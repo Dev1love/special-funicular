@@ -1,0 +1,329 @@
+{
+  "active": false,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow": {
+      "main": [
+        [
+          {
+            "node": "set_params",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "APITemplate.io": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "set_params": {
+      "main": [
+        [
+          {
+            "node": "APITemplate.io1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "APITemplate.io1": {
+      "main": [
+        [
+          {
+            "node": "IF1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond to Webhook3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-04-07T07:34:57.271Z",
+  "id": "58",
+  "name": "pdf_generate_old",
+  "nodes": [
+    {
+      "parameters": {
+        "resource": "pdf",
+        "pdfTemplateId": "={{ $json.template_id }}",
+        "jsonParameters": true,
+        "download": true,
+        "propertiesJson": "={{ $node.Webhook.json.body.params }}",
+        "options": {
+          "fileName": "Agreement.pdf"
+        }
+      },
+      "id": "47798fdd-98d6-4800-a8e1-ff49287c4280",
+      "name": "APITemplate.io",
+      "type": "n8n-nodes-base.apiTemplateIo",
+      "typeVersion": 1,
+      "position": [
+        1380,
+        180
+      ],
+      "retryOnFail": true,
+      "maxTries": 2,
+      "credentials": {
+        "apiTemplateIoApi": {
+          "id": "16",
+          "name": "APITemplate.io account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "httpMethod": "POST",
+        "path": "agreement/generate_old",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "5ef9b7c8-9314-47a0-a8aa-e8a5e1fcf619",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        640,
+        460
+      ],
+      "webhookId": "a9615e22-a6a2-4dfc-af98-865179ab6ea2",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "appsmith->n8n Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "binary",
+        "responseDataSource": "set",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "ebe26478-565e-45bd-9bac-7ad45ef36895",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1700,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "283348e5-0381-41eb-badb-3a416ec41b23",
+      "name": "Execute Workflow",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        840,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ !!$json.download_url }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "1fed9b51-4c8c-49ba-bc06-ac2c442619ec",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1540,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\"error\": \"there was a problem with PDF generation!\"}",
+        "options": {}
+      },
+      "id": "6c5e337d-e7f3-4c40-922c-1074e45fc87a",
+      "name": "Respond to Webhook1",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1880,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "var template_id = \"e2077b238df3f8ce\"; // ООО\n\n//if ($('Webhook').first().json.body.type === 'ООО')\nif ($('Webhook').first().json.body.type === 'СЗ') template_id = \"17d77b238df4c6a0\"\nelse if ($('Webhook').first().json.body.type === 'ИП') template_id = \"fbc77b238d9d6ea8\"\n\n$input.first().json.template_id = template_id\n\nreturn $input.all();"
+      },
+      "id": "846731b5-8c28-4271-8ebd-0e754a58f9cf",
+      "name": "set_params",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        1020,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "pdf",
+        "pdfTemplateId": "={{ $json.template_id }}",
+        "jsonParameters": true,
+        "propertiesJson": "={{ $node.Webhook.json.body.params }}"
+      },
+      "id": "6bd6dd76-127d-41d5-8108-22a483ceb719",
+      "name": "APITemplate.io1",
+      "type": "n8n-nodes-base.apiTemplateIo",
+      "typeVersion": 1,
+      "position": [
+        1220,
+        460
+      ],
+      "retryOnFail": false,
+      "maxTries": 2,
+      "credentials": {
+        "apiTemplateIoApi": {
+          "id": "16",
+          "name": "APITemplate.io account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "effa7814-9673-41dc-bd1a-7529bce832f5",
+      "name": "Respond to Webhook2",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1580,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ !!$json.download_url }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "b14ca9f1-14b8-4b1e-9806-f4e210b79728",
+      "name": "IF1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1380,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\"error\": \"there was a problem with PDF generation!\"}",
+        "options": {}
+      },
+      "id": "f65d8d36-5852-445c-b45b-db693f1e5647",
+      "name": "Respond to Webhook3",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1580,
+        620
+      ]
+    },
+    {
+      "parameters": {
+        "content": "**direct download** very often results in errors",
+        "height": 99.0625
+      },
+      "id": "7e413054-0900-4427-a4b2-c4e2dad1f163",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1640,
+        280
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-04-27T20:20:21.264Z",
+  "versionId": "d9ca6144-e3cb-4d60-9297-290a6f94d3b9"
+}
