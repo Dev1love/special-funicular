@@ -30,7 +30,7 @@
     },
     {
       "parameters": {
-        "chatId": "281899509",
+        "chatId": "-938702100",
         "text": "=New error in workflow {{ $json.workflow.name }}\n\nIn exectuion {{ $json.execution.url }} something went wrong. \nEror message:\n{{ $json.execution.error.message }}\n\nFull description:\n {{ JSON.stringify($json) }}",
         "additionalFields": {}
       },
@@ -60,6 +60,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2023-05-11T16:46:28.116Z",
-  "versionId": "6441805d-46ae-40fd-8599-bf5e38055672"
+  "updatedAt": "2023-05-21T18:25:29.854Z",
+  "versionId": "4374b6f8-5dfc-4e30-a909-9749e9c07d91"
 }
