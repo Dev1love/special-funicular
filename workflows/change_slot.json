@@ -1,0 +1,300 @@
+{
+  "active": true,
+  "connections": {
+    "change_slot": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Supabase1": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "success_response",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "error_response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Set",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Supabase1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-03-27T09:19:15.436Z",
+  "id": "39",
+  "name": "change_slot",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "slots/change",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "422472e0-b370-4e1a-925d-1479a561864b",
+      "name": "change_slot",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        60,
+        400
+      ],
+      "webhookId": "51d3310f-b085-4052-89d6-6fb5281cb48a"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "slots",
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "user_id",
+              "condition": "eq",
+              "keyValue": "={{ $json.body.user_id }}"
+            },
+            {
+              "keyName": "provider_id",
+              "condition": "eq",
+              "keyValue": "={{ $json.body.provider_id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "booking_timestring",
+              "fieldValue": "={{ $json.body.timestring }}"
+            },
+            {
+              "fieldId": "book_timestamp",
+              "fieldValue": "={{ $json.body.timestamp }}"
+            },
+            {
+              "fieldId": "change_time_meet",
+              "fieldValue": "true"
+            }
+          ]
+        }
+      },
+      "id": "f7d89337-ae11-4a8e-bb91-053338ce056b",
+      "name": "Supabase1",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        720,
+        380
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "10",
+          "name": "Supabase stage"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ \"error\" in $json }}"
+            }
+          ]
+        }
+      },
+      "id": "9bbc6436-dedf-40f9-aed2-b9adcaef0dcf",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        960,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={ \n\"newlink\": \"{{ $node[\"Set\"].json[\"link\"] }}\",\n\"newtimestap\": \"{{ $json.book_timestamp }}\",\n\"newtimestring\": \"{{ $json.booking_timestring }}\",\n\"changed_time_meet\": \"{{ $json.change_time_meet }}\"\n}",
+        "options": {}
+      },
+      "id": "acd312e1-56c6-4bd2-b849-389efcaaf69c",
+      "name": "success_response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1240,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify(\n\"Вы ещё не зарезервировали место\"\n)}}",
+        "options": {}
+      },
+      "id": "f232d2c0-7c95-45ca-bedf-6d20eb321cb6",
+      "name": "error_response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1240,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "content": "Флоу для работы с изменением времени букинга. Если такой пользователь уже зарезервировал какое-то время на букинг, то отдаст объект следующего формата:\n{\n  \"id\": 15,\n  \"created_at\": \"2023-03-26T12:27:32.74865+00:00\",\n  \"user_id\": \"dim.poteryaeff@yandex.ru\",\n  \"provider_id\": \"5\",\n  \"booking_timestring\": \"15:00 - 16:00\",\n  \"book_timestamp\": \"1679468400000\"\n}\nЕсли пользователь ничего не зарезервировал, то не отдаст такой объект",
+        "height": 350,
+        "width": 729
+      },
+      "id": "4e2ce01a-7e8f-466f-8edc-fd743886efa9",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        960,
+        820
+      ]
+    },
+    {
+      "parameters": {
+        "url": "http://api.mediastack.com/v1/news",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "access_key",
+              "value": "090b8a05ee9cf4b000b25518efb7874d"
+            },
+            {
+              "name": "keywords",
+              "value": "startup"
+            },
+            {
+              "name": "countries",
+              "value": "us"
+            },
+            {
+              "name": "limit",
+              "value": "1"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "7baba0b1-ea7b-4d46-9362-efd3a78d5347",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        120,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "link",
+              "value": "={{ $json.data[0][\"url\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "288a57ef-f0b7-4992-b187-08dcf2d009a4",
+      "name": "Set",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        320,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition",
+        "options": {}
+      },
+      "id": "44927d2d-6612-4bf4-a152-77d1c4a45a11",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2,
+      "position": [
+        500,
+        380
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "saveDataSuccessExecution": "all",
+    "saveManualExecutions": false,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "102"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-05-11T16:52:11.657Z",
+  "versionId": "6fde0142-8ef8-4644-a35f-b315c65797f2"
+}
