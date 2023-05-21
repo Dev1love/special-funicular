@@ -1,0 +1,71 @@
+{
+  "active": false,
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-04-25T08:05:22.632Z",
+  "id": "91",
+  "name": "time trigger executor wip",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 14 26 4 ? *"
+            }
+          ]
+        }
+      },
+      "id": "2661f7d7-46f1-4e76-a687-4a90e15e4710",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [
+        580,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "fromEmail": "admin@2t.band",
+        "toEmail": "yureckey@gmail.com",
+        "emailFormat": "html",
+        "html": "Greetings!",
+        "options": {}
+      },
+      "id": "dc611fee-7aa3-43c2-8bbc-f251251df154",
+      "name": "Send Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [
+        800,
+        320
+      ],
+      "credentials": {
+        "smtp": {
+          "id": "3",
+          "name": "SMTP account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-04-25T08:17:53.505Z",
+  "versionId": "67ca59b2-25aa-46f8-96af-0205c9830f4d"
+}
