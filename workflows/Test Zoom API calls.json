@@ -1,0 +1,591 @@
+{
+  "active": false,
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Zoom Auth",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Zoom Auth": {
+      "main": [
+        [
+          {
+            "node": "Get users",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "GetMeeting",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "StopMeeting",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Set",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set": {
+      "main": [
+        [
+          {
+            "node": "Item Lists",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Item Lists1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "mkdir",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Item Lists2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists2": {
+      "main": [
+        [
+          {
+            "node": "wget recordings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "mkdir": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Set4": {
+      "main": [
+        [
+          {
+            "node": "NewZoomMeeting",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "NewZoomMeeting1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Set4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2022-11-03T14:23:56.131Z",
+  "id": "10",
+  "name": "Test Zoom API calls",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "6c7a45a3-4c84-4a5c-8448-47a4b1473172",
+      "name": "Start",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        180,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "9"
+      },
+      "id": "fce2b61a-f6b9-4f16-bd20-d24929755f68",
+      "name": "Zoom Auth",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        360,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json[\"ZoomBaseUrl\"] }}users/me/recordings",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "from",
+              "value": "2022-10-10"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ $json[\"ZoomAuth\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5ca52684-2f79-444c-8b19-cd64aa9727e2",
+      "name": "HTTP Request1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        620,
+        -220
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json[\"ZoomBaseUrl\"] }}users/",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ $json[\"ZoomAuth\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5f2afe4e-3db1-41cf-970c-e2087303910d",
+      "name": "Get users",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        620,
+        -420
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "RecordingID",
+              "value": "={{$jmespath($json,\"meetings[].recording_files[].id\")}}"
+            },
+            {
+              "name": "RecordingURL",
+              "value": "={{$jmespath($json,\"meetings[].recording_files[].download_url\")}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d37eac13-a068-4077-80d2-3b68e806ab29",
+      "name": "Set",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        1600,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  {\n    \"from\": \"2022-10-10\",\n    \"to\": \"2022-11-03\",\n    \"page_count\": 1,\n    \"page_size\": 30,\n    \"total_records\": 12,\n    \"next_page_token\": \"\",\n    \"meetings\": [\n      {\n        \"uuid\": \"r/sqNPVGTh+Hp6/nFJjFmQ==\",\n        \"id\": 84239582813,\n        \"account_id\": \"0kLVFu_pSxuiWCUZ_CyvKg\",\n        \"host_id\": \"XGsV17bxQFCr6_a_0ACTPA\",\n        \"topic\": \"Daily (october)\",\n        \"type\": 3,\n        \"start_time\": \"2022-11-03T08:59:05Z\",\n        \"timezone\": \"Europe/Moscow\",\n        \"duration\": 17,\n        \"total_size\": 37312696,\n        \"recording_count\": 1,\n        \"share_url\": \"https://us06web.zoom.us/rec/share/J2t0O0wcnKwfjQyugnfhbxTcIy4vBaBbTqwZgrgq3S9HhKi1eljYw2FbdKmqsWYU.B__cvdUdTlBKClJM\",\n        \"recording_files\": [\n          {\n            \"id\": \"bc9e2715-22d2-4b46-a13a-6175d7ac5f1a\",\n            \"meeting_id\": \"r/sqNPVGTh+Hp6/nFJjFmQ==\",\n            \"recording_start\": \"2022-11-03T08:59:07Z\",\n            \"recording_end\": \"2022-11-03T09:16:36Z\",\n            \"file_type\": \"MP4\",\n            \"file_extension\": \"MP4\",\n            \"file_size\": 37312696,\n            \"play_url\": \"https://us06web.zoom.us/rec/play/JYtOpR0JApDz_XXTHR4POrkcpex0dEkQ7CF5Zcg6256qGv_WyBGP8DGNKHaUax-1opa_wLB_HZgAu1b-.2IAqaiNYk0BtlVNa\",\n            \"download_url\": \"https://us06web.zoom.us/rec/download/JYtOpR0JApDz_XXTHR4POrkcpex0dEkQ7CF5Zcg6256qGv_WyBGP8DGNKHaUax-1opa_wLB_HZgAu1b-.2IAqaiNYk0BtlVNa\",\n            \"status\": \"completed\",\n            \"recording_type\": \"shared_screen_with_speaker_view\"\n          }\n        ]\n      },\n      {\n        \"uuid\": \"WXaygnVFT8evvSU4Ijn+EA==\",\n        \"id\": 84239582813,\n        \"account_id\": \"0kLVFu_pSxuiWCUZ_CyvKg\",\n        \"host_id\": \"XGsV17bxQFCr6_a_0ACTPA\",\n        \"topic\": \"Daily (october)\",\n        \"type\": 3,\n        \"start_time\": \"2022-11-02T08:58:07Z\",\n        \"timezone\": \"Europe/Moscow\",\n        \"duration\": 21,\n        \"total_size\": 38069983,\n        \"recording_count\": 1,\n        \"share_url\": \"https://us06web.zoom.us/rec/share/WEOfneVpx7w_X9L59CwjuxUAa6FVyBSyzcR17iNykrEmpUBKXeCHWe12uD7Xl1Pw.jboxgld8q8easo7p\",\n        \"recording_files\": [\n          {\n            \"id\": \"04055f71-25b4-43a3-8c04-18e10379fff1\",\n            \"meeting_id\": \"WXaygnVFT8evvSU4Ijn+EA==\",\n            \"recording_start\": \"2022-11-02T08:58:09Z\",\n            \"recording_end\": \"2022-11-02T09:19:37Z\",\n            \"file_type\": \"MP4\",\n            \"file_extension\": \"MP4\",\n            \"file_size\": 38069983,\n            \"play_url\": \"https://us06web.zoom.us/rec/play/jNNHq-557kpFxtnXdvzZXo5LSpnGB2Q2pH-AvzBiwyFn18mrwJpQ_HueUh_p4nhkV7U_w4ITJ2rm8A.H4UnJWPpZEE7C-sI\",\n            \"download_url\": \"https://us06web.zoom.us/rec/download/jNNHq-557kpFxtnXdvzZXo5LSpnGB2Q2pH-AvzBiwyFn18mrwJpQ_HueUh_p4nhkV7U_w4ITJ2rm8A.H4UnJWPpZEE7C-sI\",\n            \"status\": \"completed\",\n            \"recording_type\": \"shared_screen_with_speaker_view\"\n          }\n        ]\n      },\n      {\n        \"uuid\": \"NVp3cme1SQuCxH+TrcctJQ==\",\n        \"id\": 84239582813,\n        \"account_id\": \"0kLVFu_pSxuiWCUZ_CyvKg\",\n        \"host_id\": \"XGsV17bxQFCr6_a_0ACTPA\",\n        \"topic\": \"Daily (october)\",\n        \"type\": 3,\n        \"start_time\": \"2022-10-31T12:47:37Z\",\n        \"timezone\": \"Europe/Moscow\",\n        \"duration\": 68,\n        \"total_size\": 268729182,\n        \"recording_count\": 1,\n        \"share_url\": \"https://us06web.zoom.us/rec/share/C6hQwgEWwNVDMVrtVbWB7RYR6-EnyjJeDEn05Tu2iSeWikPY3WyR7jmqTQ8UCjcx.aFw2u2BFt_DPEotI\",\n        \"recording_files\": [\n          {\n            \"id\": \"f3691f7d-65ae-4041-96b1-3074a03f6049\",\n            \"meeting_id\": \"NVp3cme1SQuCxH+TrcctJQ==\",\n            \"recording_start\": \"2022-10-31T12:47:38Z\",\n            \"recording_end\": \"2022-10-31T13:55:51Z\",\n            \"file_type\": \"MP4\",\n            \"file_extension\": \"MP4\",\n            \"file_size\": 268729182,\n            \"play_url\": \"https://us06web.zoom.us/rec/play/flYBB5F2MKhmu-dm1I9xwgYD1Bvjtb_QyNaF5Rvg56GdDzz-dZvFWmKuzkB0XjveX4-9MbNxvDCMMmLP.GllaHXiAUNmkEJAO\",\n            \"download_url\": \"https://us06web.zoom.us/rec/download/flYBB5F2MKhmu-dm1I9xwgYD1Bvjtb_QyNaF5Rvg56GdDzz-dZvFWmKuzkB0XjveX4-9MbNxvDCMMmLP.GllaHXiAUNmkEJAO\",\n            \"status\": \"completed\",\n            \"recording_type\": \"shared_screen_with_speaker_view\"\n          }\n        ]\n      },\n      {\n        \"uuid\": \"hUCwX2TwRYS9sm+EtZqiSQ==\",\n        \"id\": 84239582813,\n        \"account_id\": \"0kLVFu_pSxuiWCUZ_CyvKg\",\n        \"host_id\": \"XGsV17bxQFCr6_a_0ACTPA\",\n        \"topic\": \"Daily (october)\",\n        \"type\": 3,\n        \"start_time\": \"2022-10-27T10:33:26Z\",\n        \"timezone\": \"Europe/Moscow\",\n        \"duration\": 0,\n        \"total_size\": 172557,\n        \"recording_count\": 1,\n        \"share_url\": \"https://us06web.zoom.us/rec/share/HrBoYgTkKhn1PFZiZFrtgKVgjZIbVjj93olu9BfFBd23Bq0UTtFns8ThsoflwH2u.YhooK2cQxO4-VNsD\",\n        \"recording_files\": [\n          {\n            \"id\": \"125ffe37-7109-469f-bf20-1866bc3bf522\",\n            \"meeting_id\": \"hUCwX2TwRYS9sm+EtZqiSQ==\",\n            \"recording_start\": \"2022-10-27T10:33:27Z\",\n            \"recording_end\": \"2022-10-27T10:33:37Z\",\n            \"file_type\": \"MP4\",\n            \"file_extension\": \"MP4\",\n            \"file_size\": 172557,\n            \"play_url\": \"https://us06web.zoom.us/rec/play/DBF6U6gT-Io1NZopQNu1E6iYQ1DgaLO9KJacswrtqXvgFDyTVzZMgv6P7DWxTWW5qN06O79GbDX7pdLR.UmjhOCeAUK5vDmV5\",\n            \"download_url\": \"https://us06web.zoom.us/rec/download/DBF6U6gT-Io1NZopQNu1E6iYQ1DgaLO9KJacswrtqXvgFDyTVzZMgv6P7DWxTWW5qN06O79GbDX7pdLR.UmjhOCeAUK5vDmV5\",\n            \"status\": \"completed\",\n            \"recording_type\": \"shared_screen_with_speaker_view\"\n          }\n        ]\n      },\n      {\n        \"uuid\": \"GYQhexn4T8G562a/VsPeNA==\",\n        \"id\": 84239582813,\n        \"account_id\": \"0kLVFu_pSxuiWCUZ_CyvKg\",\n        \"host_id\": \"XGsV17bxQFCr6_a_0ACTPA\",\n        \"topic\": \"Daily (october)\",\n        \"type\": 3,\n        \"start_time\": \"2022-10-27T08:57:23Z\",\n        \"timezone\": \"Europe/Moscow\",\n        \"duration\": 95,\n        \"total_size\": 570228664,\n        \"recording_count\": 2,\n        \"share_url\": \"https://us06web.zoom.us/rec/share/e5fynaytSDJVXleOj61l0Uzc-KiiIIjQS_PIUDabhwQAXm9N4ZHsmbTYRDeGyj8f._M-DFFgQz31Bj6KU\",\n        \"recording_files\": [\n          {\n            \"id\": \"8c3871fd-a5d8-45cb-a93a-c2dbd6644fde\",\n            \"meeting_id\": \"GYQhexn4T8G562a/VsPeNA==\",\n            \"recording_start\": \"2022-10-27T08:57:25Z\",\n            \"recording_end\": \"2022-10-27T10:33:04Z\",\n            \"file_type\": \"MP4\",\n            \"file_extension\": \"MP4\",\n            \"file_size\": 570228373,\n            \"play_url\": \"https://us06web.zoom.us/rec/play/qqlFZ9ST0JFseVD2FQjXLpuBHIcZgJtsdI38D_2zaxvKKBWUi8lC_SpeOXCdqjO6eu_SzmYzY9cnVSDK.RGqDc-60C0XTZIya\",\n            \"download_url\": \"https://us06web.zoom.us/rec/download/qqlFZ9ST0JFseVD2FQjXLpuBHIcZgJtsdI38D_2zaxvKKBWUi8lC_SpeOXCdqjO6eu_SzmYzY9cnVSDK.RGqDc-60C0XTZIya\",\n            \"status\": \"completed\",\n            \"recording_type\": \"shared_screen_with_speaker_view\"\n          },\n          {\n            \"id\": \"e6fdadde-0654-4689-88b0-4b868ef8d491\",\n            \"meeting_id\": \"GYQhexn4T8G562a/VsPeNA==\",\n            \"recording_start\": \"2022-10-27T08:57:25Z\",\n            \"recording_end\": \"2022-10-27T10:33:04Z\",\n            \"file_type\": \"CHAT\",\n            \"file_extension\": \"TXT\",\n            \"file_size\": 291,\n            \"play_url\": \"https://us06web.zoom.us/rec/play/V3ZqhahLIdyIAb5LkRiJBAOC5TWDxpby5bdQSAQ0UkBZvSJqYUZC3v29TfgI7XSrnUqUF38YPI035TPE.nVWPTYETZbhJ6Y-E\",\n            \"download_url\": \"https://us06web.zoom.us/rec/download/V3ZqhahLIdyIAb5LkRiJBAOC5TWDxpby5bdQSAQ0UkBZvSJqYUZC3v29TfgI7XSrnUqUF38YPI035TPE.nVWPTYETZbhJ6Y-E\",\n            \"status\": \"completed\",\n            \"recording_type\": \"chat_file\"\n          }\n        ]\n      },\n      {\n        \"uuid\": \"Jjc3gCG6RkyECmgsH4LhIw==\",\n        \"id\": 84239582813,\n        \"account_id\": \"0kLVFu_pSxuiWCUZ_CyvKg\",\n        \"host_id\": \"XGsV17bxQFCr6_a_0ACTPA\",\n        \"topic\": \"Daily (october)\",\n        \"type\": 3,\n        \"start_time\": \"2022-10-21T08:58:18Z\",\n        \"timezone\": \"Europe/Moscow\",\n        \"duration\": 9,\n        \"total_size\": 43519596,\n        \"recording_count\": 1,\n        \"share_url\": \"https://us06web.zoom.us/rec/share/nPu8BpbACtvCCzxN_0bAVvkd7lk6GGcED-rAkf94KR8jxqgHagszuGzhy_tdv-ew.W2h63-6JY9_gTY-T\",\n        \"recording_files\": [\n          {\n            \"id\": \"9ba758d4-e9ab-44be-9109-926588a70d20\",\n            \"meeting_id\": \"Jjc3gCG6RkyECmgsH4LhIw==\",\n            \"recording_start\": \"2022-10-21T08:58:19Z\",\n            \"recording_end\": \"2022-10-21T09:08:15Z\",\n            \"file_type\": \"MP4\",\n            \"file_extension\": \"MP4\",\n            \"file_size\": 43519596,\n            \"play_url\": \"https://us06web.zoom.us/rec/play/98WiFW8YOOY--i65IPUm07vV5_YBnv3Jet6e9fjRnkO1ZVVs6_7jqpKkt0WJS1UqSHoI3r7opuJfJ4Ab.jBMEBopiJNfRDpO4\",\n            \"download_url\": \"https://us06web.zoom.us/rec/download/98WiFW8YOOY--i65IPUm07vV5_YBnv3Jet6e9fjRnkO1ZVVs6_7jqpKkt0WJS1UqSHoI3r7opuJfJ4Ab.jBMEBopiJNfRDpO4\",\n            \"status\": \"completed\",\n            \"recording_type\": \"shared_screen_with_speaker_view\"\n          }\n        ]\n      },\n      {\n        \"uuid\": \"lQ6cs542TUWSv69Zopkf1w==\",\n        \"id\": 84239582813,\n        \"account_id\": \"0kLVFu_pSxuiWCUZ_CyvKg\",\n        \"host_id\": \"XGsV17bxQFCr6_a_0ACTPA\",\n        \"topic\": \"Daily (october)\",\n        \"type\": 3,\n        \"start_time\": \"2022-10-19T09:20:07Z\",\n        \"timezone\": \"Europe/Moscow\",\n        \"duration\": 58,\n        \"total_size\": 242953101,\n        \"recording_count\": 1,\n        \"share_url\": \"https://us06web.zoom.us/rec/share/7dmyNTfa2Bzr3Wd7gNLamD8F8_R8-Phjzw4be57ScQXj9FGe4Ph6qG7ZsRklzNU1.aUsDOboLy0CoQtoO\",\n        \"recording_files\": [\n          {\n            \"id\": \"a6c43457-f562-4b8e-b3b5-fe8134b75657\",\n            \"meeting_id\": \"lQ6cs542TUWSv69Zopkf1w==\",\n            \"recording_start\": \"2022-10-19T09:20:08Z\",\n            \"recording_end\": \"2022-10-19T10:18:17Z\",\n            \"file_type\": \"MP4\",\n            \"file_extension\": \"MP4\",\n            \"file_size\": 242953101,\n            \"play_url\": \"https://us06web.zoom.us/rec/play/WWFk0u7sDOL4CFe-wnd40uRlHF4rT5Ekm29fUS6-J6mgzlZyPgNLeL_5uePMXarNdw0bB96qrQ_DW8GG.zK0sK0CLPJ0V9B6s\",\n            \"download_url\": \"https://us06web.zoom.us/rec/download/WWFk0u7sDOL4CFe-wnd40uRlHF4rT5Ekm29fUS6-J6mgzlZyPgNLeL_5uePMXarNdw0bB96qrQ_DW8GG.zK0sK0CLPJ0V9B6s\",\n            \"status\": \"completed\",\n            \"recording_type\": \"shared_screen_with_speaker_view\"\n          }\n        ]\n      },\n      {\n        \"uuid\": \"h3Vy3yNbS9qgpgONw91eZw==\",\n        \"id\": 84239582813,\n        \"account_id\": \"0kLVFu_pSxuiWCUZ_CyvKg\",\n        \"host_id\": \"XGsV17bxQFCr6_a_0ACTPA\",\n        \"topic\": \"Daily (october)\",\n        \"type\": 3,\n        \"start_time\": \"2022-10-19T08:58:17Z\",\n        \"timezone\": \"Europe/Moscow\",\n        \"duration\": 16,\n        \"total_size\": 64953561,\n        \"recording_count\": 1,\n        \"share_url\": \"https://us06web.zoom.us/rec/share/9-m18sdMfnQ9U2yD03CeksbI0Cq865NfZ2srcMm5S49IuNZ3GOWB8hS597nPrnOa.Lvr0pf8_xWDgkP-u\",\n        \"recording_files\": [\n          {\n            \"id\": \"6ebdcd28-e4d2-4934-ba5c-50ced4b56ee0\",\n            \"meeting_id\": \"h3Vy3yNbS9qgpgONw91eZw==\",\n            \"recording_start\": \"2022-10-19T08:58:18Z\",\n            \"recording_end\": \"2022-10-19T09:14:23Z\",\n            \"file_type\": \"MP4\",\n            \"file_extension\": \"MP4\",\n            \"file_size\": 64953561,\n            \"play_url\": \"https://us06web.zoom.us/rec/play/CpC0wH9Qewf9Ox205hS77XsK5qNnqZrnslhKFzPDQaM-4Demz8TO2yoBUQf_bkAsBbpUQe_aGbqVH31y.2yI3rDP1XzITKSsJ\",\n            \"download_url\": \"https://us06web.zoom.us/rec/download/CpC0wH9Qewf9Ox205hS77XsK5qNnqZrnslhKFzPDQaM-4Demz8TO2yoBUQf_bkAsBbpUQe_aGbqVH31y.2yI3rDP1XzITKSsJ\",\n            \"status\": \"completed\",\n            \"recording_type\": \"shared_screen_with_speaker_view\"\n          }\n        ]\n      },\n      {\n        \"uuid\": \"BE18uqYoTqOo+OAzIHE3gg==\",\n        \"id\": 84239582813,\n        \"account_id\": \"0kLVFu_pSxuiWCUZ_CyvKg\",\n        \"host_id\": \"XGsV17bxQFCr6_a_0ACTPA\",\n        \"topic\": \"Daily (october)\",\n        \"type\": 3,\n        \"start_time\": \"2022-10-17T08:57:45Z\",\n        \"timezone\": \"Europe/Moscow\",\n        \"duration\": 85,\n        \"total_size\": 389519587,\n        \"recording_count\": 1,\n        \"share_url\": \"https://us06web.zoom.us/rec/share/YghbIj95PC1TCWm7ErY11xyIbpb5RGfJ2TLOJefBlXoBlkGhP1YlKoDVhvTObVDx.ynzy6H21Yzrsbyo3\",\n        \"recording_files\": [\n          {\n            \"id\": \"74a85290-dbc1-4f26-8dc2-4250826eb532\",\n            \"meeting_id\": \"BE18uqYoTqOo+OAzIHE3gg==\",\n            \"recording_start\": \"2022-10-17T08:57:46Z\",\n            \"recording_end\": \"2022-10-17T10:22:59Z\",\n            \"file_type\": \"MP4\",\n            \"file_extension\": \"MP4\",\n            \"file_size\": 389519587,\n            \"play_url\": \"https://us06web.zoom.us/rec/play/2KCEJhn5RRYiQPm3o2esGmz2W9FFGMzqiMljoxAWURol9dfWZoHmZFSbVftvLmYqRxBdaiqysgkB7hfr.fvAoHRR6yOZaUd5k\",\n            \"download_url\": \"https://us06web.zoom.us/rec/download/2KCEJhn5RRYiQPm3o2esGmz2W9FFGMzqiMljoxAWURol9dfWZoHmZFSbVftvLmYqRxBdaiqysgkB7hfr.fvAoHRR6yOZaUd5k\",\n            \"status\": \"completed\",\n            \"recording_type\": \"shared_screen_with_speaker_view\"\n          }\n        ]\n      },\n      {\n        \"uuid\": \"BQrJQYybStmGQ8BUOWvuaA==\",\n        \"id\": 84239582813,\n        \"account_id\": \"0kLVFu_pSxuiWCUZ_CyvKg\",\n        \"host_id\": \"XGsV17bxQFCr6_a_0ACTPA\",\n        \"topic\": \"Daily (october)\",\n        \"type\": 3,\n        \"start_time\": \"2022-10-14T08:58:35Z\",\n        \"timezone\": \"Europe/Moscow\",\n        \"duration\": 78,\n        \"total_size\": 345371464,\n        \"recording_count\": 2,\n        \"share_url\": \"https://us06web.zoom.us/rec/share/WrxPqq_bi7sSKUplM6nbwoXF_yzTLC2c7kV64nUgdkPAo2Qzrvo3W-4sonNlbD4r.unSA4mQwbeUt84e6\",\n        \"recording_files\": [\n          {\n            \"id\": \"0d0ad78a-ee61-4bcf-a3dc-2cd9c20ef340\",\n            \"meeting_id\": \"BQrJQYybStmGQ8BUOWvuaA==\",\n            \"recording_start\": \"2022-10-14T08:58:36Z\",\n            \"recording_end\": \"2022-10-14T10:17:23Z\",\n            \"file_type\": \"CHAT\",\n            \"file_extension\": \"TXT\",\n            \"file_size\": 93,\n            \"play_url\": \"https://us06web.zoom.us/rec/play/1sh98W3L0cHND24XGPnAN1pEwWmIBEOuzlkd1Cqas2f8cBIxHz6f7yDd90yPeDTe1oPxVyICCMEgLiZO._ecMGjnzaJuduUcb\",\n            \"download_url\": \"https://us06web.zoom.us/rec/download/1sh98W3L0cHND24XGPnAN1pEwWmIBEOuzlkd1Cqas2f8cBIxHz6f7yDd90yPeDTe1oPxVyICCMEgLiZO._ecMGjnzaJuduUcb\",\n            \"status\": \"completed\",\n            \"recording_type\": \"chat_file\"\n          },\n          {\n            \"id\": \"ec648985-b286-470d-979b-a4a9734c7c1d\",\n            \"meeting_id\": \"BQrJQYybStmGQ8BUOWvuaA==\",\n            \"recording_start\": \"2022-10-14T08:58:36Z\",\n            \"recording_end\": \"2022-10-14T10:17:23Z\",\n            \"file_type\": \"MP4\",\n            \"file_extension\": \"MP4\",\n            \"file_size\": 345371371,\n            \"play_url\": \"https://us06web.zoom.us/rec/play/SGs8JdR4BfCmio5MX1GSZh_BuXCiAyYAoMQ3Ki9MvxH2qnJXTSUDyvbECxB38SCBpvV06zirpEY3x3Ct.muNRGyAcCHWEqboB\",\n            \"download_url\": \"https://us06web.zoom.us/rec/download/SGs8JdR4BfCmio5MX1GSZh_BuXCiAyYAoMQ3Ki9MvxH2qnJXTSUDyvbECxB38SCBpvV06zirpEY3x3Ct.muNRGyAcCHWEqboB\",\n            \"status\": \"completed\",\n            \"recording_type\": \"shared_screen_with_speaker_view\"\n          }\n        ]\n      },\n      {\n        \"uuid\": \"zFL8KYptQNSSpp88xe/llg==\",\n        \"id\": 84239582813,\n        \"account_id\": \"0kLVFu_pSxuiWCUZ_CyvKg\",\n        \"host_id\": \"XGsV17bxQFCr6_a_0ACTPA\",\n        \"topic\": \"Daily (october)\",\n        \"type\": 3,\n        \"start_time\": \"2022-10-12T08:54:33Z\",\n        \"timezone\": \"Europe/Moscow\",\n        \"duration\": 37,\n        \"total_size\": 151631878,\n        \"recording_count\": 1,\n        \"share_url\": \"https://us06web.zoom.us/rec/share/nGmgTTHy7DJNehGNMRyU_RIGLPN9NbEaJBxlV78wh83NI4nt9jgELwfhXL2CrIOo.hrVQecV1ZkTcgFwF\",\n        \"recording_files\": [\n          {\n            \"id\": \"0f4dcc4f-f4c5-4aa1-86ce-da8d9a69f42f\",\n            \"meeting_id\": \"zFL8KYptQNSSpp88xe/llg==\",\n            \"recording_start\": \"2022-10-12T08:54:35Z\",\n            \"recording_end\": \"2022-10-12T09:31:40Z\",\n            \"file_type\": \"MP4\",\n            \"file_extension\": \"MP4\",\n            \"file_size\": 151631878,\n            \"play_url\": \"https://us06web.zoom.us/rec/play/iZK6TrPOybEMvgKOVZVrfm2usuEU4z2Broka6WbKyVIGrdMvFpTZ6xe5wBK7nnyU8TuUQJcuMEhK5w.vETm2qYFAPidq-2K\",\n            \"download_url\": \"https://us06web.zoom.us/rec/download/iZK6TrPOybEMvgKOVZVrfm2usuEU4z2Broka6WbKyVIGrdMvFpTZ6xe5wBK7nnyU8TuUQJcuMEhK5w.vETm2qYFAPidq-2K\",\n            \"status\": \"completed\",\n            \"recording_type\": \"shared_screen_with_speaker_view\"\n          }\n        ]\n      },\n      {\n        \"uuid\": \"CD+DQ5PBTdmPTgjf/0nWhg==\",\n        \"id\": 84239582813,\n        \"account_id\": \"0kLVFu_pSxuiWCUZ_CyvKg\",\n        \"host_id\": \"XGsV17bxQFCr6_a_0ACTPA\",\n        \"topic\": \"Daily (october)\",\n        \"type\": 3,\n        \"start_time\": \"2022-10-10T08:57:17Z\",\n        \"timezone\": \"Europe/Moscow\",\n        \"duration\": 56,\n        \"total_size\": 208821252,\n        \"recording_count\": 2,\n        \"share_url\": \"https://us06web.zoom.us/rec/share/34ap890ClU2bzWeh1u-U_86H7Q-gkTptI6s4dXuFsXWjo3aSM57EyI2KMyUQrjjY.Zqf-RWe76Hd2VDcX\",\n        \"recording_files\": [\n          {\n            \"id\": \"95a17b62-8953-482c-9719-634128423ba7\",\n            \"meeting_id\": \"CD+DQ5PBTdmPTgjf/0nWhg==\",\n            \"recording_start\": \"2022-10-10T08:57:18Z\",\n            \"recording_end\": \"2022-10-10T09:53:30Z\",\n            \"file_type\": \"MP4\",\n            \"file_extension\": \"MP4\",\n            \"file_size\": 208820828,\n            \"play_url\": \"https://us06web.zoom.us/rec/play/Wynct94Z_d0br7V9E9eHrLbiZPtIUl2unLpHKLuX7GCpUyasdWEOm71hbw5C7Okt-3ykt6ALj30dBGZY.GmqWCCzXII7Cr6mq\",\n            \"download_url\": \"https://us06web.zoom.us/rec/download/Wynct94Z_d0br7V9E9eHrLbiZPtIUl2unLpHKLuX7GCpUyasdWEOm71hbw5C7Okt-3ykt6ALj30dBGZY.GmqWCCzXII7Cr6mq\",\n            \"status\": \"completed\",\n            \"recording_type\": \"shared_screen_with_speaker_view\"\n          },\n          {\n            \"id\": \"f3d0827a-a241-4541-86b3-70fa3eec6e9c\",\n            \"meeting_id\": \"CD+DQ5PBTdmPTgjf/0nWhg==\",\n            \"recording_start\": \"2022-10-10T08:57:18Z\",\n            \"recording_end\": \"2022-10-10T09:53:30Z\",\n            \"file_type\": \"CHAT\",\n            \"file_extension\": \"TXT\",\n            \"file_size\": 424,\n            \"play_url\": \"https://us06web.zoom.us/rec/play/Tg6fYOX_LNk41-Ja1XwKu78yt-4fAQJ8pHLSc7kOPSc7f4cBHfk6GsJCgNEXGJ3y7QIgHE7pGmOwA-Gn.aPU-pVrKdFa-ikxA\",\n            \"download_url\": \"https://us06web.zoom.us/rec/download/Tg6fYOX_LNk41-Ja1XwKu78yt-4fAQJ8pHLSc7kOPSc7f4cBHfk6GsJCgNEXGJ3y7QIgHE7pGmOwA-Gn.aPU-pVrKdFa-ikxA\",\n            \"status\": \"completed\",\n            \"recording_type\": \"chat_file\"\n          }\n        ]\n      }\n    ]\n  }\n];"
+      },
+      "id": "c9637ffb-f40d-4d02-8480-0b8c1b537649",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        1420,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "RecordingID",
+        "options": {}
+      },
+      "id": "589680cf-087f-4d26-af5d-031fec33613b",
+      "name": "Item Lists",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 1,
+      "position": [
+        1780,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "RecordingURL",
+        "options": {}
+      },
+      "id": "58a764a7-9bfb-48cd-97c3-f6afe3060bda",
+      "name": "Item Lists1",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 1,
+      "position": [
+        1780,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition",
+        "options": {}
+      },
+      "id": "951cdc04-8605-481a-849a-6bd468b4967b",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2,
+      "position": [
+        1960,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "id": "5adc5772-297a-44d8-9488-172ff43c208f",
+      "name": "Merge1",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2,
+      "position": [
+        2320,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "limit",
+        "maxItems": 2
+      },
+      "id": "52c4d0a1-9705-49f3-adca-1fee840af458",
+      "name": "Item Lists2",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 1,
+      "position": [
+        2500,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "executeOnce": false,
+        "command": "=wget -O /home/node/.n8n/TestZoomDownload/{{$json[\"RecordingID\"]}}.mp4 {{$json[\"RecordingURL\"]}}"
+      },
+      "id": "a52ab363-e88c-49b6-97d7-6f7fff6350f9",
+      "name": "wget recordings",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        2680,
+        280
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "command": "=mkdir -p /home/node/.n8n/TestZoomDownload"
+      },
+      "id": "aee6aceb-141d-4829-8519-44d860afbbac",
+      "name": "mkdir",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        2160,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  {\n    \"Id\": 1174,\n    \"CreatedAt\": \"2022-11-05T09:04:39.915Z\",\n    \"UpdatedAt\": \"2022-11-05T09:04:39.915Z\",\n    \"MeetingStartDateTime\": \"2022-11-05T10:30:00.000Z\",\n    \"MeetingComment\": \"Вторая сессия с другим трекером\",\n    \"MeetingEasyId\": 2,\n    \"MeetingStatus\": \"Planned\",\n    \"MeetingZoomLink\": null,\n    \"MeetingEndDateTime\": \"2022-11-05T11:30:00.000Z\",\n    \"MeetingHash\": null,\n    \"MeetingZoomFile\": null,\n    \"MeetingZoomScreencast\": null,\n    \"nc_meeting_Project\": [],\n    \"nc_meeting_Tracker\": [],\n    \"Trackers List\": [],\n    \"Projects List\": [],\n    \"id\": 2,\n    \"book\": \"2022-11-05 08:37:30\",\n    \"start\": \"2022-11-05 10:30:00\",\n    \"end\": \"2022-11-05 11:30:00\",\n    \"hash\": \"5hEvIAS4Z2cf\",\n    \"location\": \"\",\n    \"notes\": \"Вторая сессия с другим трекером\",\n    \"customerId\": 4,\n    \"providerId\": 6,\n    \"serviceId\": 1,\n    \"googleCalendarId\": null,\n    \"ProjectEasyId\": 4,\n    \"ProjectTitle\": \"2T pilot\",\n    \"ProjectId\": 4,\n    \"TrackerEasyId\": 6,\n    \"TrackerEmail\": \"wowbuckwheat@gmail.com\",\n    \"ZoomUser\": \"user03@2t.band\",\n    \"TrackerId\": 14,\n    \"myNewField\": 1,\n    \"access_token\": \"eyJhbGciOiJIUzUxMiIsInYiOiIyLjAiLCJraWQiOiI3YTNiNjk3NS04MjE3LTQ4NDEtYTE3Ny0xNmUwMWNmMDZlNWQifQ.eyJ2ZXIiOjcsImF1aWQiOiIwMzExNDUzZGExYjNiMjRkYWEzODcyMGRmODAyOTQ5YiIsImNvZGUiOiJscXN4RXk2X1NOS3ExZllmRENxNHJBalFnQ1ZaeWpVMDciLCJpc3MiOiJ6bTpjaWQ6alg3ZXpJNXlReGk4R2xnalJoMV9RUSIsImdubyI6MCwidHlwZSI6MywiYXVkIjoiaHR0cHM6Ly9vYXV0aC56b29tLnVzIiwidWlkIjoiWEdzVjE3YnhRRkNyNl9hXzBBQ1RQQSIsIm5iZiI6MTY2NzYzOTA4MCwiZXhwIjoxNjY3NjQyNjgwLCJpYXQiOjE2Njc2MzkwODAsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJqdGkiOiI3OWQ3MTBlYS03NWNmLTQ5NzctOTIxYi00ZTE4Nzk3ODBmZGQifQ.wiNI5T2ejM8fkcsOop1VOhFJWlXjBG-ZMh-udENkyUZpwbrhnyLUBz9-HQ2Vk1ET9eJNnCccwsm39RDXkUnpnA\",\n    \"token_type\": \"bearer\",\n    \"expires_in\": 3599,\n    \"scope\": \"meeting:master meeting:read:admin meeting:write:admin meeting_token:read:admin:live_streaming meeting_token:read:admin:local_archiving meeting_token:read:admin:local_recording recording:master recording:read:admin recording:write:admin report:master report:read:admin user:master user:read:admin user:write:admin webinar:master webinar:read:admin webinar:write:admin webinar_token:read:admin:live_streaming webinar_token:read:admin:local_archiving webinar_token:read:admin:local_recording\",\n    \"ZoomBaseUrl\": \"https://api.zoom.us/v2/\",\n    \"ZoomAuth\": \"Bearer eyJhbGciOiJIUzUxMiIsInYiOiIyLjAiLCJraWQiOiI3YTNiNjk3NS04MjE3LTQ4NDEtYTE3Ny0xNmUwMWNmMDZlNWQifQ.eyJ2ZXIiOjcsImF1aWQiOiIwMzExNDUzZGExYjNiMjRkYWEzODcyMGRmODAyOTQ5YiIsImNvZGUiOiJscXN4RXk2X1NOS3ExZllmRENxNHJBalFnQ1ZaeWpVMDciLCJpc3MiOiJ6bTpjaWQ6alg3ZXpJNXlReGk4R2xnalJoMV9RUSIsImdubyI6MCwidHlwZSI6MywiYXVkIjoiaHR0cHM6Ly9vYXV0aC56b29tLnVzIiwidWlkIjoiWEdzVjE3YnhRRkNyNl9hXzBBQ1RQQSIsIm5iZiI6MTY2NzYzOTA4MCwiZXhwIjoxNjY3NjQyNjgwLCJpYXQiOjE2Njc2MzkwODAsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJqdGkiOiI3OWQ3MTBlYS03NWNmLTQ5NzctOTIxYi00ZTE4Nzk3ODBmZGQifQ.wiNI5T2ejM8fkcsOop1VOhFJWlXjBG-ZMh-udENkyUZpwbrhnyLUBz9-HQ2Vk1ET9eJNnCccwsm39RDXkUnpnA\"\n  }\n];"
+      },
+      "id": "5453b3e7-4240-4565-a022-31ee57d3aced",
+      "name": "Code1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        360,
+        580
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json[\"ZoomBaseUrl\"] }}users/{{ $json[\"ZoomUser\"] }}/meetings",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{$json[\"ZoomAuth\"]}}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ $json[\"JSONbody\"] }}",
+        "options": {}
+      },
+      "id": "f243a92f-d443-4f1e-a8d8-b3f91a6ebe85",
+      "name": "NewZoomMeeting",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        820,
+        500
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "JSONbody",
+              "value": "={\n\"topic\": \"{{$json[\"MeetingComment\"]}}\",\n\"type\": 2,\n\"start_time\": \"{{$json[\"MeetingStartDateTime\"]}}\",\n\"timezone\": \"Europe/Moscow\",\n\"duration\": 60,\n\"schedule_for\": \"{{$json[\"ZoomUser\"]}}\",\n\"settings\": {\n\t\"auto_recording\": \"cloud\",\n\t\"join_before_host\": false,\n\t\"mute_upon_entry\": false\n\t}\n}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "657b166c-5ce0-445c-b128-5b67f5895597",
+      "name": "Set4",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        540,
+        580
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json[\"ZoomBaseUrl\"] }}users/{{ $json[\"ZoomUser\"] }}/meetings",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{$json[\"ZoomAuth\"]}}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json[\"JSONbody\"] }}",
+        "options": {}
+      },
+      "id": "ed10524a-42b4-4709-8cb6-617f213458b5",
+      "name": "NewZoomMeeting1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        820,
+        700
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "={{ $json[\"ZoomBaseUrl\"] }}meetings/84706068054/status",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ $json[\"ZoomAuth\"] }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\"action\":\"end\"}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "id": "a60aa8a7-3798-4a20-a5be-d5a376bcdd6f",
+      "name": "StopMeeting",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        620,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json[\"ZoomBaseUrl\"] }}meetings/84706068054",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ $json[\"ZoomAuth\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0bf1187d-95cc-4dde-8347-8e2f55973232",
+      "name": "GetMeeting",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        620,
+        -20
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json[\"ZoomBaseUrl\"] }}users/me/meetings",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "from",
+              "value": "2022-10-10"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ $json[\"ZoomAuth\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ddb1e81e-2e36-47db-b468-eee020d99922",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        620,
+        360
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2022-11-14T09:29:01.743Z",
+  "versionId": "6b81fbf2-dce0-4afd-9db9-39bbf3b573e7"
+}
