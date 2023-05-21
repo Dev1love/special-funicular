@@ -1,0 +1,65 @@
+{
+  "active": false,
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-05-11T16:11:08.015Z",
+  "id": "102",
+  "name": "error_workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "0c64b3d9-8f43-4cac-bc09-d990bef08a9b",
+      "name": "Error Trigger",
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        620,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "281899509",
+        "text": "=New error in workflow {{ $json.workflow.name }}\n\nIn exectuion {{ $json.execution.url }} something went wrong. \nEror message:\n{{ $json.execution.error.message }}\n\nFull description:\n {{ JSON.stringify($json) }}",
+        "additionalFields": {}
+      },
+      "id": "c16afe47-fe4b-47db-8a8f-603206b6631a",
+      "name": "Telegram",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [
+        840,
+        300
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "18",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-05-11T16:46:28.116Z",
+  "versionId": "6441805d-46ae-40fd-8599-bf5e38055672"
+}
