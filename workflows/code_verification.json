@@ -1,0 +1,689 @@
+{
+  "active": false,
+  "connections": {
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "init_vars_",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "init_vars_": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "generate_code",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "SUPA_RPC_get_user",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "SUPA_get_user_verification",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "response_error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "generate_code": {
+      "main": [
+        [
+          {
+            "node": "SUPA_save_profile",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_save_profile": {
+      "main": [
+        [
+          {
+            "node": "Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Email": {
+      "main": [
+        [
+          {
+            "node": "response_1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_get_user_verification": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "SUPA_update_user_verification1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "response_err",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_update_user_verification1": {
+      "main": [
+        [
+          {
+            "node": "response_3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "generate_code1": {
+      "main": [
+        [
+          {
+            "node": "SUPA_save_profile1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_save_profile1": {
+      "main": [
+        [
+          {
+            "node": "Send Email1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Email1": {
+      "main": [
+        [
+          {
+            "node": "response_2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_RPC_get_user": {
+      "main": [
+        [
+          {
+            "node": "generate_code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-05-03T17:30:36.359Z",
+  "id": "100",
+  "name": "code_verification",
+  "nodes": [
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{ $node[\"init_vars_\"].json?.code_verification_params?.operation }}",
+        "rules": {
+          "rules": [
+            {
+              "value2": "code_generate"
+            },
+            {
+              "value2": "code_regenerate",
+              "output": 1
+            },
+            {
+              "value2": "code_check",
+              "output": 2
+            }
+          ]
+        },
+        "fallbackOutput": 3
+      },
+      "id": "0efae73e-c6f0-4124-aa12-a7cb246ac368",
+      "name": "Switch",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [
+        620,
+        300
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "15cecdd8-fda7-4d0f-8170-683dd5ca0707",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        220,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "8654e515-10a0-4c23-b342-efc5ee421e10",
+      "name": "init_vars_",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "content": "**0 - generate**\n**1 - regenerate**\n**2 - check**",
+        "height": 80,
+        "width": 150
+      },
+      "id": "32f150b7-e04b-4439-8050-504b98876b35",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        600,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "action": "generate",
+        "dataPropertyName": "code",
+        "encodingType": "base64",
+        "stringLength": 8
+      },
+      "id": "276fc3d5-2877-4272-aa31-4a8cc5d19000",
+      "name": "generate_code",
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 1,
+      "position": [
+        820,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $node[\"init_vars_\"].json.supaBaseURL }}rest/v1/user_verification",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "user_id",
+              "value": "={{ $json.code_verification_params.user_id }}"
+            },
+            {
+              "name": "code",
+              "value": "={{ $json.code }}"
+            },
+            {
+              "name": "is_used",
+              "value": "={{ false }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f68c06b9-4674-4868-8c75-aa92e24b5805",
+      "name": "SUPA_save_profile",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1000,
+        120
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "dev@2t.band",
+        "toEmail": "={{ $node[\"init_vars_\"].json.code_verification_params.user_email }}",
+        "subject": "=код верификации на платформу 2т",
+        "text": "=Ваш код верификации на платформу 2т:\n{{ $node.generate_code.json.code }}\nДля подтверждения аккаунта введите его в поле на странице верификации.\nС уважением,\nКоманда 2Т",
+        "options": {}
+      },
+      "id": "f670660f-fd33-4632-aff5-d4878241ecf0",
+      "name": "Send Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [
+        1180,
+        120
+      ],
+      "credentials": {
+        "smtp": {
+          "id": "3",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $node[\"init_vars_\"].json.supaBaseURL }}rest/v1/user_verification?user_id=eq.{{ $node[\"init_vars_\"].json?.code_verification_params?.user_id }}&select=*&limit=1&order=created_at.desc",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "99a178c7-6d64-4c21-b8f8-87cb1710b84c",
+      "name": "SUPA_get_user_verification",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        820,
+        540
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "10",
+          "name": "Supabase stage"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $node[\"init_vars_\"].json?.code_verification_params?.code}}",
+              "value2": "={{ $json.code }}"
+            }
+          ]
+        }
+      },
+      "id": "b1f3622a-7278-4a13-88b0-4b207dd1c2c4",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        980,
+        540
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ $node[\"init_vars_\"].json.supaBaseURL }}rest/v1/user_verification?user_id=eq.{{ $node[\"init_vars_\"].json?.code_verification_params?.user_id }}&code=eq.{{ $node[\"init_vars_\"].json?.code_verification_params?.code}}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "is_used",
+              "value": "={{ true }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "55a35639-c541-4e80-ac9c-e4197dd3231a",
+      "name": "SUPA_update_user_verification1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1220,
+        520
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "10",
+          "name": "Supabase stage"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "action": "generate",
+        "dataPropertyName": "code",
+        "encodingType": "base64",
+        "stringLength": 8
+      },
+      "id": "fd5e844c-64de-469c-8e8d-7815591e20bb",
+      "name": "generate_code1",
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 1,
+      "position": [
+        1000,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $node[\"init_vars_\"].json.supaBaseURL }}rest/v1/user_verification",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "user_id",
+              "value": "={{ $node[\"init_vars_\"].json.code_verification_params.user_id }}"
+            },
+            {
+              "name": "code",
+              "value": "={{ $json.code }}"
+            },
+            {
+              "name": "is_used",
+              "value": "={{ false }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d9d7ff40-d800-4b5e-b8ed-f8a5726c05ef",
+      "name": "SUPA_save_profile1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1200,
+        320
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "dev@2t.band",
+        "toEmail": "={{ $node[\"SUPA_RPC_get_user\"].json.email }}",
+        "subject": "=код верификации на платформу 2т",
+        "text": "=Ваш код верификации на платформу 2т:\n{{ $node[\"generate_code1\"].json.code }}\nДля подтверждения аккаунта введите его в поле на странице верификации.\nС уважением,\nКоманда 2Т",
+        "options": {}
+      },
+      "id": "1def8ba7-f5e4-4f05-8b05-337c25c805c1",
+      "name": "Send Email1",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [
+        1380,
+        320
+      ],
+      "credentials": {
+        "smtp": {
+          "id": "3",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $node[\"init_vars_\"].json.supaBaseURL }}rest/v1/rpc/get_user_by_id",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "user_id",
+              "value": "={{ $json.code_verification_params.user_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9c1b843b-3248-475f-bd69-edc3679e5abc",
+      "name": "SUPA_RPC_get_user",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        820,
+        320
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "res",
+              "value": "ok"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "970da351-3514-4184-a7d0-ec825d85cb40",
+      "name": "response_2",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        1540,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "res",
+              "value": "={{true}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "81977166-b44a-4b8f-b701-98d1f13968e1",
+      "name": "response_3",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        1380,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "res",
+              "value": "={{ false }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "dcb0e2f1-2ef3-4c8b-a486-7e2d7c9602ad",
+      "name": "response_err",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        1220,
+        740
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "error",
+              "value": "=undefined command"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "8b36798b-1d99-4d98-b36c-68007a18463f",
+      "name": "response_error",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        780,
+        760
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "res",
+              "value": "ok"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4a899f53-a7ff-4783-b7ec-03c4082aba37",
+      "name": "response_1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        1360,
+        120
+      ]
+    }
+  ],
+  "pinData": {
+    "Execute Workflow Trigger": [
+      {
+        "json": {
+          "code_verification_params": {
+            "user_id": "621d61e0-9ed0-4342-88d5-ce7c843902b6",
+            "user_email": "yuuraash+0503_10@gmail.com",
+            "operation": "code_generate",
+            "firstname": "yuuraash13_0503_10",
+            "lastname": "surn",
+            "role_id": "2"
+          }
+        }
+      }
+    ]
+  },
+  "settings": {
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-05-04T08:45:45.132Z",
+  "versionId": "8c753249-e03a-4149-9776-07c1cf283894"
+}
