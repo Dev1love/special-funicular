@@ -1,0 +1,443 @@
+{
+  "active": true,
+  "connections": {
+    "accelerator_support": {
+      "main": [
+        [
+          {
+            "node": "init_vars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "init_vars": {
+      "main": [
+        [
+          {
+            "node": "get user",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Email": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get user": {
+      "main": [
+        [
+          {
+            "node": "get_user_profile",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_user_profile": {
+      "main": [
+        [
+          {
+            "node": "get_user_profile1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_ap_contacts": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set_ap_id": {
+      "main": [
+        [
+          {
+            "node": "get_ap_contacts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_user_profile1": {
+      "main": [
+        [
+          {
+            "node": "Set_ap_id",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Email1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Email1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-04-04T18:32:58.545Z",
+  "id": "50",
+  "name": "accelerator_support_email_",
+  "nodes": [
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"res\":\"Успех\"}",
+        "options": {}
+      },
+      "id": "0d820388-9357-4c61-9c60-f9610204b0a0",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        2300,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "httpMethod": "POST",
+        "path": "accelerator/support",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "4be55a7c-c9d0-4b44-a9b8-919e38e03003",
+      "name": "accelerator_support",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        680,
+        280
+      ],
+      "webhookId": "4b4ea557-6649-4679-9efa-f6b21fbc49ea",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "appsmith->n8n Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "775de739-0be4-48fa-9f5e-caefc68570a6",
+      "name": "init_vars",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        860,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "fromEmail": "dev@2t.band",
+        "toEmail": "={{ $json.admin_email }}",
+        "subject": "=От {{ $node.get_user_profile.json.firstname }} {{ $node.get_user_profile.json.lastname }} из проекта  {{ $node.get_user_profile1.json.projects.name }}",
+        "text": "={{ $node.accelerator_support.json.body.comment }}",
+        "options": {}
+      },
+      "id": "e28c3ee8-ee3d-4afe-856e-4774565c5e41",
+      "name": "Send Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [
+        2160,
+        200
+      ],
+      "credentials": {
+        "smtp": {
+          "id": "3",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/rpc/get_user_by_id",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "user_id",
+              "value": "={{ $node.accelerator_support.json.body.user_id }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d683b7f7-6199-43fd-a599-cbdcced76a27",
+      "name": "get user",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1000,
+        280
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/user_profiles?user_id=eq.{{ $node.accelerator_support.json.body.user_id }}&select=* ",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c5a32f17-306f-496b-84dd-754b079276c3",
+      "name": "get_user_profile",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1140,
+        280
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/ap_settings_instance?ap_id=eq.{{ $node.Set_ap_id.json.ap_id }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "20e8b711-ef7f-41c3-8c03-002cf9860c8f",
+      "name": "get_ap_contacts",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1740,
+        280
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "ap_id",
+              "value": "1750c110-ded1-40cc-814e-474f608f4fc5"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0e5ae9f5-f136-4be5-9d1d-30c221d093fe",
+      "name": "Set_ap_id",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        1520,
+        280
+      ],
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/user_projects?user_profile_id=eq.{{ $node.get_user_profile.json.id }}&select=*,projects(*)",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d351a95f-6695-4727-a577-e1ec68be94df",
+      "name": "get_user_profile1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1340,
+        280
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "content": "Hardcoded AP_ID\n"
+      },
+      "id": "0af00139-0e19-4685-ab81-7a63f0eb8223",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1460,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $node.get_user_profile1.json.projects.id }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "id": "be7e8cb8-9878-48e4-8912-0c6586fb4382",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1960,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"res\":\"Успех\"}",
+        "options": {}
+      },
+      "id": "bf72c140-0cf5-4118-bd4d-870d767af999",
+      "name": "Respond to Webhook1",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        2300,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "fromEmail": "dev@2t.band",
+        "toEmail": "={{ $json.admin_email }}",
+        "subject": "=От {{ $node.get_user_profile.json.firstname }} {{ $node.get_user_profile.json.lastname }}",
+        "text": "={{ $node.accelerator_support.json.body.comment }}",
+        "options": {}
+      },
+      "id": "bc91ce6a-7674-44ad-a874-b585a2b0cb84",
+      "name": "Send Email1",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [
+        2160,
+        360
+      ],
+      "credentials": {
+        "smtp": {
+          "id": "3",
+          "name": "SMTP account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "102"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-05-11T17:01:39.930Z",
+  "versionId": "e4a3c217-12ce-4e29-ab12-d49e4c9ed536"
+}
