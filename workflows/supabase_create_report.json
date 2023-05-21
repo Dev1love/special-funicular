@@ -1,0 +1,118 @@
+{
+  "active": true,
+  "connections": {
+    "save_report": {
+      "main": [
+        [
+          {
+            "node": "save_report_supa",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "save_report_supa": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-04-13T14:41:39.252Z",
+  "id": "67",
+  "name": "supabase_create_report",
+  "nodes": [
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{JSON.stringify(\n{res:$json ? $json : \"error\"})}}",
+        "options": {}
+      },
+      "id": "19995ced-9a0d-47c2-8797-564a8b77a460",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1080,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "httpMethod": "POST",
+        "path": "/meetings/create_report",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "e585d869-939c-431b-8621-9ca0c4012750",
+      "name": "save_report",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        700,
+        300
+      ],
+      "webhookId": "b4eab05b-3cef-45ca-ac46-377187091648",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "appsmith->n8n Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "reports",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "report_data",
+              "fieldValue": "={{ $json.body.report_data }}"
+            },
+            {
+              "fieldId": "tl_feedback",
+              "fieldValue": "={{ $json.body.teamlead_feedback }}"
+            },
+            {
+              "fieldId": "meeting_id",
+              "fieldValue": "={{ $json.body.meeting_id }}"
+            }
+          ]
+        }
+      },
+      "id": "1b133feb-7078-47c0-a45a-61f566b6e719",
+      "name": "save_report_supa",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        900,
+        300
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "10",
+          "name": "Supabase stage"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "saveDataSuccessExecution": "all",
+    "saveManualExecutions": false,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "102"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-05-11T16:55:44.623Z",
+  "versionId": "44a35fc4-e28a-4fda-8cfa-a010212c14ae"
+}
