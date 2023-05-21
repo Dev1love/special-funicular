@@ -1,0 +1,1454 @@
+{
+  "active": false,
+  "connections": {
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "StartedMeeting",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "EndedMeeting",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Supabase2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "FilesToProcess",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "StartedMeeting": {
+      "main": [
+        [
+          {
+            "node": "MeetingStatusRunning",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EndedMeeting": {
+      "main": [
+        [
+          {
+            "node": "MeetingStatusFinish",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "mkdir": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Set": {
+      "main": [
+        [
+          {
+            "node": "Item Lists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "IF1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF1": {
+      "main": [
+        [
+          {
+            "node": "CreateScreencast",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "LoopOverFrames",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LoopOverFrames": {
+      "main": [
+        [
+          {
+            "node": "ExtractFrame",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ExtractFrame": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "curl": {
+      "main": [
+        [
+          {
+            "node": "FileDuration2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "FileDuration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FilesToProcess": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CreateScreencast": {
+      "main": [
+        [
+          {
+            "node": "Read Binary File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Binary File": {
+      "main": [
+        [
+          {
+            "node": "UploadScreenCast",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "SetPrepare",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "SetPrepare": {
+      "main": [
+        [
+          {
+            "node": "FullRecordData1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FullRecordData": {
+      "main": [
+        [
+          {
+            "node": "curl",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "UploadScreenCast": {
+      "main": [
+        [
+          {
+            "node": "Set2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FullRecordData1": {
+      "main": [
+        [
+          {
+            "node": "mkdir",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge2": {
+      "main": [
+        [
+          {
+            "node": "FullRecordData",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FileDuration2": {
+      "main": [
+        [
+          {
+            "node": "Set",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FileDuration": {
+      "main": [
+        [
+          {
+            "node": "Set1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set1": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge3": {
+      "main": [
+        [
+          {
+            "node": "LoopOverFrames",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set2": {
+      "main": [
+        [
+          {
+            "node": "Set3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set3": {
+      "main": [
+        [
+          {
+            "node": "Supabase6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase": {
+      "main": [
+        [
+          {
+            "node": "Supabase1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase2": {
+      "main": [
+        [
+          {
+            "node": "Supabase3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2022-12-20T22:22:00.866Z",
+  "id": "18",
+  "name": "Zoom Webhooks SUPABASE (not working)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "a3d59636-37e0-4522-b136-c6bbfc2dea90",
+        "options": {}
+      },
+      "id": "e5e8f44a-0d5c-40bb-9b4d-e893eed50596",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        860,
+        500
+      ],
+      "webhookId": "9ebaa917-15aa-4ce0-bf06-9c7a05a99c01"
+    },
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{ $json[\"body\"][\"event\"] }}",
+        "rules": {
+          "rules": [
+            {
+              "value2": "meeting.started"
+            },
+            {
+              "value2": "meeting.ended",
+              "output": 1
+            },
+            {
+              "value2": "recording.completed",
+              "output": 2
+            }
+          ]
+        },
+        "fallbackOutput": 3
+      },
+      "id": "73a81868-28a1-482d-9870-bbdcd3ce70d5",
+      "name": "Switch",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [
+        1160,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### Zoom meeting started",
+        "height": 219,
+        "width": 469.5040876368443
+      },
+      "id": "ca42248e-b5b8-442b-b5ad-c18069607d0a",
+      "name": "Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1460,
+        -260
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "update",
+        "projectId": "p_4jpbiqaicez9ds",
+        "table": "md_67n7wa1n04h1n1",
+        "id": "={{ $json[\"Id\"] }}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldName": "MeetingStatus",
+              "fieldValue": "Running"
+            }
+          ]
+        }
+      },
+      "id": "a2a74ee5-d0e6-43b5-b0d8-e51feeb1b86e",
+      "name": "MeetingStatusRunning",
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 2,
+      "position": [
+        1720,
+        0
+      ],
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "2",
+          "name": "NocoDB Token account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "p_4jpbiqaicez9ds",
+        "table": "md_67n7wa1n04h1n1",
+        "returnAll": true,
+        "options": {
+          "where": "=(MeetingZoomID,eq,{{ $json[\"body\"][\"payload\"][\"object\"][\"id\"] }})"
+        }
+      },
+      "id": "e8feaf34-d02c-4360-ae30-94805891db0a",
+      "name": "StartedMeeting",
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 2,
+      "position": [
+        1520,
+        0
+      ],
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "2",
+          "name": "NocoDB Token account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "### Zoom meeting ended",
+        "height": 219,
+        "width": 472.40490516421323
+      },
+      "id": "cd4d246e-2068-476b-b8f2-515c065c12bc",
+      "name": "Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1460,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "p_4jpbiqaicez9ds",
+        "table": "md_67n7wa1n04h1n1",
+        "returnAll": true,
+        "options": {
+          "where": "=(MeetingZoomID,eq,{{ $json[\"body\"][\"payload\"][\"object\"][\"id\"] }})"
+        }
+      },
+      "id": "e7701065-ff37-4780-a772-b1c8b208e63b",
+      "name": "EndedMeeting",
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 2,
+      "position": [
+        1520,
+        220
+      ],
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "2",
+          "name": "NocoDB Token account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "update",
+        "projectId": "p_4jpbiqaicez9ds",
+        "table": "md_67n7wa1n04h1n1",
+        "id": "={{ $json[\"Id\"] }}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldName": "MeetingStatus",
+              "fieldValue": "Finished"
+            }
+          ]
+        }
+      },
+      "id": "cdb71972-02c5-495a-8f24-3ea1012a8f85",
+      "name": "MeetingStatusFinish",
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 2,
+      "position": [
+        1720,
+        220
+      ],
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "2",
+          "name": "NocoDB Token account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "### Meeting recording is ready",
+        "height": 895.9700150259279,
+        "width": 2518.881055570464
+      },
+      "id": "38a1d2f5-698d-4cff-9330-811118476385",
+      "name": "Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1142.527230842843,
+        660
+      ]
+    },
+    {
+      "parameters": {
+        "executeOnce": false,
+        "command": "=mkdir -p '{{ $json[\"S3Folder\"] }}{{ $json[\"ProjectFolder\"] }}/{{ $json[\"MeetingFolder\"] }}' && cd '{{ $json[\"S3Folder\"] }}{{ $json[\"ProjectFolder\"] }}/{{ $json[\"MeetingFolder\"] }}' && rm -f *screencast.jpeg && find . -name \"*.{{$json[\"body\"][\"payload\"][\"object\"][\"recording_files\"][0][\"file_type\"]}}\" | wc -l"
+      },
+      "id": "5c502584-a4bd-4728-adef-37d22706786d",
+      "name": "mkdir",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        2720,
+        840
+      ]
+    },
+    {
+      "parameters": {
+        "executeOnce": false,
+        "command": "=curl -L -o '{{ $node[\"FullRecordData\"].json[\"S3Folder\"] }}{{ $node[\"FullRecordData\"].json[\"ProjectFolder\"] }}/{{ $node[\"FullRecordData\"].json[\"MeetingFolder\"] }}/{{ $node[\"FullRecordData\"].json[\"FileName\"] }}_{{ $node[\"FullRecordData\"].json[\"FileSuffix\"] }}.{{ $node[\"Switch\"].json[\"body\"][\"payload\"][\"object\"][\"recording_files\"][0][\"file_extension\"] }}' \\\n--url {{ $node[\"FullRecordData\"].json[\"body\"][\"payload\"][\"object\"][\"recording_files\"][0][\"download_url\"] }} \\\n--header 'authorization: Bearer {{ $node[\"FullRecordData\"].json[\"body\"][\"download_token\"] }}' \\\n--header 'content-type: application/json'"
+      },
+      "id": "a4ba41a3-a33d-41ab-ba7c-934412362423",
+      "name": "curl",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        3220,
+        840
+      ]
+    },
+    {
+      "parameters": {
+        "command": "=ffprobe -i '{{ $node[\"FullRecordData\"].json[\"S3Folder\"] }}{{ $node[\"FullRecordData\"].json[\"ProjectFolder\"] }}/{{ $node[\"FullRecordData\"].json[\"MeetingFolder\"] }}/{{ $node[\"FullRecordData\"].json[\"FileName\"] }}_{{ $node[\"FullRecordData\"].json[\"FileSuffix\"] }}.{{ $node[\"Switch\"].json[\"body\"][\"payload\"][\"object\"][\"recording_files\"][0][\"file_extension\"] }}' -show_entries format=duration -v quiet -of csv=\"p=0\""
+      },
+      "id": "e78314b4-19e5-487d-ab95-6c0a3ac56668",
+      "name": "FileDuration",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        1200,
+        1180
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "number": [
+            {
+              "name": "TotalDuration",
+              "value": "={{$json[\"stdout\"].replaceAll('\\n',' ').split(' ').map(parseFloat)}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "52c847cd-98f3-4b2e-862d-4c592345252a",
+      "name": "Set",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        1360,
+        1320
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "var totaldur = $input.first().json[\"VideoDuration\"];\nvar fileinfo = $('FullRecordData').first().json;\nconsole.log(fileinfo);\n\nvar out=[];\nvar num = 0;\nfor (let i=0; i < totaldur; i += 60*1) {\n  var num_char = ('000' + num).slice(-4);\n  out.push({step:num_char,\n            ss:i,\n            command: `ffmpeg -ss ${i} -i '${fileinfo[\"S3Folder\"]}${fileinfo[\"ProjectFolder\"]}/${fileinfo[\"MeetingFolder\"]}/${fileinfo[\"FileName\"]}_${fileinfo[\"FileSuffix\"]}.${fileinfo[\"body\"][\"payload\"][\"object\"][\"recording_files\"][0][\"file_extension\"]}' -frames:v 1 -f image2 -map 0:v:0 '${fileinfo[\"S3Folder\"]}${fileinfo[\"ProjectFolder\"]}/${fileinfo[\"MeetingFolder\"]}/${fileinfo[\"FileName\"]}_${fileinfo[\"FileSuffix\"]}_${num_char}.jpeg'` });\n  num ++;\n}\n\nreturn out;"
+      },
+      "id": "40bcdff1-a384-4b10-a059-767c74167a59",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        1680,
+        1180
+      ]
+    },
+    {
+      "parameters": {
+        "amount": 0.25,
+        "unit": "seconds"
+      },
+      "id": "ad81bb4e-80ee-41da-af3c-a26441d61d89",
+      "name": "Wait",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        2340,
+        1200
+      ],
+      "webhookId": "1ebaf57b-0296-470b-a8d6-ba5ecc2d4f5a"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{$node[\"LoopOverFrames\"].context[\"noItemsLeft\"]}}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "3211e24c-e1cd-4575-937a-ef066606ca7f",
+      "name": "IF1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        2500,
+        1200
+      ]
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "7fcfa91d-77db-46c4-8f73-781edadfebb1",
+      "name": "LoopOverFrames",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 1,
+      "position": [
+        2020,
+        1200
+      ]
+    },
+    {
+      "parameters": {
+        "command": "=gm montage -tile 5x -geometry 640x340+2+2 -title '{{ $node[\"FullRecordData\"].json[\"FileName\"] }} - {{parseFloat($node[\"Code1\"].json[\"TotalDuration\"]/60).toFixed(2)}} min' '{{ $node[\"FullRecordData\"].json[\"S3Folder\"] }}{{ $node[\"FullRecordData\"].json[\"ProjectFolder\"] }}/{{ $node[\"FullRecordData\"].json[\"MeetingFolder\"] }}/{{ $node[\"FullRecordData\"].json[\"FileName\"] }}_*.jpeg' '{{ $node[\"FullRecordData\"].json[\"S3Folder\"] }}{{ $node[\"FullRecordData\"].json[\"ProjectFolder\"] }}/{{ $node[\"FullRecordData\"].json[\"MeetingFolder\"] }}/{{ $node[\"FullRecordData\"].json[\"FileName\"] }}_screencast.jpeg'"
+      },
+      "id": "4aa79759-71af-4e3b-8387-8f20776e2f4b",
+      "name": "CreateScreencast",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        2680,
+        1200
+      ]
+    },
+    {
+      "parameters": {
+        "command": "={{ $json[\"command\"] }}"
+      },
+      "id": "08b39450-a10b-4065-9832-1a6ce712d2dd",
+      "name": "ExtractFrame",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        2180,
+        1200
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return $input.all();"
+      },
+      "id": "1f5f4da6-32a9-425c-8a9d-91e92c53d8d1",
+      "name": "FilesToProcess",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        1520,
+        700
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://nocodb.dev.2t.band/api/v1/db/storage/upload",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "nocoDbApiToken",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "path",
+              "value": "=recording/{{ $node[\"FullRecordData\"].json[\"ProjectFolder\"] }}/{{ $node[\"FullRecordData\"].json[\"MeetingFolder\"] }}/{{ $node[\"FullRecordData\"].json[\"FileName\"] }}_screencast.jpeg"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "files",
+              "inputDataFieldName": "data"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "cf52f96a-dcbc-4f47-a54d-b359b67d2e20",
+      "name": "UploadScreenCast",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        3040,
+        1200
+      ],
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "2",
+          "name": "NocoDB Token account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "filePath": "={{ $node[\"FullRecordData\"].json[\"S3Folder\"] }}{{ $node[\"FullRecordData\"].json[\"ProjectFolder\"] }}/{{ $node[\"FullRecordData\"].json[\"MeetingFolder\"] }}/{{ $node[\"FullRecordData\"].json[\"FileName\"] }}_screencast.jpeg"
+      },
+      "id": "8c9e525a-0513-4da7-952b-ab78dc7fdd3f",
+      "name": "Read Binary File",
+      "type": "n8n-nodes-base.readBinaryFile",
+      "typeVersion": 1,
+      "position": [
+        2860,
+        1200
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "p_4jpbiqaicez9ds",
+        "table": "md_67n7wa1n04h1n1",
+        "returnAll": true,
+        "options": {
+          "where": "=(MeetingZoomID,eq,{{ $node[\"FilesToProcess\"].json[\"body\"][\"payload\"][\"object\"][\"id\"] }})"
+        }
+      },
+      "id": "299dbfaf-0167-407e-b32a-943f46507671",
+      "name": "GetMeeting1",
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 2,
+      "position": [
+        960,
+        920
+      ],
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "2",
+          "name": "NocoDB Token account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition",
+        "options": {}
+      },
+      "id": "654e7fa5-52bd-4b83-bdde-1bfdfd648849",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2,
+      "position": [
+        2260,
+        720
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "p_4jpbiqaicez9ds",
+        "table": "md_qud1os3qde26n3",
+        "returnAll": true,
+        "options": {
+          "fields": [
+            "Id,TrackerName,TrackerSurname,TrackerEmail,ZoomUser"
+          ],
+          "where": "=(Id,eq,{{ $json[\"Trackers List\"][0][\"Id\"] }})"
+        }
+      },
+      "id": "0f8123eb-ca01-4521-9afa-a7e7aa30f61c",
+      "name": "GetTracker",
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 2,
+      "position": [
+        940,
+        1120
+      ],
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "2",
+          "name": "NocoDB Token account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "multiplex",
+        "options": {
+          "clashHandling": {
+            "values": {
+              "resolveClash": "preferInput1"
+            }
+          }
+        }
+      },
+      "id": "e3a3fa64-4ffd-49ad-8cff-aa8e1926d2eb",
+      "name": "Merge1",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2,
+      "position": [
+        2100,
+        780
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "S3Folder",
+              "value": "/home/s3fs/recording/"
+            },
+            {
+              "name": "ProjectFolder",
+              "value": "={{ ('00000'+$json[\"project\"]).slice(-6) }}"
+            },
+            {
+              "name": "MeetingFolder",
+              "value": "={{ $json[\"visit_planned_start\"].split('T')[0].replaceAll('-','') }}-{{$json[\"visit_planned_start\"].split('T')[1].split(':').slice(0,2).join('')}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a983816c-bcb2-4e55-84c7-39491937b85c",
+      "name": "SetPrepare",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        2420,
+        720
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "FileName",
+              "value": "={{ $json[\"ProjectFolder\"] }}_{{ $json[\"TrackerSurname\"] }} {{ $json[\"TrackerName\"] }}_{{ $json[\"MeetingFolder\"] }}"
+            },
+            {
+              "name": "FileSuffix",
+              "value": "={{ $json[\"stdout\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5bf3349e-b1ef-4c37-9e7d-2ac7f3d2d091",
+      "name": "FullRecordData",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        3040,
+        840
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "update",
+        "projectId": "p_4jpbiqaicez9ds",
+        "table": "md_67n7wa1n04h1n1",
+        "id": "={{ $node[\"FullRecordData\"].json[\"Id\"] }}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldName": "MeetingZoomScreencast",
+              "fieldValue": "=[{{JSON.stringify($node[\"UploadScreenCast\"].json)}}]"
+            },
+            {
+              "fieldName": "MeetingZoomFile",
+              "fieldValue": "={{ JSON.stringify($json[\"TotalVideos\"]) }}"
+            },
+            {
+              "fieldName": "NumOfRecordings",
+              "fieldValue": "={{ $json[\"TotalVideos\"].length}}"
+            }
+          ]
+        }
+      },
+      "id": "9033ac1c-9600-4830-bf57-c1503193c7f7",
+      "name": "AttachRecordingURLs",
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 2,
+      "position": [
+        3560,
+        1620
+      ],
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "2",
+          "name": "NocoDB Token account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "FileName",
+              "value": "={{ $json[\"ProjectFolder\"] }}_{{ $json[\"TrackerSurname\"] }} {{ $json[\"TrackerName\"] }}_{{ $json[\"MeetingFolder\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "017c1b51-e03a-4c17-806a-35fc6ed03263",
+      "name": "FullRecordData1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        2560,
+        720
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "multiplex",
+        "options": {}
+      },
+      "id": "1c1677c2-9e48-47c8-be54-ba268d305a09",
+      "name": "Merge2",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2,
+      "position": [
+        2880,
+        740
+      ]
+    },
+    {
+      "parameters": {
+        "command": "=cd '{{ $node[\"FullRecordData\"].json[\"S3Folder\"] }}{{ $node[\"FullRecordData\"].json[\"ProjectFolder\"] }}/{{ $node[\"FullRecordData\"].json[\"MeetingFolder\"] }}' && find -maxdepth 1 -name '*MP4' -exec ffprobe -i {} -show_entries format=duration -v quiet -of csv=\"p=0\" \\;"
+      },
+      "id": "d352eb30-d564-4fa2-ba57-8e3d4e0794a8",
+      "name": "FileDuration2",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        1200,
+        1320
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "let total = 0;\n\nfor (const item of $input.all()) {\n  total += item.json[\"TotalDuration\"]\n}\n\nreturn [{TotalDuration:total}]"
+      },
+      "id": "7b35abd0-ed0e-48ef-8ffd-9041c872e397",
+      "name": "Code1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        1680,
+        1320
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "TotalDuration",
+        "options": {}
+      },
+      "id": "ac44a115-9e8e-4fe0-bf15-22c19a93ba66",
+      "name": "Item Lists",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 1,
+      "position": [
+        1520,
+        1320
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "number": [
+            {
+              "name": "VideoDuration",
+              "value": "={{Math.floor($json[\"stdout\"])}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "3e8fd684-ce16-453b-883c-6f1cf88aeb87",
+      "name": "Set1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        1360,
+        1180
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "id": "48d55923-1a99-4a3d-8046-a174e1e0791f",
+      "name": "Merge3",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2,
+      "position": [
+        1840,
+        1200
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "update",
+        "projectId": "p_4jpbiqaicez9ds",
+        "table": "md_67n7wa1n04h1n1",
+        "id": "={{ $node[\"FullRecordData\"].json[\"Id\"] }}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldName": "MeetingZoomScreencast",
+              "fieldValue": "=[{{JSON.stringify($json)}}]"
+            },
+            {
+              "fieldName": "MeetingZoomFile",
+              "fieldValue": "={\"url\":\"https://my.selectel.ru/storage/object/2T.Drive?objectName=recording/{{ $node[\"FullRecordData\"].json[\"ProjectFolder\"] }}/{{ $node[\"FullRecordData\"].json[\"MeetingFolder\"] }}/{{ $node[\"FullRecordData\"].json[\"FileName\"] }}_{{ $node[\"FullRecordData\"].json[\"FileSuffix\"] }}.{{ $node[\"Switch\"].json[\"body\"][\"payload\"][\"object\"][\"recording_files\"][0][\"file_extension\"] }}\",\"title\":\"{{ $node[\"FullRecordData\"].json[\"FileName\"] }}_{{ $node[\"FullRecordData\"].json[\"FileSuffix\"] }}.{{ $node[\"Switch\"].json[\"body\"][\"payload\"][\"object\"][\"recording_files\"][0][\"file_extension\"] }}\",\"mimetype\":\"video/mp4\"}\n\n{{JSON.parse($node[\"GetMeeting1\"].json[\"MeetingZoomFile\"]).concat({\"url\":\"https://my.selectel.ru/storage/object/2T.Drive?objectName=recording\"})}}\n\n{{JSON.parse($node[\"GetMeeting1\"].json[\"MeetingZoomFile\"])}}\n\n{{JSON.parse($node[\"GetMeeting1\"].json[\"MeetingZoomFile\"]).concat({\"url\":\"https://my.selectel.ru/storage/object/2T.Drive?objectName=recording/{{ $node[\"FullRecordData\"].json[\"ProjectFolder\"] }}/{{ $node[\"FullRecordData\"].json[\"MeetingFolder\"] }}/{{ $node[\"FullRecordData\"].json[\"FileName\"] }}_{{ $node[\"FullRecordData\"].json[\"FileSuffix\"] }}.{{ $node[\"Switch\"].json[\"body\"][\"payload\"][\"object\"][\"recording_files\"][0][\"file_extension\"] }}\",\"title\":\"{{ $node[\"FullRecordData\"].json[\"FileName\"] }}_{{ $node[\"FullRecordData\"].json[\"FileSuffix\"] }}.{{ $node[\"Switch\"].json[\"body\"][\"payload\"][\"object\"][\"recording_files\"][0][\"file_extension\"] }}\",\"mimetype\":\"video/mp4\"})}}\n\n{{JSON.parse($node[\"GetMeeting1\"].json[\"MeetingZoomFile\"]).concat($json)}}\n\n{{JSON.stringify(JSON.parse($node[\"GetMeeting1\"].json[\"MeetingZoomFile\"]).concat($json))}}"
+            }
+          ]
+        }
+      },
+      "id": "2e72b8c1-a8cb-4757-9546-34e44b6791ce",
+      "name": "AttachRecordingURLs1",
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 2,
+      "position": [
+        3320,
+        1620
+      ],
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "2",
+          "name": "NocoDB Token account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "NewVideo",
+              "value": "={\"url\":\"https://my.selectel.ru/storage/object/2T.Drive?objectName=recording/{{ $node[\"FullRecordData\"].json[\"ProjectFolder\"] }}/{{ $node[\"FullRecordData\"].json[\"MeetingFolder\"] }}/{{ $node[\"FullRecordData\"].json[\"FileName\"] }}_{{ $node[\"FullRecordData\"].json[\"FileSuffix\"] }}.{{ $node[\"Switch\"].json[\"body\"][\"payload\"][\"object\"][\"recording_files\"][0][\"file_extension\"] }}\",\"title\":\"{{ $node[\"FullRecordData\"].json[\"FileName\"] }}_{{ $node[\"FullRecordData\"].json[\"FileSuffix\"] }}.{{ $node[\"Switch\"].json[\"body\"][\"payload\"][\"object\"][\"recording_files\"][0][\"file_extension\"] }}\",\"mimetype\":\"video/mp4\"}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "fb7093a6-7914-4caf-9048-e6c05fc71da7",
+      "name": "Set2",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        3200,
+        1200
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "TotalVideos",
+              "value": "={{($node[\"GetMeeting1\"].json[\"MeetingZoomFile\"] == null ? [] : JSON.parse($node[\"GetMeeting1\"].json[\"MeetingZoomFile\"])).concat(JSON.parse($json[\"NewVideo\"]))}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "898cedfb-3f56-4f6b-a355-d8d7e0efb0ac",
+      "name": "Set3",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        3360,
+        1200
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "project_visits",
+        "returnAll": true,
+        "filterType": "string",
+        "filterString": "=MeetingZoomID=eq.{{$json[\"body\"][\"payload\"][\"object\"][\"id\"]}}"
+      },
+      "id": "307af52b-5784-4f1c-accd-670009ea0025",
+      "name": "Supabase",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1520,
+        -200
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "project_visits",
+        "filterType": "string",
+        "filterString": "=id=eq.{{$json[\"id\"]}}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "MeetingStatus",
+              "fieldValue": "Running"
+            }
+          ]
+        }
+      },
+      "id": "8f3f0e61-fdf0-488f-8811-4f65b07f1d84",
+      "name": "Supabase1",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1720,
+        -200
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "project_visits",
+        "returnAll": true,
+        "filterType": "string",
+        "filterString": "=MeetingZoomID=eq.{{$json[\"body\"][\"payload\"][\"object\"][\"id\"]}}"
+      },
+      "id": "3a9db476-55be-4a97-b484-cca904c950c4",
+      "name": "Supabase2",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1520,
+        440
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "project_visits",
+        "filterType": "string",
+        "filterString": "=id=eq.{{$json[\"id\"]}}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "MeetingStatus",
+              "fieldValue": "Finished"
+            }
+          ]
+        }
+      },
+      "id": "339a68d8-5f28-4652-bbfd-2e69209d8e49",
+      "name": "Supabase3",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1720,
+        440
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "project_visits",
+        "returnAll": true,
+        "filterType": "string",
+        "filterString": "=MeetingZoomID=eq.{{$node[\"FilesToProcess\"].json[\"body\"][\"payload\"][\"object\"][\"id\"]}}"
+      },
+      "id": "0a212ae6-b130-4e3b-a7ff-215df75da7ca",
+      "name": "Supabase4",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        960,
+        740
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "url": "=https://supa.dev.2t.band/rest/v1/project_visits?select=id,project,visit_planned_start,projects(Name,tracker)&MeetingZoomID=eq.{{$node[\"FilesToProcess\"].json[\"body\"][\"payload\"][\"object\"][\"id\"]}}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "options": {}
+      },
+      "id": "c8648842-5840-473f-b6f9-e8280179f272",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1680,
+        780
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://supa.dev.2t.band/rest/v1/staffs?user_id=eq.{{ $json[\"projects\"][\"tracker\"]}}&select=name,user_id,TrackerName,TrackerSurname",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "options": {}
+      },
+      "id": "f6777c96-85c7-4cd6-bc05-44da0dafb2e6",
+      "name": "HTTP Request1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1920,
+        860
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "project_visits",
+        "filterType": "string",
+        "filterString": "=id=eq.{{ $node[\"FullRecordData\"].json[\"id\"] }}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "MeetingZoomScreencast",
+              "fieldValue": "=[{{JSON.stringify($node[\"UploadScreenCast\"].json)}}]"
+            },
+            {
+              "fieldId": "MeetingZoomFile",
+              "fieldValue": "={{ JSON.stringify($json[\"TotalVideos\"]) }}"
+            },
+            {
+              "fieldId": "NumOfRecordings",
+              "fieldValue": "={{ $json[\"TotalVideos\"].length}}"
+            }
+          ]
+        }
+      },
+      "id": "68cc9ee0-b63e-4313-b60b-a98dc6efcd2e",
+      "name": "Supabase6",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3520,
+        1180
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "saveDataSuccessExecution": "all",
+    "callerPolicy": "any",
+    "executionTimeout": 600
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-05-02T15:47:11.336Z",
+  "versionId": "8146cfc6-7ce3-4cfe-a87c-8ae248165f0a"
+}
