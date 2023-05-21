@@ -1,0 +1,204 @@
+{
+  "active": false,
+  "connections": {
+    "init_vars": {
+      "main": [
+        [
+          {
+            "node": "token_verify",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "token_verify": {
+      "main": [
+        [
+          {
+            "node": "IF_error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_error": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        []
+      ]
+    },
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "init_vars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-04-05T10:59:02.375Z",
+  "id": "53",
+  "name": "user token verify _ sample",
+  "nodes": [
+    {
+      "parameters": {
+        "jsCode": "/*const crypto = require('crypto');\nconst shasum = crypto.createHash('sha1');\n\nshasum.update('myMessage');\nvar item = shasum.digest('hex');\n\nreturn '';*/\n\n/*const crypto = require('crypto');\n\nvar encryptedNpi = '--encrypted-string-here--';\nvar decipher = crypto.createDecipheriv('aes-192-ecb','--decypher-key-here--','');\nvar decrypted =\n  decipher.update(encryptedNpi, 'hex', 'utf8') + decipher.final('utf8');\n\nconsole.log(decrypted);\n\nreturn [ { \"decrypted\" : decrypted } ]*/\n\n\nconst crypto = require('crypto');\n\nconst ENC_KEY = \"bf3c199c2470cb477d907b1e0917c17b\"; // set random encryption key\nconst IV = \"5183666c72eec9e4\"; // set random initialisation vector\n// ENC_KEY and IV can be generated as crypto.randomBytes(32).toString('hex');\n\nconst phrase = \"who let the dogs out\";\n\nvar encrypt = ((val) => {\n  let cipher = crypto.createCipheriv('aes-256-cbc', ENC_KEY, IV);\n  let encrypted = cipher.update(val, 'utf8', 'base64');\n  encrypted += cipher.final('base64');\n  return encrypted;\n});\n\nvar decrypt = ((encrypted) => {\n  let decipher = crypto.createDecipheriv('aes-256-cbc', ENC_KEY, IV);\n  let decrypted = decipher.update(encrypted, 'base64', 'utf8');\n  return (decrypted + decipher.final('utf8'));\n});\n\nencrypted_key = encrypt(phrase);\noriginal_phrase = decrypt(encrypted_key);\nconsole.log('encrypted_key:', encrypted_key);\nconsole.log('original_phrase:', original_phrase);\n\nreturn $input.all();"
+      },
+      "id": "1efd8d64-76a5-4fce-bc26-ce6f89949564",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        1080,
+        480
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const jwt = require(\"jsonwebtoken\");\n\nvar accessToken = $('Webhook').first().json.headers[\"user-access-token\"];\nvar supaJWTsecret = $('init_vars').first().json.supaJWTsecret;\n//console.log('accessToken:', accessToken);\n//console.log('supaJWTsecret:', supaJWTsecret);\n\ntry {\n  var decoded = jwt.verify(accessToken, supaJWTsecret);\n  console.log('decoded:', decoded);\n    $input.first().json.res = decoded;\n  /*{\n    \"aud\": \"authenticated\",\n    \"exp\": 1681377438,\n    \"sub\": \"d6e67c48-afb4-467b-9cc5-35cf9ff04f6c\",\n    \"email\": \"yureckey@gmail.com\",\n    \"phone\": \"\",\n    \"app_metadata\": {\n        \"provider\": \"email\",\n        \"providers\": [\n            \"email\"\n        ]\n    },\n    \"user_metadata\": {\n        \"name\": \"имя2\",\n        \"surname\": \"фамилия2\"\n    },\n    \"role\": \"authenticated\",\n    \"session_id\": \"5df50ea9-f6f8-45a9-aaba-882f8f22b124\"\n}*/\n} catch (error) {\n  console.log('nope:', error);//{name: 'JsonWebTokenError', message: 'invalid signature'}\n  $input.first().json.error = error;\n}\n\nreturn $input.all();"
+      },
+      "id": "11eaeff5-924f-4a33-ae8f-35db7568666e",
+      "name": "token_verify",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        740
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "c06ba739-e988-4344-886d-f0e84573bc39",
+      "name": "init_vars",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        820,
+        740
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({\"res\":$json.res}) }}",
+        "options": {}
+      },
+      "id": "fc9be7c0-b3fd-442e-a298-0ec1409599fc",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1460,
+        820
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({error:JSON.parse($json.error)}) }}",
+        "options": {}
+      },
+      "id": "eaef9e7b-ff11-4585-9c44-5cdfefe78874",
+      "name": "Respond to Webhook1",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1460,
+        660
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ !!$json.error }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "08b903dd-9bfc-41c7-9597-dd790f08ad37",
+      "name": "IF_error",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1260,
+        740
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "httpMethod": "POST",
+        "path": "test_token_verify",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "47cdfa80-322f-45dc-8f50-c6efa4eb424e",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        680,
+        580
+      ],
+      "webhookId": "469144f8-31fc-4dfb-93d8-a0817cffec76",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "appsmith->n8n Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "586a7463-77a5-4ca2-8a54-edd78dc30de2",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        620,
+        740
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-04-18T20:08:35.034Z",
+  "versionId": "c264a79b-b95f-4274-b0a9-0634a645e34b"
+}
