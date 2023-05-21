@@ -1,0 +1,278 @@
+{
+  "active": false,
+  "connections": {
+    "init_vars": {
+      "main": [
+        [
+          {
+            "node": "get_user_profiles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking \"Execute Workflow\"": {
+      "main": [
+        [
+          {
+            "node": "init_vars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split In Batches": {
+      "main": [
+        [
+          {
+            "node": "get user",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_user_profiles": {
+      "main": [
+        [
+          {
+            "node": "get_user_ap_name",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get user": {
+      "main": [
+        []
+      ]
+    },
+    "get_user_ap_name": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-04-27T20:08:11.789Z",
+  "id": "98",
+  "name": "user_updates_notif",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "d69fdc8c-2bb8-4271-abb4-28414a962adf",
+      "name": "init_vars",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        700,
+        300
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "f10202e2-7d89-47ad-8015-4355441aac03",
+      "name": "When clicking \"Execute Workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        500,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/rpc/get_user_by_id",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "user_id",
+              "value": "={{ $node.get_user_profiles.json.user_id }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ba777dc4-6ea9-4d45-8d81-8e85cba28c61",
+      "name": "get user",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1480,
+        260
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "521b4eed-124b-4a54-bfdf-e5d94b3e4c93",
+      "name": "Split In Batches",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 2,
+      "position": [
+        1240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/user_profiles",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "select",
+              "value": "*"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "92b73226-1431-405b-b930-f5edcf0d485e",
+      "name": "get_user_profiles",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        860,
+        300
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "dev@2t.band",
+        "toEmail": "={{ $json.email }}",
+        "subject": "=Уважаемый {{ $node.get_user_profiles.json.firstname }} {{ $node.get_user_profiles.json.lastname }},\nМы рады сообщить вам, что акселерационной программа programname начинается! В течение программы вы будете работать в тесном сотрудничестве с командой акселератора, обмениваясь идеями и опытом.\nНачало программы - это захватывающий момент, и мы надеемся, что вы готовы взять на себя этот вызов и принести максимальную пользу участникам нашей программы. Если у вас есть какие-либо вопросы или потребности, пожалуйста, не стесняйтесь обращаться к нашей команде поддержки. Вся необходимая информация находится в разделе онбординг. С уважением,\nкоманда 2Т  ",
+        "text": "={{ $node.teamlead_support.json.body.comment }}\n\nПочта для связи с трекером  {{ $node[\"get user\"].json.email }}",
+        "options": {}
+      },
+      "id": "2eb89f89-ba37-442c-b836-d8e7445f14db",
+      "name": "Send Email with project name",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [
+        1720,
+        260
+      ],
+      "credentials": {
+        "smtp": {
+          "id": "3",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $('init_vars').first().json.supaBaseURL }}rest/v1/meetings ",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "select",
+              "value": "projects(id,ap_id,acceleration_program(name))"
+            },
+            {
+              "name": "user_id",
+              "value": "=eq.{{ $json.user_id }}"
+            },
+            {
+              "name": "limit",
+              "value": "1"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4259b527-44f5-441e-96c9-b736e7500958",
+      "name": "get_user_ap_name",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1060,
+        300
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2023-04-27T18:40:13.285Z",
+      "updatedAt": "2023-04-27T18:40:13.285Z",
+      "id": "3",
+      "name": "notif"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2023-04-28T09:14:32.806Z",
+  "versionId": "d0b0551b-7e8e-4885-b2f6-9cf9fbf8a5c3"
+}
