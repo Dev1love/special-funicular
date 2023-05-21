@@ -1,0 +1,378 @@
+{
+  "active": true,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "init_vars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "init_vars": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Respond_not_found",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "EAP_request_services",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "EAP_request_providers",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EAP_request_providers": {
+      "main": [
+        [
+          {
+            "node": "Item Lists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EAP_request_services": {
+      "main": [
+        [
+          {
+            "node": "Item Lists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists": {
+      "main": [
+        [
+          {
+            "node": "Respond",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists1": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "createdAt": "2023-03-24T10:14:04.510Z",
+  "id": "35",
+  "name": "eap_utils_",
+  "nodes": [
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "httpMethod": "POST",
+        "path": "eap_utils",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "9f9c8c79-28b3-4e05-ba3b-55f8016e28e2",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -540,
+        220
+      ],
+      "webhookId": "eed7d66c-f72c-46be-8ca9-42d140f09974",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "appsmith->n8n Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "52d251b5-a227-48bc-9494-8643448817de",
+      "name": "init_vars",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        -380,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{ $node.Webhook.json.body?.type }}",
+        "rules": {
+          "rules": [
+            {
+              "value2": "getservices",
+              "output": 1
+            },
+            {
+              "value2": "getproviders",
+              "output": 2
+            }
+          ]
+        },
+        "fallbackOutput": 0
+      },
+      "id": "b86dea70-9dd4-4a59-a143-98e79c8fca63",
+      "name": "Switch",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [
+        -220,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={ \"res\": {{ JSON.stringify($json.all) }}, \"error\":null }",
+        "options": {}
+      },
+      "id": "0c17a142-5772-4497-a6cb-61830e6ec882",
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        440,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={ \"res\": {{ JSON.stringify($json.all) }}, \"error\":null }",
+        "options": {}
+      },
+      "id": "312d73c0-6e9d-47f4-94e2-da0101c122b3",
+      "name": "Respond1",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        480,
+        -160
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.EAP_URL }}/providers",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "options": {}
+      },
+      "id": "9b1f3fe6-2c9a-4f66-899c-0350ce0b478c",
+      "name": "EAP_request_providers",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        40,
+        280
+      ],
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "1",
+          "name": "EAP admin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.EAP_URL }}/services",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "options": {}
+      },
+      "id": "29040212-ad79-4555-8d80-126d8b3108af",
+      "name": "EAP_request_services",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        40,
+        100
+      ],
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "1",
+          "name": "EAP admin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "aggregateItems",
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "all",
+        "include": "allFieldsExcept"
+      },
+      "id": "88244355-4e3f-43bc-a496-aeee7af63799",
+      "name": "Item Lists",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 2,
+      "position": [
+        240,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "aggregateItems",
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "all",
+        "include": "allFieldsExcept"
+      },
+      "id": "3b9b28a3-d04e-4642-b1fb-91331e3ef4d9",
+      "name": "Item Lists1",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 2,
+      "position": [
+        480,
+        20
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"res\":null, \"error\": \"can't recognize command\" } ",
+        "options": {}
+      },
+      "id": "ea5d362c-f8d4-44b6-a962-0141a3e66d11",
+      "name": "Respond_not_found",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        40,
+        -60
+      ]
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n.stage.2t.band",
+            "x-forwarded-scheme": "https",
+            "x-forwarded-proto": "https",
+            "x-forwarded-for": "147.235.197.126",
+            "x-real-ip": "147.235.197.126",
+            "connection": "close",
+            "content-length": "30",
+            "auth": "d23Y_Vfds8_9sdf",
+            "user-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNjgwMDAyMTcyLCJzdWIiOiJkNmU2N2M0OC1hZmI0LTQ2N2ItOWNjNS0zNWNmOWZmMDRmNmMiLCJlbWFpbCI6Inl1cmVja2V5QGdtYWlsLmNvbSIsInBob25lIjoiIiwiYXBwX21ldGFkYXRhIjp7InByb3ZpZGVyIjoiZW1haWwiLCJwcm92aWRlcnMiOlsiZW1haWwiXX0sInVzZXJfbWV0YWRhdGEiOnt9LCJyb2xlIjoiYXV0aGVudGljYXRlZCIsInNlc3Npb25faWQiOiI1MzMzZmFlYS0xMTBmLTRjNTUtYjNmMC1lMDAyYTBmZmIwYjAifQ.680FRsX_6ccfPhL1w2HjK6iBL6P-JOqGPytQpqCZPpI",
+            "user-refresh-token": "xxx",
+            "content-type": "application/json",
+            "user-agent": "PostmanRuntime/7.31.3",
+            "accept": "*/*",
+            "cache-control": "no-cache",
+            "postman-token": "53f1923b-07e1-4927-971e-19134acb10a8",
+            "accept-encoding": "gzip, deflate, br"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "type": "getservices"
+          }
+        }
+      }
+    ],
+    "init_vars": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n.stage.2t.band",
+            "x-forwarded-scheme": "https",
+            "x-forwarded-proto": "https",
+            "x-forwarded-for": "147.235.197.126",
+            "x-real-ip": "147.235.197.126",
+            "connection": "close",
+            "content-length": "30",
+            "auth": "d23Y_Vfds8_9sdf",
+            "user-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNjgwMDAyMTcyLCJzdWIiOiJkNmU2N2M0OC1hZmI0LTQ2N2ItOWNjNS0zNWNmOWZmMDRmNmMiLCJlbWFpbCI6Inl1cmVja2V5QGdtYWlsLmNvbSIsInBob25lIjoiIiwiYXBwX21ldGFkYXRhIjp7InByb3ZpZGVyIjoiZW1haWwiLCJwcm92aWRlcnMiOlsiZW1haWwiXX0sInVzZXJfbWV0YWRhdGEiOnt9LCJyb2xlIjoiYXV0aGVudGljYXRlZCIsInNlc3Npb25faWQiOiI1MzMzZmFlYS0xMTBmLTRjNTUtYjNmMC1lMDAyYTBmZmIwYjAifQ.680FRsX_6ccfPhL1w2HjK6iBL6P-JOqGPytQpqCZPpI",
+            "user-refresh-token": "xxx",
+            "content-type": "application/json",
+            "user-agent": "PostmanRuntime/7.31.3",
+            "accept": "*/*",
+            "cache-control": "no-cache",
+            "postman-token": "53f1923b-07e1-4927-971e-19134acb10a8",
+            "accept-encoding": "gzip, deflate, br"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "type": "getservices"
+          },
+          "supaBaseURL": "https://supa.stage.2t.band/",
+          "supaBasePublicKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICAgInJvbGUiOiAiYW5vbiIsCiAgICAiaXNzIjogInN1cGFiYXNlIiwKICAgICJpYXQiOiAxNjY5MTU4MDAwLAogICAgImV4cCI6IDE4MjY5MjQ0MDAKfQ.MKy5X_4WPKpOurvHBoJ5eAxP_iGoqmCZxjmUxp8Ptjo",
+          "supaBaseServiceKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICAgInJvbGUiOiAic2VydmljZV9yb2xlIiwKICAgICJpc3MiOiAic3VwYWJhc2UiLAogICAgImlhdCI6IDE2NjkxNTgwMDAsCiAgICAiZXhwIjogMTgyNjkyNDQwMAp9.S1Ih0riKG5mR8hJ_2VdCXyaOJK1sbDnoQHNzRN6iV-Y",
+          "EAP_URL": "http://calend.dev.2t.band:8081/index.php/api/v1"
+        }
+      }
+    ],
+    "EAP_request_services": [
+      {
+        "json": {
+          "id": 1,
+          "name": "Менторинг-Сессия",
+          "duration": 60,
+          "price": 0,
+          "currency": "",
+          "description": "",
+          "location": "",
+          "availabilitiesType": "flexible",
+          "attendantsNumber": 1,
+          "categoryId": null
+        }
+      }
+    ]
+  },
+  "settings": {
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "saveDataSuccessExecution": "all",
+    "errorWorkflow": "102"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrencyRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-05-11T16:47:44.770Z",
+  "versionId": "b044240a-f723-408d-9cc1-a7a514b2a98d"
+}
