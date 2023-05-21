@@ -1,0 +1,140 @@
+{
+  "active": true,
+  "connections": {
+    "init_vars": {
+      "main": [
+        [
+          {
+            "node": "update_tl_feedback",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "update_tl_feedback": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "update_artifcat_is_deleted": {
+      "main": [
+        [
+          {
+            "node": "init_vars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-04-17T09:01:20.057Z",
+  "id": "78",
+  "name": "update_artifact_is_deleted",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "5fc63586-f0a6-4d48-bfa9-97b27d7c6ff8",
+      "name": "init_vars",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/artifacts?id=eq.{{ $json.body.artifact_id }}&select=* ",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "is_deleted",
+              "value": "=true"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9eefd150-e461-4ff5-a9ca-c1752bd5af2b",
+      "name": "update_tl_feedback",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1340,
+        420
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "2adebca7-ab56-48f6-86a5-996d121b0b76",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1560,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "artifact/delete",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "6bf8d897-ec88-4cb0-b655-f2c679981780",
+      "name": "update_artifcat_is_deleted",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        960,
+        420
+      ],
+      "webhookId": "4c82c4d3-2325-4f9b-9107-2ee4d46d09a3"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "102"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-05-11T16:54:56.729Z",
+  "versionId": "d713ef07-bb96-44d7-8435-a5242d8a1eb3"
+}
