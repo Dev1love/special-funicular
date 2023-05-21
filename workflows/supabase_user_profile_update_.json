@@ -1,0 +1,352 @@
+{
+  "active": true,
+  "connections": {
+    "Execute Workflow": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "update user_profiles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "update user_profiles": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "add user educations": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "add user educations",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fill profile": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "return error",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-04-07T16:26:06.683Z",
+  "id": "61",
+  "name": "supabase_user_profile_update_",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "d9283650-b876-49b0-9c57-b62c671e399a",
+      "name": "Execute Workflow",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        860,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify( \"успех\" )}}",
+        "options": {}
+      },
+      "id": "ff432f8f-5059-42b8-b470-97b8113ce798",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1600,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ $node[\"Execute Workflow\"].json.supaBaseURL }}rest/v1/user_profiles?select=*&user_id=eq.{{ $json.body.user_id }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "firstname",
+              "value": "={{ $node[\"Fill profile\"].json.body.firstname }}"
+            },
+            {
+              "name": "lastname",
+              "value": "={{ $node[\"Fill profile\"].json.body.lastname }}"
+            },
+            {
+              "name": "middle_name",
+              "value": "={{ $node[\"Fill profile\"].json.body.middle_name }}"
+            },
+            {
+              "name": "citizenship",
+              "value": "={{ $node[\"Fill profile\"].json.body.citizenship }}"
+            },
+            {
+              "name": "country_host",
+              "value": "={{ $node[\"Fill profile\"].json.body.country_host }}"
+            },
+            {
+              "name": "date_of_birth",
+              "value": "={{ $node[\"Fill profile\"].json.body.date_of_birth }}"
+            },
+            {
+              "name": "phone",
+              "value": "={{ $node[\"Fill profile\"].json.body.phone }}"
+            },
+            {
+              "name": "legal_status",
+              "value": "={{ $node[\"Fill profile\"].json.body.legal_status }}"
+            },
+            {
+              "name": "user_site",
+              "value": "={{ $node[\"Fill profile\"].json.body.user_site }}"
+            },
+            {
+              "name": "user_tg",
+              "value": "={{ $node[\"Fill profile\"].json.body.user_tg }}"
+            },
+            {
+              "name": "projects_capacity",
+              "value": "={{ $node[\"Fill profile\"].json.body.projects_capacity }}"
+            },
+            {
+              "name": "city_host",
+              "value": "={{ $node[\"Fill profile\"].json.body.city_host }}"
+            },
+            {
+              "name": "legal_doc_link",
+              "value": "={{ $json.body.legal_doc_link }}"
+            },
+            {
+              "name": "legal_requisites_link",
+              "value": "={{ $json.body.legal_requisites_link }}"
+            },
+            {
+              "name": "user_resume",
+              "value": "={{ $json.body.user_resume }}"
+            },
+            {
+              "name": "user_photo",
+              "value": "={{ $json.body.user_photo }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "637a7089-fbc5-4a7c-9097-b9aa8ce72f72",
+      "name": "update user_profiles",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1060,
+        280
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $node[\"Execute Workflow\"].json.supaBaseURL }}rest/v1/educations",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($('Code').first().json.edu)}}",
+        "options": {}
+      },
+      "id": "fdc92446-ed91-4ac0-92aa-b4c335aa0878",
+      "name": "add user educations",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1180,
+        120
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return {edu: $json.body.educations.filter((el) => el.edu_organization && el.edu_organization !== \" \")};"
+      },
+      "id": "9b4d9d5f-5d6c-4c6f-bd16-471e96f54aad",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        1000,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "content": "Filling up user profile and adding his educations",
+        "height": 386,
+        "width": 1308.7595426348284
+      },
+      "id": "e40ea991-b763-4bc3-a748-f3ec53ec9a13",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        540,
+        80
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "httpMethod": "POST",
+        "path": "user_profile/update",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "a04c5869-7e03-4d12-a59e-18ab3ede60fc",
+      "name": "Fill profile",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        620,
+        280
+      ],
+      "webhookId": "e7617b5b-90de-4e0f-9ea8-f25c2ec3387d",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "appsmith->n8n Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ !!$json?.error }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "22145866-c7eb-487e-869f-0887ce809431",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1380,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "=json",
+        "responseBody": "={{\nJSON.stringify({\"error\": $json[\"error\"]})\n}}",
+        "options": {}
+      },
+      "id": "6b83609d-0889-439c-afdc-58c0191436e5",
+      "name": "return error",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1520,
+        120
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "102"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-05-11T16:57:17.815Z",
+  "versionId": "7ba02005-1d00-42ce-a645-65da56d82de5"
+}
