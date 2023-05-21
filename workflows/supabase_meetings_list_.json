@@ -1,0 +1,379 @@
+{
+  "active": false,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "init_vars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "init_vars": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_error": {
+      "main": [
+        [
+          {
+            "node": "return error",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "concatenate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "return error(no auth)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "SUPA_meetings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "concatenate": {
+      "main": [
+        [
+          {
+            "node": "flatten",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_meetings": {
+      "main": [
+        [
+          {
+            "node": "IF_error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "flatten": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-03-24T10:09:08.488Z",
+  "id": "32",
+  "name": "supabase_meetings_list_",
+  "nodes": [
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "httpMethod": "POST",
+        "path": "meetings/list",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "7e4bbb13-8e8a-490d-8137-fec5cc7e96ff",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -480,
+        220
+      ],
+      "webhookId": "a81dd0cf-6db2-4433-b6f1-6f2cd405deeb",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "appsmith->n8n Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "=json",
+        "responseBody": "={{\nJSON.stringify({\n\"res\": $json?.all?.length>0 ? $json.all : []})\n}}",
+        "options": {}
+      },
+      "id": "041040ac-a4b8-4ec5-9d04-3cba77e1ffc9",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        840,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items \nvar out = [];\nfor (var item of $input.all()) {\n   out.push(item.json);\n}\n\nreturn {all:out};"
+      },
+      "id": "af8493ad-8be4-49c2-9374-f6c2f9bfd756",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        460,
+        540
+      ],
+      "alwaysOutputData": true,
+      "notesInFlow": true,
+      "disabled": true,
+      "notes": "transform array of item\ninto one item with array"
+    },
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "9268b2c9-161c-42cb-ad49-5a5b9c97e2f9",
+      "name": "init_vars",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        -320,
+        220
+      ],
+      "notesInFlow": true,
+      "notes": "Init Shared Vars"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ !!$json?.error }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "02c4e78e-24dc-4b1e-978f-29c3d6c0d94b",
+      "name": "IF_error",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        220,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ !!$json.headers?.[\"user-access-token\"] }}"
+            }
+          ]
+        }
+      },
+      "id": "7b3336b2-8831-42b8-94bc-85ed7f129ef5",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "=json",
+        "responseBody": "={{\nJSON.stringify({\"error\": $json[\"error\"]})\n}}",
+        "options": {}
+      },
+      "id": "3fd06327-9c14-4d8f-b83c-202a811e403c",
+      "name": "return error",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        840,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "=json",
+        "responseBody": "={{\nJSON.stringify({\"error\": \"missing user-access-token header!\"})\n}}",
+        "options": {}
+      },
+      "id": "0e90732d-386d-4f62-aea8-86f60e12ee2a",
+      "name": "return error(no auth)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        40,
+        60
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "aggregateItems",
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "all",
+        "include": "allFieldsExcept",
+        "fieldsToExclude": {
+          "fields": [
+            {
+              "fieldName": "user_id"
+            }
+          ]
+        }
+      },
+      "id": "97d4d222-1e31-4ce8-9f8c-e0ebb2bd5514",
+      "name": "concatenate",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 2,
+      "position": [
+        440,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.supaBaseURL }}rest/v1/meetings?select=*,meetings_type(name),meetings_status(name),projects(name)",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{$json.headers[\"user-access-token\"]}}"
+            },
+            {
+              "name": "apikey",
+              "value": "={{ $json.supaBasePublicKey }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "af8ec4a0-d6ba-4592-9766-f5a6724d038c",
+      "name": "SUPA_meetings",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        40,
+        240
+      ],
+      "alwaysOutputData": true,
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "for (const ALL of $input.all()) {\n\n  for (const meeting of ALL.json.all) {\n    if (meeting?.meetings_type?.name) {\n        meeting.meetings_type_str = meeting.meetings_type.name;\n        delete meeting.meetings_type;\n      }\n\n      if (meeting?.meetings_status?.name) {\n        meeting.meetings_status_str = meeting.meetings_status.name;\n        delete meeting.meetings_status;\n      }\n\n      if (meeting?.projects?.name) {\n        meeting.projects_str = meeting.projects.name;\n        delete meeting.projects;\n      }\n  }\n}\n\nreturn $input.all();"
+      },
+      "id": "2f2a4cc8-1e02-422c-8851-3343b33ad18e",
+      "name": "flatten",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        640,
+        280
+      ]
+    }
+  ],
+  "pinData": {
+    "SUPA_meetings": [
+      {
+        "json": {
+          "id": "82226e98-94c0-4921-b8a4-00e2f26222c0",
+          "created_at": "2023-03-27T08:10:49+00:00",
+          "project_id": "7842debf-df6d-49f2-865b-caf8cfa3b2d5",
+          "name": "митинг Г1",
+          "type": 2,
+          "booking_link": null,
+          "join_link": null,
+          "status": 3,
+          "booked": null,
+          "happened": null,
+          "reported": null,
+          "recorded": null,
+          "artefact": null,
+          "user_id": "d6e67c48-afb4-467b-9cc5-35cf9ff04f6c",
+          "meetings_type": {
+            "name": "ТС 1"
+          },
+          "meetings_status": {
+            "name": "Canceled"
+          },
+          "projects": {
+            "name": "project C"
+          }
+        }
+      },
+      {
+        "json": {
+          "id": "5f1613ef-2f24-4f87-b7be-ed6c7557f638",
+          "created_at": "2023-03-27T08:10:54+00:00",
+          "project_id": "26280de1-432c-481a-99e5-e3fa462601a8",
+          "name": "митинг Г2",
+          "type": 3,
+          "booking_link": null,
+          "join_link": null,
+          "status": 4,
+          "booked": null,
+          "happened": null,
+          "reported": null,
+          "recorded": null,
+          "artefact": null,
+          "user_id": "d6e67c48-afb4-467b-9cc5-35cf9ff04f6c",
+          "meetings_type": {
+            "name": "ТС 2"
+          },
+          "meetings_status": {
+            "name": "Completed"
+          },
+          "projects": {
+            "name": "проект Д"
+          }
+        }
+      }
+    ]
+  },
+  "settings": {
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "saveDataSuccessExecution": "all"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrencyRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-04-28T15:36:40.951Z",
+  "versionId": "4ff56a1c-9690-4e08-aa6a-3b5e2b7e0b9f"
+}
