@@ -1,0 +1,97 @@
+{
+  "active": true,
+  "connections": {
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_countries_": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-04-07T14:36:01.655Z",
+  "id": "59",
+  "name": "get_countries_",
+  "nodes": [
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json.countries) }}",
+        "options": {}
+      },
+      "id": "359966ec-846d-4a53-acf2-9c2efcad8d92",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1140,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return {countries:[\n  {\n    \"label\": \"Афганистан\",\n    \"value\": 0\n  },\n   {\n    \"label\": \"Албания\",\n    \"value\": 1\n  },\n  {\n    \"label\": \"Алжир\",\n    \"value\": 2\n  },\n  {\n    \"label\": \"Андорра\",\n    \"value\": 3\n  },\n  {\n    \"label\": \"Ангола\",\n    \"value\": 4\n  },\n  {\n    \"label\": \"Антигуа и Барбуда\",\n    \"value\": 5\n  },\n  {\n    \"label\": \"Аргентина\",\n    \"value\": 6\n  },\n  {\n    \"label\": \"Армения\",\n    \"value\": 7\n  },\n  {\n    \"label\": \"Австралия\",\n    \"value\": 8\n  },\n  {\n    \"label\": \"Австрия\",\n    \"value\": 9\n  },\n  {\n    \"label\": \"Азербайджан\",\n    \"value\": 10\n  },\n  {\n    \"label\": \"Багамские Острова\",\n    \"value\": 11\n  },\n  {\n    \"label\": \"Бахрейн\",\n    \"value\": 12\n  },\n  {\n    \"label\": \"Бангладеш\",\n    \"value\": 13\n  },\n  {\n    \"label\": \"Барбадос\",\n    \"value\": 14\n  },\n  {\n    \"label\": \"Белоруссия\",\n    \"value\": 15\n  },\n  {\n    \"label\": \"Бельгия\",\n    \"value\": 16\n  },\n  {\n    \"label\": \"Белиз\",\n    \"value\": 17\n  },\n  {\n    \"label\": \"Бенин\",\n    \"value\": 18\n  },\n  {\n    \"label\": \"Бутан\",\n    \"value\": 19\n  },\n  {\n    \"label\": \"Боливия (Многонациональное Государство)\",\n    \"value\": 20\n  },\n  {\n    \"label\": \"Босния и Герцеговина\",\n    \"value\": 21\n  },\n  {\n    \"label\": \"Ботсвана\",\n    \"value\": 22\n  },\n  {\n    \"label\": \"Бразилия\",\n    \"value\": 23\n  },\n  {\n    \"label\": \"Бруней Даруссалам\",\n    \"value\": 24\n  },\n  {\n    \"label\": \"Болгария\",\n    \"value\": 25\n  },\n  {\n    \"label\": \"Буркина Фасо\",\n    \"value\": 26\n  },\n  {\n    \"label\": \"Бурунди\",\n    \"value\": 27\n  },\n  {\n    \"label\": \"Кабо-Верде\",\n    \"value\": 28\n  },\n  {\n    \"label\": \"Камбоджа\",\n    \"value\": 29\n  },\n  {\n    \"label\": \"Камерун\",\n    \"value\": 30\n  },\n  {\n\"label\": \"Канада\",\n\"value\": 31\n},\n{\n\"label\": \"Центральноафриканская Республика\",\n\"value\": 32\n},\n{\n\"label\": \"Чад\",\n\"value\": 33\n},\n{\n\"label\": \"Чили\",\n\"value\": 34\n},\n{\n\"label\": \"Китай\",\n\"value\": 35\n},\n{\n\"label\": \"Колумбия\",\n\"value\": 36\n},\n{\n\"label\": \"Коморские Острова\",\n\"value\": 37\n},\n{\n\"label\": \"Конго\",\n\"value\": 38\n},\n{\n\"label\": \"Коста-Рика\",\n\"value\": 39\n},\n{\n\"label\": \"Кот-д’Ивуар\",\n\"value\": 40\n},\n{\n\"label\": \"Хорватия\",\n\"value\": 41\n},\n{\n\"label\": \"Куба\",\n\"value\": 42\n},\n{\n\"label\": \"Кипр\",\n\"value\": 43\n},\n{\n\"label\": \"Чехия\",\n\"value\": 44\n},\n{\n\"label\": \"Корея (Народно-Демократическая Республика)\",\n\"value\": 45\n},\n{\n\"label\": \"Конго (Демократическая Республика)\",\n\"value\": 46\n},\n{\n\"label\": \"Дания\",\n\"value\": 47\n},\n{\n\"label\": \"Джибути\",\n\"value\": 48\n},\n{\n\"label\": \"Доминика\",\n\"value\": 49\n},\n{\n\"label\": \"Доминиканская Республика\",\n\"value\": 50\n},\n{\n\"label\": \"Эквадор\",\n\"value\": 51\n},\n{\n\"label\": \"Египет\",\n\"value\": 52\n},\n{\n\"label\": \"Сальвадор\",\n\"value\": 53\n},\n{\n\"label\": \"Экваториальная Гвинея\",\n\"value\": 54\n},\n{\n\"label\": \"Эритрея\",\n\"value\": 55\n},\n{\n\"label\": \"Эстония\",\n\"value\": 56\n},\n{\n\"label\": \"Эфиопия\",\n\"value\": 57\n},\n{\n\"label\": \"Фиджи\",\n\"value\": 58\n},\n{\n\"label\": \"Финляндия\",\n\"value\": 59\n},\n{\n\"label\": \"Франция\",\n\"value\": 60\n},\n{\n\"label\": \"Габон\",\n\"value\": 61\n},\n{\n\"label\": \"Гамбия\",\n\"value\": 62\n},\n{\n\"label\": \"Грузия\",\n\"value\": 63\n},{\n\"label\": \"Германия\",\n\"value\": 64\n},\n{\n\"label\": \"Гана\",\n\"value\": 65\n},\n{\n\"label\": \"Греция\",\n\"value\": 66\n},\n{\n\"label\": \"Гренада\",\n\"value\": 67\n},\n{\n\"label\": \"Гватемала\",\n\"value\": 68\n},\n{\n\"label\": \"Гвинея\",\n\"value\": 69\n},\n{\n\"label\": \"Гвинея-Бисау\",\n\"value\": 70\n},\n{\n\"label\": \"Гайана\",\n\"value\": 71\n},\n{\n\"label\": \"Гаити\",\n\"value\": 72\n},\n{\n\"label\": \"Гондурас\",\n\"value\": 73\n},\n{\n\"label\": \"Венгрия\",\n\"value\": 74\n},\n{\n\"label\": \"Исландия\",\n\"value\": 75\n},\n{\n\"label\": \"Индия\",\n\"value\": 76\n},\n{\n\"label\": \"Индонезия\",\n\"value\": 77\n},\n{\n\"label\": \"Иран (Исламская Республика)\",\n\"value\": 78\n},\n{\n\"label\": \"Ирак\",\n\"value\": 79\n},\n{\n\"label\": \"Ирландия\",\n\"value\": 80\n},\n{\n\"label\": \"Израиль\",\n\"value\": 81\n},\n{\n\"label\": \"Италия\",\n\"value\": 82\n},\n{\n\"label\": \"Ямайка\",\n\"value\": 83\n},\n{\n\"label\": \"Япония\",\n\"value\": 84\n},\n{\n\"label\": \"Иордания\",\n\"value\": 85\n},\n{\n\"label\": \"Казахстан\",\n\"value\": 86\n},\n{\n\"label\": \"Кения\",\n\"value\": 87\n},\n{\n\"label\": \"Кирибати\",\n\"value\": 88\n},\n{\n\"label\": \"Кувейт\",\n\"value\": 89\n},\n{\n\"label\": \"Киргизстан\",\n\"value\": 90\n},\n{\n\"label\": \"Лаос\",\n\"value\": 91\n},\n{\n\"label\": \"Латвия\",\n\"value\": 92\n},\n{\n\"label\": \"Ливан\",\n\"value\": 93\n},\n{\n\"label\": \"Лесото\",\n\"value\": 94\n},\n{\n\"label\": \"Либерия\",\n\"value\": 95\n},\n{\n\"label\": \"Ливия\",\n\"value\": 96\n},\n{\n\"label\": \"Лихтенштейн\",\n\"value\": 97\n},\n{\n\"label\": \"Литва\",\n\"value\": 98\n},\n  {\n\"label\": \"Люксембург\",\n\"value\": 99\n},\n{\n\"label\": \"Мадагаскар\",\n\"value\": 100\n},\n{\n\"label\": \"Малави\",\n\"value\": 101\n},\n{\n\"label\": \"Малайзия\",\n\"value\": 102\n},\n{\n\"label\": \"Мальдивы\",\n\"value\": 103\n},\n{\n\"label\": \"Мали\",\n\"value\": 104\n},\n{\n\"label\": \"Мальта\",\n\"value\": 105\n},\n{\n\"label\": \"Маршалловы острова\",\n\"value\": 106\n},\n{\n\"label\": \"Мавритания\",\n\"value\": 107\n},\n{\n\"label\": \"Маврикий\",\n\"value\": 108\n},\n{\n\"label\": \"Мексика\",\n\"value\": 109\n},\n{\n\"label\": \"Микронезия (Федеративные Штаты)\",\n\"value\": 110\n},\n{\n\"label\": \"Молдова (Республика)\",\n\"value\": 111\n},\n{\n\"label\": \"Монако\",\n\"value\": 112\n},\n{\n\"label\": \"Монголия\",\n\"value\": 113\n},\n{\n\"label\": \"Черногория\",\n\"value\": 114\n},\n{\n\"label\": \"Марокко\",\n\"value\": 115\n},\n{\n\"label\": \"Мозамбик\",\n\"value\": 116\n},\n{\n\"label\": \"Мьянма\",\n\"value\": 117\n},\n{\n\"label\": \"Намибия\",\n\"value\": 118\n},\n{\n\"label\": \"Науру\",\n\"value\": 119\n},\n{\n\"label\": \"Непал\",\n\"value\": 120\n},\n{\n\"label\": \"Нидерланды\",\n\"value\": 121\n},\n{\n\"label\": \"Новая Зеландия\",\n\"value\": 122\n},\n{\n\"label\": \"Никарагуа\",\n\"value\": 123\n},\n{\n\"label\": \"Нигер\",\n\"value\": 124\n},\n{\n\"label\": \"Нигерия\",\n\"value\": 125\n},\n{\n\"label\": \"Северная Македония\",\n\"value\": 126\n},\n{\n\"label\": \"Норвегия\",\n\"value\": 127\n},\n{\n\"label\": \"Оман\",\n\"value\": 128\n},\n{\n\"label\": \"Пакистан\",\n\"value\": 129\n},\n{\n\"label\": \"Палау\",\n\"value\": 130\n},\n{\n\"label\": \"Панама\",\n\"value\": 131\n},\n{\n\"label\": \"Папуа-Новая Гвинея\",\n\"value\": 132\n},\n{\n\"label\": \"Парагвай\",\n\"value\": 133\n},\n{\n\"label\": \"Перу\",\n\"value\": 134\n},\n{\n\"label\": \"Филиппины\",\n\"value\": 135\n},\n{\n\"label\": \"Польша\",\n\"value\": 136\n},\n{\n\"label\": \"Португалия\",\n\"value\": 137\n},\n{\n\"label\": \"Катар\",\n\"value\": 138\n},\n{\n\"label\": \"Румыния\",\n\"value\": 139\n},\n{\n\"label\": \"Россия\",\n\"value\": 140\n},\n{\n\"label\": \"Руанда\",\n\"value\": 141\n},\n{\n\"label\": \"Сент-Китс и Невис\",\n\"value\": 142\n},\n{\n\"label\": \"Сент-Люсия\",\n\"value\": 143\n},\n{\n\"label\": \"Сент-Винсент и Гренадины\",\n\"value\": 144\n},\n{\n\"label\": \"Самоа\",\n\"value\": 145\n},\n{\n\"label\": \"Сан-Марино\",\n\"value\": 146\n},\n{\n\"label\": \"Сан-Томе и Принсипи\",\n\"value\": 147\n},\n{\n\"label\": \"Саудовская Аравия\",\n\"value\": 148\n},\n{\n\"label\": \"Сенегал\",\n\"value\": 149\n},\n{\n\"label\": \"Сербия\",\n\"value\": 150\n},\n{\n\"label\": \"Сейшелы\",\n\"value\": 151\n},\n{\n\"label\": \"Сьерра-Леоне\",\n\"value\": 152\n},\n{\n\"label\": \"Сингапур\",\n\"value\": 153\n},\n{\n\"label\": \"Словакия\",\n\"value\": 154\n},\n{\n\"label\": \"Словения\",\n\"value\": 155\n},\n{\n\"label\": \"Соломоновы острова\",\n\"value\": 156\n},\n{\n\"label\": \"Сомали\",\n\"value\": 157\n},\n{\n\"label\": \"Южно-Африканская Республика\",\n\"value\": 158\n},\n{\n\"label\": \"Южный Судан\",\n\"value\": 159\n},\n{\n\"label\": \"Испания\",\n\"value\": 160\n},\n{\n\"label\": \"Шри-Ланка\",\n\"value\": 161\n},\n{\n\"label\": \"Судан\",\n\"value\": 162\n},\n{\n\"label\": \"Суринам\",\n\"value\": 163\n},\n{\n\"label\": \"Швеция\",\n\"value\": 164\n},\n{\n\"label\": \"Швейцария\",\n\"value\": 165\n},\n{\n\"label\": \"Сирия\",\n\"value\": 166\n},\n{\n\"label\": \"Тайвань\",\n\"value\": 167\n},\n{\n\"label\": \"Таджикистан\",\n\"value\": 168\n},\n{\n\"label\": \"Танзания\",\n\"value\": 169\n},\n{\n\"label\": \"Таиланд\",\n\"value\": 170\n},\n{\n\"label\": \"Тимор-Лесте\",\n\"value\": 171\n},\n{\n\"label\": \"Того\",\n\"value\": 172\n},\n{\n\"label\": \"Тонга\",\n\"value\": 173\n},\n{\n\"label\": \"Тринидад и Тобаго\",\n\"value\": 174\n},\n{\n\"label\": \"Тунис\",\n\"value\": 175\n},\n{\n\"label\": \"Турция\",\n\"value\": 176\n},\n{\n\"label\": \"Туркменистан\",\n\"value\": 177\n},\n{\n\"label\": \"Тувалу\",\n\"value\": 178\n},\n{\n\"label\": \"Уганда\",\n\"value\": 179\n},\n{\n\"label\": \"Украина\",\n\"value\": 180\n},\n{\n\"label\": \"ОАЭ\",\n\"value\": 181\n},\n{\n\"label\": \"Великобритания\",\n\"value\": 182\n},\n{\n\"label\": \"США\",\n\"value\": 183\n},\n{\n\"label\": \"Уругвай\",\n\"value\": 184\n},\n{\n\"label\": \"Узбекистан\",\n\"value\": 185\n},\n{\n\"label\": \"Вануату\",\n\"value\": 186\n},\n{\n\"label\": \"Ватикан\",\n\"value\": 187\n},\n{\n\"label\": \"Венесуэла\",\n\"value\": 188\n},\n{\n\"label\": \"Вьетнам\",\n\"value\": 189\n},\n{\n\"label\": \"Йемен\",\n\"value\": 190\n},\n{\n\"label\": \"Замбия\",\n\"value\": 191\n},\n{\n\"label\": \"Зимбабве\",\n\"value\": 192\n}\n]\n}"
+      },
+      "id": "c8149cf9-dc71-46aa-85ff-4faa82f15699",
+      "name": "Code1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        920,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "httpMethod": "POST",
+        "path": "countries",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "486369f2-99ef-4e00-8417-a8335eaf0ca9",
+      "name": "get_countries_",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        700,
+        300
+      ],
+      "webhookId": "9e8ecf88-f783-4c92-901e-8f98bd50eb98",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "appsmith->n8n Header Auth account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "saveDataSuccessExecution": "all",
+    "errorWorkflow": "102"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-05-11T16:53:21.804Z",
+  "versionId": "8ffc77f9-2e59-41e8-b9b7-e558b722bde3"
+}
