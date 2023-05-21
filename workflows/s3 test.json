@@ -1,0 +1,80 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking \"Execute Workflow\"": {
+      "main": [
+        [
+          {
+            "node": "S3",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-04-05T08:57:04.935Z",
+  "id": "52",
+  "name": "s3 test",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "getAll",
+        "bucketName": "2T.Drive",
+        "options": {}
+      },
+      "id": "83b29fda-9f68-4b6d-92bc-2d1dc02da6c3",
+      "name": "S3",
+      "type": "n8n-nodes-base.s3",
+      "typeVersion": 1,
+      "position": [
+        900,
+        280
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "s3": {
+          "id": "13",
+          "name": "S3 account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {},
+      "id": "7d59722c-a93d-4bed-9022-6f9489a73374",
+      "name": "When clicking \"Execute Workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        700,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const crypto = require('crypto');\nconst method = 'GET';\nconst expires = Math.floor(Date.now() / 1000) + 60*60; // add 1 hour\nconst path = '/2T.Drive/unnamed.png';\nconst linkSecretKey = 'XvB$d239';\nconst hmacBody = `${method}\\n${expires}\\n${path}`;\nconst sig = crypto.createHmac('sha1', linkSecretKey).update(hmacBody).digest('hex');\n\nconsole.log('sig:', sig);\nconsole.log('expires:', expires);\n//htts://api.selcdn.ru/2T.Drive/unnamed.png?temp_url_sig=6c2fdc02f61a1833c60f6d713cd83b3dd5996c5c&temp_url_expires=1681127582\n\n//[Node: \"Code\"] sig: 6c2fdc02f61a1833c60f6d713cd83b3dd5996c5c\n//index-b480f63e.js:21 [Node: \"Code\"] expires: 1681127582\n\n\nreturn $input.all();"
+      },
+      "id": "5372ad02-5182-41b2-8090-b96e833a73a3",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        860,
+        120
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-04-10T19:20:20.422Z",
+  "versionId": "7b4fbbdc-7b89-47f5-9796-bf1cbe74614c"
+}
