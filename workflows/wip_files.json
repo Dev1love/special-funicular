@@ -1,0 +1,176 @@
+{
+  "active": false,
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Authenticate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Authenticate": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "NewFolder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-03-22T11:10:13.661Z",
+  "id": "27",
+  "name": "wip_files",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "cd3059f3-4e5a-480c-9bb4-45c4cec8f712",
+      "name": "Start",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        120,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "6"
+      },
+      "id": "11396cfd-cae1-484a-ad12-fd9455c68c9d",
+      "name": "Authenticate",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        320,
+        180
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "url": "={{ $json[\"storage_url\"] }}/2T.Drive",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Auth-Token",
+              "value": "={{ $json[\"storage_token\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "657d19e1-9db5-4fb9-825c-cd166eee9500",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        520,
+        180
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json[\"content_type\"] }}",
+              "operation": "startsWith",
+              "value2": "video"
+            }
+          ]
+        }
+      },
+      "id": "827e582f-cd81-479d-9963-c8e15f705499",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        700,
+        180
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "newfolder",
+              "value": "={{ $json[\"name\"].split(\"_\")[0] }}"
+            },
+            {
+              "name": "FileURL",
+              "value": "={{ $item(0).$node[\"Authenticate\"].json[\"storage_url\"] }}/2T.Drive/{{$json[\"name\"] }}"
+            },
+            {
+              "name": "localfolder",
+              "value": "/home/node/.n8n"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "104054f1-fcf4-4ef0-8ba1-0cec49326cb5",
+      "name": "NewFolder",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        920,
+        160
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "command": "=cd /home/node/zoom_recordings && rm -r '85659587161'"
+      },
+      "id": "d6c2c262-c58c-4ff4-b8a4-c93968d63108",
+      "name": "cleanup_files",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        480,
+        440
+      ],
+      "disabled": true
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-04-29T12:42:15.251Z",
+  "versionId": "49ab7439-3be0-467b-a98f-9513c7091a17"
+}
