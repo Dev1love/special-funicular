@@ -1,0 +1,266 @@
+{
+  "active": false,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "init_vars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "init_vars": {
+      "main": [
+        [
+          {
+            "node": "SUPA_get_emailconfirmed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_get_profile_info": {
+      "main": [
+        [
+          {
+            "node": "format_response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_get_emailconfirmed": {
+      "main": [
+        [
+          {
+            "node": "SUPA_get_profile_info",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "format_response": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-04-05T18:28:12.122Z",
+  "id": "55",
+  "name": "user_info",
+  "nodes": [
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "httpMethod": "POST",
+        "path": "user_info/status",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "f621ba3e-3367-463c-b86c-b751925110af",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        240,
+        1640
+      ],
+      "webhookId": "469144f8-31fc-4dfb-93d8-a0817cffec76",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "appsmith->n8n Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "9c7b2c8d-69ea-4ece-ac44-7ec303b09022",
+      "name": "init_vars",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        420,
+        1640
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "bab5c1dd-7cc2-42ea-96cd-7cab5a949acb",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1360,
+        1640
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/user_profiles",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "user_id",
+              "value": "=eq.{{ $node.init_vars.json.body.user_id }}"
+            },
+            {
+              "name": "select",
+              "value": "date_of_birth,country_host,user_profile_status"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $node.init_vars.json.supaBaseServiceKey }}"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{\"Bearer \"+$node.init_vars.json.supaBaseServiceKey }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "251a098c-5324-4737-b315-3107d0215844",
+      "name": "SUPA_get_profile_info",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        880,
+        1640
+      ],
+      "alwaysOutputData": true,
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/rpc/is_useremail_confirmed",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $node.init_vars.json.supaBaseServiceKey }}"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{\"Bearer \"+$node.init_vars.json.supaBaseServiceKey }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "id",
+              "value": "={{ $node.init_vars.json.body.user_id }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "text"
+            }
+          }
+        }
+      },
+      "id": "2a9c42f7-7c25-4118-b2ec-afc3bc6615d6",
+      "name": "SUPA_get_emailconfirmed",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        660,
+        1640
+      ],
+      "alwaysOutputData": true,
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "email_confirmed",
+              "value": "={{ $node.SUPA_get_emailconfirmed.json.data }}"
+            },
+            {
+              "name": "date_of_birth",
+              "value": "={{ $json.date_of_birth ?? '' }}"
+            },
+            {
+              "name": "country_host",
+              "value": "={{ $json.country_host ?? '' }}"
+            },
+            {
+              "name": "user_profile_status",
+              "value": "={{ $json.user_profile_status ?? '' }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9a3bf77f-ffac-45e5-b38e-60b55fc9e6df",
+      "name": "format_response",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        1100,
+        1640
+      ]
+    },
+    {
+      "parameters": {
+        "content": "**superseded by user/logn**",
+        "height": 80,
+        "width": 219.13715430565588
+      },
+      "id": "405d2059-73ee-48b8-bd6b-71bc7eb7d44c",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        260,
+        1500
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-04-07T12:09:10.187Z",
+  "versionId": "c4e0eb7b-faf5-4725-8d06-2796e8b98e0a"
+}
