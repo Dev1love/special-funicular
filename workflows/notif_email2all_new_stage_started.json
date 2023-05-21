@@ -1,0 +1,337 @@
+{
+  "active": false,
+  "connections": {
+    "init_vars": {
+      "main": [
+        [
+          {
+            "node": "SUPA_get_stages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_get_stages": {
+      "main": [
+        [
+          {
+            "node": "Code_getstage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code_getstage": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "SUPA_get_all_users",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "When clicking \"Execute Workflow\"": {
+      "main": [
+        [
+          {
+            "node": "init_vars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_get_all_users": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Email1": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split In Batches": {
+      "main": [
+        [
+          {
+            "node": "Send Email1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-05-02T15:58:17.298Z",
+  "id": "99",
+  "name": "notif_email2all_new_stage_started",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 11,
+              "triggerAtMinute": 5
+            }
+          ]
+        }
+      },
+      "id": "1d42627f-706f-466f-b726-1c82d0b2a285",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [
+        640,
+        100
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "9024ab38-fdcb-483e-917b-c5667fe1f73f",
+      "name": "init_vars",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        840,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.supaBaseURL }}rest/v1/ap_stages",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "select",
+              "value": "*"
+            },
+            {
+              "name": "order",
+              "value": "start_date"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $json.supaBasePublicKey }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "1681c35e-54b9-4361-9854-c598b9b041c3",
+      "name": "SUPA_get_stages",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1020,
+        300
+      ],
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "jsCode": "//console.log(\"$input.all():\",$input.all())\n\n// to get rid of potential problems with time zones just extract numbers // for year/month/day and use them in comparison\n\nvar cur_date_arr = new Date();\nvar cur_year = cur_date_arr.getFullYear();\nvar cur_month = cur_date_arr.getMonth() + 1;\nvar cur_day = cur_date_arr.getDate();\nconsole.log(\"cur:\", cur_year, cur_month, cur_day);\n\n//console.log($now);\n//console.log($now.startOf('day'));\n//var now = new Date();\nvar stage = \"none\";\n//console.log(now.getTime());\n\nfor (let i = $input.all().length - 1; i >= 0; i--) {\n  const item = $input.all()[i];\n  //console.log(item);\n  var x_date_arr = item.json.start_date.split(\"-\");\n  var x_year = parseInt(x_date_arr[0]);\n  var x_month = parseInt(x_date_arr[1]);\n  var x_day = parseInt(x_date_arr[2]);\n  console.log(x_year, x_month, x_day);\n  // var start_date = new Date(item.json.start_date);\n  // console.log(start_date);\n  // console.log(start_date.getTime());\n  if (cur_year==x_year && cur_month==x_month && cur_day==x_day) {\n    console.log(\"current stage:\", item.json.stage);\n    stage = item.json.stage;\n    break;\n  }\n\n}\n\n//return $input.all();\nreturn [{json:{stage:stage}}]"
+      },
+      "id": "b0d664a7-6b49-4414-9633-ef7d0d7bed38",
+      "name": "Code_getstage",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        1220,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.stage }}",
+              "operation": "notEqual",
+              "value2": "none"
+            }
+          ]
+        }
+      },
+      "id": "9f0f3236-39b9-4dfe-a874-3aed9e46556e",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1400,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/rpc/get_all_user_profiles_with_emails",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $node.init_vars.json.supaBasePublicKey }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a1cb5480-d338-43a6-a63f-20437c9f7a38",
+      "name": "SUPA_get_all_users",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1620,
+        200
+      ],
+      "alwaysOutputData": true,
+      "continueOnFail": true
+    },
+    {
+      "parameters": {},
+      "id": "6c687f5c-8505-4b09-b88b-9c76c5535a04",
+      "name": "When clicking \"Execute Workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        640,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "fromEmail": "dev@2t.band",
+        "toEmail": "={{ $node.SUPA_get_all_users.json.email }}",
+        "subject": "=стартовал этап",
+        "text": "=Здравствуйте, уважаемый {{$json.firstname}}, на нашей программе начинается новый этап \"{{ $node.Code_getstage.json.stage }}\".\nС уважением,\nКоманда 2Т",
+        "options": {}
+      },
+      "id": "9ac76491-75b2-4156-adb4-19c91929cf31",
+      "name": "Send Email1",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [
+        2020,
+        180
+      ],
+      "credentials": {
+        "smtp": {
+          "id": "3",
+          "name": "SMTP account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "unit": "seconds"
+      },
+      "id": "ee5fc4e6-12b4-47f7-9c62-986807efa227",
+      "name": "Wait",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        2180,
+        180
+      ],
+      "webhookId": "803cf5a4-9d10-4053-acd9-da2669316c70"
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "24764c46-9fe7-4ddd-ad87-5a1a8d8ed6c3",
+      "name": "Split In Batches",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 2,
+      "position": [
+        1800,
+        200
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrencyRules": []
+    }
+  },
+  "tags": [
+    {
+      "createdAt": "2023-04-27T18:40:13.285Z",
+      "updatedAt": "2023-04-27T18:40:13.285Z",
+      "id": "3",
+      "name": "notif"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2023-05-10T08:23:55.566Z",
+  "versionId": "f1b42769-1ced-4e42-acf1-ffc352db0af5"
+}
