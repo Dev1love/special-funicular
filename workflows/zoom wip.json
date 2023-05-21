@@ -1,0 +1,1266 @@
+{
+  "active": false,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "init_vars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "init_vars": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "return error(no auth)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "SUPA_meetings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_meetings": {
+      "main": [
+        [
+          {
+            "node": "IF_error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get users": {
+      "main": [
+        [
+          {
+            "node": "Set",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Zoom Auth": {
+      "main": [
+        [
+          {
+            "node": "Get users",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set": {
+      "main": [
+        [
+          {
+            "node": "Item Lists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists": {
+      "main": [
+        [
+          {
+            "node": "IF1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NewZoomMeeting": {
+      "main": [
+        [
+          {
+            "node": "AddZoomURLs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set4": {
+      "main": [
+        [
+          {
+            "node": "NewZoomMeeting",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AddZoomURLs": {
+      "main": [
+        [
+          {
+            "node": "Wait3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait3": {
+      "main": [
+        [
+          {
+            "node": "SingleMeeting",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GetEvents1": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Set4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SingleMeeting": {
+      "main": [
+        [
+          {
+            "node": "GetEvents1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "SingleMeeting1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase1": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase2": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NewZoomMeeting1": {
+      "main": [
+        [
+          {
+            "node": "Supabase1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set5": {
+      "main": [
+        [
+          {
+            "node": "NewZoomMeeting1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "SingleMeeting1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Set5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SingleMeeting1": {
+      "main": [
+        [
+          {
+            "node": "Supabase2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Zoom Auth1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Zoom Auth1": {
+      "main": [
+        [
+          {
+            "node": "Get users1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "GetMeeting",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "StopMeeting1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code2": {
+      "main": [
+        [
+          {
+            "node": "Set6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set6": {
+      "main": [
+        [
+          {
+            "node": "NewZoomMeeting2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "NewZoomMeeting3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-03-27T09:15:54.278Z",
+  "id": "38",
+  "name": "zoom wip",
+  "nodes": [
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "httpMethod": "POST",
+        "path": "zoom/test1",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "c4109408-1d1b-41b5-ad46-6fa291c05945",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -140,
+        680
+      ],
+      "webhookId": "a81dd0cf-6db2-4433-b6f1-6f2cd405deeb",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "appsmith->n8n Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "284e37f4-1433-4c2d-9915-5564390954c3",
+      "name": "init_vars",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        20,
+        680
+      ],
+      "notesInFlow": true,
+      "notes": "Init Shared Vars"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ !!$json?.error }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "41399db1-1bd9-4ebf-b312-f3d3a60d28ae",
+      "name": "IF_error",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        560,
+        700
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ !!$json.headers?.[\"user-access-token\"] }}"
+            }
+          ]
+        }
+      },
+      "id": "59def7ea-73d9-4e71-853d-ed856cb1843d",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        180,
+        680
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "=json",
+        "responseBody": "={{\nJSON.stringify({\"res\": null, \"error\": \"missing user-access-token header!\"})\n}}",
+        "options": {}
+      },
+      "id": "13ea274d-6924-4dba-833d-d32d4b4c8ec6",
+      "name": "return error(no auth)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        380,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.supaBaseURL }}rest/v1/meetings?select=*,meetings_type(name),meetings_status(name),projects(name)",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{$json.headers[\"user-access-token\"]}}"
+            },
+            {
+              "name": "apikey",
+              "value": "={{ $json.supaBasePublicKey }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "3bbb000b-26dd-4423-addd-d597fa9e11f5",
+      "name": "SUPA_meetings",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        380,
+        700
+      ],
+      "alwaysOutputData": true,
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "url": "={{ $json[\"ZoomBaseUrl\"] }}users/",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ $json[\"ZoomAuth\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "749b65dc-5a86-4560-bf41-42dfdadc5e28",
+      "name": "Get users",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        80,
+        940
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "9"
+      },
+      "id": "7f54f87c-dacc-4b24-8ddb-7320357784f7",
+      "name": "Zoom Auth",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        -100,
+        940
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "UserEmails",
+              "value": "={{ $jmespath($json[\"users\"],\"[].email\") }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "7362cf64-9e69-4679-bd7f-b404fb4cca61",
+      "name": "Set",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        260,
+        940
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "UserEmails",
+        "options": {}
+      },
+      "id": "8e53cb23-0283-4ccb-a7e4-7c00d1796f86",
+      "name": "Item Lists",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 1,
+      "position": [
+        440,
+        940
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json[\"UserEmails\"] }}",
+              "operation": "startsWith",
+              "value2": "user"
+            }
+          ]
+        }
+      },
+      "id": "03a864dd-7a3b-4d6c-8845-0d61571bd180",
+      "name": "IF1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        620,
+        940
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "={{ $json[\"ZoomBaseUrl\"] }}meetings/{{ $node[\"IFLateRunning\"].json[\"MeetingZoomID\"] }}/status",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ $json[\"ZoomAuth\"] }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\"action\":\"end\"}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "id": "cc22080e-8a9a-48eb-8725-9477f5e42869",
+      "name": "StopMeeting",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        900,
+        460
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $item(0).$node[\"EasyHostname\"].json[\"HOSTNAME\"] }}/providers",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n\"firstName\": \"{{ $node[\"IsValidTracker\"].json[\"TrackerName\"] }}\",\n\"lastName\": \"{{ $node[\"IsValidTracker\"].json[\"TrackerSurname\"] }}\",\n\"email\": \"{{ $node[\"IsValidTracker\"].json[\"TrackerEmail\"] }}\",\n\"phone\":\"{{ $node[\"IsValidTracker\"].json[\"TrackerPhone\"] }}\",\n\"services\": [1],\n\"timezone\":\"Europe/Moscow\",\n\"settings\": {\n\"username\": \"{{ $node[\"IsValidTracker\"].json[\"TrackerEmail\"] }}\",\n\"password\": \"{{$json[\"stdout\"]}}!\",\n\"notifications\":true,\n\"calendarView\": \"default\"},\n\"workingPlan\": { },\n\"working_plan\": { }\n}",
+        "options": {}
+      },
+      "id": "a91e2cad-f11b-4d16-8ccc-ec02f8ca18f6",
+      "name": "Add Tracker",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1080,
+        540
+      ],
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "1",
+          "name": "EAP admin"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## Генерация ссылок Zoom встреч",
+        "height": 290.98171738989004,
+        "width": 1295.1164132108865
+      },
+      "id": "c0509618-10f0-46f3-a409-820d464202e4",
+      "name": "Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -400,
+        1420
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $node[\"SingleMeeting\"].json[\"ZoomBaseUrl\"] }}users/{{ $json[\"ZoomUser\"] }}/meetings",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ $node[\"SingleMeeting\"].json[\"ZoomAuth\"] }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json[\"JSONbody\"] }}",
+        "options": {}
+      },
+      "id": "266a91b2-63b9-4b8d-8ba7-0dd3544f49b4",
+      "name": "NewZoomMeeting",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        380,
+        1500
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "JSONbody",
+              "value": "={\n\"topic\": \"{{($json[\"MeetingComment\"] == null) ? 'Meeting topic not provided' : $json[\"MeetingComment\"]}}\",\n\"type\": 2,\n\"start_time\": \"{{$json[\"MeetingStartDateTime\"]}}\",\n\"timezone\": \"Europe/Moscow\",\n\"duration\": 60,\n\"schedule_for\": \"{{$json[\"ZoomUser\"]}}\",\n\"settings\": {\n\"auto_recording\": \"cloud\",\n\"join_before_host\": false,\n\"mute_upon_entry\": false\n}\n}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "809e48f2-fefc-4879-80b3-bc6c03bc235f",
+      "name": "Set4",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        200,
+        1500
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "update",
+        "projectId": "p_4jpbiqaicez9ds",
+        "table": "md_67n7wa1n04h1n1",
+        "id": "={{ $node[\"SingleMeeting\"].json[\"Id\"] }}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldName": "MeetingStartURL",
+              "fieldValue": "={{ $json[\"start_url\"] }}"
+            },
+            {
+              "fieldName": "MeetingJoinURL",
+              "fieldValue": "={{ $json[\"join_url\"] }}"
+            },
+            {
+              "fieldName": "MeetingZoomID",
+              "fieldValue": "={{ $json[\"id\"] }}"
+            },
+            {
+              "fieldName": "ZoomUser",
+              "fieldValue": "={{ $json[\"host_email\"] }}"
+            }
+          ]
+        }
+      },
+      "id": "f7623377-a76f-46a7-9216-9db97beae4e2",
+      "name": "AddZoomURLs",
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 2,
+      "position": [
+        560,
+        1500
+      ],
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "2",
+          "name": "NocoDB Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "unit": "seconds"
+      },
+      "id": "b46bf76b-c2f5-4c77-81e7-2bcaee7107d2",
+      "name": "Wait3",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        740,
+        1500
+      ],
+      "webhookId": "eaf44c49-19c1-4187-851f-7ed29ff30199"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "p_4jpbiqaicez9ds",
+        "table": "md_67n7wa1n04h1n1",
+        "returnAll": true,
+        "options": {
+          "fields": [
+            "Id,MeetingComment,MeetingStartDateTime,MeetingEndDateTime,MeetingStatus,MeetingEasyId,ZoomUser"
+          ],
+          "where": "=(Id,neq,{{ $json[\"Id\"] }})~and((MeetingStartDateTime,btw,{{ $json[\"MeetingStartDateTime\"] }},{{ $json[\"MeetingEndDateTime\"]}})~or(MeetingEndDateTime,btw,{{ $json[\"MeetingStartDateTime\"] }},{{ $json[\"MeetingEndDateTime\"]}}))"
+        }
+      },
+      "id": "aa93194d-bc03-47fd-ab33-9601b5423e1b",
+      "name": "GetEvents1",
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 2,
+      "position": [
+        -160,
+        1500
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "2",
+          "name": "NocoDB Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const AllZoomEmails = [\n  \"user01@2t.band\",\n  \"user02@2t.band\",\n  \"user03@2t.band\",\n  \"user04@2t.band\",\n  \"user05@2t.band\",\n  \"user06@2t.band\",\n  \"user07@2t.band\",\n  \"user08@2t.band\",\n  \"user09@2t.band\",\n  \"user10@2t.band\",\n  \"user11@2t.band\",\n  \"user12@2t.band\",\n  \"user13@2t.band\",\n  \"user14@2t.band\",\n  \"user15@2t.band\",\n  \"user16@2t.band\",\n  \"user17@2t.band\",\n  \"user18@2t.band\",\n  \"user19@2t.band\",\n  \"user20@2t.band\",\n  \"user21@2t.band\",\n  \"user22@2t.band\",\n  \"user23@2t.band\",\n  \"user24@2t.band\",\n  \"user25@2t.band\",\n  \"user26@2t.band\",\n  \"user27@2t.band\",\n  \"user28@2t.band\",\n  \"user29@2t.band\"  \n];\n\nvar OverlapVisit = $input.all();\n\nvar UsedEmails = [];\nfor (const item of OverlapVisit) {\n  if(item.json.ZoomUser !== null) {UsedEmails.push(item.json.ZoomUser)};\n}\n//console.log(UsedEmails);\n\nfor (const ZoomAccount of AllZoomEmails) {\n//  console.log(ZoomAccount + ': '+ UsedEmails.includes(ZoomAccount));\n  if(!UsedEmails.includes(ZoomAccount))\n    {\n      $input.first().json.ZoomUser = ZoomAccount;\n      break;\n    };\n}\n\nreturn $input.first();"
+      },
+      "id": "2caa58a2-56ce-4717-a69d-eac2f1505b65",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        20,
+        1500
+      ]
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "cd56cf40-2c68-45ec-8408-1fbec9bb7f34",
+      "name": "SingleMeeting",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 1,
+      "position": [
+        -340,
+        1500
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "multiplex",
+        "options": {}
+      },
+      "id": "e4f63009-129c-4063-999c-fe107b8cfda0",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2,
+      "position": [
+        -360,
+        1940
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "project_visits",
+        "filterType": "string",
+        "filterString": "=id=eq.{{ $node[\"SingleMeeting1\"].json[\"id\"] }}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "MeetingStartURL",
+              "fieldValue": "={{ $json[\"start_url\"] }}"
+            },
+            {
+              "fieldId": "MeetingJoinURL",
+              "fieldValue": "={{ $json[\"join_url\"] }}"
+            },
+            {
+              "fieldId": "MeetingZoomID",
+              "fieldValue": "={{ $json[\"id\"] }}"
+            },
+            {
+              "fieldId": "ZoomUser",
+              "fieldValue": "={{ $json[\"host_email\"] }}"
+            }
+          ]
+        }
+      },
+      "id": "51bbc594-6903-4bac-8557-64ac8fa0fcc4",
+      "name": "Supabase1",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        720,
+        1940
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "project_visits",
+        "returnAll": true,
+        "filterType": "string",
+        "filterString": "=id=neq.{{$json[\"id\"]}}&and=(or(and(visit_planned_start.gte.{{$json[\"visit_planned_start\"].split('+')[0]}},visit_planned_start.lte.{{$json[\"visit_planned_stop\"].split('+')[0]}}),and(visit_planned_stop.gte.{{$json[\"visit_planned_start\"].split('+')[0]}},visit_planned_stop.lte.{{$json[\"visit_planned_stop\"].split('+')[0]}})))"
+      },
+      "id": "27c8fdf0-c9aa-4c87-876d-288880df18c5",
+      "name": "Supabase2",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        20,
+        1940
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Генерация ссылок Zoom встреч",
+        "height": 290.98171738989004,
+        "width": 1454.4614774285449
+      },
+      "id": "3b82dc41-1ae9-4d72-9b40-4644c70302b5",
+      "name": "Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -380,
+        1880
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $node[\"SingleMeeting1\"].json[\"ZoomBaseUrl\"] }}users/{{ $json[\"ZoomUser\"] }}/meetings",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ $node[\"SingleMeeting1\"].json[\"ZoomAuth\"] }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json[\"JSONbody\"] }}",
+        "options": {}
+      },
+      "id": "5c63e1d0-9fb1-475d-99ae-cefb1e56e460",
+      "name": "NewZoomMeeting1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        540,
+        1940
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "JSONbody",
+              "value": "={\n\"topic\": \"{{($json[\"MeetingComment\"] == null) ? 'Meeting topic not provided' : $json[\"MeetingComment\"]}}\",\n\"type\": 2,\n\"start_time\": \"{{$json[\"MeetingStartDateTime\"]}}\",\n\"timezone\": \"Europe/Moscow\",\n\"duration\": 60,\n\"schedule_for\": \"{{$json[\"ZoomUser\"]}}\",\n\"default_password\": true,\n\"settings\": {\n\"auto_recording\": \"cloud\",\n\"join_before_host\": false,\n\"mute_upon_entry\": false\n}\n}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9a22715f-32a1-4810-b24e-ed9eeb498913",
+      "name": "Set5",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        380,
+        1940
+      ]
+    },
+    {
+      "parameters": {
+        "unit": "seconds"
+      },
+      "id": "58472ffa-7b9d-4cd0-b236-24c55b6b2baa",
+      "name": "Wait",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        920,
+        1940
+      ],
+      "webhookId": "c9e8cc80-83ed-461c-95d4-657df0ddbc23"
+    },
+    {
+      "parameters": {
+        "jsCode": "const AllZoomEmails = [\n  \"user01@2t.band\",\n  \"user02@2t.band\",\n  \"user03@2t.band\",\n  \"user04@2t.band\",\n  \"user05@2t.band\",\n  \"user06@2t.band\",\n  \"user07@2t.band\",\n  \"user08@2t.band\",\n  \"user09@2t.band\",\n  \"user10@2t.band\",\n  \"user11@2t.band\",\n  \"user12@2t.band\",\n  \"user13@2t.band\",\n  \"user14@2t.band\",\n  \"user15@2t.band\",\n  \"user16@2t.band\",\n  \"user17@2t.band\",\n  \"user18@2t.band\",\n  \"user19@2t.band\",\n  \"user20@2t.band\",\n  \"user21@2t.band\",\n  \"user22@2t.band\",\n  \"user23@2t.band\",\n  \"user24@2t.band\",\n  \"user25@2t.band\",\n  \"user26@2t.band\",\n  \"user27@2t.band\",\n  \"user28@2t.band\",\n  \"user29@2t.band\"  \n];\n\nvar OverlapVisit = $input.all();\n\nvar UsedEmails = [];\nfor (const item of OverlapVisit) {\n  if(item.json.ZoomUser !== null) {UsedEmails.push(item.json.ZoomUser)};\n}\n//console.log(UsedEmails);\n\nfor (const ZoomAccount of AllZoomEmails) {\n//  console.log(ZoomAccount + ': '+ UsedEmails.includes(ZoomAccount));\n  if(!UsedEmails.includes(ZoomAccount))\n    {\n      $input.first().json.ZoomUser = ZoomAccount;\n      break;\n    };\n}\n\nreturn $input.first();"
+      },
+      "id": "1f8bab4e-6266-493b-a305-3647be087884",
+      "name": "Code1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        200,
+        1940
+      ]
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "c1a7abe5-56dd-44dc-ab8d-1a6b3fe33d7e",
+      "name": "SingleMeeting1",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        1940
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "acf002fe-1986-45ef-b33a-1ab1380c3dc4",
+      "name": "Start",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        -1220,
+        580
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json[\"ZoomBaseUrl\"] }}users/me/recordings",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "from",
+              "value": "2022-10-10"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ $json[\"ZoomAuth\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "1e674c03-1e51-4c7f-b01d-67223923c544",
+      "name": "HTTP Request1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        -780,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json[\"ZoomBaseUrl\"] }}meetings/84706068054",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ $json[\"ZoomAuth\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "597ec3ab-d963-4fac-a524-10d812512e9f",
+      "name": "GetMeeting",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        -780,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json[\"ZoomBaseUrl\"] }}users/me/meetings",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "from",
+              "value": "2022-10-10"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ $json[\"ZoomAuth\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "eca51713-0229-403c-8430-8d1ce17c97bd",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        -780,
+        700
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "9"
+      },
+      "id": "6086f1ca-44d1-49dc-ab7e-ae662a835305",
+      "name": "Zoom Auth1",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        -1040,
+        580
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json[\"ZoomBaseUrl\"] }}users/",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ $json[\"ZoomAuth\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0a69584c-8eaa-42c3-be6c-b9d99ec91fac",
+      "name": "Get users1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        -780,
+        -80
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  {\n    \"Id\": 1174,\n    \"CreatedAt\": \"2022-11-05T09:04:39.915Z\",\n    \"UpdatedAt\": \"2022-11-05T09:04:39.915Z\",\n    \"MeetingStartDateTime\": \"2022-11-05T10:30:00.000Z\",\n    \"MeetingComment\": \"Вторая сессия с другим трекером\",\n    \"MeetingEasyId\": 2,\n    \"MeetingStatus\": \"Planned\",\n    \"MeetingZoomLink\": null,\n    \"MeetingEndDateTime\": \"2022-11-05T11:30:00.000Z\",\n    \"MeetingHash\": null,\n    \"MeetingZoomFile\": null,\n    \"MeetingZoomScreencast\": null,\n    \"nc_meeting_Project\": [],\n    \"nc_meeting_Tracker\": [],\n    \"Trackers List\": [],\n    \"Projects List\": [],\n    \"id\": 2,\n    \"book\": \"2022-11-05 08:37:30\",\n    \"start\": \"2022-11-05 10:30:00\",\n    \"end\": \"2022-11-05 11:30:00\",\n    \"hash\": \"5hEvIAS4Z2cf\",\n    \"location\": \"\",\n    \"notes\": \"Вторая сессия с другим трекером\",\n    \"customerId\": 4,\n    \"providerId\": 6,\n    \"serviceId\": 1,\n    \"googleCalendarId\": null,\n    \"ProjectEasyId\": 4,\n    \"ProjectTitle\": \"2T pilot\",\n    \"ProjectId\": 4,\n    \"TrackerEasyId\": 6,\n    \"TrackerEmail\": \"wowbuckwheat@gmail.com\",\n    \"ZoomUser\": \"user03@2t.band\",\n    \"TrackerId\": 14,\n    \"myNewField\": 1,\n    \"access_token\": \"eyJhbGciOiJIUzUxMiIsInYiOiIyLjAiLCJraWQiOiI3YTNiNjk3NS04MjE3LTQ4NDEtYTE3Ny0xNmUwMWNmMDZlNWQifQ.eyJ2ZXIiOjcsImF1aWQiOiIwMzExNDUzZGExYjNiMjRkYWEzODcyMGRmODAyOTQ5YiIsImNvZGUiOiJscXN4RXk2X1NOS3ExZllmRENxNHJBalFnQ1ZaeWpVMDciLCJpc3MiOiJ6bTpjaWQ6alg3ZXpJNXlReGk4R2xnalJoMV9RUSIsImdubyI6MCwidHlwZSI6MywiYXVkIjoiaHR0cHM6Ly9vYXV0aC56b29tLnVzIiwidWlkIjoiWEdzVjE3YnhRRkNyNl9hXzBBQ1RQQSIsIm5iZiI6MTY2NzYzOTA4MCwiZXhwIjoxNjY3NjQyNjgwLCJpYXQiOjE2Njc2MzkwODAsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJqdGkiOiI3OWQ3MTBlYS03NWNmLTQ5NzctOTIxYi00ZTE4Nzk3ODBmZGQifQ.wiNI5T2ejM8fkcsOop1VOhFJWlXjBG-ZMh-udENkyUZpwbrhnyLUBz9-HQ2Vk1ET9eJNnCccwsm39RDXkUnpnA\",\n    \"token_type\": \"bearer\",\n    \"expires_in\": 3599,\n    \"scope\": \"meeting:master meeting:read:admin meeting:write:admin meeting_token:read:admin:live_streaming meeting_token:read:admin:local_archiving meeting_token:read:admin:local_recording recording:master recording:read:admin recording:write:admin report:master report:read:admin user:master user:read:admin user:write:admin webinar:master webinar:read:admin webinar:write:admin webinar_token:read:admin:live_streaming webinar_token:read:admin:local_archiving webinar_token:read:admin:local_recording\",\n    \"ZoomBaseUrl\": \"https://api.zoom.us/v2/\",\n    \"ZoomAuth\": \"Bearer eyJhbGciOiJIUzUxMiIsInYiOiIyLjAiLCJraWQiOiI3YTNiNjk3NS04MjE3LTQ4NDEtYTE3Ny0xNmUwMWNmMDZlNWQifQ.eyJ2ZXIiOjcsImF1aWQiOiIwMzExNDUzZGExYjNiMjRkYWEzODcyMGRmODAyOTQ5YiIsImNvZGUiOiJscXN4RXk2X1NOS3ExZllmRENxNHJBalFnQ1ZaeWpVMDciLCJpc3MiOiJ6bTpjaWQ6alg3ZXpJNXlReGk4R2xnalJoMV9RUSIsImdubyI6MCwidHlwZSI6MywiYXVkIjoiaHR0cHM6Ly9vYXV0aC56b29tLnVzIiwidWlkIjoiWEdzVjE3YnhRRkNyNl9hXzBBQ1RQQSIsIm5iZiI6MTY2NzYzOTA4MCwiZXhwIjoxNjY3NjQyNjgwLCJpYXQiOjE2Njc2MzkwODAsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJqdGkiOiI3OWQ3MTBlYS03NWNmLTQ5NzctOTIxYi00ZTE4Nzk3ODBmZGQifQ.wiNI5T2ejM8fkcsOop1VOhFJWlXjBG-ZMh-udENkyUZpwbrhnyLUBz9-HQ2Vk1ET9eJNnCccwsm39RDXkUnpnA\"\n  }\n];"
+      },
+      "id": "af06b545-2064-4a42-9a3a-d176ce07411c",
+      "name": "Code2",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        -1040,
+        920
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json[\"ZoomBaseUrl\"] }}users/{{ $json[\"ZoomUser\"] }}/meetings",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{$json[\"ZoomAuth\"]}}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ $json[\"JSONbody\"] }}",
+        "options": {}
+      },
+      "id": "ed831fff-dc1b-4e7c-a8d2-af0d35b86121",
+      "name": "NewZoomMeeting2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        -580,
+        840
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "JSONbody",
+              "value": "={\n\"topic\": \"{{$json[\"MeetingComment\"]}}\",\n\"type\": 2,\n\"start_time\": \"{{$json[\"MeetingStartDateTime\"]}}\",\n\"timezone\": \"Europe/Moscow\",\n\"duration\": 60,\n\"schedule_for\": \"{{$json[\"ZoomUser\"]}}\",\n\"settings\": {\n\t\"auto_recording\": \"cloud\",\n\t\"join_before_host\": false,\n\t\"mute_upon_entry\": false\n\t}\n}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "1edafeae-6ccd-41a8-973a-f6ff6c6d13e2",
+      "name": "Set6",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        -860,
+        920
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json[\"ZoomBaseUrl\"] }}users/{{ $json[\"ZoomUser\"] }}/meetings",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{$json[\"ZoomAuth\"]}}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json[\"JSONbody\"] }}",
+        "options": {}
+      },
+      "id": "7a6846ea-bfc6-4bbc-9305-43a6ce73021b",
+      "name": "NewZoomMeeting3",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        -580,
+        1040
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "={{ $json[\"ZoomBaseUrl\"] }}meetings/84706068054/status",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ $json[\"ZoomAuth\"] }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\"action\":\"end\"}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "id": "57a84ec0-4436-4963-9d09-1f019dfceeab",
+      "name": "StopMeeting1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        -780,
+        520
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-03-27T09:42:09.062Z",
+  "versionId": "71ed34d7-2d25-4784-8fdd-b3d2ffa78f6f"
+}
