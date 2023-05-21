@@ -1,0 +1,88 @@
+{
+  "active": false,
+  "connections": {
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "Initialize_Variables",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-03-18T08:03:39.397Z",
+  "id": "22",
+  "name": "Initial_variables",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "a6ceabcd-8934-457f-803d-6f7b8de14b82",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        340,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "supaBaseURL",
+              "value": "https://supa.stage.2t.band/"
+            },
+            {
+              "name": "supaBasePublicKey",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICAgInJvbGUiOiAiYW5vbiIsCiAgICAiaXNzIjogInN1cGFiYXNlIiwKICAgICJpYXQiOiAxNjY5MTU4MDAwLAogICAgImV4cCI6IDE4MjY5MjQ0MDAKfQ.MKy5X_4WPKpOurvHBoJ5eAxP_iGoqmCZxjmUxp8Ptjo"
+            },
+            {
+              "name": "supaBaseServiceKey",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICAgInJvbGUiOiAic2VydmljZV9yb2xlIiwKICAgICJpc3MiOiAic3VwYWJhc2UiLAogICAgImlhdCI6IDE2NjkxNTgwMDAsCiAgICAiZXhwIjogMTgyNjkyNDQwMAp9.S1Ih0riKG5mR8hJ_2VdCXyaOJK1sbDnoQHNzRN6iV-Y"
+            },
+            {
+              "name": "EAP_URL",
+              "value": "http://calend.stage.2t.band:8081/index.php/api/v1"
+            },
+            {
+              "name": "supaJWTsecret",
+              "value": "ZbjbgNNFRPZqA3011LI8RbuVYqI0jKakyhjcNSerUb5W3zb1zylzNhYCIxDYl0Rw"
+            },
+            {
+              "name": "selectel_ContainerMetaTempURLKey",
+              "value": "XvB$d239"
+            },
+            {
+              "name": "selectel_api",
+              "value": "https://183406.selcdn.ru"
+            },
+            {
+              "name": "zoomWebhookSecret",
+              "value": "dK9o9q5VS-KBbiOTYd9NPQ"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "6b924c36-4e89-496d-8de2-86ede59d373f",
+      "name": "Initialize_Variables",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        580,
+        300
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-04-13T08:19:20.125Z",
+  "versionId": "6770d0dc-96b8-46d2-b571-58632c1dfcf1"
+}
