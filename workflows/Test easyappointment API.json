@@ -1,0 +1,221 @@
+{
+  "active": false,
+  "connections": {
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Add Client",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Set",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2022-10-14T09:01:13.564Z",
+  "id": "1",
+  "name": "Test easyappointment API",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "c3e0c504-1f4c-4a1e-bb11-0b24296c8ef4",
+      "name": "Start",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        240,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json[\"HOSTNAME\"] }}/appointments",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "sort",
+              "value": "-id"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "09d0af37-edb8-4568-9b3c-b26033e75b02",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        660,
+        240
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "39",
+          "name": "EasyAppointments test API"
+        },
+        "httpBasicAuth": {
+          "id": "1",
+          "name": "Unnamed credential"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "HOSTNAME",
+              "value": "http://automate.digigin.eu:8080/index.php/api/v1"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "be0e882d-d6a8-475b-a4c9-6698da6a0eab",
+      "name": "Set",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        420,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json[\"HOSTNAME\"] }}/customers",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "options": {}
+      },
+      "id": "257c7742-cca7-4e0b-b1c1-4ca0892a9f37",
+      "name": "HTTP Request1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        660,
+        420
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "39",
+          "name": "EasyAppointments test API"
+        },
+        "httpBasicAuth": {
+          "id": "1",
+          "name": "Unnamed credential"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "mode": "mergeByFields",
+        "mergeByFields": {
+          "values": [
+            {
+              "field1": "customerId",
+              "field2": "id"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "78bdf057-1d56-46ca-af09-34ef13870ad1",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2,
+      "position": [
+        920,
+        300
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json[\"HOSTNAME\"] }}/customers",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"firstName\": \"Bla\", \n    \"lastName\": \"BlaBla\", \n    \"email\": \"bla23@bla.com\", \n    \"phone\": \"0123456789\",\n    \"address\": \"Some Str. 123\", \n    \"city\": \"Some City\", \n    \"zip\": \"12345\", \n    \"notes\": \"Test customer notes.\"\n}",
+        "options": {}
+      },
+      "id": "9a94321c-0444-4475-a434-3a1a4f9662bb",
+      "name": "Add Client",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        660,
+        40
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "39",
+          "name": "EasyAppointments test API"
+        },
+        "httpBasicAuth": {
+          "id": "1",
+          "name": "EAP admin"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "saveDataSuccessExecution": "all"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2022-10-17T09:35:18.784Z",
+  "versionId": "34afbec6-b73e-4e7e-9c0c-e705b8a1b539"
+}
