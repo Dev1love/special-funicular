@@ -1,0 +1,349 @@
+{
+  "active": true,
+  "connections": {
+    "init_vars": {
+      "main": [
+        [
+          {
+            "node": "update_tl_feedback",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "update_tl_feedback": {
+      "main": [
+        [
+          {
+            "node": "get_meeting_user_id",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "update_artifcat_TL_acceptance": {
+      "main": [
+        [
+          {
+            "node": "init_vars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "add_report_accepted_notif",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "add_report_rejected_notif",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_meeting_user_id": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "add_report_accepted_notif": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "add_report_rejected_notif": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-04-17T07:44:25.334Z",
+  "id": "75",
+  "name": "update_teamlead_artifact_acceptance_",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "626d87be-a730-4851-bd53-3b23bc153be1",
+      "name": "init_vars",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        800,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/artifacts?id=eq.{{ $json.body.artifact_id }}&select=*,artifacts_type(*)",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "is_accepted",
+              "value": "={{ $json.body.is_accepted }}"
+            },
+            {
+              "name": "tl_feedback",
+              "value": "={{ $json.body.comment }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "876f00dd-9170-46e8-ab15-dc637546df1b",
+      "name": "update_tl_feedback",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        960,
+        420
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "71dbe7be-9f32-4e29-aeac-5feecddff076",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1740,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "artifact/teamlead_accept",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "7638b694-8594-47dd-a800-e2496d28f83e",
+      "name": "update_artifcat_TL_acceptance",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        640,
+        420
+      ],
+      "webhookId": "b824d714-e732-4370-b091-9f229598cec4"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $node.update_tl_feedback.json.is_accepted }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "12978118-7ebe-4b65-9aa9-0fd9f3ef761a",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/notifications",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "user_id",
+              "value": "={{ $json.user_id }}"
+            },
+            {
+              "name": "text",
+              "value": "=Спасибо, тимлид высоко оценил ваш {{ $node.update_tl_feedback.json.artifacts_type.type }} "
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "48b90b44-361d-4372-b67f-a71fde387d78",
+      "name": "add_report_accepted_notif",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1520,
+        280
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/notifications",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "user_id",
+              "value": "={{ $json.user_id }}"
+            },
+            {
+              "name": "text",
+              "value": "=Вам необходимо доработать ваш артефакт {{ $node.update_tl_feedback.json.artifacts_type.type }} по встрече {{ $json. }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "473bee17-a847-47cd-9c8c-ebd5d59af8ac",
+      "name": "add_report_rejected_notif",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1520,
+        540
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/meetings?id=eq.{{ $json.meeting_id }}&select=user_id,name",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "is_accepted",
+              "value": "={{ $json.body.is_accepted }}"
+            },
+            {
+              "name": "tl_feedback",
+              "value": "={{ $json.body.comment }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d9fd157c-383d-4820-ba8e-6ba46fff54ba",
+      "name": "get_meeting_user_id",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1120,
+        420
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "102"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-05-20T07:08:00.938Z",
+  "versionId": "3efef067-4694-4da9-8dab-b1f7fe8489d3"
+}
