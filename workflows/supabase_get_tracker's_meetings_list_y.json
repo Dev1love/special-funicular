@@ -1,0 +1,512 @@
+{
+  "active": true,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "init_vars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_error": {
+      "main": [
+        [
+          {
+            "node": "return error",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Filter_meeting_statuses",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "return error(no auth)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "SUPA_TL_team",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "init_vars": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_TL_team": {
+      "main": [
+        [
+          {
+            "node": "SUPA_TL_team1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_TL_team1": {
+      "main": [
+        [
+          {
+            "node": "set_user_ids_filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter_meeting_statuses": {
+      "main": [
+        [
+          {
+            "node": "IF1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "set_user_ids_filter": {
+      "main": [
+        [
+          {
+            "node": "SUPA_meetings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_meetings": {
+      "main": [
+        [
+          {
+            "node": "Code add tracker name to meeting",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code add tracker name to meeting": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "IF_error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF1": {
+      "main": [
+        [
+          {
+            "node": "Item Lists",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "return error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-04-25T11:51:25.593Z",
+  "id": "93",
+  "name": "supabase_get_tracker's_meetings_list_y",
+  "nodes": [
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "httpMethod": "POST",
+        "path": "trackers/meetings_",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "17a574d1-29ee-4ec7-a0de-323a06f8d0e6",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -800,
+        220
+      ],
+      "webhookId": "69ff79ce-14ac-486c-8abc-b5cea5c201ec",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "appsmith->n8n Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "=json",
+        "responseBody": "={{\nJSON.stringify(\n$json)\n}}",
+        "options": {}
+      },
+      "id": "6310a9c9-2104-4832-a1aa-8148accffcfa",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1800,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ !!$json?.error }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "7b5ed392-7180-4137-b6d4-80eef5ad6ae7",
+      "name": "IF_error",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        960,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "=json",
+        "responseBody": "={{\nJSON.stringify({\"error\": $json[\"error\"]})\n}}",
+        "options": {}
+      },
+      "id": "e5f547bd-a3c6-45c2-b8e1-e14f92b3f449",
+      "name": "return error",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/meetings?user_id=in.({{ $json.user_ids_filter.join(',') }})&select=*,meetings_type(name,meeting_recommend,meeting_deadline),meetings_status(name),projects(id,short_id,name,contact_name),artifacts(*)",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4ec1432f-482e-4563-b831-eec88062ee47",
+      "name": "SUPA_meetings",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        280,
+        240
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "10",
+          "name": "Supabase stage"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "respondWith": "=json",
+        "responseBody": "={{\nJSON.stringify({\"error\": \"missing user-access-token header!\"})\n}}",
+        "options": {}
+      },
+      "id": "1c88873e-b806-4951-9f34-801f070b4720",
+      "name": "return error(no auth)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        60
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ !!$json?.error }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "13aad58b-7573-471b-a138-29b047a762a9",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -440,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "ce3395ae-dff4-420b-8ea3-99a96c5f588a",
+      "name": "init_vars",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        -620,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/user_profiles?user_id=eq.{{ $node.Webhook.json.body.user_id }}&select=team_id",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "7ce61c9e-0641-4b69-8c16-7214ca72f35f",
+      "name": "SUPA_TL_team",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        -280,
+        240
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "10",
+          "name": "Supabase stage"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/user_profiles?team_id=eq.{{ $json.team_id }}&select=user_id,firstname,lastname",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "1c5dcd55-94a0-4775-9a55-136c7af819ca",
+      "name": "SUPA_TL_team1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        -80,
+        240
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "10",
+          "name": "Supabase stage"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "let res = [];\nfor (const meet_ of $input.all()) {\n  console.log('meet_', meet_);\n  let meet = meet_.json;\n    const meeting_recommend = new Date(meet?.meetings_type?.meeting_recommend);\n    const meeting_deadline = new Date(meet?.meetings_type?.meeting_deadline);\n    const current_date = new Date()\n\n    if (meeting_recommend < current_date && meeting_deadline > current_date) {\n      if (meet.booked === null) {\n        meet.booking_btn = 'yellow';\n      }\n      if (meet.reported === null) {\n        meet.report_btn = 'yellow';\n      }\n      if (meet.s3_path === null) {\n        meet.artifact_btn = 'yellow';\n      }\n    } else if (meeting_deadline < current_date) {\n      if (meet.booked === null) {\n        meet.booking_btn = 'red';\n      }\n      if (meet.reported === null) {\n        meet.report_btn = 'red';\n      }\n    }\n    else if (meeting_recommend > current_date) {\n      if (meet.booked === null) {\n        meet.booking_btn = 'gray';\n      }\n    }\n  res.push(meet);\n }\nreturn {res:res.sort(function (a, b) {\n            if (a.type > b.type) {\n              return 1;\n            }\n            if (a.type < b.type) {\n              return -1;\n             }\n              return 0;\n            })};"
+      },
+      "id": "68fe4ec2-d643-4570-81d0-f9632cde1aa1",
+      "name": "Filter_meeting_statuses",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        1100,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "for (const item of $input.all()) {\n  //console.log(\"item:\", item.json.user_id);\n  var user_obj = $('set_user_ids_filter').first().json.ids_obj[item.json.user_id]\n  //console.log('user_obj:', user_obj);\n  item.json.firstname = user_obj.firstname;\n  item.json.lastname = user_obj.lastname;\n}\n\nreturn $input.all();"
+      },
+      "id": "c6e0d61c-23a9-429c-9a4d-2c533033c876",
+      "name": "Code add tracker name to meeting",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        480,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "var ids = [];\nvar ids_obj = {};\nfor (const item of $input.all()) {\n  //console.log(\"item.json.user_id:\", item.json.user_id);\n  //console.log(\"item.json:\", item.json);\n  ids.push(item.json.user_id);\n  ids_obj[item.json.user_id] = item.json;\n}\n\nvar out = {\n  user_ids_filter: ids,\n  ids_obj: ids_obj\n}\n//console.log(\"ids:\", ids);\n//console.log(\"ids_obj:\", ids_obj);\n\nreturn {json:out}\n"
+      },
+      "id": "6242d28f-848c-4eae-9d40-7bd2ca78d84b",
+      "name": "set_user_ids_filter",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        100,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.project_id }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "id": "bf149562-3611-4074-aca3-bdc75b895d0d",
+      "name": "Filter",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 1,
+      "position": [
+        700,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "sort",
+        "sortFieldsUi": {
+          "sortField": [
+            {
+              "fieldName": "=res[0].type"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "03c3369e-278a-4890-9835-e3d0568e9a2e",
+      "name": "Item Lists",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 2,
+      "position": [
+        1580,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.res[0] }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "id": "4aa86659-d409-495f-a548-ffb9e343473e",
+      "name": "IF1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1320,
+        420
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "saveDataSuccessExecution": "all",
+    "errorWorkflow": "102"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrencyRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-05-11T16:26:46.971Z",
+  "versionId": "1b8a1af2-a54e-4c01-b277-46a75b4127bd"
+}
