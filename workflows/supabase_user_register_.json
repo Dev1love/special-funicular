@@ -1,0 +1,598 @@
+{
+  "active": true,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "init_vars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "EAP_create_customer",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_save_profile": {
+      "main": [
+        [
+          {
+            "node": "IF1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "init_vars": {
+      "main": [
+        [
+          {
+            "node": "SUPA_check_user",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_signup": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_check_user": {
+      "main": [
+        [
+          {
+            "node": "IF_exist",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_exist": {
+      "main": [
+        [
+          {
+            "node": "return error",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "SUPA_signup",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EAP_create_customer": {
+      "main": [
+        [
+          {
+            "node": "SUPA_save_profile",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond to Webhook2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond to Webhook": {
+      "main": [
+        [
+          {
+            "node": "Set_vars4code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set_vars4code": {
+      "main": [
+        [
+          {
+            "node": "code_verification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-03-24T10:08:15.196Z",
+  "id": "31",
+  "name": "supabase_user_register_",
+  "nodes": [
+    {
+      "parameters": {
+        "jsCode": "console.log('TEST', (new Date()).toLocaleString(), $execution.id);\nconsole.log('$env:', $env['N8N_LOG_LEVEL']);\n\nreturn {\"x\":\"y\"};"
+      },
+      "id": "c72eccd9-268f-449f-987c-595b1ffc998a",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        600,
+        600
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "httpMethod": "POST",
+        "path": "user/register",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "1a8c6ca0-20ad-4c29-9f55-2ec9071b2af1",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -540,
+        220
+      ],
+      "webhookId": "092b9a97-7d86-4931-8dd2-b28c414ed8af",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "appsmith->n8n Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n\"res\": { \"id\": \"{{ $node[\"SUPA_signup\"].json.user.id }}\"}\n}",
+        "options": {}
+      },
+      "id": "5f41eea1-b2fb-4faa-967b-b15bddd605ec",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1100,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json?.user?.id ? $json.user.id : ''}} ",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "id": "3b10d0c6-46af-4631-a45a-09c7d1499970",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        280,
+        240
+      ],
+      "notesInFlow": true,
+      "notes": "check if created"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={ \"error\": \"something went wrong!\" }",
+        "options": {}
+      },
+      "id": "4e600045-4a6b-44db-8e5b-45eec981228f",
+      "name": "Respond to Webhook1",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        860,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.supaBaseURL }}rest/v1/rpc/is_useremail_exist",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $json.supaBasePublicKey }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "email",
+              "value": "={{ $json.body.email }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ec91d5c6-f688-490f-8ef6-953c4ef2b8c6",
+      "name": "SUPA_check_user",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        -240,
+        220
+      ],
+      "notesInFlow": true,
+      "continueOnFail": true,
+      "notes": "check if user registered"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $node[\"init_vars\"].json.supaBaseURL }}rest/v1/user_profiles",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "firstname",
+              "value": "={{ $node[\"init_vars\"].json.body.firstname }}"
+            },
+            {
+              "name": "lastname",
+              "value": "={{ $node[\"init_vars\"].json.body.lastname }}"
+            },
+            {
+              "name": "user_id",
+              "value": "={{ $node[\"SUPA_signup\"].json.user.id }}"
+            },
+            {
+              "name": "eap_user_id",
+              "value": "={{$json.id}}"
+            },
+            {
+              "name": "role_id",
+              "value": "={{ $node[\"init_vars\"].json.body.role_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "24978728-b1ff-4e3e-a67e-499b0130f857",
+      "name": "SUPA_save_profile",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        660,
+        120
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "f2c855d6-8ec5-4311-b5a0-0cef8168060e",
+      "name": "init_vars",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        -400,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "= {{ $node.init_vars.json.supaBaseURL }}auth/v1/signup",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "email",
+              "value": "={{ $node.Webhook.json.body.email }}"
+            },
+            {
+              "name": "password",
+              "value": "={{ $node.Webhook.json.body.password }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4629af1e-d316-426f-82e0-421875f6f9c6",
+      "name": "SUPA_signup",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        120,
+        240
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "e87fe600-964b-47ed-96f7-10746141928c",
+      "name": "IF_exist",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -100,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={ \"error\": \"user already registered\" } ",
+        "options": {}
+      },
+      "id": "cd4cd946-4257-4c2b-9021-c64ae4232ae8",
+      "name": "return error",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        120,
+        80
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $node.init_vars.json.EAP_URL }}/customers",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "firstName",
+              "value": "={{ $node.Webhook.json.body.firstname }}"
+            },
+            {
+              "name": "lastName",
+              "value": "={{ $node.Webhook.json.body.lastname }}"
+            },
+            {
+              "name": "email",
+              "value": "={{ $node.Webhook.json.body.email }}"
+            },
+            {
+              "name": "phone",
+              "value": "\"\""
+            },
+            {
+              "name": "city",
+              "value": "\"\""
+            },
+            {
+              "name": "zip",
+              "value": "\"\""
+            },
+            {
+              "name": "address",
+              "value": "\"\""
+            },
+            {
+              "name": "timezone",
+              "value": "\"Europe/Moscow\""
+            },
+            {
+              "name": "language",
+              "value": "\"english\""
+            },
+            {
+              "name": "notes",
+              "value": "={{ \"autogenerated from n8n, \" + $node?.[\"SUPA_signup\"]?.json?.user.id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "3f7eb73a-ca8a-4acc-bd60-553a31c09649",
+      "name": "EAP_create_customer",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        480,
+        120
+      ],
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "1",
+          "name": "EAP admin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.id }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        },
+        "combineOperation": "any"
+      },
+      "id": "853b193f-869f-42f0-a63d-2e546c3bdaff",
+      "name": "IF1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        860,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={ \"error\": {{ JSON.stringify($node[\"SUPA_save_profile\"].json) }} } ",
+        "options": {}
+      },
+      "id": "b8b928b4-9a4a-48e5-9111-765603bbd93c",
+      "name": "Respond to Webhook2",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "code_verification_params.user_id",
+              "value": "={{ $node[\"SUPA_signup\"].json.user.id }}"
+            },
+            {
+              "name": "code_verification_params.user_email",
+              "value": "={{ $node.Webhook.json.body.email }}"
+            },
+            {
+              "name": "code_verification_params.operation",
+              "value": "code_generate"
+            },
+            {
+              "name": "code_verification_params.firstname",
+              "value": "={{ $node[\"init_vars\"].json.body.firstname }}"
+            },
+            {
+              "name": "code_verification_params.lastname",
+              "value": "={{ $node[\"init_vars\"].json.body.lastname }}"
+            },
+            {
+              "name": "code_verification_params.role_id",
+              "value": "={{ $node[\"init_vars\"].json.body.role_id }}"
+            }
+          ]
+        },
+        "options": {
+          "dotNotation": true
+        }
+      },
+      "id": "af96f4ae-573e-4f49-994b-d7ca9375abc8",
+      "name": "Set_vars4code",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        1300,
+        -40
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "100"
+      },
+      "id": "d7f34b4b-1731-4130-a625-79196fd4f1a2",
+      "name": "code_verification",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        1480,
+        -40
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "saveDataSuccessExecution": "all",
+    "errorWorkflow": "102"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrencyRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-05-11T17:03:31.977Z",
+  "versionId": "73961e54-92b2-45e8-ab55-60460d95c63f"
+}
