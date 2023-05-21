@@ -1,0 +1,280 @@
+{
+  "active": false,
+  "connections": {
+    "on_file_upload": {
+      "main": [
+        [
+          {
+            "node": "get_path",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_path": {
+      "main": [
+        [
+          {
+            "node": "init_vars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "init_vars": {
+      "main": [
+        [
+          {
+            "node": "sel_auth",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "sel_auth": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Sel_upload",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "S3_upload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sel_upload": {
+      "main": [
+        [
+          {
+            "node": "success_response2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "S3_upload": {
+      "main": [
+        [
+          {
+            "node": "success_response2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-04-11T11:29:33.229Z",
+  "id": "65",
+  "name": "simple file upload",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "file_temp_upload",
+        "responseMode": "responseNode",
+        "options": {
+          "binaryData": false
+        }
+      },
+      "id": "54cefa32-b1d1-4d27-9273-64bd44a3df88",
+      "name": "on_file_upload",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -400,
+        -480
+      ],
+      "webhookId": "0ca1f24a-9fe2-4ce4-99b4-60282dce111c"
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "webhookPath",
+              "value": "={{ $input.params.path}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0af092bd-22a0-4f71-bed3-d2e0842d450e",
+      "name": "get_path",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        -480
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "e2a823c2-10d5-465c-ae11-27f5a9a37aba",
+      "name": "init_vars",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        0,
+        -480
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "6"
+      },
+      "id": "2a3a6499-0913-4605-b4b5-115d74cb04d3",
+      "name": "sel_auth",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        160,
+        -480
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{\njson: {\n  //file_name: 'file4.png'\n},\nbinary: $('on_file_upload').first().binary\n}];"
+      },
+      "id": "6a0e441f-7bbe-4ad4-aa60-76254cd9d160",
+      "name": "Code1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        360,
+        -480
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "upload",
+        "bucketName": "2T.Drive",
+        "fileName": "=project1/path1/{{ $binary.data.fileName }}",
+        "additionalFields": {}
+      },
+      "id": "9bd79b08-977d-400d-8fdd-d868cb168e21",
+      "name": "S3_upload",
+      "type": "n8n-nodes-base.s3",
+      "typeVersion": 1,
+      "position": [
+        660,
+        -360
+      ],
+      "credentials": {
+        "s3": {
+          "id": "13",
+          "name": "S3 account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "={{ $node[\"sel_auth\"].json.storage_url }}/2T.Drive/testFolder/{{ $binary.data.fileName }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Auth-Token",
+              "value": "={{ $node[\"sel_auth\"].json.storage_token }}"
+            },
+            {
+              "name": "X-Object-Meta-userparam1",
+              "value": "uservalue1"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "binaryData",
+        "inputDataFieldName": "data",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "073ee69f-a379-4226-835f-0d9b7d3f7e4e",
+      "name": "Sel_upload",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        660,
+        -680
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\"res\":\"file upload\"}",
+        "options": {}
+      },
+      "id": "e5a6ccb2-b55d-40c5-ad6d-fc5c1d27c7d2",
+      "name": "success_response2",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        880,
+        -600
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "125633b5-2036-43ec-a0a7-2a41fd0293b1",
+      "name": "Execute Command",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        -100,
+        -780
+      ]
+    },
+    {
+      "parameters": {
+        "executeOnce": false,
+        "command": "=curl -L -o '{{ $node[\"FullRecordData\"].json[\"S3Folder\"] }}{{ $node[\"FullRecordData\"].json[\"ProjectFolder\"] }}/{{ $node[\"FullRecordData\"].json[\"MeetingFolder\"] }}/{{ $node[\"FullRecordData\"].json[\"FileName\"] }}_{{ $node[\"FullRecordData\"].json[\"FileSuffix\"] }}.{{ $node[\"Switch\"].json[\"body\"][\"payload\"][\"object\"][\"recording_files\"][0][\"file_extension\"] }}' \\\n--url {{ $node[\"FullRecordData\"].json[\"body\"][\"payload\"][\"object\"][\"recording_files\"][0][\"download_url\"] }} \\\n--header 'authorization: Bearer {{ $node[\"FullRecordData\"].json[\"body\"][\"download_token\"] }}' \\\n--header 'content-type: application/json'"
+      },
+      "id": "b23490c6-619b-4b13-bff6-2704a4223b66",
+      "name": "curl",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        200,
+        -780
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-04-11T14:22:38.388Z",
+  "versionId": "7951145c-e8e1-4a85-916b-21475d06d049"
+}
