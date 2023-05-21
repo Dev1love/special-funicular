@@ -1,0 +1,239 @@
+{
+  "active": true,
+  "connections": {
+    "init_vars": {
+      "main": [
+        [
+          {
+            "node": "get_user_project_with_all data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_projects_reports": {
+      "main": [
+        [
+          {
+            "node": "init_vars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_user_project_with_all data": {
+      "main": [
+        [
+          {
+            "node": "Item Lists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-04-17T08:12:17.526Z",
+  "id": "77",
+  "name": "get_project_with_reports_artifacts - project card",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "59035e2a-a1a9-4f13-96e9-0a602cc799fd",
+      "name": "init_vars",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        1100,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "e373d33e-4465-497e-8c5e-a4d492c15314",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1980,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "= {{ $json[\"0\"].id }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "id": "dc7efe21-09e7-4457-a2d7-58b3ccef026d",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1780,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"error\":{{ $json[\"error\"] ? $JSON.stringify($json.error) : \"null\"}}}",
+        "options": {}
+      },
+      "id": "c43567b5-fdad-4dfd-90ee-4b3301e8f753",
+      "name": "Respond to Webhook1",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1980,
+        540
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "httpMethod": "POST",
+        "path": "project/card",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "308749db-8ea8-4585-97a4-25aed2da4374",
+      "name": "get_projects_reports",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        960,
+        460
+      ],
+      "webhookId": "0103ed2a-51f0-476b-9412-273b6d982435",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "appsmith->n8n Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/projects?id=eq.{{ $json.body.project_id }}&select=*,meetings(*,reports(*),artifacts(*),meetings_type(*),meetings_status(*)),user_projects(user_profile_id,user_profiles(firstname,lastname))",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0c1589e2-5986-409d-87b5-605ee7dcb4a6",
+      "name": "get_user_project_with_all data",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1220,
+        460
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "let res = [];\nfor (let meet of $json.data[0].meetings) {\n    const meeting_recommend = new Date(meet?.meetings_type?.meeting_recommend);\n    const meeting_deadline = new Date(meet?.meetings_type?.meeting_deadline);\n    const current_date = new Date()\n\n    if (meeting_recommend < current_date && meeting_deadline > current_date) {\n      if (meet.booked === null) {\n        meet.booking_btn = 'yellow';\n      }\n      if (meet.reported === null) {\n        meet.report_btn = 'yellow';\n      }\n      if (meet.s3_path === null) {\n        meet.artifact_btn = 'yellow';\n      }\n    } else if (meeting_deadline < current_date) {\n      if (meet.booked === null) {\n        meet.booking_btn = 'red';\n      }\n      if (meet.reported === null) {\n        meet.report_btn = 'red';\n      }\n    }\n    else if (meeting_recommend > current_date) {\n      if (meet.booked === null) {\n        meet.booking_btn = 'gray';\n      }\n    }\n  res.push(meet);\n }\nreturn {...$json.data[0], meetings: res};"
+      },
+      "id": "627df54f-94a5-4591-b6ff-038730a8d298",
+      "name": "Code1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        1600,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "aggregateItems",
+        "aggregate": "aggregateAllItemData"
+      },
+      "id": "4b9ca2f9-655c-426c-b8e1-5cdb43af6c8f",
+      "name": "Item Lists",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 2,
+      "position": [
+        1440,
+        460
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "102"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-05-11T16:57:33.988Z",
+  "versionId": "2375b3fb-5ec2-4763-b38e-dbdb8ec24639"
+}
