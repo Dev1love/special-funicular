@@ -1,0 +1,71 @@
+{
+  "active": false,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "n8n",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-04-25T07:50:25.704Z",
+  "id": "90",
+  "name": "time trigger dispatcher wip",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "create",
+        "workflowObject": "{\n\"name\": \"My workflow1\", \n\"nodes\": [\n    {\n      \"parameters\": {\n        \"fromEmail\": \"admin@2t.band\",\n        \"toEmail\": \"yureckey@gmail.com\",\n        \"emailFormat\": \"html\",\n        \"html\": \"Greetings!\",\n        \"options\": {}\n      },\n      \"id\": \"dc611fee-7aa3-43c2-8bbc-f251251df154\",\n      \"name\": \"Send Email\",\n      \"type\": \"n8n-nodes-base.emailSend\",\n      \"typeVersion\": 2,\n      \"position\": [\n        800,\n        320\n      ],\n      \"credentials\": {\n        \"smtp\": {\n          \"id\": \"3\",\n          \"name\": \"SMTP account\"\n        }\n      }\n    },\n    {\n      \"parameters\": {\n        \"rule\": {\n          \"interval\": [\n            {\n              \"field\": \"cronExpression\",\n              \"expression\": \"0 14 26 4 ? *\"\n            }\n          ]\n        }\n      },\n      \"id\": \"2661f7d7-46f1-4e76-a687-4a90e15e4710\",\n      \"name\": \"Schedule Trigger\",\n      \"type\": \"n8n-nodes-base.scheduleTrigger\",\n      \"typeVersion\": 1,\n      \"position\": [\n        580,\n        320\n      ]\n    }\n  ],\n  \"connections\": {\n    \"Schedule Trigger\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"Send Email\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    }\n  },\n\"settings\": {}\n}\n"
+      },
+      "id": "d2364ac0-f8c1-473c-a664-79878f57481c",
+      "name": "n8n",
+      "type": "n8n-nodes-base.n8n",
+      "typeVersion": 1,
+      "position": [
+        660,
+        300
+      ],
+      "credentials": {
+        "n8nApi": {
+          "id": "17",
+          "name": "n8n account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "httpMethod": "POST",
+        "path": "create_n8n_wip",
+        "options": {}
+      },
+      "id": "950d47f0-a455-4101-ab2f-98eaf1a4f396",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        420,
+        300
+      ],
+      "webhookId": "94194304-a745-4f70-b926-3cf975c2ac81",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "appsmith->n8n Header Auth account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-04-25T09:32:15.818Z",
+  "versionId": "68cf3916-fcab-4de0-9757-ccc50c69d90e"
+}
