@@ -1,0 +1,1600 @@
+{
+  "active": false,
+  "connections": {
+    "Zoom Auth": {
+      "main": [
+        [
+          {
+            "node": "Get users",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "Zoom Auth",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get users": {
+      "main": [
+        [
+          {
+            "node": "Set",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set": {
+      "main": [
+        [
+          {
+            "node": "Item Lists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2022-11-14T09:24:31.542Z",
+  "id": "13",
+  "name": "Get All Zoom Users",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "df2888b8-8480-4941-b587-6be0a57ca514",
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        500,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json[\"ZoomBaseUrl\"] }}users/",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ $json[\"ZoomAuth\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5e449b78-9f46-44a6-9fcd-c50790bfcf1b",
+      "name": "Get users",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        820,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "9"
+      },
+      "id": "4b07e02a-8f4a-48ed-8794-76f901376bf2",
+      "name": "Zoom Auth",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        640,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "UserEmails",
+              "value": "={{ $jmespath($json[\"users\"],\"[].email\") }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "162a8190-5f73-42ae-ae40-85f2006a41c4",
+      "name": "Set",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        1000,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "UserEmails",
+        "options": {}
+      },
+      "id": "52cc6799-657f-4110-a0f7-b62ef6099c97",
+      "name": "Item Lists",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 1,
+      "position": [
+        1180,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json[\"UserEmails\"] }}",
+              "operation": "startsWith",
+              "value2": "user"
+            }
+          ]
+        }
+      },
+      "id": "762dde23-819a-4271-80a6-953729fc771e",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1360,
+        400
+      ]
+    }
+  ],
+  "pinData": {
+    "Zoom Auth": [
+      {
+        "json": {
+          "access_token": "eyJhbGciOiJIUzUxMiIsInYiOiIyLjAiLCJraWQiOiJlMDBkYzg5Ni02MDNkLTQ4NDctYmQ1MS1mMzI3YjU3M2QwMTcifQ.eyJ2ZXIiOjgsImF1aWQiOiIwMzExNDUzZGExYjNiMjRkYWEzODcyMGRmODAyOTQ5YiIsImNvZGUiOiJPcmxBd0pOMFIxeS00YzdtSjhIb0J3TVhrcmRYbDIyZVIiLCJpc3MiOiJ6bTpjaWQ6alg3ZXpJNXlReGk4R2xnalJoMV9RUSIsImdubyI6MCwidHlwZSI6MywiYXVkIjoiaHR0cHM6Ly9vYXV0aC56b29tLnVzIiwidWlkIjoiWEdzVjE3YnhRRkNyNl9hXzBBQ1RQQSIsIm5iZiI6MTY3ODM0ODM0MiwiZXhwIjoxNjc4MzUxOTQyLCJpYXQiOjE2NzgzNDgzNDIsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJqdGkiOiIzOTMwYmI5Yy1jM2Q3LTQxMmEtOTA4Mi1lODdhZWZjZDc2MzkifQ.zv7ZaIYVtXgEGAxB9LyDqwWxCwSrg9Ill68c1ojpH62TF70Rc6ghSE0VaHk3s1Un40xKSZ3i2yKYjNiLtZ1IDQ",
+          "token_type": "bearer",
+          "expires_in": 3599,
+          "scope": "user:write:admin meeting_token:read:admin:local_recording webinar:master user:read:admin recording:write:admin report:master report:read:admin meeting_token:read:admin:live_streaming webinar:read:admin recording:master webinar_token:read:admin:local_recording user:master meeting:master meeting_token:read:admin:local_archiving webinar_token:read:admin:local_archiving webinar:write:admin webinar_token:read:admin:live_streaming meeting:read:admin recording:read:admin meeting:write:admin",
+          "ZoomBaseUrl": "https://api.zoom.us/v2/",
+          "ZoomAuth": "Bearer eyJhbGciOiJIUzUxMiIsInYiOiIyLjAiLCJraWQiOiJlMDBkYzg5Ni02MDNkLTQ4NDctYmQ1MS1mMzI3YjU3M2QwMTcifQ.eyJ2ZXIiOjgsImF1aWQiOiIwMzExNDUzZGExYjNiMjRkYWEzODcyMGRmODAyOTQ5YiIsImNvZGUiOiJPcmxBd0pOMFIxeS00YzdtSjhIb0J3TVhrcmRYbDIyZVIiLCJpc3MiOiJ6bTpjaWQ6alg3ZXpJNXlReGk4R2xnalJoMV9RUSIsImdubyI6MCwidHlwZSI6MywiYXVkIjoiaHR0cHM6Ly9vYXV0aC56b29tLnVzIiwidWlkIjoiWEdzVjE3YnhRRkNyNl9hXzBBQ1RQQSIsIm5iZiI6MTY3ODM0ODM0MiwiZXhwIjoxNjc4MzUxOTQyLCJpYXQiOjE2NzgzNDgzNDIsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJqdGkiOiIzOTMwYmI5Yy1jM2Q3LTQxMmEtOTA4Mi1lODdhZWZjZDc2MzkifQ.zv7ZaIYVtXgEGAxB9LyDqwWxCwSrg9Ill68c1ojpH62TF70Rc6ghSE0VaHk3s1Un40xKSZ3i2yKYjNiLtZ1IDQ"
+        }
+      }
+    ],
+    "Get users": [
+      {
+        "json": {
+          "page_count": 2,
+          "page_number": 1,
+          "page_size": 30,
+          "total_records": 31,
+          "next_page_token": "lWLh5ol7y5roD7A9Ry7JQEolpTrzFrEZgU2",
+          "users": [
+            {
+              "id": "-FhaR95qSsShG31X03qQHQ",
+              "first_name": "useruser08@2t.band",
+              "last_name": "08",
+              "display_name": "useruser08@2t.band 08",
+              "email": "user08@2t.band",
+              "type": 1,
+              "pmi": 5214931213,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T08:11:53Z",
+              "last_login_time": "2022-06-02T15:33:50Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:42Z"
+            },
+            {
+              "id": "1ecFZ7GrRvG-d0dOfgNP1A",
+              "first_name": "Support",
+              "last_name": "Team",
+              "display_name": "Support Team",
+              "email": "user01@2t.band",
+              "type": 2,
+              "pmi": 6721870431,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "dept": "",
+              "created_at": "2022-05-28T14:33:28Z",
+              "last_login_time": "2023-03-08T17:53:46Z",
+              "last_client_version": "5.13.3.11494(win)",
+              "language": "ru-RU",
+              "phone_number": "",
+              "status": "active",
+              "role_id": "1",
+              "user_created_at": "2022-05-28T14:30:57Z"
+            },
+            {
+              "id": "2ji4r8soSt2pZ2Q_ivk5uQ",
+              "first_name": "user14@2t.band",
+              "last_name": "14",
+              "display_name": "user14@2t.band 14",
+              "email": "user14@2t.band",
+              "type": 1,
+              "pmi": 4126009981,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T07:43:34Z",
+              "last_login_time": "2022-06-02T15:47:51Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:44Z"
+            },
+            {
+              "id": "2SJnmDx5Qr-T2pHF4G2qZw",
+              "first_name": "user26@2t.band",
+              "last_name": "26",
+              "display_name": "user26@2t.band 26",
+              "email": "user26@2t.band",
+              "type": 1,
+              "pmi": 4060681861,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T08:36:50Z",
+              "last_login_time": "2022-06-02T16:26:01Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:46Z"
+            },
+            {
+              "id": "6qxBWtWHRbqj7MAr8HJr6A",
+              "first_name": "user07@2t.band",
+              "last_name": "07",
+              "display_name": "user07@2t.band 07",
+              "email": "user07@2t.band",
+              "type": 1,
+              "pmi": 5946795467,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T08:10:42Z",
+              "last_login_time": "2022-06-02T15:32:04Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:42Z"
+            },
+            {
+              "id": "6YUfkQFsRieDciJ9MtYYkg",
+              "first_name": "user22@2t.band",
+              "last_name": "22",
+              "display_name": "user22@2t.band 22",
+              "email": "user22@2t.band",
+              "type": 1,
+              "pmi": 5201647827,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T08:29:13Z",
+              "last_login_time": "2022-06-02T16:15:38Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:46Z"
+            },
+            {
+              "id": "AuSr_PjBSpKJeF54MChUeg",
+              "first_name": "user20@2t.band",
+              "last_name": "user20",
+              "display_name": "user20@2t.band user20",
+              "email": "user20@2t.band",
+              "type": 1,
+              "pmi": 3303636503,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T07:35:22Z",
+              "last_login_time": "2022-06-02T16:11:41Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:45Z"
+            },
+            {
+              "id": "b-7B99HpTGS2X7NAxp-p3Q",
+              "first_name": "user12@2t.band",
+              "last_name": "12",
+              "display_name": "user12@2t.band 12",
+              "email": "user12@2t.band",
+              "type": 1,
+              "pmi": 6997124165,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T08:21:07Z",
+              "last_login_time": "2022-06-02T15:41:17Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:43Z"
+            },
+            {
+              "id": "E17uvYLYShim9uTnwyagJQ",
+              "first_name": "user27@2t.band",
+              "last_name": "27",
+              "display_name": "user27@2t.band 27",
+              "email": "user27@2t.band",
+              "type": 1,
+              "pmi": 3177037677,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T09:14:06Z",
+              "last_login_time": "2022-06-02T16:29:17Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:47Z"
+            },
+            {
+              "id": "FKswkUpcRcmlUjxamh3EGQ",
+              "first_name": "user23@2t.band",
+              "last_name": "23",
+              "display_name": "user23@2t.band 23",
+              "email": "user23@2t.band",
+              "type": 1,
+              "pmi": 9698726689,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T08:30:17Z",
+              "last_login_time": "2022-06-02T16:17:39Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:46Z"
+            },
+            {
+              "id": "iOknchZiS3CgUsiXDkdNNw",
+              "first_name": "user25@2t.band",
+              "last_name": "25",
+              "display_name": "user25@2t.band",
+              "email": "user25@2t.band",
+              "type": 1,
+              "pmi": 7073260707,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T08:33:42Z",
+              "last_login_time": "2022-06-02T16:24:14Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:46Z"
+            },
+            {
+              "id": "Jv4WY-LPR-uWtJDb-1ls-Q",
+              "first_name": "user28@2t.band",
+              "last_name": "28",
+              "display_name": "user28@2t.band 28",
+              "email": "user28@2t.band",
+              "type": 1,
+              "pmi": 3522555947,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T09:16:34Z",
+              "last_login_time": "2022-06-02T16:31:28Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:47Z"
+            },
+            {
+              "id": "KhbGeBToTWO5vH_UWFUnGw",
+              "first_name": "user30@2t.band",
+              "last_name": "30",
+              "display_name": "user30@2t.band 30",
+              "email": "user30@2t.band",
+              "type": 1,
+              "pmi": 6742014274,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "dept": "",
+              "created_at": "2022-05-29T07:22:08Z",
+              "last_login_time": "2022-06-02T16:35:05Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:47Z"
+            },
+            {
+              "id": "M1o5p3GBQ4C6XjmGL-FN7A",
+              "first_name": "user05@2t.band",
+              "last_name": "05",
+              "display_name": "user05@2t.band 05",
+              "email": "user05@2t.band",
+              "type": 1,
+              "pmi": 7519937098,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T08:06:27Z",
+              "last_login_time": "2022-06-02T15:04:24Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:42Z"
+            },
+            {
+              "id": "nmTKawJ0S6SRGEDci8xX2w",
+              "first_name": "user13@2t.band",
+              "last_name": "13",
+              "display_name": "user13@2t.band 13",
+              "email": "user13@2t.band",
+              "type": 1,
+              "pmi": 8696228128,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T08:22:15Z",
+              "last_login_time": "2022-06-02T15:46:05Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:44Z"
+            },
+            {
+              "id": "oTtG2eT6Sq21oHrnTX47lw",
+              "first_name": "user21@2t.band",
+              "last_name": "21",
+              "display_name": "user21@2t.band 21",
+              "email": "user21@2t.band",
+              "type": 1,
+              "pmi": 8670019401,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T08:25:50Z",
+              "last_login_time": "2022-06-02T16:13:12Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:45Z"
+            },
+            {
+              "id": "pvBK-khkTGuSl0kQy21LkQ",
+              "first_name": "user10@2t.band",
+              "last_name": "10",
+              "display_name": "user10@2t.band 10",
+              "email": "user10@2t.band",
+              "type": 1,
+              "pmi": 8589185749,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T08:19:34Z",
+              "last_login_time": "2022-06-02T15:37:46Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:43Z"
+            },
+            {
+              "id": "Q9ZA_KKORxestxtROweNbQ",
+              "first_name": "user11@2t.band",
+              "last_name": "11",
+              "display_name": "user11@2t.band 11",
+              "email": "user11@2t.band",
+              "type": 1,
+              "pmi": 7447475729,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T07:25:59Z",
+              "last_login_time": "2022-06-02T15:39:50Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:43Z"
+            },
+            {
+              "id": "RGVivyVBRmqmk_sxXV6Q4Q",
+              "first_name": "user03@2t.band",
+              "last_name": "03",
+              "display_name": "user03@2t.band 03",
+              "email": "user03@2t.band",
+              "type": 1,
+              "pmi": 9451107940,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T07:58:06Z",
+              "last_login_time": "2022-06-02T14:46:36Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:41Z"
+            },
+            {
+              "id": "rP3rGo5URNSrjHEI-ePBww",
+              "first_name": "user09@2t.band",
+              "last_name": "09",
+              "display_name": "user09@2t.band 09",
+              "email": "user09@2t.band",
+              "type": 1,
+              "pmi": 5094178566,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T08:17:26Z",
+              "last_login_time": "2022-06-02T15:36:00Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:43Z"
+            },
+            {
+              "id": "S0ZaPlQiR7-FOr6lJtX9LA",
+              "first_name": "user02@2t.band",
+              "last_name": "02",
+              "display_name": "user02@2t.band 02",
+              "email": "user02@2t.band",
+              "type": 1,
+              "pmi": 3423333233,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T07:55:18Z",
+              "last_login_time": "2022-06-02T14:42:47Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:41Z"
+            },
+            {
+              "id": "Sgf-4QOtQ3OKys1Ze9PeNA",
+              "first_name": "user04@2t.band",
+              "last_name": "user04",
+              "display_name": "user04@2t.band user04",
+              "email": "user04@2t.band",
+              "type": 1,
+              "pmi": 3725389545,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T08:01:02Z",
+              "last_login_time": "2022-06-02T15:02:25Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:42Z"
+            },
+            {
+              "id": "sNMNZ0sFSuaUycqMRy2gdQ",
+              "first_name": "user17@2t.band",
+              "last_name": "17",
+              "display_name": "user17@2t.band 17",
+              "email": "user17@2t.band",
+              "type": 1,
+              "pmi": 7698817429,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T07:45:11Z",
+              "last_login_time": "2022-06-02T16:05:35Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:44Z"
+            },
+            {
+              "id": "T-rpTtoFRhqdRkI8atyijQ",
+              "first_name": "user29@2t.band",
+              "last_name": "29",
+              "display_name": "user29@2t.band 29",
+              "email": "user29@2t.band",
+              "type": 1,
+              "pmi": 2509344361,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T09:18:49Z",
+              "last_login_time": "2022-06-02T16:33:20Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:47Z"
+            },
+            {
+              "id": "U4OhGVaSRZqqfpHivHvThA",
+              "first_name": "user19@2t.band",
+              "last_name": "user19",
+              "display_name": "user19@2t.band user19",
+              "email": "user19@2t.band",
+              "type": 1,
+              "pmi": 9753111979,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T07:37:48Z",
+              "last_login_time": "2022-06-02T16:09:55Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:45Z"
+            },
+            {
+              "id": "ve3hldPTTqeBvgV_oov20g",
+              "first_name": "user24@2t.band",
+              "last_name": "24",
+              "display_name": "user24@2t.band 24",
+              "email": "user24@2t.band",
+              "type": 1,
+              "pmi": 4700260109,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T07:52:09Z",
+              "last_login_time": "2022-06-02T16:20:10Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:46Z"
+            },
+            {
+              "id": "VQ3NmlyxSqOosDicwld37w",
+              "first_name": "useruser16@2t.band",
+              "last_name": "16",
+              "display_name": "useruser16@2t.band 16",
+              "email": "user16@2t.band",
+              "type": 1,
+              "pmi": 7835635014,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T08:24:46Z",
+              "last_login_time": "2022-06-02T15:56:26Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:44Z"
+            },
+            {
+              "id": "Wv3f7Gn0SnOZTdddobFYcg",
+              "first_name": "user",
+              "last_name": "06",
+              "display_name": "user 06",
+              "email": "user06@2t.band",
+              "type": 1,
+              "pmi": 2043460662,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "dept": "",
+              "created_at": "2022-06-02T15:09:01Z",
+              "last_login_time": "2022-06-02T15:09:02Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:42Z"
+            },
+            {
+              "id": "x-I3M-NlTESwZClA9KrJyg",
+              "first_name": "user15@2t.band",
+              "last_name": "15",
+              "display_name": "user15@2t.band 15",
+              "email": "user15@2t.band",
+              "type": 1,
+              "pmi": 6318817591,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T08:23:21Z",
+              "last_login_time": "2022-06-02T15:51:45Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:44Z"
+            },
+            {
+              "id": "XGsV17bxQFCr6_a_0ACTPA",
+              "first_name": "Main",
+              "last_name": "2tband",
+              "display_name": "Main 2tband",
+              "email": "main00@2t.band",
+              "type": 2,
+              "pmi": 4095166705,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-28T17:05:54Z",
+              "last_login_time": "2023-03-08T17:56:43Z",
+              "last_client_version": "5.11.10.8200(win)",
+              "language": "ru-RU",
+              "phone_number": "",
+              "status": "active",
+              "role_id": "0",
+              "user_created_at": "2022-05-28T17:04:26Z"
+            }
+          ]
+        }
+      }
+    ],
+    "Set": [
+      {
+        "json": {
+          "page_count": 2,
+          "page_number": 1,
+          "page_size": 30,
+          "total_records": 31,
+          "next_page_token": "lWLh5ol7y5roD7A9Ry7JQEolpTrzFrEZgU2",
+          "users": [
+            {
+              "id": "-FhaR95qSsShG31X03qQHQ",
+              "first_name": "useruser08@2t.band",
+              "last_name": "08",
+              "display_name": "useruser08@2t.band 08",
+              "email": "user08@2t.band",
+              "type": 1,
+              "pmi": 5214931213,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T08:11:53Z",
+              "last_login_time": "2022-06-02T15:33:50Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:42Z"
+            },
+            {
+              "id": "1ecFZ7GrRvG-d0dOfgNP1A",
+              "first_name": "Support",
+              "last_name": "Team",
+              "display_name": "Support Team",
+              "email": "user01@2t.band",
+              "type": 2,
+              "pmi": 6721870431,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "dept": "",
+              "created_at": "2022-05-28T14:33:28Z",
+              "last_login_time": "2023-03-08T17:53:46Z",
+              "last_client_version": "5.13.3.11494(win)",
+              "language": "ru-RU",
+              "phone_number": "",
+              "status": "active",
+              "role_id": "1",
+              "user_created_at": "2022-05-28T14:30:57Z"
+            },
+            {
+              "id": "2ji4r8soSt2pZ2Q_ivk5uQ",
+              "first_name": "user14@2t.band",
+              "last_name": "14",
+              "display_name": "user14@2t.band 14",
+              "email": "user14@2t.band",
+              "type": 1,
+              "pmi": 4126009981,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T07:43:34Z",
+              "last_login_time": "2022-06-02T15:47:51Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:44Z"
+            },
+            {
+              "id": "2SJnmDx5Qr-T2pHF4G2qZw",
+              "first_name": "user26@2t.band",
+              "last_name": "26",
+              "display_name": "user26@2t.band 26",
+              "email": "user26@2t.band",
+              "type": 1,
+              "pmi": 4060681861,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T08:36:50Z",
+              "last_login_time": "2022-06-02T16:26:01Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:46Z"
+            },
+            {
+              "id": "6qxBWtWHRbqj7MAr8HJr6A",
+              "first_name": "user07@2t.band",
+              "last_name": "07",
+              "display_name": "user07@2t.band 07",
+              "email": "user07@2t.band",
+              "type": 1,
+              "pmi": 5946795467,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T08:10:42Z",
+              "last_login_time": "2022-06-02T15:32:04Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:42Z"
+            },
+            {
+              "id": "6YUfkQFsRieDciJ9MtYYkg",
+              "first_name": "user22@2t.band",
+              "last_name": "22",
+              "display_name": "user22@2t.band 22",
+              "email": "user22@2t.band",
+              "type": 1,
+              "pmi": 5201647827,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T08:29:13Z",
+              "last_login_time": "2022-06-02T16:15:38Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:46Z"
+            },
+            {
+              "id": "AuSr_PjBSpKJeF54MChUeg",
+              "first_name": "user20@2t.band",
+              "last_name": "user20",
+              "display_name": "user20@2t.band user20",
+              "email": "user20@2t.band",
+              "type": 1,
+              "pmi": 3303636503,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T07:35:22Z",
+              "last_login_time": "2022-06-02T16:11:41Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:45Z"
+            },
+            {
+              "id": "b-7B99HpTGS2X7NAxp-p3Q",
+              "first_name": "user12@2t.band",
+              "last_name": "12",
+              "display_name": "user12@2t.band 12",
+              "email": "user12@2t.band",
+              "type": 1,
+              "pmi": 6997124165,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T08:21:07Z",
+              "last_login_time": "2022-06-02T15:41:17Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:43Z"
+            },
+            {
+              "id": "E17uvYLYShim9uTnwyagJQ",
+              "first_name": "user27@2t.band",
+              "last_name": "27",
+              "display_name": "user27@2t.band 27",
+              "email": "user27@2t.band",
+              "type": 1,
+              "pmi": 3177037677,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T09:14:06Z",
+              "last_login_time": "2022-06-02T16:29:17Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:47Z"
+            },
+            {
+              "id": "FKswkUpcRcmlUjxamh3EGQ",
+              "first_name": "user23@2t.band",
+              "last_name": "23",
+              "display_name": "user23@2t.band 23",
+              "email": "user23@2t.band",
+              "type": 1,
+              "pmi": 9698726689,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T08:30:17Z",
+              "last_login_time": "2022-06-02T16:17:39Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:46Z"
+            },
+            {
+              "id": "iOknchZiS3CgUsiXDkdNNw",
+              "first_name": "user25@2t.band",
+              "last_name": "25",
+              "display_name": "user25@2t.band",
+              "email": "user25@2t.band",
+              "type": 1,
+              "pmi": 7073260707,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T08:33:42Z",
+              "last_login_time": "2022-06-02T16:24:14Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:46Z"
+            },
+            {
+              "id": "Jv4WY-LPR-uWtJDb-1ls-Q",
+              "first_name": "user28@2t.band",
+              "last_name": "28",
+              "display_name": "user28@2t.band 28",
+              "email": "user28@2t.band",
+              "type": 1,
+              "pmi": 3522555947,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T09:16:34Z",
+              "last_login_time": "2022-06-02T16:31:28Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:47Z"
+            },
+            {
+              "id": "KhbGeBToTWO5vH_UWFUnGw",
+              "first_name": "user30@2t.band",
+              "last_name": "30",
+              "display_name": "user30@2t.band 30",
+              "email": "user30@2t.band",
+              "type": 1,
+              "pmi": 6742014274,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "dept": "",
+              "created_at": "2022-05-29T07:22:08Z",
+              "last_login_time": "2022-06-02T16:35:05Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:47Z"
+            },
+            {
+              "id": "M1o5p3GBQ4C6XjmGL-FN7A",
+              "first_name": "user05@2t.band",
+              "last_name": "05",
+              "display_name": "user05@2t.band 05",
+              "email": "user05@2t.band",
+              "type": 1,
+              "pmi": 7519937098,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T08:06:27Z",
+              "last_login_time": "2022-06-02T15:04:24Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:42Z"
+            },
+            {
+              "id": "nmTKawJ0S6SRGEDci8xX2w",
+              "first_name": "user13@2t.band",
+              "last_name": "13",
+              "display_name": "user13@2t.band 13",
+              "email": "user13@2t.band",
+              "type": 1,
+              "pmi": 8696228128,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T08:22:15Z",
+              "last_login_time": "2022-06-02T15:46:05Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:44Z"
+            },
+            {
+              "id": "oTtG2eT6Sq21oHrnTX47lw",
+              "first_name": "user21@2t.band",
+              "last_name": "21",
+              "display_name": "user21@2t.band 21",
+              "email": "user21@2t.band",
+              "type": 1,
+              "pmi": 8670019401,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T08:25:50Z",
+              "last_login_time": "2022-06-02T16:13:12Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:45Z"
+            },
+            {
+              "id": "pvBK-khkTGuSl0kQy21LkQ",
+              "first_name": "user10@2t.band",
+              "last_name": "10",
+              "display_name": "user10@2t.band 10",
+              "email": "user10@2t.band",
+              "type": 1,
+              "pmi": 8589185749,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T08:19:34Z",
+              "last_login_time": "2022-06-02T15:37:46Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:43Z"
+            },
+            {
+              "id": "Q9ZA_KKORxestxtROweNbQ",
+              "first_name": "user11@2t.band",
+              "last_name": "11",
+              "display_name": "user11@2t.band 11",
+              "email": "user11@2t.band",
+              "type": 1,
+              "pmi": 7447475729,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T07:25:59Z",
+              "last_login_time": "2022-06-02T15:39:50Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:43Z"
+            },
+            {
+              "id": "RGVivyVBRmqmk_sxXV6Q4Q",
+              "first_name": "user03@2t.band",
+              "last_name": "03",
+              "display_name": "user03@2t.band 03",
+              "email": "user03@2t.band",
+              "type": 1,
+              "pmi": 9451107940,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T07:58:06Z",
+              "last_login_time": "2022-06-02T14:46:36Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:41Z"
+            },
+            {
+              "id": "rP3rGo5URNSrjHEI-ePBww",
+              "first_name": "user09@2t.band",
+              "last_name": "09",
+              "display_name": "user09@2t.band 09",
+              "email": "user09@2t.band",
+              "type": 1,
+              "pmi": 5094178566,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T08:17:26Z",
+              "last_login_time": "2022-06-02T15:36:00Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:43Z"
+            },
+            {
+              "id": "S0ZaPlQiR7-FOr6lJtX9LA",
+              "first_name": "user02@2t.band",
+              "last_name": "02",
+              "display_name": "user02@2t.band 02",
+              "email": "user02@2t.band",
+              "type": 1,
+              "pmi": 3423333233,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T07:55:18Z",
+              "last_login_time": "2022-06-02T14:42:47Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:41Z"
+            },
+            {
+              "id": "Sgf-4QOtQ3OKys1Ze9PeNA",
+              "first_name": "user04@2t.band",
+              "last_name": "user04",
+              "display_name": "user04@2t.band user04",
+              "email": "user04@2t.band",
+              "type": 1,
+              "pmi": 3725389545,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T08:01:02Z",
+              "last_login_time": "2022-06-02T15:02:25Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:42Z"
+            },
+            {
+              "id": "sNMNZ0sFSuaUycqMRy2gdQ",
+              "first_name": "user17@2t.band",
+              "last_name": "17",
+              "display_name": "user17@2t.band 17",
+              "email": "user17@2t.band",
+              "type": 1,
+              "pmi": 7698817429,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T07:45:11Z",
+              "last_login_time": "2022-06-02T16:05:35Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:44Z"
+            },
+            {
+              "id": "T-rpTtoFRhqdRkI8atyijQ",
+              "first_name": "user29@2t.band",
+              "last_name": "29",
+              "display_name": "user29@2t.band 29",
+              "email": "user29@2t.band",
+              "type": 1,
+              "pmi": 2509344361,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T09:18:49Z",
+              "last_login_time": "2022-06-02T16:33:20Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:47Z"
+            },
+            {
+              "id": "U4OhGVaSRZqqfpHivHvThA",
+              "first_name": "user19@2t.band",
+              "last_name": "user19",
+              "display_name": "user19@2t.band user19",
+              "email": "user19@2t.band",
+              "type": 1,
+              "pmi": 9753111979,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T07:37:48Z",
+              "last_login_time": "2022-06-02T16:09:55Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:45Z"
+            },
+            {
+              "id": "ve3hldPTTqeBvgV_oov20g",
+              "first_name": "user24@2t.band",
+              "last_name": "24",
+              "display_name": "user24@2t.band 24",
+              "email": "user24@2t.band",
+              "type": 1,
+              "pmi": 4700260109,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T07:52:09Z",
+              "last_login_time": "2022-06-02T16:20:10Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:46Z"
+            },
+            {
+              "id": "VQ3NmlyxSqOosDicwld37w",
+              "first_name": "useruser16@2t.band",
+              "last_name": "16",
+              "display_name": "useruser16@2t.band 16",
+              "email": "user16@2t.band",
+              "type": 1,
+              "pmi": 7835635014,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T08:24:46Z",
+              "last_login_time": "2022-06-02T15:56:26Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:44Z"
+            },
+            {
+              "id": "Wv3f7Gn0SnOZTdddobFYcg",
+              "first_name": "user",
+              "last_name": "06",
+              "display_name": "user 06",
+              "email": "user06@2t.band",
+              "type": 1,
+              "pmi": 2043460662,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "dept": "",
+              "created_at": "2022-06-02T15:09:01Z",
+              "last_login_time": "2022-06-02T15:09:02Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:42Z"
+            },
+            {
+              "id": "x-I3M-NlTESwZClA9KrJyg",
+              "first_name": "user15@2t.band",
+              "last_name": "15",
+              "display_name": "user15@2t.band 15",
+              "email": "user15@2t.band",
+              "type": 1,
+              "pmi": 6318817591,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-29T08:23:21Z",
+              "last_login_time": "2022-06-02T15:51:45Z",
+              "group_ids": [
+                "Q0JgdwsnQHGypytPj36l_Q"
+              ],
+              "language": "ru-RU",
+              "status": "active",
+              "role_id": "2",
+              "user_created_at": "2022-05-28T17:17:44Z"
+            },
+            {
+              "id": "XGsV17bxQFCr6_a_0ACTPA",
+              "first_name": "Main",
+              "last_name": "2tband",
+              "display_name": "Main 2tband",
+              "email": "main00@2t.band",
+              "type": 2,
+              "pmi": 4095166705,
+              "timezone": "Europe/Moscow",
+              "verified": 1,
+              "created_at": "2022-05-28T17:05:54Z",
+              "last_login_time": "2023-03-08T17:56:43Z",
+              "last_client_version": "5.11.10.8200(win)",
+              "language": "ru-RU",
+              "phone_number": "",
+              "status": "active",
+              "role_id": "0",
+              "user_created_at": "2022-05-28T17:04:26Z"
+            }
+          ],
+          "UserEmails": [
+            "user08@2t.band",
+            "user01@2t.band",
+            "user14@2t.band",
+            "user26@2t.band",
+            "user07@2t.band",
+            "user22@2t.band",
+            "user20@2t.band",
+            "user12@2t.band",
+            "user27@2t.band",
+            "user23@2t.band",
+            "user25@2t.band",
+            "user28@2t.band",
+            "user30@2t.band",
+            "user05@2t.band",
+            "user13@2t.band",
+            "user21@2t.band",
+            "user10@2t.band",
+            "user11@2t.band",
+            "user03@2t.band",
+            "user09@2t.band",
+            "user02@2t.band",
+            "user04@2t.band",
+            "user17@2t.band",
+            "user29@2t.band",
+            "user19@2t.band",
+            "user24@2t.band",
+            "user16@2t.band",
+            "user06@2t.band",
+            "user15@2t.band",
+            "main00@2t.band"
+          ]
+        }
+      }
+    ],
+    "Item Lists": [
+      {
+        "json": {
+          "UserEmails": "user08@2t.band"
+        }
+      },
+      {
+        "json": {
+          "UserEmails": "user01@2t.band"
+        }
+      },
+      {
+        "json": {
+          "UserEmails": "user14@2t.band"
+        }
+      },
+      {
+        "json": {
+          "UserEmails": "user26@2t.band"
+        }
+      },
+      {
+        "json": {
+          "UserEmails": "user07@2t.band"
+        }
+      },
+      {
+        "json": {
+          "UserEmails": "user22@2t.band"
+        }
+      },
+      {
+        "json": {
+          "UserEmails": "user20@2t.band"
+        }
+      },
+      {
+        "json": {
+          "UserEmails": "user12@2t.band"
+        }
+      },
+      {
+        "json": {
+          "UserEmails": "user27@2t.band"
+        }
+      },
+      {
+        "json": {
+          "UserEmails": "user23@2t.band"
+        }
+      },
+      {
+        "json": {
+          "UserEmails": "user25@2t.band"
+        }
+      },
+      {
+        "json": {
+          "UserEmails": "user28@2t.band"
+        }
+      },
+      {
+        "json": {
+          "UserEmails": "user30@2t.band"
+        }
+      },
+      {
+        "json": {
+          "UserEmails": "user05@2t.band"
+        }
+      },
+      {
+        "json": {
+          "UserEmails": "user13@2t.band"
+        }
+      },
+      {
+        "json": {
+          "UserEmails": "user21@2t.band"
+        }
+      },
+      {
+        "json": {
+          "UserEmails": "user10@2t.band"
+        }
+      },
+      {
+        "json": {
+          "UserEmails": "user11@2t.band"
+        }
+      },
+      {
+        "json": {
+          "UserEmails": "user03@2t.band"
+        }
+      },
+      {
+        "json": {
+          "UserEmails": "user09@2t.band"
+        }
+      },
+      {
+        "json": {
+          "UserEmails": "user02@2t.band"
+        }
+      },
+      {
+        "json": {
+          "UserEmails": "user04@2t.band"
+        }
+      },
+      {
+        "json": {
+          "UserEmails": "user17@2t.band"
+        }
+      },
+      {
+        "json": {
+          "UserEmails": "user29@2t.band"
+        }
+      },
+      {
+        "json": {
+          "UserEmails": "user19@2t.band"
+        }
+      },
+      {
+        "json": {
+          "UserEmails": "user24@2t.band"
+        }
+      },
+      {
+        "json": {
+          "UserEmails": "user16@2t.band"
+        }
+      },
+      {
+        "json": {
+          "UserEmails": "user06@2t.band"
+        }
+      },
+      {
+        "json": {
+          "UserEmails": "user15@2t.band"
+        }
+      },
+      {
+        "json": {
+          "UserEmails": "main00@2t.band"
+        }
+      }
+    ]
+  },
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-03-09T07:55:39.907Z",
+  "versionId": "a0341539-56ce-4f2b-908b-5e5e29111c8b"
+}
