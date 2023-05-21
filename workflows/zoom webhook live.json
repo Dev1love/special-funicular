@@ -1,0 +1,1738 @@
+{
+  "active": true,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "init_vars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Crypto": {
+      "main": [
+        [
+          {
+            "node": "endpoint_url_validation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Crypto",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "recording_completed",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "meeting_created",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Switch1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "download_recording": {
+      "main": [
+        [
+          {
+            "node": "check_curl",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "check_curl": {
+      "main": [
+        [
+          {
+            "node": "IF_downloaded",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "sel_auth": {
+      "main": [
+        [
+          {
+            "node": "download_recording",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "check_params": {
+      "main": [
+        [
+          {
+            "node": "SUPA_get_meeting",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch1": {
+      "main": [
+        [
+          {
+            "node": "meeting_started",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "meeting_ended",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "meeting_deleted",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "unknown",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "recording_completed": {
+      "main": [
+        [
+          {
+            "node": "check_params",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "init_vars": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_get_meeting": {
+      "main": [
+        [
+          {
+            "node": "IF_found",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_found": {
+      "main": [
+        [
+          {
+            "node": "fileParams",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "extract_frames": {
+      "main": [
+        [
+          {
+            "node": "create_screencast",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "upload_recording": {
+      "main": [
+        [
+          {
+            "node": "check_upload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "upload_screencast": {
+      "main": [
+        [
+          {
+            "node": "check_upload_s",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "create_screencast": {
+      "main": [
+        [
+          {
+            "node": "upload_recording",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_downloaded": {
+      "main": [
+        [
+          {
+            "node": "extract_frames",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "fileParams": {
+      "main": [
+        [
+          {
+            "node": "sel_auth",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "check_upload": {
+      "main": [
+        [
+          {
+            "node": "IF_ok",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "check_upload_s": {
+      "main": [
+        [
+          {
+            "node": "IF_ok_s",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_ok": {
+      "main": [
+        [
+          {
+            "node": "generate_download_url",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "upload_screencast",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_ok_s": {
+      "main": [
+        [
+          {
+            "node": "generate_download_url_s",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "cleanup_files",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "SUPA_update_meeting",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "generate_download_url_s": {
+      "main": [
+        [
+          {
+            "node": "SUPA_update_meeting",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "generate_download_url": {
+      "main": [
+        [
+          {
+            "node": "upload_screencast",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "meeting_started": {
+      "main": [
+        [
+          {
+            "node": "SUPA_get_meeting1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_get_meeting1": {
+      "main": [
+        [
+          {
+            "node": "IF_found1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_found1": {
+      "main": [
+        [
+          {
+            "node": "SUPA_update_meeting1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_get_meeting2": {
+      "main": [
+        [
+          {
+            "node": "IF_found2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_found2": {
+      "main": [
+        [
+          {
+            "node": "SUPA_update_meeting2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "meeting_ended": {
+      "main": [
+        [
+          {
+            "node": "SUPA_get_meeting2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_update_meeting": {
+      "main": [
+        [
+          {
+            "node": "IF_not_TM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_not_TM": {
+      "main": [
+        [
+          {
+            "node": "SUPA_meeting_user_id",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_err": {
+      "main": [
+        [],
+        [
+          {
+            "node": "SUPA_add_notification_",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_meeting_user_id": {
+      "main": [
+        [
+          {
+            "node": "SUPA_get_team_id1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_get_team_id1": {
+      "main": [
+        [
+          {
+            "node": "SUPA_get_teamlead_id",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_get_teamlead_id": {
+      "main": [
+        [
+          {
+            "node": "IF_err",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-04-11T14:26:00.265Z",
+  "id": "66",
+  "name": "zoom webhook live",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "zoomwebhook",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "ad9c6608-1eb4-412f-a56c-bf7f6988f658",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        320
+      ],
+      "webhookId": "34c348d2-44b8-4c16-9231-1152a6ae3bec"
+    },
+    {
+      "parameters": {
+        "action": "hmac",
+        "type": "SHA256",
+        "value": "={{ $node.Webhook.json.body.payload.plainToken }}",
+        "dataPropertyName": "hash",
+        "secret": "={{ $node.init_vars.json.zoomWebhookSecret }}"
+      },
+      "id": "d2fe2477-cb4b-4a63-a0e4-6cf707d563ea",
+      "name": "Crypto",
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 1,
+      "position": [
+        760,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{ $json.body.event }}",
+        "rules": {
+          "rules": [
+            {
+              "value2": "endpoint.url_validation"
+            },
+            {
+              "value2": "recording.completed",
+              "output": 1
+            },
+            {
+              "value2": "meeting.created",
+              "output": 2
+            }
+          ]
+        },
+        "fallbackOutput": 3
+      },
+      "id": "b216a5fc-6ac0-4ffd-b6b4-10879b9afccf",
+      "name": "Switch",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [
+        460,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "content": "**0 - endpoint.url_validation**\n**1 - recording.completed**\n**2 - meeting.created**\n****",
+        "height": 84.58922645761875,
+        "width": 212
+      },
+      "id": "1e505403-6b05-434c-93df-61b9029edf4b",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        240,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "try {\n  const resultjson = JSON.parse(items[0].json.stdout.trim());  \n\n  if (resultjson.http_code === 200) {\n  return [\n    {\n      json: {\n        message: 'Download finished successfully',\n        success: true,\n      },\n    },\n  ];\n} else {\n  return [\n    {\n      json: {\n        message: `Download failed with code: ${resultCode}`,\n        success: false,\n      },\n    },\n  ];\n}\n\n} catch (error) {\n  console.log('parse error:',error);\n  return [\n    {\n      json: {\n        message: 'Download failed',\n        success: false,\n      },\n    },\n  ]; \n}"
+      },
+      "id": "2627859f-0d1f-4be1-80f5-36e53b5cbb12",
+      "name": "check_curl",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        2220,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "command": "=cd /home/node/{{ $node[\"fileParams\"].json[\"folder_in_parent\"] }} && mkdir -p '{{ $node.Webhook.json.body.payload.object.id }}' && curl -w %{json} -o '{{ $node.Webhook.json.body.payload.object.id + '/' + $node[\"fileParams\"].json[\"fileName\"] }}' --request GET \\\n --location '{{ $node.Webhook.json.body.payload.object.recording_files[0].download_url }}' \\\n --header 'authorization: Bearer {{ $node.Webhook.json.body.download_token }}' \\\n --header 'content-type: video/mp4'"
+      },
+      "id": "9f03ac83-396f-48da-9d7f-d9960d2c2746",
+      "name": "download_recording",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        2020,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "6"
+      },
+      "id": "c9ff0812-33a2-4d86-a5be-ad765504b5af",
+      "name": "sel_auth",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        1840,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $node.Webhook.json.body.payload.object.recording_files[0].file_type }}",
+              "value2": "MP4"
+            },
+            {
+              "value1": "={{ $node.Webhook.json.body.payload.object.recording_files[0].status }}",
+              "value2": "completed"
+            }
+          ]
+        }
+      },
+      "id": "379167c4-9f21-49f4-9053-8e4d3d336e6f",
+      "name": "check_params",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        960,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "content": "**Selectel Key setup** \nhttps://183406.selcdn.ru/2T.Drive\nX-Auth-Token\nX-Container-Meta-Temp-URL-Key\nhttps://developers.selectel.ru/docs/cloud-services/cloud-storage/selectel_storage_api/#создание-ссылки-для-скачивания-файла\n",
+        "height": 167.0434782608696,
+        "width": 306.91304347826093
+      },
+      "id": "2dda477b-5926-4be5-acb8-7ef5236aa0a8",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        920,
+        -200
+      ]
+    },
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{ $json.body.event }}",
+        "rules": {
+          "rules": [
+            {
+              "value2": "meeting.started"
+            },
+            {
+              "value2": "meeting.ended",
+              "output": 1
+            },
+            {
+              "value2": "meeting.deleted",
+              "output": 2
+            }
+          ]
+        },
+        "fallbackOutput": 3
+      },
+      "id": "ff5c76c2-c057-4797-ab4f-ffbcf9c57a08",
+      "name": "Switch1",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [
+        460,
+        560
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"res\":\"ok\"}",
+        "options": {}
+      },
+      "id": "c083f359-91bc-4baf-a480-62ab48993fe8",
+      "name": "recording_completed",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        760,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"res\":\"ok\"}",
+        "options": {}
+      },
+      "id": "8d9a8ccc-5bd3-4659-9422-0c5d9d6dc9f4",
+      "name": "meeting_created",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        780,
+        540
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({\n    \"plainToken\": $node.Webhook.json.body.payload.plainToken,\n    \"encryptedToken\": $json.hash\n  }) }}",
+        "options": {}
+      },
+      "id": "caec742b-201c-47c3-8bb5-c02230ac90e4",
+      "name": "endpoint_url_validation",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        980,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"res\":\"ok\"}",
+        "options": {}
+      },
+      "id": "04293e11-b39a-474b-b8f1-2c7bb516dd12",
+      "name": "meeting_started",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        780,
+        700
+      ]
+    },
+    {
+      "parameters": {
+        "content": "**0 - meeting.started**\n**1 - meeting.ended**\n**2 - meeting.deleted**",
+        "height": 100.52562904894076,
+        "width": 201.9364025913222
+      },
+      "id": "b508c63c-0159-458f-9c02-46e10dccf8e4",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        220,
+        560
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"res\":\"ok\"}",
+        "options": {}
+      },
+      "id": "f7da6c27-8284-401f-b187-1a181877ef74",
+      "name": "meeting_ended",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        780,
+        880
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"res\":\"ok\"}",
+        "options": {}
+      },
+      "id": "4b55e334-541d-4962-a2ec-9e6e725fe607",
+      "name": "meeting_deleted",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        780,
+        1040
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"error\":\"unknown command\"}",
+        "options": {}
+      },
+      "id": "ccf1983e-4e7f-40b4-94ec-9629fa4b6834",
+      "name": "unknown",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        440,
+        880
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "9592b071-e170-40da-bd4a-205909f90117",
+      "name": "init_vars",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        80,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/meetings",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "meeting_zoom_id",
+              "value": "=eq.{{ $node.Webhook.json.body.payload.object.id }}"
+            },
+            {
+              "name": "select",
+              "value": "*,projects(name)"
+            },
+            {
+              "name": "order",
+              "value": "created_at"
+            },
+            {
+              "name": "limit",
+              "value": "1"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $node.init_vars.json.supaBaseServiceKey }}"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{\"Bearer \"+$node.init_vars.json.supaBaseServiceKey }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "6230bfc5-69d6-4d57-be2f-c8cd917a100e",
+      "name": "SUPA_get_meeting",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1180,
+        340
+      ],
+      "alwaysOutputData": true,
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ $node[\"init_vars\"].json.supaBaseURL }}rest/v1/meetings",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "id",
+              "value": "={{\"eq.\" + $node.SUPA_get_meeting.json.id }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{\"Bearer \"+$node.init_vars.json.supaBaseServiceKey }}"
+            },
+            {
+              "name": "apikey",
+              "value": "={{ $node.init_vars.json.supaBaseServiceKey }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "recorded",
+              "value": "={{ (new Date()).toISOString() }}"
+            },
+            {
+              "name": "recording_link",
+              "value": "={{ $node.generate_download_url?.json?.downloadUrl_recording }}"
+            },
+            {
+              "name": "screencast_link",
+              "value": "={{ $node.generate_download_url_s?.json?.downloadUrl_screencast }}"
+            },
+            {
+              "name": "s3_path",
+              "value": "={{ $node.fileParams.json.outFullPathEncoded }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c0e68337-f794-437a-b079-76e6473ba55a",
+      "name": "SUPA_update_meeting",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        4320,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "content": "**not by http node to save resources**",
+        "height": 80,
+        "width": 229.07158433774288
+      },
+      "id": "03c9d00e-608b-4f79-9644-01947341f461",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1980,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ !!$json.id}}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "1309b31b-b6e9-4665-bab1-c00a80a85a5d",
+      "name": "IF_found",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1360,
+        340
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "19535ffb-6bf2-4b40-bf12-f746956d9cb2",
+      "name": "No Operation, do nothing1",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1660,
+        540
+      ]
+    },
+    {
+      "parameters": {
+        "command": "=cd /home/node/{{ $node[\"fileParams\"].json[\"folder_in_parent\"] +  '/' + $node.Webhook.json.body.payload.object.id }} && ffmpeg -i {{ $node[\"fileParams\"].json.fileName }} -vf \"select=isnan(prev_selected_t)+gte(t-prev_selected_t\\,300),scale=640:360\" -vsync vfr -q:v 2 output_%03d.jpg"
+      },
+      "id": "6e3516af-3359-4c3f-a73a-d22ae475c6b6",
+      "name": "extract_frames",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        2620,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "command": "=cd /home/node/{{ $node[\"fileParams\"].json[\"folder_in_parent\"] + '/' + $node.Webhook.json.body.payload.object.id }} && curl -w %{json} --request PUT \\\n--location '{{ $node.sel_auth.json.storage_url + '/' + $node[\"fileParams\"].json.bucketName + '/' + $node[\"fileParams\"].json.outFullPathEncoded }}' \\\n--header 'X-Auth-Token: {{ $node.sel_auth.json.storage_token }}' \\\n--header 'Content-Type: video/mp4' \\\n--upload-file '{{ $node[\"fileParams\"].json.fileName }}'"
+      },
+      "id": "13f6c9eb-e2c2-4253-9826-2a86a0e6097e",
+      "name": "upload_recording",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        2960,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "command": "=cd /home/node/{{ $node[\"fileParams\"].json[\"folder_in_parent\"] + '/' + $node.Webhook.json.body.payload.object.id }} && curl -w %{json} --request PUT \\\n--location '{{ $node.sel_auth.json.storage_url + '/' + $node[\"fileParams\"].json.bucketName + '/' + $node[\"fileParams\"].json.outPathEncoded + '/' + $node[\"fileParams\"].json.fileNameScreencast }}' \\\n--header 'X-Auth-Token: {{ $node.sel_auth.json.storage_token }}' \\\n--header 'Content-Type: image/jpeg' \\\n--upload-file '{{ $node[\"fileParams\"].json.fileNameScreencast }}'"
+      },
+      "id": "9eabea8d-bef7-458e-bc4f-d89ae4ac1f1c",
+      "name": "upload_screencast",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        3580,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "command": "=cd /home/node/{{ $node[\"fileParams\"].json[\"folder_in_parent\"] +  '/' + $node.Webhook.json.body.payload.object.id }} &&\ngm montage -tile 5x -geometry 640x360+2+2 -title '{{ $node.Webhook.json.body.payload.object.topic }}' 'output_*.jpg' '{{ $node[\"fileParams\"].json[\"fileNameScreencast\"] }}'"
+      },
+      "id": "f84bfc57-946c-40ff-89b6-8f5ea9731f2b",
+      "name": "create_screencast",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        2780,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.success }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "85acb226-e503-4836-b0c1-97801b33f4b8",
+      "name": "IF_downloaded",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        2380,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "content": "**current check only allows MP4** - could there be others?",
+        "height": 108.1829543088896,
+        "width": 150
+      },
+      "id": "46f4659e-4f29-4e5b-87a2-e5df03415ee9",
+      "name": "Sticky Note5",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1000,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "content": "**TODO:**\n**- tiles numbers**\n**- test for loong meeting**"
+      },
+      "id": "59bdd310-cb40-435f-9dcf-96f1dd3487dd",
+      "name": "Sticky Note6",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2740,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "function replaceNonAlphanumericOrCyrillicInFilename(filename) {\n\n  if (typeof filename !== 'string') {\n    return 'namenotprovided'\n  }\n\n  // Split the filename into name and extension parts\n  const nameAndExtension = filename.split('.');\n  const extension = nameAndExtension.pop();\n  const name = nameAndExtension.join('.');\n\n  // Alphanumeric range: [a-zA-Z0-9]\n  // Cyrillic Unicode range: [\\u0400-\\u04FF]\n  // Match non-alphanumeric and non-Cyrillic characters\n  const nonAlphanumericOrCyrillic = /[^a-zA-Z0-9\\u0400-\\u04FF]/g;\n\n  // Replace non-alphanumeric and non-Cyrillic characters with an underscore\n  const replacedName = name.replace(nonAlphanumericOrCyrillic, '_');\n\n  // Join the replaced name with the extension\n  const replacedFilename = `${replacedName}.${extension}`;\n\n  return replacedFilename;\n}\n\nvar project_id = $('SUPA_get_meeting').first().json.project_id;\nvar meeting_id = $('SUPA_get_meeting').first().json.id;\n\nvar fileName = replaceNonAlphanumericOrCyrillicInFilename('meeting_' + $('Webhook').first().json.body.payload.object.id + '_' + $('Webhook').first().json.body.payload.object.topic + '.mp4');\n\nvar fileNameScreencast = replaceNonAlphanumericOrCyrillicInFilename('meeting_' + $('Webhook').first().json.body.payload.object.id + '_' + $('Webhook').first().json.body.payload.object.topic + '_screencast.jpg');\n\nvar outFullPathEncoded = \"accelerator/projects/\" + project_id + '/' + meeting_id + '/' + fileName;\nconsole.log('outFullPathEncoded:', outFullPathEncoded);\n\nvar outFullPathEncoded_s = \"accelerator/projects/\" + project_id + '/' + meeting_id + '/' + fileNameScreencast;\n\nvar outPathEncoded = \"accelerator/projects/\" + project_id + '/' + meeting_id;\n\n//var outFullPath = \"accelerator/projects/\" + project_id + '/' + meeting_id + '/' + fileName;\n//console.log('outFullPath:', outFullPath);\n\n$input.first().json.bucketName = \"2T.Drive\";\n$input.first().json.folder_in_parent = \"zoom_recordings\";\n//$input.first().json.folder_out = \"zoom_recordings\";\n$input.first().json.fileName = fileName;\n$input.first().json.fileNameScreencast = fileNameScreencast;\n$input.first().json.outFullPathEncoded = outFullPathEncoded;\n$input.first().json.outFullPathEncoded_s = outFullPathEncoded_s;\n$input.first().json.outPathEncoded = outPathEncoded;\n//$input.first().json.outFullPath = outFullPath;\n\nreturn $input.all();"
+      },
+      "id": "c4ca84c8-050a-4d55-9179-e4c280389d9a",
+      "name": "fileParams",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        1620,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "try {\n  const resultjson = JSON.parse(items[0].json.stdout.trim());  \n\n  if (resultjson.http_code === 201) {\n  return [\n    {\n      json: {\n        message: 'Upload finished successfully',\n        success: true,\n      },\n    },\n  ];\n} else {\n  return [\n    {\n      json: {\n        message: `Upload failed with code: ${resultCode}`,\n        success: false,\n      },\n    },\n  ];\n}\n\n} catch (error) {\n  console.log('parse error:',error);\n  return [\n    {\n      json: {\n        message: 'Download failed',\n        success: false,\n      },\n    },\n  ]; \n}"
+      },
+      "id": "c41775e9-bfe5-4c99-837e-2b5ba2b83302",
+      "name": "check_upload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        3140,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "try {\n  const resultjson = JSON.parse(items[0].json.stdout.trim());  \n\n  if (resultjson.http_code === 201) {\n  return [\n    {\n      json: {\n        message: 'Upload finished successfully',\n        success: true,\n      },\n    },\n  ];\n} else {\n  return [\n    {\n      json: {\n        message: `Upload failed with code: ${resultCode}`,\n        success: false,\n      },\n    },\n  ];\n}\n\n} catch (error) {\n  console.log('parse error:',error);\n  return [\n    {\n      json: {\n        message: 'Download failed',\n        success: false,\n      },\n    },\n  ]; \n}"
+      },
+      "id": "13a77f53-807f-4de8-874f-8c62d58fef54",
+      "name": "check_upload_s",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        3780,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.success }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "7c0b9f4f-1ec9-43a9-9bff-87f23886deef",
+      "name": "IF_ok",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        3300,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.success }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "ab1d7c54-533d-40c1-ba9b-da28a71c3ce1",
+      "name": "IF_ok_s",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        3960,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const crypto = require('crypto');\nconst method = 'GET';\nconst expires = Math.floor(Date.now() / 1000) + 60*24*60*60; // add 2 months\n\nconst fullPath = '/' + $(\"fileParams\").first().json.bucketName + '/' + $(\"fileParams\").first().json.outFullPathEncoded_s; //  /2T.Drive/unnamed.png';\nconst fileName = fullPath.split('/').at(-1);\nconst linkSecretKey = $('init_vars').first().json.selectel_ContainerMetaTempURLKey;\nconst hmacBody = `${method}\\n${expires}\\n${fullPath}`;\nconsole.log('hmacBody:', hmacBody);\nconst sig = crypto.createHmac('sha1', linkSecretKey).update(hmacBody).digest('hex');\n\nconsole.log('sig:', sig);\nconsole.log('expires:', expires);\n\nvar downloadUrl = $('init_vars').first().json.selectel_api + fullPath + '?temp_url_sig=' + sig + '&temp_url_expires='+expires + '&filename=' + fileName;\n\nconsole.log('downloadUrl:', downloadUrl);\n$input.first().json.downloadUrl_screencast = downloadUrl;\n\nreturn $input.all();"
+      },
+      "id": "d76efd39-ddb6-44c0-90b9-30688e262ef1",
+      "name": "generate_download_url_s",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        4120,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const crypto = require('crypto');\nconst method = 'GET';\nconst expires = Math.floor(Date.now() / 1000) + 60*24*60*60; // add 2 months\n\nconst fullPath = '/' + $(\"fileParams\").first().json.bucketName + '/' + $(\"fileParams\").first().json.outFullPathEncoded; //  /2T.Drive/unnamed.png';\nconst fileName = fullPath.split('/').at(-1);\nconst linkSecretKey = $('init_vars').first().json.selectel_ContainerMetaTempURLKey;\nconst hmacBody = `${method}\\n${expires}\\n${fullPath}`;\nconsole.log('hmacBody:', hmacBody);\nconst sig = crypto.createHmac('sha1', linkSecretKey).update(hmacBody).digest('hex');\n\nconsole.log('sig:', sig);\nconsole.log('expires:', expires);\n\nvar downloadUrl = $('init_vars').first().json.selectel_api + fullPath + '?temp_url_sig=' + sig + '&temp_url_expires='+expires + '&filename=' + fileName;\n\nconsole.log('downloadUrl:', downloadUrl);\n$input.first().json.downloadUrl_recording = downloadUrl;\n\nreturn $input.all();"
+      },
+      "id": "79b2a60d-9634-4bff-9976-1bf5f0ee9035",
+      "name": "generate_download_url",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        3440,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ $node[\"init_vars\"].json.supaBaseURL }}rest/v1/meetings",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "meeting_zoom_id",
+              "value": "=eq.{{ $node.Webhook.json.body.payload.object.id }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{\"Bearer \"+$node.init_vars.json.supaBaseServiceKey }}"
+            },
+            {
+              "name": "apikey",
+              "value": "={{ $node.init_vars.json.supaBaseServiceKey }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "status",
+              "value": "5"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "42713b85-0ba3-495e-8c89-8fbdfdf66ce4",
+      "name": "SUPA_update_meeting1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1380,
+        700
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/meetings",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "meeting_zoom_id",
+              "value": "=eq.{{ $node.Webhook.json.body.payload.object.id }}"
+            },
+            {
+              "name": "select",
+              "value": "*"
+            },
+            {
+              "name": "limit",
+              "value": "1"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $node.init_vars.json.supaBaseServiceKey }}"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{\"Bearer \"+$node.init_vars.json.supaBaseServiceKey }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "87af5737-0920-4512-9cde-a69ba5521ed0",
+      "name": "SUPA_get_meeting1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        980,
+        700
+      ],
+      "alwaysOutputData": true,
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ !!$json.id}}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "9b9c93a1-9307-42c3-95a2-c6c5200870d6",
+      "name": "IF_found1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1160,
+        700
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ $node[\"init_vars\"].json.supaBaseURL }}rest/v1/meetings",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "meeting_zoom_id",
+              "value": "=eq.{{ $node.Webhook.json.body.payload.object.id }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{\"Bearer \"+$node.init_vars.json.supaBaseServiceKey }}"
+            },
+            {
+              "name": "apikey",
+              "value": "={{ $node.init_vars.json.supaBaseServiceKey }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "happened",
+              "value": "={{ (new Date()).toISOString() }}"
+            },
+            {
+              "name": "status",
+              "value": "4"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "2b05c5cd-8ee4-448d-a13e-8a5e4cd2ddaa",
+      "name": "SUPA_update_meeting2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1380,
+        880
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/meetings",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "meeting_zoom_id",
+              "value": "=eq.{{ $node.Webhook.json.body.payload.object.id }}"
+            },
+            {
+              "name": "select",
+              "value": "*"
+            },
+            {
+              "name": "limit",
+              "value": "1"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $node.init_vars.json.supaBaseServiceKey }}"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{\"Bearer \"+$node.init_vars.json.supaBaseServiceKey }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b1ba46c3-ec64-4ac3-867d-c4c8428d789f",
+      "name": "SUPA_get_meeting2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        980,
+        880
+      ],
+      "alwaysOutputData": true,
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ !!$json.id}}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "57e4401b-1e56-4c59-b8e1-e4f2baa8f91e",
+      "name": "IF_found2",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1160,
+        880
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $node[\"init_vars\"].json.supaBaseURL }}rest/v1/notifications",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{\"Bearer \"+$node.init_vars.json.supaBaseServiceKey }}"
+            },
+            {
+              "name": "apikey",
+              "value": "={{ $node.init_vars.json.supaBaseServiceKey }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "user_id",
+              "value": "={{ $json.user_id }}"
+            },
+            {
+              "name": "text",
+              "value": "=Вам нужно подтвердить качество проведенной встречи \"{{ $node.SUPA_get_meeting.json.name }}\" с  {{ $node.SUPA_get_team_id1.json.firstname ?? \"\" }} {{ $node.SUPA_get_team_id1.json.lastname ?? \"\" }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "48718855-1757-4a13-8107-9be0f9923ccd",
+      "name": "SUPA_add_notification_",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        5460,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $node.SUPA_get_meeting.json.type }}",
+              "operation": "notEqual",
+              "value2": 6
+            }
+          ]
+        }
+      },
+      "id": "120c84b7-ced6-451b-af85-ef2a69b054a1",
+      "name": "IF_not_TM",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        4520,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $node[\"init_vars\"].json.supaBaseURL }}rest/v1/rpc/get_tracker_teamlead_meeting",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $node[\"init_vars\"].json.supaBasePublicKey }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "p_meeting_id",
+              "value": "={{ $node.SUPA_get_meeting.json.id }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "8c70578c-46a6-4e93-92b0-f3e3b16c4a19",
+      "name": "SUPA_rpc_stats",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        4860,
+        40
+      ],
+      "alwaysOutputData": false,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ !!$json.error }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "b96dbb7e-ef8c-4296-9653-6a3bb7a98e11",
+      "name": "IF_err",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        5240,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "command": "=cd /home/node/{{ $node[\"fileParams\"].json[\"folder_in_parent\"] }} && rm -r '{{ $node.Webhook.json.body.payload.object.id }}'"
+      },
+      "id": "d2682c38-bd7b-4885-8fd1-772891105a31",
+      "name": "cleanup_files",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        4080,
+        -20
+      ]
+    },
+    {
+      "parameters": {
+        "content": "Тестить RPC или переделать но обчное доставание тимлида из бд\n"
+      },
+      "id": "cccaf30b-ba5e-42ed-a806-585d150ab721",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        4740,
+        -20
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $node[\"init_vars\"].json.supaBaseURL }}rest/v1/meetings?id=eq.{{ $json.id }}&select=user_id",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{\"Bearer \"+$node.init_vars.json.supaBaseServiceKey }}"
+            },
+            {
+              "name": "apikey",
+              "value": "={{ $node.init_vars.json.supaBaseServiceKey }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "7022746e-0d8b-4c7b-922a-6829b337b028",
+      "name": "SUPA_meeting_user_id",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        4700,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/user_profiles?select=team_id,firstname,lastname&user_id=eq.{{ $json.user_id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{\"Bearer \"+$node.init_vars.json.supaBaseServiceKey }}"
+            },
+            {
+              "name": "apikey",
+              "value": "={{ $node.init_vars.json.supaBaseServiceKey }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "674165a3-e23c-4eed-9379-e72f551906c7",
+      "name": "SUPA_get_team_id1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        4880,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $node[\"init_vars\"].json.supaBaseURL }}rest/v1/user_profiles?select=user_id,firstname,lastname&role_id=eq.2&team_id=eq.{{ $json.team_id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{\"Bearer \"+$node.init_vars.json.supaBaseServiceKey }}"
+            },
+            {
+              "name": "apikey",
+              "value": "={{ $node.init_vars.json.supaBaseServiceKey }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "6dfe872f-0b39-4123-a4b4-229385290bc5",
+      "name": "SUPA_get_teamlead_id",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        5040,
+        340
+      ]
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n.stage.2t.band",
+            "x-forwarded-scheme": "https",
+            "x-forwarded-proto": "https",
+            "x-forwarded-for": "134.224.191.2",
+            "x-real-ip": "134.224.191.2",
+            "connection": "close",
+            "content-length": "1649",
+            "authorization": "tP_k6dh1Tuiz8fz_6ryD6w",
+            "clientid": "QKmsVEh0TN6zlVqUdvOykg",
+            "x-zm-trackingid": "v=2.0;clid=us06;rid=WEB_2a37755930ecbc8c06163eaf0065d24b",
+            "x-zm-request-timestamp": "1682526957",
+            "x-zm-signature": "v0=5a446b993118531a0f3f6791d9d9a06eb7b46cfd436139c6b40b22bf319d5d0b",
+            "content-type": "application/json; charset=utf-8",
+            "user-agent": "Zoom Marketplace/1.0a"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "payload": {
+              "account_id": "0kLVFu_pSxuiWCUZ_CyvKg",
+              "object": {
+                "uuid": "dcG0c4akQuOnextqQcIwMw==",
+                "id": 85659587161,
+                "account_id": "0kLVFu_pSxuiWCUZ_CyvKg",
+                "host_id": "XGsV17bxQFCr6_a_0ACTPA",
+                "topic": "meeting topic X",
+                "type": 2,
+                "start_time": "2023-04-26T15:28:17Z",
+                "timezone": "Europe/Moscow",
+                "host_email": "main00@2t.band",
+                "duration": 61,
+                "total_size": 146817205,
+                "recording_count": 1,
+                "share_url": "https://us06web.zoom.us/rec/share/5K2EbYul98FVhU3NtVcz3hsqu9qsvsDuzdtRGFkrhf7h4Z-UwJ0ITM8rbK5buG6r.AoVOgTq9VoqB61xn",
+                "recording_files": [
+                  {
+                    "id": "490605a7-5781-4c54-adc7-7432e2c1d36a",
+                    "meeting_id": "dcG0c4akQuOnextqQcIwMw==",
+                    "recording_start": "2023-04-26T15:28:18Z",
+                    "recording_end": "2023-04-26T16:29:22Z",
+                    "file_type": "MP4",
+                    "file_extension": "MP4",
+                    "file_size": 146817205,
+                    "play_url": "https://us06web.zoom.us/rec/play/0xSzjsytpeSGaniEzTYjhCsVgRgTTczu3m4MOTV05gEIyDx7rg_g6KiZvtPbXCBUtBLDP47ohu6jyXKl.t6zKLnr6rzlFw0Dz",
+                    "download_url": "https://us06web.zoom.us/rec/webhook_download/0xSzjsytpeSGaniEzTYjhCsVgRgTTczu3m4MOTV05gEIyDx7rg_g6KiZvtPbXCBUtBLDP47ohu6jyXKl.t6zKLnr6rzlFw0Dz/CKwPBMsMFYmvM90UgR_1G50IoLDFO5qwgqF_2jua5EoDqaXF0wU_I1oWXvULnnE.gf2wjgIKvK1ugvkB",
+                    "status": "completed",
+                    "recording_type": "shared_screen_with_speaker_view"
+                  }
+                ],
+                "on_prem": false
+              }
+            },
+            "event_ts": 1682526942365,
+            "event": "recording.completed",
+            "download_token": "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJodHRwczovL2V2ZW50Lnpvb20udXMiLCJhY2NvdW50SWQiOiIwa0xWRnVfcFN4dWlXQ1VaX0N5dktnIiwiYXVkIjoiaHR0cHM6Ly9vYXV0aC56b29tLnVzIiwibWlkIjoiZGNHMGM0YWtRdU9uZXh0cVFjSXdNdz09IiwiZXhwIjoxNjgyNjEzMzU3LCJ1c2VySWQiOiJYR3NWMTdieFFGQ3I2X2FfMEFDVFBBIn0.8eetNRIwjBtMpuLgto66IMS8vcvv0YqjCOfR8AUkD6RZHShUp8Mikzro7UYKE_3BlR0XPLtPR3x0z_6uT7w-zg"
+          }
+        }
+      }
+    ],
+    "SUPA_rpc_stats": [
+      {
+        "json": {
+          "teamlead_user_id": "8e500a35-09e3-44c7-b978-b9ef17dad0e6",
+          "teamlead_profile_id": "ab3dadd7-aa4d-40bd-8131-f8d57f822597",
+          "teamlead_firstname": "Stepan",
+          "teamlead_lastname": "Stepanov",
+          "teamlead_middle_name": null,
+          "tracker_user_id": "d13f7851-f783-4b72-88fd-470c117f3e22",
+          "tracker_profile_id": "906ea307-e6cc-4031-aa11-5351f0e44aaf",
+          "tracker_firstname": "Владимир",
+          "tracker_lastname": "Владимиров",
+          "tracker_middle_name": null
+        }
+      }
+    ]
+  },
+  "settings": {
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "102"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-05-11T17:04:38.179Z",
+  "versionId": "7970a36e-c201-4679-8846-4491b12afea7"
+}
