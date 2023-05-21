@@ -1,0 +1,315 @@
+{
+  "active": true,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "init_vars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "init_vars": {
+      "main": [
+        [
+          {
+            "node": "SUPA_get_stages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_get_stages": {
+      "main": [
+        [
+          {
+            "node": "Code_getstage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code_getstage": {
+      "main": [
+        [
+          {
+            "node": "SUPA_get_acceleration_program",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_get_acceleration_program": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-04-18T08:02:25.096Z",
+  "id": "81",
+  "name": "user_dashboard",
+  "nodes": [
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "httpMethod": "POST",
+        "path": "user/stats_dash",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "3d78ad4f-3ab4-4739-8926-396dc4e31401",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -340,
+        360
+      ],
+      "webhookId": "450cfcc9-a979-47b0-b1ae-12379f48c3c2",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "appsmith->n8n Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "6627d5ed-b5e9-430b-8669-437acba0b274",
+      "name": "init_vars",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify( {\"res\":{\"ap_basic_info\":$json.ap_basic_info, \"stage\":$node[\"Code_getstage\"].json[\"stage\"] } }) }}",
+        "options": {}
+      },
+      "id": "9ad07eb5-497a-4b83-b060-0817c5e8fad2",
+      "name": "Respond to Webhook1",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        620,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.supaBaseURL }}rest/v1/rpc/get_user_stats",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $json.supaBasePublicKey }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "p_user_id",
+              "value": "={{ $node.Webhook.json.body.user_id }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "6b9f0336-8d49-4723-9f5a-0ec603011cd0",
+      "name": "SUPA_rpc_stats1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        440,
+        100
+      ],
+      "alwaysOutputData": false,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.supaBaseURL }}rest/v1/ap_stages",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "select",
+              "value": "*"
+            },
+            {
+              "name": "order",
+              "value": "start_date"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $json.supaBasePublicKey }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "9ca92299-1957-41ba-a603-195ea7a7abda",
+      "name": "SUPA_get_stages",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        20,
+        360
+      ],
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "operation": "aggregateItems",
+        "aggregate": "aggregateAllItemData"
+      },
+      "id": "41dbe014-a3d3-4648-b18c-7b94d029be70",
+      "name": "gather",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 2,
+      "position": [
+        220,
+        120
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "jsCode": "//console.log(\"$input.all():\",$input.all())\n\n// to get rid of potential problems with time zones just extract numbers // for year/month/day and use them in comparison\n\nvar cur_date_arr = $('Webhook').first().json.body.current_date.split(\"-\");\nvar cur_year = parseInt(cur_date_arr[0]);\nvar cur_month = parseInt(cur_date_arr[1]);\nvar cur_day = parseInt(cur_date_arr[2]);\n//console.log(cur_year, cur_month, cur_day);\n\n//console.log($now);\n//console.log($now.startOf('day'));\n//var now = new Date();\nvar stage = \"\";\n//console.log(now.getTime());\n\nfor (let i = $input.all().length - 1; i >= 0; i--) {\n  const item = $input.all()[i];\n  //console.log(item);\n  var x_date_arr = item.json.start_date.split(\"-\");\n  var x_year = parseInt(x_date_arr[0]);\n  var x_month = parseInt(x_date_arr[1]);\n  var x_day = parseInt(x_date_arr[2]);\n  console.log(x_year, x_month, x_day);\n  // var start_date = new Date(item.json.start_date);\n  // console.log(start_date);\n  // console.log(start_date.getTime());\n\n  if (cur_year>=x_year && cur_month>=x_month && cur_day>=x_day) {\n    console.log(\"current stage is0 \", item.json.stage);\n    stage = item.json.stage;\n    break;\n  } else if (cur_year>=x_year && cur_month>x_month) {\n    console.log(\"current stage is1 \", item.json.stage);\n    stage = item.json.stage;\n    break;\n  } else if (cur_year>x_year) {\n    console.log(\"current stage is2 \", item.json.stage);\n    stage = item.json.stage;\n    break;\n  } \n\n}\n\n//return $input.all();\nreturn [{json:{stage:stage}}]"
+      },
+      "id": "db40ec56-8e87-4a86-bc55-875f6637c9a3",
+      "name": "Code_getstage",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        200,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/acceleration_program",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "select",
+              "value": "*"
+            },
+            {
+              "name": "id",
+              "value": "=eq.a8f64373-d9f9-4211-93d5-bc71475a7223"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $node.init_vars.json.supaBasePublicKey }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "9ec5294e-0e00-47bb-a57f-64aeb754de16",
+      "name": "SUPA_get_acceleration_program",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        400,
+        360
+      ],
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "content": "**TODO - remove hardcoded ID**",
+        "height": 80,
+        "width": 252.03256913920075
+      },
+      "id": "bd8c7cd9-2ee0-4fe8-aaea-0eacaa6c7e60",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        360,
+        540
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "saveDataSuccessExecution": "all",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "saveExecutionProgress": true,
+    "errorWorkflow": "102"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-05-11T17:02:47.663Z",
+  "versionId": "a0cab486-8741-4b4e-be25-c49040faacd5"
+}
