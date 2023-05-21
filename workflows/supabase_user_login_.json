@@ -140,7 +140,7 @@
       "main": [
         [
           {
-            "node": "SUPA_get_stages",
+            "node": "SUPA_get_ap_name",
             "type": "main",
             "index": 0
           }
@@ -148,6 +148,17 @@
         [
           {
             "node": "err3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_get_ap_name": {
+      "main": [
+        [
+          {
+            "node": "SUPA_get_stages",
             "type": "main",
             "index": 0
           }
@@ -388,7 +399,7 @@
             },
             {
               "name": "res.ap_name",
-              "value": "Акселератор Лидеры инноваций"
+              "value": "={{ $node.SUPA_get_ap_name.json.name }}"
             }
           ]
         },
@@ -401,7 +412,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 1,
       "position": [
-        1840,
+        2000,
         80
       ]
     },
@@ -414,7 +425,7 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1,
       "position": [
-        2020,
+        2180,
         80
       ]
     },
@@ -501,7 +512,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 3,
       "position": [
-        1520,
+        1680,
         80
       ],
       "alwaysOutputData": false
@@ -515,7 +526,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 1,
       "position": [
-        1680,
+        1840,
         80
       ]
     },
@@ -628,6 +639,47 @@
         1820,
         -60
       ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/acceleration_program?id=eq.a8f64373-d9f9-4211-93d5-bc71475a7223",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $node.init_vars.json.supaBasePublicKey }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "aa4a49fb-6e96-472f-befa-ebc90f0d7db8",
+      "name": "SUPA_get_ap_name",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1520,
+        80
+      ],
+      "alwaysOutputData": false
     }
   ],
   "pinData": {},
@@ -645,6 +697,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-05-11T17:04:20.701Z",
-  "versionId": "1df8b789-c438-4e14-9094-30c9b0893b69"
+  "updatedAt": "2023-05-21T20:50:20.891Z",
+  "versionId": "cfda0c39-440b-4772-bd3a-bbb0f5687cc0"
 }
