@@ -1,0 +1,2061 @@
+{
+  "active": true,
+  "connections": {
+    "init_vars": {
+      "main": [
+        [
+          {
+            "node": "sel_auth",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_path": {
+      "main": [
+        [
+          {
+            "node": "init_vars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "on_file_upload": {
+      "main": [
+        [
+          {
+            "node": "get_path",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Sel_upload1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "on_file_download": {
+      "main": [
+        [
+          {
+            "node": "get_path",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "on_file_delete": {
+      "main": [
+        [
+          {
+            "node": "get_path",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "on_file_replace": {
+      "main": [
+        [
+          {
+            "node": "get_path",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "on_folder_list": {
+      "main": [
+        [
+          {
+            "node": "get_path",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "on_folder_create": {
+      "main": [
+        [
+          {
+            "node": "get_path",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch_path": {
+      "main": [
+        [
+          {
+            "node": "Set_uploadtype_variant",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "generate_download_url",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Switch_path1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch_path1": {
+      "main": [
+        [
+          {
+            "node": "S3_delete_",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Sel_list",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "S3_folder_create",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "wrong_command",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code2": {
+      "main": [
+        [
+          {
+            "node": "S3_delete",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "S3_delete": {
+      "main": [
+        [
+          {
+            "node": "S3_upload_",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "S3_upload_": {
+      "main": [
+        [
+          {
+            "node": "success_response3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "S3_folder_create": {
+      "main": [
+        [
+          {
+            "node": "success_response7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "S3_delete_": {
+      "main": [
+        [
+          {
+            "node": "success_response5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "sel_auth": {
+      "main": [
+        [
+          {
+            "node": "Switch_path",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sel_list": {
+      "main": [
+        [
+          {
+            "node": "success_response6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "generate_download_url": {
+      "main": [
+        [
+          {
+            "node": "success_response4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "S3_upload": {
+      "main": [
+        [
+          {
+            "node": "generate_download_url1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "generate_download_url1": {
+      "main": [
+        [
+          {
+            "node": "success_response2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "IF_project",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "IF_tracker_agreement",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "set_binary": {
+      "main": [
+        [
+          {
+            "node": "S3_upload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "set_paths": {
+      "main": [
+        [
+          {
+            "node": "set_binary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Sel_upload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set_uploadtype_variant": {
+      "main": [
+        [
+          {
+            "node": "set_paths",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_project": {
+      "main": [
+        [
+          {
+            "node": "SUPA_insert_artifact",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_tracker_agreement": {
+      "main": [
+        [
+          {
+            "node": "SUPA_update_user_profile",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_insert_artifact": {
+      "main": [
+        [
+          {
+            "node": "SUPA_get_meeting_user_id",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_pitchdeck": {
+      "main": [
+        [
+          {
+            "node": "SUPA_add_notification_",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "SUPA_add_notification_1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_get_teamlead_id": {
+      "main": [
+        [
+          {
+            "node": "IF_pitchdeck",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_get_meeting_user_id": {
+      "main": [
+        [
+          {
+            "node": "SUPA_get_team_id1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_get_team_id1": {
+      "main": [
+        [
+          {
+            "node": "SUPA_get_teamlead_id",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-04-04T13:51:32.778Z",
+  "id": "49",
+  "name": "s3_all_functions",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "60bbc7bf-375a-42b1-a02d-2a05cea243ef",
+      "name": "init_vars",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        820,
+        540
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "start_eap_format",
+              "value": "={{ $json.body.datestring + \" \" + $json.body.timestring.split(\" - \")[0]+\":00\" }}"
+            },
+            {
+              "name": "end_eap_format",
+              "value": "={{ $json.body.datestring + \" \" + $json.body.timestring.split(\" - \")[1]+\":00\" }}"
+            },
+            {
+              "name": "start_zoom_format",
+              "value": "={{ $json.body.datestring + \"T\" + $json.body.timestring.split(\" - \")[0]+\":00\" }}"
+            },
+            {
+              "name": "start_time",
+              "value": "={{$json.body.timestring.split(\" - \")[0]}}"
+            },
+            {
+              "name": "end_zoom_format",
+              "value": "={{ $json.body.datestring + \"T\" + $json.body.timestring.split(\" - \")[1]+\":00\" }}"
+            },
+            {
+              "name": "datestring",
+              "value": "={{ $json.body.datestring }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "713c24a4-987a-46a3-87bc-cb33007142be",
+      "name": "transform format",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        960,
+        -220
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "webhookPath",
+              "value": "={{ $input.params.path}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "679713fc-6155-47b9-b058-5fe773d26b71",
+      "name": "get_path",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        660,
+        540
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "httpMethod": "POST",
+        "path": "file/upload",
+        "responseMode": "responseNode",
+        "options": {
+          "binaryData": true
+        }
+      },
+      "id": "63dfffd0-601d-4361-b24b-3f1b314c1858",
+      "name": "on_file_upload",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        320,
+        140
+      ],
+      "webhookId": "0ca1f24a-9fe2-4ce4-99b4-60282dce111c",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "appsmith->n8n Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "httpMethod": "POST",
+        "path": "file/download",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "f2891108-180e-47fb-ae9e-0511ab5625a4",
+      "name": "on_file_download",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        320,
+        460
+      ],
+      "webhookId": "bc9ddb28-d014-4356-bc83-1c7ef690c59e",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "appsmith->n8n Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "httpMethod": "POST",
+        "path": "file/delete",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "01bc8b42-7262-453b-93cc-19a5b7d43727",
+      "name": "on_file_delete",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        320,
+        620
+      ],
+      "webhookId": "753fa913-ea3a-49d6-a9c6-11a9107a059e",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "appsmith->n8n Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "httpMethod": "POST",
+        "path": "file/replace",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "58841593-f54f-4d64-b6dc-6aa2baeac41c",
+      "name": "on_file_replace",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        320,
+        300
+      ],
+      "webhookId": "8a896762-efae-461d-bf5d-a0803526c858",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "appsmith->n8n Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "httpMethod": "POST",
+        "path": "folder/list",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "43646a95-2ad8-4596-8b46-ea70cd341506",
+      "name": "on_folder_list",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        320,
+        780
+      ],
+      "webhookId": "c18ab269-1a06-454c-81d0-176eb42df30a",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "appsmith->n8n Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "httpMethod": "POST",
+        "path": "folder/create",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "a01dac44-96ab-404f-baa1-fdf97b27a507",
+      "name": "on_folder_create",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        320,
+        940
+      ],
+      "webhookId": "6768eea9-d7e6-4c0f-8add-b193547d211b",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "appsmith->n8n Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{ $node[\"get_path\"].json.webhookPath }}",
+        "rules": {
+          "rules": [
+            {
+              "value2": "file/upload"
+            },
+            {
+              "value2": "file/replace",
+              "output": 1
+            },
+            {
+              "value2": "file/download",
+              "output": 2
+            }
+          ]
+        },
+        "fallbackOutput": 3
+      },
+      "id": "411e8265-0414-47f0-a0c9-78b56e7356db",
+      "name": "Switch_path",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [
+        1160,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{ $node[\"get_path\"].json.webhookPath }}",
+        "rules": {
+          "rules": [
+            {
+              "value2": "file/delete"
+            },
+            {
+              "value2": "folder/list",
+              "output": 1
+            },
+            {
+              "value2": "folder/create",
+              "output": 2
+            }
+          ]
+        },
+        "fallbackOutput": 3
+      },
+      "id": "1769687e-9a2b-41b1-829b-84abc96b85b3",
+      "name": "Switch_path1",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [
+        1160,
+        660
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({res:\"ok\", filename:$node[\"set_paths\"].json.filenameEncoded, download_url:$json.downloadUrl}) }}",
+        "options": {}
+      },
+      "id": "3ae7cfa1-ae67-438a-ba88-d7743b1835ff",
+      "name": "success_response2",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        2220,
+        60
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\"res\":\"file replace\"}",
+        "options": {}
+      },
+      "id": "d4618ba1-afcb-4a4b-b92b-53c9091d316c",
+      "name": "success_response3",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        2140,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({res:$json.downloadUrl}) }}",
+        "options": {}
+      },
+      "id": "2a93c42a-376c-4ffe-b691-5821d29e713f",
+      "name": "success_response4",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1820,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\"res\":\"file delete\"}",
+        "options": {}
+      },
+      "id": "f2a89fd3-0338-41ef-817a-ba26e56812cd",
+      "name": "success_response5",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1640,
+        640
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({\"res\":$json.body}) }}",
+        "options": {}
+      },
+      "id": "3f2c9420-d658-4693-9813-1335498b9edb",
+      "name": "success_response6",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1640,
+        840
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\"res\":\"folder create\"}",
+        "options": {}
+      },
+      "id": "f4a705b8-8ba4-4b94-b6f0-771e680cb87a",
+      "name": "success_response7",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1640,
+        1040
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\"error\":\"wrong command\"}",
+        "options": {}
+      },
+      "id": "2a7e06ae-e89f-4e80-892a-bef64458b0af",
+      "name": "wrong_command",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1340,
+        1180
+      ]
+    },
+    {
+      "parameters": {
+        "content": "0 - file upload\n1 - file replace\n2 - file download",
+        "height": 87.98387429096431,
+        "width": 150
+      },
+      "id": "9f116870-ae8c-41e8-bacd-b69d8171dc53",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1140,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "content": "0 - file delete\n1 - folder list\n2 - folder create",
+        "height": 87.98387429096431,
+        "width": 150
+      },
+      "id": "4cf4dc08-e4ff-47b8-899a-6b888c74ae58",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1140,
+        820
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{\njson: {\n//  file_name: 'file4.png'\n},\nbinary: $('on_file_replace').first().binary\n}];"
+      },
+      "id": "fc8234f9-7a99-4dc9-8b42-9ef11febf9a7",
+      "name": "Code2",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        1460,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "upload",
+        "bucketName": "={{ $node[\"set_paths\"].json.bucket }}",
+        "fileName": "={{ $node[\"set_paths\"].json.outFullPathEncoded }}",
+        "additionalFields": {}
+      },
+      "id": "d96046f7-da3e-4584-a620-7ce51011d9d0",
+      "name": "S3_upload",
+      "type": "n8n-nodes-base.s3",
+      "typeVersion": 1,
+      "position": [
+        1860,
+        60
+      ],
+      "credentials": {
+        "s3": {
+          "id": "13",
+          "name": "S3 account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "bucketName": "2T.Drive",
+        "fileKey": "={{ $json.body.path }}",
+        "options": {}
+      },
+      "id": "23827333-08f6-4297-b74b-9b2f34c36225",
+      "name": "S3_delete",
+      "type": "n8n-nodes-base.s3",
+      "typeVersion": 1,
+      "position": [
+        1680,
+        300
+      ],
+      "credentials": {
+        "s3": {
+          "id": "13",
+          "name": "S3 account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "upload",
+        "bucketName": "2T.Drive",
+        "fileName": "={{ $json.file_name }}",
+        "additionalFields": {
+          "parentFolderKey": "={{ $json.body.path }}"
+        }
+      },
+      "id": "458f7fdf-b914-42d7-9f80-d5eaac65a99e",
+      "name": "S3_upload_",
+      "type": "n8n-nodes-base.s3",
+      "typeVersion": 1,
+      "position": [
+        1900,
+        300
+      ],
+      "credentials": {
+        "s3": {
+          "id": "13",
+          "name": "S3 account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "bucketName": "2T.Drive",
+        "fileKey": "projects/xproject/unnamed.png"
+      },
+      "id": "2276fcd5-7be6-4da0-bdd3-daa35f84e0ea",
+      "name": "S3_download",
+      "type": "n8n-nodes-base.s3",
+      "typeVersion": 1,
+      "position": [
+        2260,
+        460
+      ],
+      "credentials": {
+        "s3": {
+          "id": "13",
+          "name": "S3 account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "folder",
+        "bucketName": "2T.Drive",
+        "folderName": "={{ $json.body.path }}",
+        "additionalFields": {}
+      },
+      "id": "671c0f14-b7cb-4411-9a36-1c52b2415e2b",
+      "name": "S3_folder_create",
+      "type": "n8n-nodes-base.s3",
+      "typeVersion": 1,
+      "position": [
+        1460,
+        1040
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "s3": {
+          "id": "13",
+          "name": "S3 account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "bucketName": "2T.Drive",
+        "fileKey": "={{ $json.body.path }}",
+        "options": {}
+      },
+      "id": "42afba23-aa3e-4b8f-bfa4-48879a24bd1c",
+      "name": "S3_delete_",
+      "type": "n8n-nodes-base.s3",
+      "typeVersion": 1,
+      "position": [
+        1460,
+        640
+      ],
+      "credentials": {
+        "s3": {
+          "id": "13",
+          "name": "S3 account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "bucketName": "2T.Drive",
+        "returnAll": true,
+        "options": {
+          "folderKey": "={{ $json.body.path }}"
+        }
+      },
+      "id": "ce32a385-54dc-41de-95e1-d9c1f7b562cf",
+      "name": "S3_folder_list",
+      "type": "n8n-nodes-base.s3",
+      "typeVersion": 1,
+      "position": [
+        1840,
+        840
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "s3": {
+          "id": "13",
+          "name": "S3 account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "bucketName": "2T.Drive",
+        "returnAll": true,
+        "options": {}
+      },
+      "id": "d8f5e67d-85e9-41a5-87a0-9a5ce4f70eff",
+      "name": "S3_folderlist",
+      "type": "n8n-nodes-base.s3",
+      "typeVersion": 1,
+      "position": [
+        2260,
+        740
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "s3": {
+          "id": "13",
+          "name": "S3 account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "={{ $node[\"sel_auth\"].json.storage_url }}/{{  $node[\"set_paths\"].json.bucket }}/{{ $node[\"set_paths\"].json.outFullPath }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Auth-Token",
+              "value": "={{ $node[\"sel_auth\"].json.storage_token }}"
+            },
+            {
+              "name": "X-Object-Meta-userparam1",
+              "value": "uservalue1"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "binaryData",
+        "inputDataFieldName": "data",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "dadaba00-e921-4d9f-a58e-e48039d7e1bb",
+      "name": "Sel_upload",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1980,
+        -140
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "workflowId": "6"
+      },
+      "id": "4750ff24-2043-4780-8130-3fc385271173",
+      "name": "sel_auth",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        980,
+        540
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $node[\"sel_auth\"].json.storage_url }}/2T.Drive?prefix={{$node.init_vars.json.body.path}}/&format=json",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Auth-Token",
+              "value": "={{ $node[\"sel_auth\"].json.storage_token }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "2adf97d5-fdac-4219-b4a4-ad4899deae01",
+      "name": "Sel_list",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1460,
+        840
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const crypto = require('crypto');\nconst method = 'GET';\nconst expires = Math.floor(Date.now() / 1000) + 60*24*60*60; // add 2 months\n\nconst path = '/' + $('init_vars').first().json.body.path; // 2T.Drive/unnamed.png';\nconst fileName = path.split('/').at(-1);\nconst linkSecretKey = $('init_vars').first().json.selectel_ContainerMetaTempURLKey;\nconst hmacBody = `${method}\\n${expires}\\n${path}`;\nconsole.log('hmacBody:', hmacBody);\nconst sig = crypto.createHmac('sha1', linkSecretKey).update(hmacBody).digest('hex');\n\nconsole.log('sig:', sig);\nconsole.log('expires:', expires);\n\nvar downloadUrl = $('init_vars').first().json.selectel_api + path + '?temp_url_sig=' + sig + '&temp_url_expires='+expires + '&filename=' + fileName;\n\nconsole.log('downloadUrl:', downloadUrl);\n$input.first().json.downloadUrl = downloadUrl;\n\nreturn $input.all();"
+      },
+      "id": "feea5cad-f09d-40a8-ac42-6216a65ece12",
+      "name": "generate_download_url",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        1480,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const crypto = require('crypto');\nconst method = 'GET';\nconst expires = Math.floor(Date.now() / 1000) + 60*24*60*60; // add 2 months\n\n//encodeURIComponent\nconst fullPath = '/' + $('set_paths').first().json.bucket + '/' + $('set_paths').first().json.outFullPathEncoded; //  /2T.Drive/unnamed.png';\nconst fileName = fullPath.split('/').at(-1);\nconst linkSecretKey = $('init_vars').first().json.selectel_ContainerMetaTempURLKey;\nconst hmacBody = `${method}\\n${expires}\\n${fullPath}`;\nconsole.log('hmacBody:', hmacBody);\nconst sig = crypto.createHmac('sha1', linkSecretKey).update(hmacBody).digest('hex');\n\nconsole.log('sig:', sig);\nconsole.log('expires:', expires);\n\nvar downloadUrl = $('init_vars').first().json.selectel_api + fullPath + '?temp_url_sig=' + sig + '&temp_url_expires='+expires + '&filename=' + fileName;\n\nconsole.log('downloadUrl:', downloadUrl);\n$input.first().json.downloadUrl = downloadUrl;\n\nreturn $input.all();"
+      },
+      "id": "1e3409fd-529d-4506-a28f-51c909049828",
+      "name": "generate_download_url1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        2040,
+        60
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "$input.first().binary = $('on_file_upload').first().binary\nreturn $input.all();"
+      },
+      "id": "78137b63-851f-48b8-8e0a-19ede54fc9ad",
+      "name": "set_binary",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        1700,
+        60
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "function replaceNonAlphanumericOrCyrillicInFilename(filename) {\n  // Ensure the input is a string\n  if (typeof filename !== 'string') {\n    throw new Error('Invalid input: The input must be a string');\n  }\n\n  // Split the filename into name and extension parts\n  const nameAndExtension = filename.split('.');\n  const extension = nameAndExtension.pop();\n  const name = nameAndExtension.join('.');\n\n  // Alphanumeric range: [a-zA-Z0-9]\n  // Cyrillic Unicode range: [\\u0400-\\u04FF]\n  // Match non-alphanumeric and non-Cyrillic characters\n  const nonAlphanumericOrCyrillic = /[^a-zA-Z0-9\\u0400-\\u04FF]/g;\n\n  // Replace non-alphanumeric and non-Cyrillic characters with an underscore\n  const replacedName = name.replace(nonAlphanumericOrCyrillic, '_');\n\n  // Join the replaced name with the extension\n  const replacedFilename = `${replacedName}.${extension}`;\n\n  return replacedFilename;\n}\n\n\nvar uploadtype_variant = $('Set_uploadtype_variant').first().json.uploadtype_variant;\n//  accelerator/projects/[project_id]/[meeting_id]\n// trackers/[tracker_id]\n\nvar filenameEncoded = replaceNonAlphanumericOrCyrillicInFilename($('init_vars').first().binary.data.fileName);\n\nvar outFullPathEncoded = \"trackers/\" + $('init_vars').first(). json.body.user_id + '/' + filenameEncoded;\n//console.log('outFullPathEncoded:', outFullPathEncoded);\n\nvar outFullPath = \"trackers/\" + $('init_vars').first(). json.body.user_id + '/' + $('init_vars').first().binary.data.fileName;\n//console.log('outFullPath:', outFullPath);\n\nif (uploadtype_variant=='project') {\n  var project_id = $('init_vars').first().json.body.project_id ?? 'project_id_not_provided';\n    var meeting_id = $('init_vars').first().json.body.meeting_id ?? 'meeting_id_not_provided';\n  outFullPathEncoded = \"accelerator/projects/\" + project_id + '/' + meeting_id + '/' + filenameEncoded;\n  outFullPath = \"accelerator/projects/\" + project_id + '/' + meeting_id + '/' + $('init_vars').first().binary.data.fileName;\n}\n\n$input.first().json.bucket = \"2T.Drive\";\n$input.first().json.outFullPathEncoded = outFullPathEncoded;\n$input.first().json.outFullPath= outFullPath;\n$input.first().json.filenameEncoded = filenameEncoded;\n\nreturn $input.all();"
+      },
+      "id": "4986ba12-1cf7-42d0-b366-b1de05a789df",
+      "name": "set_paths",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        1540,
+        60
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "https://api.selcdn.ru/v1/SEL_53352/2T.Drive/trackers/d6e67c48-afb4-467b-9cc5-35cf9ff04f6c/%D1%81%D0%B8%D0%BC%D0%B2%D0%BE%D0%BB.pdf",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Auth-Token",
+              "value": "787340c646783348a4d84616515c8fa6"
+            },
+            {
+              "name": "X-Object-Meta-userparam2",
+              "value": "uservalue2"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "binaryData",
+        "inputDataFieldName": "data",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "59cd106f-97e3-4f8c-9cfa-0b65ad5faa43",
+      "name": "Sel_upload1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        820,
+        220
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "id": "87a2179e-c949-41a8-8beb-91d8c7f50aa2",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2,
+      "position": [
+        1780,
+        -140
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "**Selectel Key setup** \nhttps://183406.selcdn.ru/2T.Drive\nX-Auth-Token\nX-Container-Meta-Temp-URL-Key\nhttps://developers.selectel.ru/docs/cloud-services/cloud-storage/selectel_storage_api/#создание-ссылки-для-скачивания-файла\n",
+        "height": 167.0434782608696,
+        "width": 306.91304347826093
+      },
+      "id": "d01e35a4-07c3-43ad-a0d8-3a3a8fc9b90c",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1860,
+        -400
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "uploadtype_variant",
+              "value": "={{ $node.init_vars.json.body.uploadtype == 'tracker' ? 'tracker' : 'project'}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "2da45ba9-387e-4299-98f8-d2a4f005bd10",
+      "name": "Set_uploadtype_variant",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        1380,
+        140
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "bucketName": "2T.Drive",
+        "returnAll": true,
+        "options": {}
+      },
+      "id": "e405b55d-b720-4709-9467-252c5b68ddd5",
+      "name": "S3",
+      "type": "n8n-nodes-base.s3",
+      "typeVersion": 1,
+      "position": [
+        2260,
+        940
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "s3": {
+          "id": "13",
+          "name": "S3 account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $node.Set_uploadtype_variant.json.uploadtype_variant }}",
+              "value2": "project"
+            }
+          ]
+        }
+      },
+      "id": "33a41f9e-6be6-4b45-9afe-4f5cf33219a8",
+      "name": "IF_project",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        2240,
+        -100
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $node[\"init_vars\"].json.supaBaseURL }}rest/v1/artifacts",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{\"Bearer \"+$node.init_vars.json.supaBaseServiceKey }}"
+            },
+            {
+              "name": "apikey",
+              "value": "={{ $node.init_vars.json.supaBaseServiceKey }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "link",
+              "value": "={{ $node.generate_download_url1?.json?.downloadUrl }}"
+            },
+            {
+              "name": "meeting_id",
+              "value": "={{ $node.init_vars.json.body.meeting_id }}"
+            },
+            {
+              "name": "name",
+              "value": "={{ $node.init_vars.binary.data.fileName }}"
+            },
+            {
+              "name": "s3_path",
+              "value": "={{ $node[\"set_paths\"].json.outFullPathEncoded }}"
+            },
+            {
+              "name": "type",
+              "value": "={{ parseInt($node.init_vars.json.body.type) }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "608e9efc-eca3-4094-a518-2e69bcf828df",
+      "name": "SUPA_insert_artifact",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        2480,
+        -120
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "62e37be2-ad4f-466c-9f39-e2f28c145608",
+      "name": "No Operation, do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        2480,
+        40
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ $node[\"init_vars\"].json.supaBaseURL }}rest/v1/user_profiles",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "user_id",
+              "value": "={{\"eq.\" + $node.init_vars.json.body.user_id }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{\"Bearer \"+$node.init_vars.json.supaBaseServiceKey }}"
+            },
+            {
+              "name": "apikey",
+              "value": "={{ $node.init_vars.json.supaBaseServiceKey }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "contract_url",
+              "value": "={{ $node.generate_download_url1?.json?.downloadUrl }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c2fb6e8b-cde6-4a2d-9c47-5d69b0cffad0",
+      "name": "SUPA_update_user_profile",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        2480,
+        -320
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $node.init_vars.json.body.subtype }}",
+              "value2": "agreement"
+            }
+          ]
+        }
+      },
+      "id": "7cb5ecd2-842b-4189-baa2-cc75b277ba3a",
+      "name": "IF_tracker_agreement",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        2240,
+        -300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $node[\"init_vars\"].json.supaBaseURL }}rest/v1/notifications",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{\"Bearer \"+$node.init_vars.json.supaBaseServiceKey }}"
+            },
+            {
+              "name": "apikey",
+              "value": "={{ $node.init_vars.json.supaBaseServiceKey }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "user_id",
+              "value": "={{ $json.user_id }}"
+            },
+            {
+              "name": "text",
+              "value": "=Трекер {{ $node.SUPA_get_team_id1.json.firstname ?? \"\" }} {{ $node.SUPA_get_team_id1.json.lastname ?? \"\" }} загрузил новый питчдек \"{{ $node.init_vars.binary.data.fileName }}\". Вам нужно проверить его качество. "
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "fb58f04d-d81e-477b-a8c9-f4034a44fecb",
+      "name": "SUPA_add_notification_",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        3560,
+        -180
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ parseInt($node.init_vars.json.body.type) }}",
+              "operation": "equal",
+              "value2": 1
+            }
+          ]
+        }
+      },
+      "id": "e7e95cf1-8984-46da-9b11-6d50a4b335b5",
+      "name": "IF_pitchdeck",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        3320,
+        -120
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $node[\"init_vars\"].json.supaBaseURL }}rest/v1/rpc/get_tracker_teamlead_meeting",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $node[\"init_vars\"].json.supaBasePublicKey }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "p_meeting_id",
+              "value": "={{ $node.init_vars.json.body.meeting_id }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "5297b929-fee8-4199-a0fc-81e9407a7dee",
+      "name": "SUPA_rpc_get_tracker_teamlead",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        3060,
+        -320
+      ],
+      "alwaysOutputData": false,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "проверять РПС что берется тимлид или брать самим трекера"
+      },
+      "id": "52dcf0c0-6dcf-4ad6-879d-9e3d319dc9a5",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2980,
+        -400
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $node[\"init_vars\"].json.supaBaseURL }}rest/v1/user_profiles?select=user_id,firstname,lastname&role_id=eq.2&team_id=eq.{{ $json.team_id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{\"Bearer \"+$node.init_vars.json.supaBaseServiceKey }}"
+            },
+            {
+              "name": "apikey",
+              "value": "={{ $node.init_vars.json.supaBaseServiceKey }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4fd85614-2bbe-4380-8f88-eec587b16cf8",
+      "name": "SUPA_get_teamlead_id",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        3120,
+        -120
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/user_profiles?select=team_id,firstname,lastname&user_id=eq.{{ $json.user_id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{\"Bearer \"+$node.init_vars.json.supaBaseServiceKey }}"
+            },
+            {
+              "name": "apikey",
+              "value": "={{ $node.init_vars.json.supaBaseServiceKey }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "7e4bfe23-8101-4722-81d3-1f2b76881d75",
+      "name": "SUPA_get_team_id1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        2900,
+        -120
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $node[\"init_vars\"].json.supaBaseURL }}rest/v1/meetings?id=eq.{{ $json.meeting_id }}&select=user_id",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{\"Bearer \"+$node.init_vars.json.supaBaseServiceKey }}"
+            },
+            {
+              "name": "apikey",
+              "value": "={{ $node.init_vars.json.supaBaseServiceKey }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "069cf35f-5b5a-4f02-9d53-23c995b4d36f",
+      "name": "SUPA_get_meeting_user_id",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        2700,
+        -120
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $node[\"init_vars\"].json.supaBaseURL }}rest/v1/notifications",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{\"Bearer \"+$node.init_vars.json.supaBaseServiceKey }}"
+            },
+            {
+              "name": "apikey",
+              "value": "={{ $node.init_vars.json.supaBaseServiceKey }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "user_id",
+              "value": "={{ $json.user_id }}"
+            },
+            {
+              "name": "text",
+              "value": "=Трекер {{ $node.SUPA_get_team_id1.json.firstname ?? \"\" }} {{ $node.SUPA_get_team_id1.json.lastname ?? \"\" }} загрузил новую финмодель \"{{ $node.init_vars.binary.data.fileName }}\". Вам нужно проверить ее качество."
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "1ef9fddf-5211-4822-8e04-38c525b23f38",
+      "name": "SUPA_add_notification_1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        3560,
+        -40
+      ]
+    }
+  ],
+  "pinData": {
+    "S3_folder_list": [
+      {
+        "json": {
+          "Key": "testFolder/file4.png",
+          "Size": "72408",
+          "LastModified": "2023-04-07T14:03:21Z",
+          "ETag": "\"3954181e3031a4666391cebff4f8c784\"",
+          "StorageClass": "Default"
+        }
+      },
+      {
+        "json": {
+          "Key": "testFolder/file4_.png",
+          "Size": "72408",
+          "LastModified": "2023-04-07T13:58:36Z",
+          "ETag": "\"3954181e3031a4666391cebff4f8c784\"",
+          "StorageClass": "Default"
+        }
+      },
+      {
+        "json": {
+          "Key": "testFolder/unnamed.png",
+          "Size": "137381",
+          "LastModified": "2023-04-07T19:10:46Z",
+          "ETag": "\"0e8ffd24be78fd9ea27a3674b3b7d149\"",
+          "StorageClass": "Default"
+        }
+      }
+    ],
+    "S3_folderlist": [
+      {
+        "json": {
+          "Key": "recording/",
+          "Size": "0",
+          "LastModified": "2022-11-06T14:26:33Z",
+          "ETag": "\"d41d8cd98f00b204e9800998ecf8427e\"",
+          "StorageClass": "Default"
+        }
+      },
+      {
+        "json": {
+          "Key": "recording/000003/",
+          "Size": "0",
+          "LastModified": "2022-12-20T23:25:04Z",
+          "ETag": "\"d41d8cd98f00b204e9800998ecf8427e\"",
+          "StorageClass": "Default"
+        }
+      },
+      {
+        "json": {
+          "Key": "recording/000003/-/",
+          "Size": "0",
+          "LastModified": "2022-12-20T23:25:04Z",
+          "ETag": "\"d41d8cd98f00b204e9800998ecf8427e\"",
+          "StorageClass": "Default"
+        }
+      },
+      {
+        "json": {
+          "Key": "recording/000004/",
+          "Size": "0",
+          "LastModified": "2022-11-06T20:33:28Z",
+          "ETag": "\"d41d8cd98f00b204e9800998ecf8427e\"",
+          "StorageClass": "Default"
+        }
+      },
+      {
+        "json": {
+          "Key": "recording/000004/20221106-1530/",
+          "Size": "0",
+          "LastModified": "2022-11-06T20:33:28Z",
+          "ETag": "\"d41d8cd98f00b204e9800998ecf8427e\"",
+          "StorageClass": "Default"
+        }
+      },
+      {
+        "json": {
+          "Key": "recording/000004/20221107-1300/",
+          "Size": "0",
+          "LastModified": "2022-11-07T10:48:26Z",
+          "ETag": "\"d41d8cd98f00b204e9800998ecf8427e\"",
+          "StorageClass": "Default"
+        }
+      },
+      {
+        "json": {
+          "Key": "recording/000005/",
+          "Size": "0",
+          "LastModified": "2022-12-21T17:48:40Z",
+          "ETag": "\"d41d8cd98f00b204e9800998ecf8427e\"",
+          "StorageClass": "Default"
+        }
+      },
+      {
+        "json": {
+          "Key": "recording/000005/20221221-2317/",
+          "Size": "0",
+          "LastModified": "2022-12-22T00:21:41Z",
+          "ETag": "\"d41d8cd98f00b204e9800998ecf8427e\"",
+          "StorageClass": "Default"
+        }
+      },
+      {
+        "json": {
+          "Key": "recording/000005/20221222-0612/",
+          "Size": "0",
+          "LastModified": "2022-12-22T07:21:53Z",
+          "ETag": "\"d41d8cd98f00b204e9800998ecf8427e\"",
+          "StorageClass": "Default"
+        }
+      },
+      {
+        "json": {
+          "Key": "recording/000005/20221222-1433/",
+          "Size": "0",
+          "LastModified": "2022-12-22T15:38:29Z",
+          "ETag": "\"d41d8cd98f00b204e9800998ecf8427e\"",
+          "StorageClass": "Default"
+        }
+      },
+      {
+        "json": {
+          "Key": "recording/000007/",
+          "Size": "0",
+          "LastModified": "2022-11-07T12:54:08Z",
+          "ETag": "\"d41d8cd98f00b204e9800998ecf8427e\"",
+          "StorageClass": "Default"
+        }
+      },
+      {
+        "json": {
+          "Key": "recording/000007/20221107-1545/",
+          "Size": "0",
+          "LastModified": "2022-11-07T12:54:08Z",
+          "ETag": "\"d41d8cd98f00b204e9800998ecf8427e\"",
+          "StorageClass": "Default"
+        }
+      },
+      {
+        "json": {
+          "Key": "recording/000007/20221107-2202/",
+          "Size": "0",
+          "LastModified": "2022-11-07T22:19:05Z",
+          "ETag": "\"d41d8cd98f00b204e9800998ecf8427e\"",
+          "StorageClass": "Default"
+        }
+      }
+    ],
+    "Sel_list": [
+      {
+        "json": {
+          "body": [
+            {
+              "bytes": 72408,
+              "hash": "3954181e3031a4666391cebff4f8c784",
+              "name": "testFolder/file4.png",
+              "content_type": "image/jpeg",
+              "last_modified": "2023-04-07T14:03:21.684030"
+            },
+            {
+              "bytes": 137381,
+              "hash": "0e8ffd24be78fd9ea27a3674b3b7d149",
+              "name": "testFolder/unnamed.png",
+              "content_type": "image/png",
+              "last_modified": "2023-04-10T07:18:40.249260"
+            }
+          ],
+          "headers": {
+            "access-control-allow-origin": "*",
+            "access-control-expose-headers": "Cache-Control, Content-Language, Content-Type, Expires, Last-Modified, Pragma, Etag, X-Timestamp, X-Trans-Id, X-Openstack-Request-Id, Content-Length, Accept-Ranges, X-Container-Meta-Web-Listings, X-Container-Bytes-Used, X-Container-Meta-Type, X-Container-Meta-Web-Listings-Sort, X-Container-Object-Count",
+            "content-length": "344",
+            "content-type": "application/json; charset=utf-8",
+            "date": "Mon, 10 Apr 2023 07:31:37 GMT",
+            "last-modified": "Tue, 04 Apr 2023 15:39:18 GMT",
+            "x-backend-delete-timestamp": "0000000000.00000",
+            "x-backend-put-timestamp": "1680622757.84343",
+            "x-backend-record-type": "object",
+            "x-backend-sharding-state": "unsharded",
+            "x-backend-status-changed-at": "1666103334.90609",
+            "x-backend-storage-policy-index": "1",
+            "x-backend-timestamp": "1666103334.90775",
+            "x-container-bytes-used": "820862085",
+            "x-container-meta-type": "private",
+            "x-container-meta-web-listings": "true",
+            "x-container-meta-web-listings-sort": "date_desc",
+            "x-container-object-count": "116",
+            "x-container-storage-policy-index": "1",
+            "x-container-storage-policy-name": "cold",
+            "x-put-timestamp": "1680622757.84343",
+            "x-storage-policy": "cold",
+            "x-timestamp": "1666103334.90775",
+            "connection": "close"
+          },
+          "statusCode": 200,
+          "statusMessage": "OK"
+        }
+      }
+    ],
+    "S3": [
+      {
+        "json": {
+          "Key": "recording/",
+          "Size": "0",
+          "LastModified": "2022-11-06T14:26:33Z",
+          "ETag": "\"d41d8cd98f00b204e9800998ecf8427e\"",
+          "StorageClass": "Default"
+        }
+      },
+      {
+        "json": {
+          "Key": "recording/000003/",
+          "Size": "0",
+          "LastModified": "2022-12-20T23:25:04Z",
+          "ETag": "\"d41d8cd98f00b204e9800998ecf8427e\"",
+          "StorageClass": "Default"
+        }
+      },
+      {
+        "json": {
+          "Key": "recording/000003/-/",
+          "Size": "0",
+          "LastModified": "2022-12-20T23:25:04Z",
+          "ETag": "\"d41d8cd98f00b204e9800998ecf8427e\"",
+          "StorageClass": "Default"
+        }
+      },
+      {
+        "json": {
+          "Key": "recording/000004/",
+          "Size": "0",
+          "LastModified": "2022-11-06T20:33:28Z",
+          "ETag": "\"d41d8cd98f00b204e9800998ecf8427e\"",
+          "StorageClass": "Default"
+        }
+      },
+      {
+        "json": {
+          "Key": "recording/000004/20221106-1530/",
+          "Size": "0",
+          "LastModified": "2022-11-06T20:33:28Z",
+          "ETag": "\"d41d8cd98f00b204e9800998ecf8427e\"",
+          "StorageClass": "Default"
+        }
+      },
+      {
+        "json": {
+          "Key": "recording/000004/20221107-1300/",
+          "Size": "0",
+          "LastModified": "2022-11-07T10:48:26Z",
+          "ETag": "\"d41d8cd98f00b204e9800998ecf8427e\"",
+          "StorageClass": "Default"
+        }
+      },
+      {
+        "json": {
+          "Key": "recording/000005/",
+          "Size": "0",
+          "LastModified": "2022-12-21T17:48:40Z",
+          "ETag": "\"d41d8cd98f00b204e9800998ecf8427e\"",
+          "StorageClass": "Default"
+        }
+      },
+      {
+        "json": {
+          "Key": "recording/000005/20221221-2317/",
+          "Size": "0",
+          "LastModified": "2022-12-22T00:21:41Z",
+          "ETag": "\"d41d8cd98f00b204e9800998ecf8427e\"",
+          "StorageClass": "Default"
+        }
+      },
+      {
+        "json": {
+          "Key": "recording/000005/20221222-0612/",
+          "Size": "0",
+          "LastModified": "2022-12-22T07:21:53Z",
+          "ETag": "\"d41d8cd98f00b204e9800998ecf8427e\"",
+          "StorageClass": "Default"
+        }
+      },
+      {
+        "json": {
+          "Key": "recording/000005/20221222-1433/",
+          "Size": "0",
+          "LastModified": "2022-12-22T15:38:29Z",
+          "ETag": "\"d41d8cd98f00b204e9800998ecf8427e\"",
+          "StorageClass": "Default"
+        }
+      },
+      {
+        "json": {
+          "Key": "recording/000007/",
+          "Size": "0",
+          "LastModified": "2022-11-07T12:54:08Z",
+          "ETag": "\"d41d8cd98f00b204e9800998ecf8427e\"",
+          "StorageClass": "Default"
+        }
+      },
+      {
+        "json": {
+          "Key": "recording/000007/20221107-1545/",
+          "Size": "0",
+          "LastModified": "2022-11-07T12:54:08Z",
+          "ETag": "\"d41d8cd98f00b204e9800998ecf8427e\"",
+          "StorageClass": "Default"
+        }
+      },
+      {
+        "json": {
+          "Key": "recording/000007/20221107-2202/",
+          "Size": "0",
+          "LastModified": "2022-11-07T22:19:05Z",
+          "ETag": "\"d41d8cd98f00b204e9800998ecf8427e\"",
+          "StorageClass": "Default"
+        }
+      }
+    ]
+  },
+  "settings": {
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "102"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 6,
+  "updatedAt": "2023-05-11T16:32:53.034Z",
+  "versionId": "0ea4e201-a111-44c6-aff9-04b8215ce9be"
+}
