@@ -1,0 +1,650 @@
+{
+  "active": true,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "init_vars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "init_vars": {
+      "main": [
+        [
+          {
+            "node": "SUPA_auth",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_auth": {
+      "main": [
+        [
+          {
+            "node": "IF_error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_get_profile_info": {
+      "main": [
+        [
+          {
+            "node": "IF role eq request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_get_emailconfirmed": {
+      "main": [
+        [
+          {
+            "node": "SUPA_get_profile_info",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "format_response": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_error": {
+      "main": [
+        [
+          {
+            "node": "err",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "SUPA_get_emailconfirmed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF role eq request": {
+      "main": [
+        [
+          {
+            "node": "SUPA_get_user_verification",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "err2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_get_stages": {
+      "main": [
+        [
+          {
+            "node": "Code_getstage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code_getstage": {
+      "main": [
+        [
+          {
+            "node": "format_response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_get_user_verification": {
+      "main": [
+        [
+          {
+            "node": "IF confirmed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF confirmed": {
+      "main": [
+        [
+          {
+            "node": "SUPA_get_stages",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "err3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-03-24T10:12:59.571Z",
+  "id": "34",
+  "name": "supabase_user_login_",
+  "nodes": [
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "httpMethod": "POST",
+        "path": "user/login",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "24cd9c1e-ee22-41e9-b083-7c2db4ad98db",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -280,
+        220
+      ],
+      "webhookId": "685ade3e-399b-4088-83a8-e10288e594d3",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "appsmith->n8n Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "7401c22e-07b6-498c-87e8-a263a1b82408",
+      "name": "init_vars",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        -100,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.supaBaseURL }}auth/v1/token?grant_type=password",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $json.supaBasePublicKey }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "email",
+              "value": "={{ $node.Webhook.json.body.email }}"
+            },
+            {
+              "name": "password",
+              "value": "={{ $node.Webhook.json.body.password }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "0ba239e8-cc78-4ce9-aba3-82260387bb8e",
+      "name": "SUPA_auth",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        100,
+        220
+      ],
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/user_profiles",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "user_id",
+              "value": "=eq.{{ $node.SUPA_auth.json.user.id }}"
+            },
+            {
+              "name": "select",
+              "value": "date_of_birth,country_host,user_profile_status,role_id,eap_provider_id,contract_url,draft_contract_url"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $node.init_vars.json.supaBaseServiceKey }}"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{\"Bearer \"+$node.init_vars.json.supaBaseServiceKey }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "8cf555b7-e4fb-4cac-ac82-f2ba8ad8199f",
+      "name": "SUPA_get_profile_info",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        740,
+        320
+      ],
+      "alwaysOutputData": true,
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/rpc/is_useremail_confirmed",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $node.init_vars.json.supaBaseServiceKey }}"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{\"Bearer \"+$node.init_vars.json.supaBaseServiceKey }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "id",
+              "value": "={{ $json.user.id }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "text"
+            }
+          }
+        }
+      },
+      "id": "2184136f-ab1d-4ff0-ac1d-685443cc5b54",
+      "name": "SUPA_get_emailconfirmed",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        520,
+        320
+      ],
+      "alwaysOutputData": true,
+      "disabled": true,
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "res.email_confirmed",
+              "value": "={{ $node.SUPA_auth.json.user.email_confirmed_at }}"
+            },
+            {
+              "name": "res.date_of_birth",
+              "value": "={{ $node.SUPA_get_profile_info.json.date_of_birth ?? \"\" }}"
+            },
+            {
+              "name": "res.country_host",
+              "value": "={{ $node.SUPA_get_profile_info.json.country_host ?? '' }}"
+            },
+            {
+              "name": "res.user_profile_status",
+              "value": "={{ $node.SUPA_get_profile_info.json.user_profile_status ?? '' }}"
+            },
+            {
+              "name": "res.user",
+              "value": "={{ $node.SUPA_auth.json.user }}"
+            },
+            {
+              "name": "res.access_token",
+              "value": "={{ $node.SUPA_auth.json.access_token }}"
+            },
+            {
+              "name": "res.refresh_token",
+              "value": "={{ $node.SUPA_auth.json.refresh_token }}"
+            },
+            {
+              "name": "res.eap_provider_id",
+              "value": "={{ $node.SUPA_get_profile_info.json.eap_provider_id ?? '' }}"
+            },
+            {
+              "name": "res.draft_contract_url",
+              "value": "={{$node.SUPA_get_profile_info.json.draft_contract_url ?? ''}} "
+            },
+            {
+              "name": "res.contract_url",
+              "value": "={{$node.SUPA_get_profile_info.json.contract_url ?? ''}} "
+            },
+            {
+              "name": "res.stage",
+              "value": "={{ $node[\"Code_getstage\"].json.stage }}"
+            },
+            {
+              "name": "res.ap_name",
+              "value": "Акселератор Лидеры инноваций"
+            }
+          ]
+        },
+        "options": {
+          "dotNotation": true
+        }
+      },
+      "id": "2f813ac8-cb30-4ed2-88b0-26855eecfb71",
+      "name": "format_response",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        1840,
+        80
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "1cddf663-b3f2-4603-ae58-26dbaf04b401",
+      "name": "Respond to Webhook1",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        2020,
+        80
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ !!$json[\"user\"]  }}"
+            }
+          ]
+        }
+      },
+      "id": "9a75066f-0571-42c7-b933-5a0b36a63780",
+      "name": "IF_error",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        300,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json.role_id }}",
+              "operation": "equal",
+              "value2": "={{ $node.Webhook.json.body.role }}"
+            }
+          ]
+        }
+      },
+      "id": "4570c203-0a72-4e83-b369-da9757a8692f",
+      "name": "IF role eq request",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        960,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/ap_stages",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "select",
+              "value": "*"
+            },
+            {
+              "name": "order",
+              "value": "start_date"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $node.init_vars.json.supaBasePublicKey }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "5c1a7e74-544b-483f-b893-a34da5987efb",
+      "name": "SUPA_get_stages",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1520,
+        80
+      ],
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "jsCode": "//console.log(\"$input.all():\",$input.all())\n\n// to get rid of potential problems with time zones just extract numbers // for year/month/day and use them in comparison\n\nvar cur_date_arr = new Date();\nvar cur_year = cur_date_arr.getFullYear();\nvar cur_month = cur_date_arr.getMonth() + 1;\nvar cur_day = cur_date_arr.getDate();\nconsole.log(\"cur:\",cur_year, cur_month, cur_day);\n\n//console.log($now);\n//console.log($now.startOf('day'));\n//var now = new Date();\nvar stage = \"\";\n//console.log(now.getTime());\n\nfor (let i = $input.all().length - 1; i >= 0; i--) {\n  const item = $input.all()[i];\n  //console.log(item);\n  var x_date_arr = item.json.start_date.split(\"-\");\n  var x_year = parseInt(x_date_arr[0]);\n  var x_month = parseInt(x_date_arr[1]);\n  var x_day = parseInt(x_date_arr[2]);\n  console.log(x_year, x_month, x_day);\n  console.log(cur_year>=x_year, cur_month>=x_month,cur_day>=x_day);\n  // var start_date = new Date(item.json.start_date);\n  // console.log(start_date);\n  // console.log(start_date.getTime());\n  if (cur_year>=x_year && cur_month>=x_month && cur_day>=x_day) {\n    console.log(\"current stage is0 \", item.json.stage);\n    stage = item.json.stage;\n    break;\n  } else if (cur_year>=x_year && cur_month>x_month) {\n    console.log(\"current stage is1 \", item.json.stage);\n    stage = item.json.stage;\n    break;\n  } else if (cur_year>x_year) {\n    console.log(\"current stage is2 \", item.json.stage);\n    stage = item.json.stage;\n    break;\n  } \n\n}\n\n//return $input.all();\nreturn [{json:{stage:stage}}]"
+      },
+      "id": "1310695f-ee51-4ff9-bbf2-ce4e2fc299bf",
+      "name": "Code_getstage",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        1680,
+        80
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $node[\"init_vars\"].json.supaBaseURL }}rest/v1/user_verification?user_id=eq.{{ $node.SUPA_auth.json.user.id }}&select=*&limit=1&order=created_at.desc",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "950a62c2-5301-40b4-aa87-6e2066e26938",
+      "name": "SUPA_get_user_verification",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1160,
+        220
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "10",
+          "name": "Supabase stage"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{\nJSON.stringify({\n\"error\": $json[\"error\"], \"error_description\": $json[\"error_description\"] })\n}}",
+        "options": {}
+      },
+      "id": "5d7140f5-0b14-46fb-bfd0-342d3cc2c499",
+      "name": "err",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        520,
+        140
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n\"res\":\"Доступ закрыт\"\n}",
+        "options": {}
+      },
+      "id": "6beaa401-6aed-468f-af5b-fbbb1f0e7738",
+      "name": "err2",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1200,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n\"error\": true,\n\"error_description\": \"Email not confirmed\"\n}",
+        "options": {}
+      },
+      "id": "423f18a5-7d41-4546-aebc-cc3f222e637f",
+      "name": "err3",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1520,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ !!$json.is_used }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "ebac1a2c-fa21-44a5-9cf0-f26cd8ee7920",
+      "name": "IF confirmed",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1340,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "content": "res.ap_name пока хардкод\nАкселератор Лидеры инноваций"
+      },
+      "id": "ab31b0dc-4d2b-4f82-ad1a-3dc2d1dca30b",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1820,
+        -60
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "saveDataSuccessExecution": "all",
+    "errorWorkflow": "102"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrencyRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-05-11T17:04:20.701Z",
+  "versionId": "1df8b789-c438-4e14-9094-30c9b0893b69"
+}
