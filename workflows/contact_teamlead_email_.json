@@ -1,0 +1,500 @@
+{
+  "active": true,
+  "connections": {
+    "teamlead_support": {
+      "main": [
+        [
+          {
+            "node": "init_vars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "init_vars": {
+      "main": [
+        [
+          {
+            "node": "get user",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get user": {
+      "main": [
+        [
+          {
+            "node": "get_user_profile",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_user_profile": {
+      "main": [
+        [
+          {
+            "node": "get_teamlead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_teamlead": {
+      "main": [
+        [
+          {
+            "node": "IF1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_teamlead_email": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "Send Email with project name",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Email without project name",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Email with project name": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Email without project name": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF1": {
+      "main": [
+        [
+          {
+            "node": "get_teamlead_email",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond to Webhook2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-04-03T13:13:32.431Z",
+  "id": "48",
+  "name": "contact_teamlead_email_",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Contact teamlead of your team\n/support/teamlead\n\nExpect to receive tracker's ID to get related teamlead",
+        "height": 416,
+        "width": 1695.6605403117492
+      },
+      "id": "cefcf9db-8bca-4693-a4c5-90dc562a55a2",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        620,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify(\n{\n res: $json ? \"Успех\" : \"ошибка\"\n}\n)}}",
+        "options": {}
+      },
+      "id": "d3301fe1-031b-42be-a20d-b30b0bbc79cf",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        2340,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "httpMethod": "POST",
+        "path": "support/teamlead",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "8ff351a9-3e4c-4420-a428-010047441853",
+      "name": "teamlead_support",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        640,
+        340
+      ],
+      "webhookId": "cc6daef7-e7ce-4ceb-9332-40f22be18e57",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "appsmith->n8n Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "9bb49a24-13d1-4816-9c0e-9f8617b28dbe",
+      "name": "init_vars",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        800,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/rpc/get_user_by_id",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "user_id",
+              "value": "={{ $node.teamlead_support.json.body.user_id }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "fec6c7bb-c803-43fa-8d78-031d4b33944c",
+      "name": "get user",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        980,
+        340
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/user_profiles?user_id=eq.{{ $node.teamlead_support.json.body.user_id }}&select=*",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "600cdafc-e268-4e65-963a-ce3a0e0311fb",
+      "name": "get_user_profile",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1160,
+        340
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "id": "d92f13bf-6717-4b81-a54f-8fcd25134c16",
+      "name": "Set",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        1800,
+        760
+      ],
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/user_profiles?team_id=eq.{{ $node.get_user_profile.json.team_id }}&role_id=eq.2",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f99a990f-5b95-4713-a350-b22b68b3d915",
+      "name": "get_teamlead",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1320,
+        340
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/rpc/get_user_by_id",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "user_id",
+              "value": "={{ $json.user_id }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "760f4522-bf23-44a4-9273-e4c3456b7a25",
+      "name": "get_teamlead_email",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1740,
+        320
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $node.teamlead_support.json.body.project_name }}",
+              "operation": "isNotEmpty"
+            },
+            {
+              "value1": "={{ $node.teamlead_support.json.body.project_name }}",
+              "operation": "notEqual",
+              "value2": "\" \""
+            }
+          ]
+        }
+      },
+      "id": "5e44076e-12bf-4de6-af48-94b9194106d4",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1940,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "fromEmail": "dev@2t.band",
+        "toEmail": "={{ $node.get_teamlead_email.json.email }}",
+        "subject": "=От {{ $node.get_user_profile.json.firstname }} {{ $node.get_user_profile.json.lastname }}",
+        "text": "={{ $node.teamlead_support.json.body.comment }}\n\nПочта для связи с трекером  {{ $node[\"get user\"].json.email }}",
+        "options": {}
+      },
+      "id": "4de06005-6f31-4689-a3dc-829d6b20ba0e",
+      "name": "Send Email without project name",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [
+        2160,
+        420
+      ],
+      "credentials": {
+        "smtp": {
+          "id": "3",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "dev@2t.band",
+        "toEmail": "={{ $node.get_teamlead_email.json.email }}",
+        "subject": "=От {{ $node.get_user_profile.json.firstname }} {{ $node.get_user_profile.json.lastname }} из проекта   {{ $node.teamlead_support.json.body.project_name }}",
+        "text": "={{ $node.teamlead_support.json.body.comment }}\n\nПочта для связи с трекером  {{ $node[\"get user\"].json.email }}",
+        "options": {}
+      },
+      "id": "0c548879-f3d0-4017-bd22-f69dacfeb9dc",
+      "name": "Send Email with project name",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [
+        2160,
+        220
+      ],
+      "credentials": {
+        "smtp": {
+          "id": "3",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify(\n{\n res: $json ? \"Успех\" : \"ошибка\"\n}\n)}}",
+        "options": {}
+      },
+      "id": "74f25149-c327-4bc8-8dac-025cc7a4eddb",
+      "name": "Respond to Webhook1",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        2340,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.id }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "id": "b32f921b-8fc2-45f1-870e-92d7364af9b4",
+      "name": "IF1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1520,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={\"res\": \"Teamlead not assigned\"}",
+        "options": {}
+      },
+      "id": "f2145ad8-5ee9-452a-a554-77a8928ca941",
+      "name": "Respond to Webhook2",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1740,
+        480
+      ],
+      "alwaysOutputData": true,
+      "executeOnce": true
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "saveDataSuccessExecution": "all",
+    "saveManualExecutions": false,
+    "callerPolicy": "workflowsFromSameOwner",
+    "saveExecutionProgress": true,
+    "errorWorkflow": "102"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-05-11T17:01:56.265Z",
+  "versionId": "aa9698aa-32ea-4677-958f-e6f07cbd105f"
+}
