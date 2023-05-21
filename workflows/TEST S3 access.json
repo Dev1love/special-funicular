@@ -1,0 +1,52 @@
+{
+  "active": false,
+  "connections": {
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "Execute Command",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2022-11-06T14:17:49.908Z",
+  "id": "12",
+  "name": "TEST S3 access",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "9d35f764-3f51-42e0-8d76-8f6130b3f2f7",
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        880,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "command": "ls /home/s3fs -lah"
+      },
+      "id": "07617c77-31de-4c80-a5c8-cf736fe6da9b",
+      "name": "Execute Command",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        1100,
+        420
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2022-11-06T14:25:53.312Z",
+  "versionId": "fa44bf48-d944-4b29-b0b3-0de63baf210b"
+}
