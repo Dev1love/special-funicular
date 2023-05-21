@@ -1,0 +1,146 @@
+{
+  "active": false,
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Set",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cron": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2022-10-30T08:35:44.923Z",
+  "id": "6",
+  "name": "S3 authenticate",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "57d26e49-9097-4eda-98cf-6fbacb78e964",
+      "name": "Start",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        200,
+        140
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://api.selcdn.ru/auth/v1.0",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Auth-User",
+              "value": "53352_dev"
+            },
+            {
+              "name": "X-Auth-Key",
+              "value": "R/0,[Ls4ib"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "id": "53a84194-be04-4a51-a39e-c05ad19c2504",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        400,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "storage_url",
+              "value": "={{ $json[\"headers\"][\"x-storage-url\"] }}"
+            },
+            {
+              "name": "storage_token",
+              "value": "={{ $json[\"headers\"][\"x-storage-token\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "2a5e0a0e-0e1c-4f77-a122-60a660c15c43",
+      "name": "Set",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        620,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "triggerTimes": {
+          "item": [
+            {
+              "mode": "everyX",
+              "value": 15
+            }
+          ]
+        }
+      },
+      "id": "74fbbe35-4f73-4a8d-ad60-208ff6ddf1f9",
+      "name": "Cron",
+      "type": "n8n-nodes-base.cron",
+      "typeVersion": 1,
+      "position": [
+        200,
+        340
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2023-04-03T19:25:18.504Z",
+      "updatedAt": "2023-04-03T19:25:18.504Z",
+      "id": "2",
+      "name": "variable"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2023-04-03T19:25:19.620Z",
+  "versionId": "26f6a134-15bd-4185-97d6-278765d1feec"
+}
