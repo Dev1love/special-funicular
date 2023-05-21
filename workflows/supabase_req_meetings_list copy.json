@@ -1,0 +1,187 @@
+{
+  "active": false,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Item Lists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        []
+      ]
+    },
+    "Item Lists": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-03-21T14:15:49.932Z",
+  "id": "26",
+  "name": "supabase_req_meetings_list copy",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "={{ $json.supaBaseURL }}rest/v1/meetings_tmp?select=*",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{$json.headers[\"user-access-token\"]}}"
+            },
+            {
+              "name": "apikey",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICAgInJvbGUiOiAiYW5vbiIsCiAgICAiaXNzIjogInN1cGFiYXNlIiwKICAgICJpYXQiOiAxNjY5MTU4MDAwLAogICAgImV4cCI6IDE4MjY5MjQ0MDAKfQ.MKy5X_4WPKpOurvHBoJ5eAxP_iGoqmCZxjmUxp8Ptjo"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "6767d6bf-edf7-4bcb-929c-699cd08b96c0",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        40,
+        220
+      ],
+      "alwaysOutputData": true,
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "httpMethod": "POST",
+        "path": "edb75237-cb73-4297-92c9-meet2",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "62fc4a77-c3d3-4c2d-9732-bc636160d963",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -360,
+        220
+      ],
+      "webhookId": "f1a520a3-44b3-4710-ba8f-a0bd83cc85b4",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "appsmith->n8n Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "=json",
+        "responseBody": "={\n\"res\": {{ $json?.all?.length>0 ? JSON.stringify($json.all) : null}},\n\"error\": {{ $json[\"error\"] ? JSON.stringify($json.error) : \"null\"}}\n}",
+        "options": {}
+      },
+      "id": "89cea5b8-ce89-40c3-9fb0-bf6d3ece941b",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        400,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "a19f2d73-fbba-4184-9e97-81e06f038be3",
+      "name": "Execute Workflow",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items \nvar out = [];\nfor (var item of $input.all()) {\n   out.push(item.json);\n}\n\nreturn {all:out};"
+      },
+      "id": "cb59fe4a-f808-442b-97e8-6bd257627421",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        240,
+        460
+      ],
+      "alwaysOutputData": true,
+      "notesInFlow": true,
+      "notes": "transform array of item\ninto one item with array"
+    },
+    {
+      "parameters": {
+        "operation": "aggregateItems",
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "all"
+      },
+      "id": "51c4505f-2ca4-4164-8e00-d3c7de272903",
+      "name": "Item Lists",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 2,
+      "position": [
+        220,
+        220
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "saveDataSuccessExecution": "all"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrencyRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-03-21T14:34:57.537Z",
+  "versionId": "69448ea4-6270-405a-a7ce-2512945fcde2"
+}
