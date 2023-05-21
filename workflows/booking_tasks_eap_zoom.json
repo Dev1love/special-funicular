@@ -1,0 +1,2756 @@
+{
+  "active": true,
+  "connections": {
+    "init_vars": {
+      "main": [
+        [
+          {
+            "node": "transform format",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "transform format": {
+      "main": [
+        [
+          {
+            "node": "SUPA_get_meeting",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EAP_create_appointment": {
+      "main": [
+        [
+          {
+            "node": "Zoom Auth",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EAP_get_availabilities": {
+      "main": [
+        [
+          {
+            "node": "all in one item",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "all in one item": {
+      "main": [
+        [
+          {
+            "node": "check_availability",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Zoom_create_meeting": {
+      "main": [
+        [
+          {
+            "node": "SUPA_update_meeting",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Zoom_get_meetings1": {
+      "main": [
+        [
+          {
+            "node": "check_overlapping",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split In Batches": {
+      "main": [
+        [
+          {
+            "node": "Zoom_get_meetings1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "all_zoom_users": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "check_overlapping": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "can't find spot in zoom",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "meeting_json",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EAP_get_provider": {
+      "main": [
+        [
+          {
+            "node": "provider_worktime",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "provider_worktime": {
+      "main": [
+        [
+          {
+            "node": "EAP_get_availabilities",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "check_availability": {
+      "main": [
+        [
+          {
+            "node": "Switch_",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "availability found1": {
+      "main": [
+        [
+          {
+            "node": "SUPA_get_user_profile",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond with error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Zoom Auth": {
+      "main": [
+        [
+          {
+            "node": "all_zoom_users",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_get_user_profile": {
+      "main": [
+        [
+          {
+            "node": "EAP_create_appointment",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_path": {
+      "main": [
+        [
+          {
+            "node": "init_vars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "additional_data": {
+      "main": [
+        [
+          {
+            "node": "Switch_1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "format_response": {
+      "main": [
+        [
+          {
+            "node": "Respond to List",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_get_meeting": {
+      "main": [
+        [
+          {
+            "node": "additional_data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_update_meeting": {
+      "main": [
+        [
+          {
+            "node": "Respond to Create",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Zoom Auth1": {
+      "main": [
+        [
+          {
+            "node": "Zoom_delete_meeting",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_update_meeting1": {
+      "main": [
+        [
+          {
+            "node": "if_TM1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Zoom_delete_meeting": {
+      "main": [
+        [
+          {
+            "node": "EAP_delete_appointment",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EAP_delete_appointment": {
+      "main": [
+        [
+          {
+            "node": "SUPA_update_meeting1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EAP_get_appointment": {
+      "main": [
+        [
+          {
+            "node": "Respond to Info",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch_1": {
+      "main": [
+        [
+          {
+            "node": "EAP_get_appointment",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "EAP_get_provider",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Zoom Auth1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Zoom Auth1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch_2": {
+      "main": [
+        [
+          {
+            "node": "Respond to Delete",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "EAP_get_provider",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch_": {
+      "main": [
+        [
+          {
+            "node": "availability found1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "availability found1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "format_response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook_slot_create": {
+      "main": [
+        [
+          {
+            "node": "get_path",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook_slot_list": {
+      "main": [
+        [
+          {
+            "node": "get_path",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook_slot_delete": {
+      "main": [
+        [
+          {
+            "node": "get_path",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook_slot_move": {
+      "main": [
+        [
+          {
+            "node": "get_path",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook_slot_info": {
+      "main": [
+        [
+          {
+            "node": "get_path",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "meeting_json": {
+      "main": [
+        [
+          {
+            "node": "Zoom_create_meeting",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EAP_create_appointment1": {
+      "main": [
+        [
+          {
+            "node": "SUPA_update_meeting2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond to Create": {
+      "main": [
+        [
+          {
+            "node": "if_TM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "if_TM": {
+      "main": [
+        [
+          {
+            "node": "SUPA_get_user_profiles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_get_meeting1": {
+      "main": [
+        [
+          {
+            "node": "IF_error1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_get_user_profiles": {
+      "main": [
+        [
+          {
+            "node": "IF_error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_error": {
+      "main": [
+        [],
+        [
+          {
+            "node": "SUPA_get_meeting1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_error1": {
+      "main": [
+        [],
+        [
+          {
+            "node": "EAP_create_appointment1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "if_TM1": {
+      "main": [
+        [
+          {
+            "node": "SUPA_get_user_profile1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Switch_2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_get_meeting2": {
+      "main": [
+        [
+          {
+            "node": "IF_error3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_get_user_profiles1": {
+      "main": [
+        [
+          {
+            "node": "IF_error2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_error2": {
+      "main": [
+        [],
+        [
+          {
+            "node": "SUPA_get_meeting2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_error3": {
+      "main": [
+        [],
+        [
+          {
+            "node": "EAP_delete_appointment1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_update_meeting3": {
+      "main": [
+        [
+          {
+            "node": "all in one item1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "all in one item1": {
+      "main": [
+        [
+          {
+            "node": "Switch_2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EAP_delete_appointment1": {
+      "main": [
+        [
+          {
+            "node": "SUPA_update_meeting3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_update_meeting2": {
+      "main": [
+        [
+          {
+            "node": "SUPA_RPC_getemail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_bookmove": {
+      "main": [
+        [
+          {
+            "node": "SUPA_add_notification_",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "SUPA_add_notification_1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_RPC_getemail": {
+      "main": [
+        [
+          {
+            "node": "IF_bookmove",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_add_notification_": {
+      "main": [
+        [
+          {
+            "node": "Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_add_notification_1": {
+      "main": [
+        [
+          {
+            "node": "Send Email1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_get_user_profile1": {
+      "main": [
+        [
+          {
+            "node": "SUPA_get_user_profiles1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-03-28T09:55:37.688Z",
+  "id": "41",
+  "name": "booking_tasks_eap_zoom",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "cc3f28a7-2391-4b34-964b-efc8f4007586",
+      "name": "init_vars",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        -120,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "9"
+      },
+      "id": "f2470426-d976-44dc-9ef4-03d00680beeb",
+      "name": "Zoom Auth",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        2540,
+        -20
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $node.init_vars.json.EAP_URL }}/appointments",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "start",
+              "value": "={{ $node[\"transform format\"].json.start_eap_format }}"
+            },
+            {
+              "name": "end",
+              "value": "={{ $node[\"transform format\"].json.end_eap_format }}"
+            },
+            {
+              "name": "location",
+              "value": "\"\""
+            },
+            {
+              "name": "notes",
+              "value": "\"TODO: This is a test appointment created in n8n\""
+            },
+            {
+              "name": "customerId",
+              "value": "={{ $json.eap_user_id }}"
+            },
+            {
+              "name": "providerId",
+              "value": "={{ $node.init_vars.json.body.eap_provider_id }}"
+            },
+            {
+              "name": "serviceId",
+              "value": "={{ $node.additional_data.json.eap_serviceId }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b9d5f012-2afb-417a-8f34-5d187ab85553",
+      "name": "EAP_create_appointment",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        2360,
+        -20
+      ],
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "1",
+          "name": "EAP admin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "start_eap_format",
+              "value": "={{ $json.body.datestring + \" \" + $json.body.timestring.split(\" - \")[0]+\":00\" }}"
+            },
+            {
+              "name": "end_eap_format",
+              "value": "={{ $json.body.datestring + \" \" + $json.body.timestring.split(\" - \")[1]+\":00\" }}"
+            },
+            {
+              "name": "start_zoom_format",
+              "value": "={{ $json.body.datestring + \"T\" + $json.body.timestring.split(\" - \")[0]+\":00\" }}"
+            },
+            {
+              "name": "start_time",
+              "value": "={{$json.body.timestring.split(\" - \")[0]}}"
+            },
+            {
+              "name": "end_zoom_format",
+              "value": "={{ $json.body.datestring + \"T\" + $json.body.timestring.split(\" - \")[1]+\":00\" }}"
+            },
+            {
+              "name": "datestring",
+              "value": "={{ $json.body.datestring }}"
+            },
+            {
+              "name": "timestring",
+              "value": "={{ $json.body.timestring }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "788a14a2-c61b-44f1-a5f8-793e57158d02",
+      "name": "transform format",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        40,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $node[\"Zoom Auth\"].json.ZoomBaseUrl }}users/{{ $json[\"curEmail\"] }}/meetings  ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ $node[\"Zoom Auth\"].json[\"ZoomAuth\"] }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $node.meeting_json.json.JSONbody }}",
+        "options": {}
+      },
+      "id": "bd9fc487-9489-426c-9fa2-0f19ea4ffd44",
+      "name": "Zoom_create_meeting",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        3940,
+        -40
+      ],
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 2000
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.EAP_URL }}/availabilities",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "providerId",
+              "value": "={{ $node.init_vars.json.body.eap_provider_id }}"
+            },
+            {
+              "name": "serviceId",
+              "value": "={{ $node.additional_data.json.eap_serviceId }}"
+            },
+            {
+              "name": "date",
+              "value": "={{ $node.init_vars.json.body.datestring }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "14fbf1e6-28c2-4c38-bdb9-0dd4bae45cb3",
+      "name": "EAP_get_availabilities",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1180,
+        340
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "1",
+          "name": "EAP admin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "values": {
+          "number": [
+            {
+              "name": "eap_serviceId",
+              "value": "={{ ($json.type == 6 || $node.init_vars.json.body.service == 2) ? 2 : 1 }}"
+            }
+          ],
+          "string": [
+            {
+              "name": "project_id",
+              "value": "={{ $json.project_id }}"
+            },
+            {
+              "name": "user_id",
+              "value": "={{ $json.user_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c57646a6-f1f9-49b3-bec7-254fdfd4922f",
+      "name": "additional_data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        380,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/user_profiles",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "user_id",
+              "value": "=eq.{{ $node.additional_data.json.user_id }}"
+            },
+            {
+              "name": "select",
+              "value": "id,eap_user_id,eap_provider_id,team_id"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $node.init_vars.json.supaBaseServiceKey }}"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{\"Bearer \"+$node.init_vars.json.supaBaseServiceKey }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "29f51000-88e4-4d74-97c2-add37e22fc1d",
+      "name": "SUPA_get_user_profile",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        2160,
+        40
+      ],
+      "alwaysOutputData": true,
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "content": "supaBaseServiceKey and not supaBasePublicKey in current supabase requests to speed up dev time and not require auth tokens "
+      },
+      "id": "e098dea6-b5f3-4f51-8a42-343300b5b6b1",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1580,
+        -200
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "aggregateItems",
+        "aggregate": "aggregateAllItemData"
+      },
+      "id": "65808008-3a20-4736-956f-7f03722c4dbd",
+      "name": "all in one item",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 2,
+      "position": [
+        1360,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## TODO\n\n**input checks**\n**timezones**\n**later: check user token**",
+        "height": 165.20212501813393,
+        "width": 249.0800358838876
+      },
+      "id": "1216d7ca-432b-434e-8dce-0fb437544ff8",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        300,
+        -120
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $node[\"Zoom Auth\"].json.ZoomBaseUrl }}users/{{ $json.email}}/meetings  ",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "type",
+              "value": "upcoming_meetings"
+            },
+            {
+              "name": "from",
+              "value": "={{ $node.init_vars.json.body.datestring }}"
+            },
+            {
+              "name": "to",
+              "value": "={{ $node.init_vars.json.body.datestring }}"
+            },
+            {
+              "name": "page_size",
+              "value": "50"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ $node[\"Zoom Auth\"].json[\"ZoomAuth\"] }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "63bf9be3-8eda-4599-a204-c6c3b578705e",
+      "name": "Zoom_get_meetings1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        3040,
+        -20
+      ],
+      "retryOnFail": true,
+      "waitBetweenTries": 2000,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "44411c14-f028-4661-a947-ca0f156662b8",
+      "name": "Split In Batches",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 1,
+      "position": [
+        2860,
+        -20
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n    {\n\t\tjson: {\n\t\t\temail: 'user02@2t.band',\n\t\t}\n\t},\n    {\n\t\tjson: {\n\t\t\temail: 'user03@2t.band',\n\t\t}\n\t},\n    {\n\t\tjson: {\n\t\t\temail: 'user04@2t.band',\n\t\t}\n    }\n];"
+      },
+      "id": "70d0e157-b24c-4a89-b757-09d132966297",
+      "name": "all_zoom_users",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        2700,
+        -20
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "function isMeetingOverlap(target_start, target_end, existing_meetings, addGap) {\n  const target_start_time = new Date(target_start);\n  const target_end_time = new Date(target_end);\n  console.log(\"target_start_time:\", target_start_time)\n  console.log(\"target_end_time:\", target_end_time)\n\n  for (let i = 0; i < existing_meetings.length; i++) {\n    const existing_start_time = new Date(existing_meetings[i].start_time);\n    const existing_end_time = new Date(existing_meetings[i].start_time);\n    existing_end_time.setMinutes(existing_end_time.getMinutes() + existing_meetings[i].duration + addGap);\n    console.log(\"existing_start_time:\", existing_start_time)\n    console.log(\"existing_end_time:\", existing_end_time)\n\n    if (\n      (target_start_time >= existing_start_time && target_start_time < existing_end_time) ||\n      (target_end_time > existing_start_time && target_end_time <= existing_end_time) ||\n      (target_start_time <= existing_start_time && target_end_time >= existing_end_time)\n    ) {\n      return true;\n    }\n  }\n\n  return false;\n}\n\n// todo: is this correct query?\nvar curEmail = $(\"Split In Batches\").itemMatching(0)?.json?.email;\n\n$input.first().json.currentRunIndex = $runIndex;\n$input.first().json.curEmail = curEmail;\n\nvar existing_meetings = $input.first().json?.meetings;\nif (existing_meetings?.length===0){\n  console.log(\"no meetings at all\");\n  $input.first().json.isMeetingOverlapped = false;\n  return $input.all();\n}\n\n//var target_meeting_start_time = $item(\"0\").$node[\"additional_data\"].json[\"start_zoom_format\"];\nvar target_meeting_start_time = $('transform format').first().json.start_zoom_format;\n\n//var target_meeting_end_time = $item(\"0\").$node[\"additional_data\"].json[\"end_zoom_format\"];\n\nvar target_meeting_end_time = $('transform format').first().json.end_zoom_format;\n\n//console.log(\"$input.all():\",$input.all());\n\nconsole.log(\"existing_meetings:\", existing_meetings);\n//console.log(\"target_meeting_start_time:\", target_meeting_start_time+'+03:00');\n//console.log(\"target_meeting_end_time:\", target_meeting_end_time+'+03:00');\nconsole.log(\"target_meeting_start_time:\", target_meeting_start_time);\nconsole.log(\"target_meeting_end_time:\", target_meeting_end_time);\n\n// TODO: think about proper way to handle timezones\n// current workaround: convert target time to Europe/Moscow from UTC\n// new Date(\"2023-04-01T11:00:00.000+03:00\");\n\nvar isOverlap = isMeetingOverlap(target_meeting_start_time+'+03:00', target_meeting_end_time+'+03:00', existing_meetings, 30)//\n\nconsole.log(\"isOverlap:\", isOverlap);\n\n$input.first().json.isMeetingOverlapped = isOverlap;\nreturn $input.all();\n"
+      },
+      "id": "b82246ad-4273-423a-9b85-30ae935b2764",
+      "name": "check_overlapping",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        3240,
+        -20
+      ]
+    },
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{ $json.isMeetingOverlapped + '_' + $node[\"Split In Batches\"].context[\"noItemsLeft\"]}}",
+        "rules": {
+          "rules": [
+            {
+              "value2": "true_true"
+            },
+            {
+              "value2": "false_true",
+              "output": 1
+            },
+            {
+              "value2": "false_false",
+              "output": 1
+            },
+            {
+              "value2": "true_false",
+              "output": 2
+            }
+          ]
+        }
+      },
+      "id": "0dde080f-edb6-4679-aaca-7a690e7167d9",
+      "name": "Switch",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [
+        3440,
+        -20
+      ],
+      "notesInFlow": true,
+      "notes": "0-nothing|1-good|2-next"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\"res\":null,\"error\":\"no spot in zoom found\"}",
+        "options": {}
+      },
+      "id": "aec51663-cd40-4962-bc1a-adbdbb00bcb3",
+      "name": "can't find spot in zoom",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        3640,
+        -200
+      ]
+    },
+    {
+      "parameters": {
+        "content": "**think about: do we need delete created eap event in case of no zoom spot found?**\n",
+        "height": 111.33321352921209,
+        "width": 184.19349717628148
+      },
+      "id": "7b98ec0d-6622-4e8d-8976-6317c6594fff",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3480,
+        -340
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.EAP_URL }}/providers/{{ $node[\"transform format\"].json.body.eap_provider_id }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "fields",
+              "value": "timezone,settings"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a56f479e-b6c8-43f5-b415-cb2006c1c433",
+      "name": "EAP_get_provider",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        820,
+        340
+      ],
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "1",
+          "name": "EAP admin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "//var targetDateStr = $('transform format').first().json.start_zoom_format+\".00\";\nvar targetDateStr = $('transform format').first().json.datestring.substr(0,10);\nconsole.log(\"targetDateStr:\", targetDateStr);\n//var targetDate = DateTime.fromISO(targetDateStr);\nvar targetDate = DateTime.fromFormat(targetDateStr, 'yyyy-MM-dd')\nconsole.log(\"targetDate:\", targetDate);\n\n// TODO: consider timezone?\nvar timezone = $input.first().json.timezone;\nvar workingPlan = $input.first().json.settings.workingPlan;\n\nvar targetDateWeekday = targetDate.weekdayLong.toLowerCase();\nconsole.log(\"targetDateWeekday:\", targetDateWeekday);\n// console.log(\"workingPlan:\", workingPlan);\nconsole.log(\"workingPlan[targetDateWeekday]:\", workingPlan[targetDateWeekday]);\n//start:'09:00', end:'18:00',\n//var targetDateWorkStart = $('transform format').first().json.datestring + \"T\" + workingPlan[targetDateWeekday].start + \":00.00\";\n//var targetDateWorkEnd = $('transform format').first().json.datestring + \"T\" + workingPlan[targetDateWeekday].end + \":00.00\";\n\n$input.first().json.workingPlan = workingPlan[targetDateWeekday];\n\nreturn $input.all();"
+      },
+      "id": "fb322318-5ae8-474f-80a4-b0a9ad4dfddc",
+      "name": "provider_worktime",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        1020,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Algorithm.\n// 1 - prepare:\n// from the base time slots list (every 30 minutes) make adjustments for current provider,\n// remove everything before start and place \"SKIPCHECK\" before first slot, remove everything after end.\n// Remove end slot and one before it, place \"SKIPCHECK\" after last slot.\n// For all breaks remove one equal break start and one before it, place \"SKIPCHECK\" instead.\n// this will be \"PreparedSlotsList\"\n// 2 - for the actual work.\n// prepare corrected availabilities list:\n// for each received item find corresponding item in the PreparedSlotsList, then take previous and next slot (in PreparedSlotsList)\n// and find that these are existing in received availabilities list. But if previous or next slots is \"SKIPCHECK\" - do not check.\n// if slot have to be checked and missing - remove it from received availabilities list.\n// almost same when actual checking before actual booking - not \"for each received item\" but do it only for one item\n\n//20230403 decided to add aditional filter with reduced fixed set of slots\n\n\nfunction filter_keep_00_30(x) {\n  const filteredArray = x.filter(y => y.endsWith(\":30\") || y.endsWith(\":00\"));\n  return filteredArray;\n}\n\nfunction filterBaseHours(basehours, filterObj) {\n  let filteredHours = [...basehours];\n\n  // Remove hours before and after the specified start and end times\n  const startIndex = filteredHours.indexOf(filterObj.start);\n  console.log(\"startIndex:\", startIndex);\n  if (startIndex==-1) startIndex = 0;\n\n  const endIndex = filteredHours.indexOf(filterObj.end);\n  console.log(\"endIndex:\", endIndex);\n  if (endIndex==-1) endIndex = filteredHours.length-1;\n  \n  filteredHours = filteredHours.slice(startIndex, endIndex + 1);\n\n  // Add SKIPCHECK before the start time\n  filteredHours.unshift(\"SKIPCHECK\");\n\n  // Remove the last item and the item before it, and add SKIPCHECK after the last slot\n  filteredHours.splice(filteredHours.length - 2, 2, \"SKIPCHECK\");\n\n  // Remove breaks and add SKIPCHECK\n  filterObj.breaks.forEach(breakObj => {\n    const breakStartIndex = filteredHours.indexOf(breakObj.start);\n    const breakEndIndex = filteredHours.indexOf(breakObj.end);\n\n    if (breakStartIndex !== -1) {\n      filteredHours.splice(breakStartIndex - 1, breakEndIndex - breakStartIndex + 1, \"SKIPCHECK\");\n    }\n  });\n\n  return filteredHours;\n}\n\nfunction filterReceivedSlots(preparedSlots, receivedSlots) {\n  const filteredReceivedSlots = receivedSlots.filter(itemX => {\n    const indexInPreparedSlots = preparedSlots.indexOf(itemX);\n\n    if (indexInPreparedSlots === -1) {\n      return false;\n    }\n\n    const prevItem = preparedSlots[indexInPreparedSlots - 1];\n    const nextItem = preparedSlots[indexInPreparedSlots + 1];\n    console.log('receivedSlots:', receivedSlots);\n    console.log('prevItem:', prevItem);\n    console.log('nextItem:', nextItem);\n    console.log('receivedSlots.includes(prevItem):', receivedSlots.includes(prevItem));\n\n    const prevItemExistsInReceivedSlots = prevItem === \"SKIPCHECK\" || receivedSlots.includes(prevItem);\n    const nextItemExistsInReceivedSlots = nextItem === \"SKIPCHECK\" || receivedSlots.includes(nextItem);\n\n    return prevItemExistsInReceivedSlots && nextItemExistsInReceivedSlots;\n  });\n\n  return filteredReceivedSlots;\n}\n\nconst basehours = [\"00:00\",\"00:30\",\"01:00\",\"01:30\",\"02:00\",\"02:30\",\"03:00\",\"03:30\",\"04:00\",\"04:30\",\"05:00\",\"05:30\",\"06:00\",\"06:30\",\"07:00\",\"07:30\",\"08:00\",\"08:30\",\"09:00\",\"09:30\",\"10:00\",\"10:30\",\"11:00\",\"11:30\",\"12:00\",\"12:30\",\"13:00\",\"13:30\",\"14:00\",\"14:30\",\"15:00\",\"15:30\",\"16:00\",\"16:30\",\"17:00\",\"17:30\",\"18:00\",\"18:30\",\"19:00\",\"19:30\",\"20:00\",\"20:30\",\"21:00\",\"21:30\",\"22:00\",\"22:30\",\"23:00\",\"23:30\"];\nvar filterObj = $('provider_worktime').first().json.workingPlan;\n\nvar preparedSlots = filterBaseHours(basehours, filterObj);\nconsole.log(\"preparedSlots:\", preparedSlots);\n\n//console.log($('provider_worktime').all()[0].json.targetDateWorkStart_)\n//console.log($('provider_worktime').all()[0].json.targetDateWorkStart)\n//console.log($('provider_worktime').all()[0].json.targetDateWorkEnd_)\n//console.log($('provider_worktime').all()[0].json.targetDateWorkEnd)\n//console.log(\"workingPlan:\", $('provider_worktime').all()[0].json.workingPlan)\nconsole.log(\"start_time:\", $('transform format').first().json.start_time)\nconsole.log(\"datestring:\", $('transform format').first().json.datestring)\n//$('transform format').all()[0].json.end_eap_format\n\nvar availabilitiesArr_raw = $input.first().json.data;\n\nconsole.log(\"availabilitiesArr_raw[0]:\", availabilitiesArr_raw[0]);\nif (!availabilitiesArr_raw[0] || Object.keys(availabilitiesArr_raw[0]).length === 0) {\n  console.log(\"empty input\");\n  $input.first().json.filteredReceivedSlots = [];\n  return $input.all();\n}\n\nvar receivedSlots = filter_keep_00_30(availabilitiesArr_raw);\nconsole.log(\"receivedSlots:\", receivedSlots);\n\nconst filteredReceivedSlots = filterReceivedSlots(preparedSlots, receivedSlots);\nconsole.log(\"filteredReceivedSlots:\", filteredReceivedSlots);\n\n//20230403 decided to add aditional filter with reduced fixed set of slots\n//var fixedSlots = [\"09:00\", \"10:30\", \"12:00\", \"13:30\", \"15:00\", \"16:30\"];\nvar fixedSlots = [\"00:00\", \"01:30\", \"03:00\", \"04:30\", \"06:00\", \"07:30\", \"09:00\", \"10:30\", \"12:00\", \"13:30\", \"15:00\", \"16:30\", \"18:00\", \"19:30\", \"21:00\", \"22:30\"];\n\n// case for teamlead and TM\n//if ($('additional_data').first().json.eap_serviceId == 2) fixedSlots = [\"09:00\", \"12:00\", \"15:00\"];\nif ($('additional_data').first().json.eap_serviceId == 2) fixedSlots = [\"00:00\", \"03:00\", \"06:00\", \"09:00\", \"12:00\", \"15:00\", \"18:00\", \"21:00\"];\n\nvar filteredReceivedSlotsWithFixed = filteredReceivedSlots.filter(x => fixedSlots.includes(x));\n\n$input.first().json.filteredReceivedSlots = filteredReceivedSlotsWithFixed; //filteredReceivedSlots;\n\n// TODO: think about workaround for the case when date is close to now\n// in that case availabilities slot isn't there so it got skipped in filter check\n\n\nreturn $input.all();"
+      },
+      "id": "bc84945b-c803-4c9e-bbcf-e2d60bcd80be",
+      "name": "check_availability",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        1520,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.filteredReceivedSlots.indexOf($node[\"transform format\"].json.start_time)>-1 }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "32fdbbd8-8f5b-4832-a173-42e47c70bfea",
+      "name": "availability found1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1940,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "webhookPath",
+              "value": "={{ $input.params.path}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "bcf5457f-3e1b-4b72-a77f-29d19f051809",
+      "name": "get_path",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        -280,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "content": "**0 - create**\n**1 - move**\n**2 - list**",
+        "height": 99.32486918973474,
+        "width": 173.4375
+      },
+      "id": "cd2da4f8-b020-450a-8f8a-4fc7fdbb7cc6",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1656.5625,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "function transformSlots(inp) {\n  return inp.map(time => {\n    const hour = parseInt(time.slice(0, 2), 10);\n    const minutes = time.slice(2);\n    const nextHour = ((hour + 1) % 24).toString().padStart(2, \"0\");\n    const endString = `${nextHour}${minutes}`;\n    return { timestring: `${time} - ${endString}` };\n  });\n}\n\nif ($input.first().json.filteredReceivedSlots.length==0) {\n  return $input.all();  \n}\n\n$input.first().json.filteredReceivedSlots = transformSlots($input.first().json.filteredReceivedSlots);\n\nreturn $input.all();"
+      },
+      "id": "6d756f05-f25f-4366-81ca-92b99688ecb0",
+      "name": "format_response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        1960,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/meetings",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "id",
+              "value": "=eq.{{ $node.init_vars.json.body.meeting_id }}"
+            },
+            {
+              "name": "select",
+              "value": "*"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $node.init_vars.json.supaBaseServiceKey }}"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{\"Bearer \"+$node.init_vars.json.supaBaseServiceKey }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0a1b551d-6fe2-44c9-9663-0620e6129364",
+      "name": "SUPA_get_meeting",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        200,
+        340
+      ],
+      "alwaysOutputData": true,
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ $node[\"init_vars\"].json.supaBaseURL }}rest/v1/meetings",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "id",
+              "value": "={{\"eq.\" + $node.init_vars.json.body.meeting_id}}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{\"Bearer \"+$node.init_vars.json.supaBaseServiceKey }}"
+            },
+            {
+              "name": "apikey",
+              "value": "={{ $node.init_vars.json.supaBaseServiceKey }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "status",
+              "value": "2"
+            },
+            {
+              "name": "meeting_eap_id",
+              "value": "={{ $node.EAP_create_appointment.json.id }}"
+            },
+            {
+              "name": "meeting_zoom_id",
+              "value": "={{ $json.id }}"
+            },
+            {
+              "name": "=booking_link",
+              "value": "={{ $json.start_url }}"
+            },
+            {
+              "name": "join_link",
+              "value": "={{ $json.join_url }}"
+            },
+            {
+              "name": "booked",
+              "value": "={{ (new Date()).toISOString() }}"
+            },
+            {
+              "name": "start_time",
+              "value": "={{ $('transform format').first().json.start_zoom_format}}"
+            },
+            {
+              "name": "time_slot",
+              "value": "={{ $node.init_vars.json.body.timestring }}"
+            },
+            {
+              "name": "zoom_user_host",
+              "value": "={{ $json[\"host_email\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b36eacd7-a057-4e3d-97cc-06cc7818c142",
+      "name": "SUPA_update_meeting",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        4140,
+        -40
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "9"
+      },
+      "id": "892ef873-8dcb-48cf-addf-97762a2266d8",
+      "name": "Zoom Auth1",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        720,
+        780
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ $node[\"init_vars\"].json.supaBaseURL }}rest/v1/meetings",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "id",
+              "value": "={{\"eq.\" + $node.init_vars.json.body.meeting_id}}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{\"Bearer \"+$node.init_vars.json.supaBaseServiceKey }}"
+            },
+            {
+              "name": "apikey",
+              "value": "={{ $node.init_vars.json.supaBaseServiceKey }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "status",
+              "value": "3"
+            },
+            {
+              "name": "meeting_eap_id",
+              "value": "={{ null }}"
+            },
+            {
+              "name": "meeting_zoom_id",
+              "value": "={{ null }}"
+            },
+            {
+              "name": "=booking_link",
+              "value": "={{ null }}"
+            },
+            {
+              "name": "join_link",
+              "value": "={{ null }}"
+            },
+            {
+              "name": "booked",
+              "value": "={{ null }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "1392ddca-4b7e-4136-b3c4-3c8c7803ec24",
+      "name": "SUPA_update_meeting1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1340,
+        780
+      ]
+    },
+    {
+      "parameters": {
+        "method": "DELETE",
+        "url": "={{ $json.ZoomBaseUrl }}meetings/{{ $node.additional_data.json.meeting_zoom_id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ $json.ZoomAuth }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "dbcf7290-024f-446e-b903-1def3a0f14b9",
+      "name": "Zoom_delete_meeting",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        940,
+        780
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "method": "DELETE",
+        "url": "={{ $node.init_vars.json.EAP_URL }}/appointments/{{ $node.additional_data.json.meeting_eap_id }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "options": {}
+      },
+      "id": "fdabba55-9a00-47da-8ce2-833e64392b66",
+      "name": "EAP_delete_appointment",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1120,
+        780
+      ],
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "1",
+          "name": "EAP admin"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.EAP_URL }}/appointments/{{ $node.additional_data.json.meeting_eap_id }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "options": {}
+      },
+      "id": "2c123ecc-4dbc-4f94-9778-aab3c2190d53",
+      "name": "EAP_get_appointment",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        800,
+        80
+      ],
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "1",
+          "name": "EAP admin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "**0 - info**\n**1 - create**\n**2 - delete**\n**3 - move**",
+        "height": 108.75,
+        "width": 150
+      },
+      "id": "d3e9e1f8-4262-44b2-adb8-d9316892bd67",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        520,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\"res\":\"ok\" }",
+        "options": {}
+      },
+      "id": "e3e56543-ca1e-4107-b8a5-0422f37acf98",
+      "name": "Respond to Delete",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1200,
+        540
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({slots:$json.filteredReceivedSlots}) }}",
+        "options": {}
+      },
+      "id": "13a3ec5f-df9d-4592-bc56-94639fc62af3",
+      "name": "Respond to List",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        2160,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({\"res\":{\"booking_start\":$json.start,\"booking_end\":$json.end, \"booking_link\":$node.SUPA_get_meeting.json.booking_link, \"join_link\":$node.SUPA_get_meeting.json.join_link} }) }}",
+        "options": {}
+      },
+      "id": "5232c6a1-b198-480d-8405-6aa9c2a9ced2",
+      "name": "Respond to Info",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1000,
+        80
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\"error\":\"can't find free timeslot\"}",
+        "options": {}
+      },
+      "id": "7282b1a5-f161-4410-8546-34ec05a4ce9d",
+      "name": "Respond with error",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        2160,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"res\":{{ JSON.stringify($json) }}} ",
+        "options": {}
+      },
+      "id": "039874cd-e670-49c4-a4c8-4c98354ccd84",
+      "name": "Respond to Create",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        4320,
+        -40
+      ]
+    },
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{ $node[\"transform format\"].json.webhookPath }}",
+        "rules": {
+          "rules": [
+            {
+              "value2": "slots/delete_tmp",
+              "output": 2
+            },
+            {
+              "value2": "slots/move_tmp",
+              "output": 3
+            },
+            {
+              "value2": "slots/list_tmp",
+              "output": 1
+            },
+            {
+              "value2": "slots/info_tmp"
+            },
+            {
+              "value2": "slots/create_tmp",
+              "output": 1
+            }
+          ]
+        }
+      },
+      "id": "5da1cb9d-8691-4bc3-8c01-610131c20741",
+      "name": "Switch_1",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [
+        520,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{ $node[\"transform format\"].json.webhookPath }}",
+        "rules": {
+          "rules": [
+            {
+              "value2": "slots/delete_tmp"
+            },
+            {
+              "value2": "slots/move_tmp",
+              "output": 1
+            }
+          ]
+        }
+      },
+      "id": "0536dd62-2578-4794-a69a-bb6039592591",
+      "name": "Switch_2",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [
+        940,
+        560
+      ]
+    },
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{ $node[\"transform format\"].json.webhookPath }}",
+        "rules": {
+          "rules": [
+            {
+              "value2": "slots/create_tmp"
+            },
+            {
+              "value2": "slots/list_tmp",
+              "output": 2
+            },
+            {
+              "value2": "slots/move_tmp",
+              "output": 1
+            }
+          ]
+        }
+      },
+      "id": "4c07e59e-0f92-49ed-9c8e-7cd046842ad6",
+      "name": "Switch_",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [
+        1700,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "slots/create_tmp",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "9c96bb02-72c2-44f5-bab4-4c4169635bb3",
+      "name": "Webhook_slot_create",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -500,
+        40
+      ],
+      "webhookId": "469144f8-31fc-4dfb-93d8-a0817cffec76"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "slots/list_tmp",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "f29059a9-e7aa-4bc3-84c6-da32909dcdc4",
+      "name": "Webhook_slot_list",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -500,
+        260
+      ],
+      "webhookId": "02b78152-5b2a-442c-a0ed-162d4c6ce70d"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "slots/delete_tmp",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "798000bc-cb09-4dba-8413-140301ad0ead",
+      "name": "Webhook_slot_delete",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -500,
+        460
+      ],
+      "webhookId": "8a7313ad-a641-44cc-81a2-53f1f318bfbf"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "slots/move_tmp",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "ae6b9a37-991e-4bf5-a136-0ffae7ef4cc4",
+      "name": "Webhook_slot_move",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -500,
+        660
+      ],
+      "webhookId": "60988045-3194-4d5e-9b3d-35d31e16e22a"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "slots/info_tmp",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "059e5934-f501-4831-98f2-c15c4bb90d91",
+      "name": "Webhook_slot_info",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -500,
+        860
+      ],
+      "webhookId": "47c2455b-0508-4758-a007-4b898c969b5b"
+    },
+    {
+      "parameters": {
+        "jsCode": "function getMeetingLength(durationString) {\n  const [start, end] = durationString.split(' - '); // split the string into start and end times\n  const [startHour, startMinute] = start.split(':'); // split the start time into hours and minutes\n  const [endHour, endMinute] = end.split(':'); // split the end time into hours and minutes\n  const startTime = new Date(); // create a new date object\n  const endTime = new Date(); // create a new date object\n  startTime.setHours(parseInt(startHour, 10), parseInt(startMinute, 10)); // set the start time in the date object\n  endTime.setHours(parseInt(endHour, 10), parseInt(endMinute, 10)); // set the end time in the date object\n  const duration = (endTime.getTime() - startTime.getTime()) / (1000 * 60); // get the duration in minutes\n  return duration;\n}\n\nvar JSONbody = {\n  \"topic\": $('SUPA_get_meeting').first().json.name,\n  \"agenda\": \"...\",\n  \"type\": 2,\n  \"start_time\": $('transform format').first().json.start_zoom_format,\n  \"timezone\": \"Europe/Moscow\",\n  \"duration\": getMeetingLength($('transform format').first().json.timestring), // 60,\n  \"schedule_for\": $input.first().json.curEmail,\n  \"default_password\": true,\n  \"settings\": {\n    \"auto_recording\": \"cloud\",\n    \"join_before_host\": false,\n    \"mute_upon_entry\": false\n   }\n}\n\n$input.first().json.JSONbody = JSONbody;\n\nreturn $input.all();"
+      },
+      "id": "62d2eb5b-60c2-4829-a33e-c78f32344dff",
+      "name": "meeting_json",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        3700,
+        -40
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('init_vars').first().json.EAP_URL }}/appointments",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "start",
+              "value": "={{ $('transform format').first().json.start_eap_format }}"
+            },
+            {
+              "name": "end",
+              "value": "={{ $('transform format').first().json.end_eap_format }}"
+            },
+            {
+              "name": "location",
+              "value": "\"\""
+            },
+            {
+              "name": "notes",
+              "value": "\"TODO: This is a test appointment created in n8n\""
+            },
+            {
+              "name": "customerId",
+              "value": "={{ $node['SUPA_get_user_profiles'].json.eap_user_id }}"
+            },
+            {
+              "name": "providerId",
+              "value": "={{ $node['SUPA_get_user_profiles'].json.eap_provider_id }}"
+            },
+            {
+              "name": "serviceId",
+              "value": "={{ $('additional_data').first().json.eap_serviceId }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "6a80deb8-47ed-4bfe-bce0-bfe8de2dcdf4",
+      "name": "EAP_create_appointment1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        5560,
+        -180
+      ],
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "1",
+          "name": "EAP admin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ $('init_vars').first().json.supaBaseURL }}rest/v1/meetings",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "id",
+              "value": "={{\"eq.\" + $node['SUPA_get_meeting1'].json.id }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{\"Bearer \"+$('init_vars').first().json.supaBaseServiceKey }}"
+            },
+            {
+              "name": "apikey",
+              "value": "={{ $('init_vars').first().json.supaBaseServiceKey }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "status",
+              "value": "2"
+            },
+            {
+              "name": "meeting_eap_id",
+              "value": "={{ $json.id }}"
+            },
+            {
+              "name": "meeting_zoom_id",
+              "value": "={{ $('Zoom_create_meeting').first().json.id }}"
+            },
+            {
+              "name": "join_link",
+              "value": "={{ $('Zoom_create_meeting').first().json.join_url }}"
+            },
+            {
+              "name": "booked",
+              "value": "={{ (new Date()).toISOString() }}"
+            },
+            {
+              "name": "start_time",
+              "value": "={{ $('transform format').first().json.start_zoom_format}}"
+            },
+            {
+              "name": "time_slot",
+              "value": "={{ $('init_vars').first().json.body.timestring }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "2f541c8d-f6e2-49a6-9b4c-3b49f6a5401d",
+      "name": "SUPA_update_meeting2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        5760,
+        -180
+      ],
+      "alwaysOutputData": true,
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $node['additional_data'].json.eap_serviceId }}",
+              "operation": "equal",
+              "value2": 2
+            }
+          ]
+        }
+      },
+      "id": "7f1a4623-9f49-484a-a3e3-68244a11e30e",
+      "name": "if_TM",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        4480,
+        -160
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## TM related additions",
+        "height": 393.2584828700543,
+        "width": 2129.2770197492705
+      },
+      "id": "6e8336c8-a759-4045-8369-d4d170dd1a0c",
+      "name": "Sticky Note5",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        4620,
+        -273.2584828700543
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $('init_vars').first().json.supaBaseURL }}rest/v1/meetings",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "project_id",
+              "value": "=eq.{{ $('additional_data').first().json.project_id }}"
+            },
+            {
+              "name": "type",
+              "value": "eq.6"
+            },
+            {
+              "name": "meeting_zoom_id",
+              "value": "is.null"
+            },
+            {
+              "name": "user_id",
+              "value": "=eq.{{ $node.SUPA_get_user_profiles.json.user_id }}"
+            },
+            {
+              "name": "limit",
+              "value": "1"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $('init_vars').first().json[\"supaBaseServiceKey\"] }}"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ \"Bearer \" + $('init_vars').first().json.supaBaseServiceKey }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "8ff36525-d3d4-4878-a75b-b3255cd72381",
+      "name": "SUPA_get_meeting1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        5120,
+        -180
+      ],
+      "alwaysOutputData": true,
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/user_profiles",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "user_id",
+              "value": "=neq.{{ $node.additional_data.json.user_id }}"
+            },
+            {
+              "name": "team_id",
+              "value": "=eq.{{ $node.SUPA_get_user_profile.json.team_id }}"
+            },
+            {
+              "name": "select",
+              "value": "id,eap_user_id,eap_provider_id,user_id"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $node.init_vars.json.supaBaseServiceKey }}"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{\"Bearer \"+$node.init_vars.json.supaBaseServiceKey }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "76f7568b-95b2-46f3-8784-db8a6a8e9016",
+      "name": "SUPA_get_user_profiles",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        4700,
+        -180
+      ],
+      "alwaysOutputData": true,
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ !!$json.error }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "a27edced-17a3-4a34-ad37-3d0d4fbebe7e",
+      "name": "IF_error",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        4900,
+        -180
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ !!$json.error }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "902fbb89-af94-4195-acfc-efa718ab1c37",
+      "name": "IF_error1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        5340,
+        -200
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ $('init_vars').first().json.supaBaseURL }}rest/v1/meetings",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "id",
+              "value": "={{\"eq.\" + $node['SUPA_get_meeting2'].json.id }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{\"Bearer \"+$('init_vars').first().json.supaBaseServiceKey }}"
+            },
+            {
+              "name": "apikey",
+              "value": "={{ $('init_vars').first().json.supaBaseServiceKey }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "status",
+              "value": "3"
+            },
+            {
+              "name": "meeting_eap_id",
+              "value": "={{ null }}"
+            },
+            {
+              "name": "meeting_zoom_id",
+              "value": "={{ null}}"
+            },
+            {
+              "name": "join_link",
+              "value": "={{ null }}"
+            },
+            {
+              "name": "booked",
+              "value": "={{ null }}"
+            },
+            {
+              "name": "start_time",
+              "value": "={{ null}}"
+            },
+            {
+              "name": "time_slot",
+              "value": "={{ null }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "1b98755a-9534-43a4-9b8d-8ea0e01919e0",
+      "name": "SUPA_update_meeting3",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        3100,
+        880
+      ],
+      "alwaysOutputData": true,
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $node['additional_data'].json.eap_serviceId }}",
+              "operation": "equal",
+              "value2": 2
+            }
+          ]
+        }
+      },
+      "id": "b0824f87-fab6-4e37-b171-ee04e2d69a62",
+      "name": "if_TM1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1540,
+        820
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## TM related",
+        "height": 393.2584828700543,
+        "width": 1772.410366642599
+      },
+      "id": "9ff67f74-d67c-4634-bc08-212575c3de10",
+      "name": "Sticky Note6",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1720,
+        787
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $('init_vars').first().json.supaBaseURL }}rest/v1/meetings",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "project_id",
+              "value": "=eq.{{ $('additional_data').first().json.project_id }}"
+            },
+            {
+              "name": "type",
+              "value": "eq.6"
+            },
+            {
+              "name": "meeting_zoom_id",
+              "value": "is.null"
+            },
+            {
+              "name": "user_id",
+              "value": "=eq.{{ $node[\"SUPA_get_user_profiles1\"].json.user_id }}"
+            },
+            {
+              "name": "limit",
+              "value": "1"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $('init_vars').first().json[\"supaBaseServiceKey\"] }}"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ \"Bearer \" + $('init_vars').first().json.supaBaseServiceKey }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9519b6ca-a5b3-4183-87ef-a899989108c9",
+      "name": "SUPA_get_meeting2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        2460,
+        880
+      ],
+      "alwaysOutputData": true,
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/user_profiles",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "user_id",
+              "value": "=eq.{{ $node.additional_data.json.user_id }}"
+            },
+            {
+              "name": "team_id",
+              "value": "=eq.{{ $node.SUPA_get_user_profile1.json.team_id }}"
+            },
+            {
+              "name": "select",
+              "value": "id,eap_user_id,eap_provider_id,user_id"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $node.init_vars.json.supaBaseServiceKey }}"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{\"Bearer \"+$node.init_vars.json.supaBaseServiceKey }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "3a532651-e490-47d2-b248-8554c6527867",
+      "name": "SUPA_get_user_profiles1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        2040,
+        880
+      ],
+      "alwaysOutputData": true,
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ !!$json.error }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "937738b8-c9f9-4b35-8a5a-5aa11142f29e",
+      "name": "IF_error2",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        2240,
+        880
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ !!$json.error }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "1fbee8ba-5447-40ef-b1f7-aaa77edc6786",
+      "name": "IF_error3",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        2680,
+        860
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "aggregateItems",
+        "aggregate": "aggregateAllItemData"
+      },
+      "id": "1e63480e-56af-4a08-b973-4a00d9bd51af",
+      "name": "all in one item1",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 2,
+      "position": [
+        3320,
+        880
+      ]
+    },
+    {
+      "parameters": {
+        "method": "DELETE",
+        "url": "={{ $node.init_vars.json.EAP_URL }}/appointments/{{ $node[\"SUPA_get_meeting2\"].json.meeting_eap_id }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "options": {}
+      },
+      "id": "090e5879-df89-4157-8b4f-a5d8b747192c",
+      "name": "EAP_delete_appointment1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        2880,
+        880
+      ],
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "1",
+          "name": "EAP admin"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "content": "Где-то тут надо добавить нотификацию что встреча была отменена если у встречи в течение 10 часов не появилась новое бронирование\n"
+      },
+      "id": "7c34e2ca-bb29-4bd5-a9cb-638d76805d49",
+      "name": "Sticky Note7",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1200,
+        680
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('init_vars').first().json.supaBaseURL }}rest/v1/notifications",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{\"Bearer \"+$('init_vars').first().json.supaBaseServiceKey }}"
+            },
+            {
+              "name": "apikey",
+              "value": "={{ $('init_vars').first().json.supaBaseServiceKey }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "user_id",
+              "value": "={{ $node.SUPA_get_user_profiles.json.user_id }}"
+            },
+            {
+              "name": "text",
+              "value": "=Обратите внимание, что трекшн-митинг на тему \"{{ $('SUPA_get_meeting1').first().json.name ?? \"\" }}\" перенесен на дату {{ $('init_vars').first().json.body.datestring + \" \" + $('init_vars').first().json.body.timestring }}.\nПрисоединиться можно будет по ссылке {{ $('Zoom_create_meeting').first().json.join_url }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "46b7d77e-df16-4535-b25b-99b483787a29",
+      "name": "SUPA_add_notification_",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        6340,
+        -260
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $node[\"transform format\"].json.webhookPath }}",
+              "operation": "contains",
+              "value2": "slots/move"
+            }
+          ]
+        }
+      },
+      "id": "76b4d851-6dc3-4c26-a988-03ae87c68c29",
+      "name": "IF_bookmove",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        6120,
+        -180
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('init_vars').first().json.supaBaseURL }}rest/v1/notifications",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{\"Bearer \"+$('init_vars').first().json.supaBaseServiceKey }}"
+            },
+            {
+              "name": "apikey",
+              "value": "={{ $('init_vars').first().json.supaBaseServiceKey }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "user_id",
+              "value": "={{ $node.SUPA_get_user_profiles.json.user_id }}"
+            },
+            {
+              "name": "text",
+              "value": "=Тимлид добавил важное мероприятие \"{{ $('SUPA_get_meeting1').first().json.name ?? \"\" }}\" в ваш календарь на дату {{ $('init_vars').first().json.body.datestring + \" \" + $('init_vars').first().json.body.timestring }}.\nПрисоединиться можно будет по ссылке {{ $('Zoom_create_meeting').first().json.join_url }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0858bc9c-3704-4f49-8fff-0e9c50cb4b31",
+      "name": "SUPA_add_notification_1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        6340,
+        -60
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('init_vars').first().json.supaBaseURL }}rest/v1/rpc/get_user_by_id",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{\"Bearer \"+$('init_vars').first().json.supaBaseServiceKey }}"
+            },
+            {
+              "name": "apikey",
+              "value": "={{ $('init_vars').first().json.supaBaseServiceKey }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "user_id",
+              "value": "={{ $node.SUPA_get_user_profiles.json.user_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b49fd522-1891-4ead-b433-977ba2509a48",
+      "name": "SUPA_RPC_getemail",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        5960,
+        -180
+      ],
+      "alwaysOutputData": true,
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "fromEmail": "dev@2t.band",
+        "toEmail": "={{ $node.SUPA_RPC_getemail.json.email }}",
+        "subject": "=трекшн-митинг \"{{ $('SUPA_get_meeting1').first().json.name ?? \"\" }}\" был перенесен",
+        "text": "=Здравствуйте,\nобратите внимание, что трекшн-митинг на тему \"{{ $('SUPA_get_meeting1').first().json.name ?? \"\" }}\" перенесен на дату {{ $('init_vars').first().json.body.datestring + \" \" + $('init_vars').first().json.body.timestring }}.\nПрисоединиться можно будет по ссылке {{ $('Zoom_create_meeting').first().json.join_url }}\nС уважением,\nКоманда 2Т\n",
+        "options": {}
+      },
+      "id": "994f8b93-0145-41f9-9909-7beac78a2721",
+      "name": "Send Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [
+        6560,
+        -260
+      ],
+      "credentials": {
+        "smtp": {
+          "id": "3",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "dev@2t.band",
+        "toEmail": "={{ $node.SUPA_RPC_getemail.json.email }}",
+        "subject": "=назначен трекшн-митинг \"{{ $('SUPA_get_meeting1').first().json.name ?? \"\" }}\"",
+        "text": "=Здравствуйте,\nВам было назначен трекшн-митинг на тему \"{{ $('SUPA_get_meeting1').first().json.name ?? \"\" }}\" на дату {{ $('init_vars').first().json.body.datestring + \" \" + $('init_vars').first().json.body.timestring }}. Это важное организационное событие в рамках нашей программы было добавлено в ваше расписание у нас на платформе.\nВы можете принять участие в событии по ссылке {{ $('Zoom_create_meeting').first().json.join_url }}\nС уважением,\nКоманда 2Т",
+        "options": {}
+      },
+      "id": "23e663a4-0a9f-4cb4-adb6-245b1fcb11d5",
+      "name": "Send Email1",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [
+        6560,
+        -60
+      ],
+      "credentials": {
+        "smtp": {
+          "id": "3",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/user_profiles",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "user_id",
+              "value": "=eq.{{ $node.additional_data.json.user_id }}"
+            },
+            {
+              "name": "select",
+              "value": "id,eap_user_id,eap_provider_id,team_id"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $node.init_vars.json.supaBaseServiceKey }}"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{\"Bearer \"+$node.init_vars.json.supaBaseServiceKey }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "dca6c8d3-a6ed-4cfa-b38d-b4591db9a2a2",
+      "name": "SUPA_get_user_profile1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1820,
+        880
+      ],
+      "alwaysOutputData": true,
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "content": "Тестить надо. как будто отошлется только одрному трекету что ТМ создалась\n"
+      },
+      "id": "2d43eaf6-3820-4a63-a8f1-e3c9676ba22e",
+      "name": "Sticky Note8",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        6100,
+        40
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "102"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 5,
+  "updatedAt": "2023-05-11T16:23:18.311Z",
+  "versionId": "ada709b1-6dad-48eb-adfe-f33f90d96a7e"
+}
