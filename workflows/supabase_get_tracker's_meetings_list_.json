@@ -1,0 +1,3329 @@
+{
+  "active": false,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "init_vars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_error": {
+      "main": [
+        [
+          {
+            "node": "return error",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Filter_meeting_statuses",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_meetings": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "return error(no auth)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "SUPA_TL_team",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "init_vars": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists": {
+      "main": [
+        [
+          {
+            "node": "Code add tracker name to meeting",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_TL_team": {
+      "main": [
+        [
+          {
+            "node": "SUPA_TL_team1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_TL_team1": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split In Batches": {
+      "main": [
+        [
+          {
+            "node": "SUPA_meetings",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Item Lists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter_meeting_statuses": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code add tracker name to meeting": {
+      "main": [
+        [
+          {
+            "node": "IF_error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-04-21T13:04:19.518Z",
+  "id": "86",
+  "name": "supabase_get_tracker's_meetings_list_",
+  "nodes": [
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "httpMethod": "POST",
+        "path": "trackers/meetings",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "27dabe6c-c77e-465f-b354-e09398592b1c",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -800,
+        220
+      ],
+      "webhookId": "caa6c4a8-cf4f-40ba-a2d7-77d25499efd1",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "appsmith->n8n Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "=json",
+        "responseBody": "={{\nJSON.stringify(\n$json)\n}}",
+        "options": {}
+      },
+      "id": "a1464572-e6c2-4f66-8595-48e786b9208c",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ !!$json?.error }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "473a143a-62a2-49b0-960f-1cd6b266b649",
+      "name": "IF_error",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        960,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "=json",
+        "responseBody": "={{\nJSON.stringify({\"error\": $json[\"error\"]})\n}}",
+        "options": {}
+      },
+      "id": "686203c0-ff95-467a-8162-c72888c50e7d",
+      "name": "return error",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/meetings?user_id=eq.{{ $node.Webhook.json.body.user_id }}&select=*,meetings_type(name,meeting_recommend,meeting_deadline),meetings_status(name),projects(id,short_id,name,contact_name),artifacts(*)",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "6dd9efbb-4b8c-4c1e-a29a-800ce58765e6",
+      "name": "SUPA_meetings",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        340,
+        380
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "10",
+          "name": "Supabase stage"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "respondWith": "=json",
+        "responseBody": "={{\nJSON.stringify({\"error\": \"missing user-access-token header!\"})\n}}",
+        "options": {}
+      },
+      "id": "5e269e46-a49c-4aa8-ae90-ecddb4fe7f02",
+      "name": "return error(no auth)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        60
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ !!$json?.error }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "86166b92-ab4e-4606-85d7-34c15e7b0415",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -440,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "ff7d7ca9-a18e-44bf-a6e3-6c136c423447",
+      "name": "init_vars",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        -620,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "aggregateItems",
+        "aggregate": "aggregateAllItemData"
+      },
+      "id": "bf0fe530-f903-4822-9687-df33850d1cfc",
+      "name": "Item Lists",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 2,
+      "position": [
+        340,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/user_profiles?user_id=eq.{{ $node.Webhook.json.body.user_id }}&select=team_id",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f8cad446-b0db-47ba-a7fc-b527a641eee5",
+      "name": "SUPA_TL_team",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        -300,
+        240
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "10",
+          "name": "Supabase stage"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/user_profiles?team_id=eq.{{ $json.team_id }}&select=user_id,firstname,lastname",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a82f677e-df73-4ac5-aaa3-cf7b83075378",
+      "name": "SUPA_TL_team1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        -160,
+        240
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "10",
+          "name": "Supabase stage"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "f8fc300e-fb27-4f74-b29d-b3b2b7e4e672",
+      "name": "Split In Batches",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 2,
+      "position": [
+        80,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "let res = [];\nfor (let meet of $json.data) {\n    const meeting_recommend = new Date(meet?.meetings_type?.meeting_recommend);\n    const meeting_deadline = new Date(meet?.meetings_type?.meeting_deadline);\n    const current_date = new Date()\n\n    if (meeting_recommend < current_date && meeting_deadline > current_date) {\n      if (meet.booked === null) {\n        meet.booking_btn = 'yellow';\n      }\n      if (meet.reported === null) {\n        meet.report_btn = 'yellow';\n      }\n      if (meet.s3_path === null) {\n        meet.artifact_btn = 'yellow';\n      }\n    } else if (meeting_deadline < current_date) {\n      if (meet.booked === null) {\n        meet.booking_btn = 'red';\n      }\n      if (meet.reported === null) {\n        meet.report_btn = 'red';\n      }\n    }\n    else if (meeting_recommend > current_date) {\n      if (meet.booked === null) {\n        meet.booking_btn = 'gray';\n      }\n    }\n  res.push(meet);\n }\nreturn {res};"
+      },
+      "id": "ddb1f689-776e-404d-8c42-6094205e09d3",
+      "name": "Filter_meeting_statuses",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        1100,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "content": "Добавление имени трекера ",
+        "height": 593.1747110808973,
+        "width": 658.7355540448674
+      },
+      "id": "9f9e0e58-f3c1-4144-b79c-d1245fc64fbd",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        40,
+        60
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "for (const item of $input.all()) {\n  console.log(\"1\",item);\n  for (const data of item.json.data) {\n  for (const el of $('SUPA_TL_team1').all()){\n    console.log(\"2\",el);\n    if (data.user_id == el.json.user_id) {\n      data.firstname = el.json.firstname;\n      data.lastname = el.json.lastname;\n    }\n  }\n  }\n}\n\nreturn $input.all();"
+      },
+      "id": "1106402c-8a23-4e18-bc0f-1bb720e50c3a",
+      "name": "Code add tracker name to meeting",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        560,
+        240
+      ]
+    }
+  ],
+  "pinData": {
+    "Item Lists": [
+      {
+        "json": {
+          "data": [
+            {
+              "id": "18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea",
+              "created_at": "2023-04-19T11:47:27.376947+00:00",
+              "project_id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+              "name": "Тестовый проект 0 - ДС",
+              "type": 1,
+              "booking_link": "https://us06web.zoom.us/s/84674409793?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IlhHc1YxN2J4UUZDcjZfYV8wQUNUUEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6Ijg0Njc0NDA5NzkzIiwiZXhwIjoxNjgxOTE5NDIyLCJpYXQiOjE2ODE5MTIyMjIsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJjaWQiOiIifQ.eLrkFcWdNZICP6bIIMAx03fl6wdZBFwTDQIcNxzphks",
+              "join_link": "https://us06web.zoom.us/j/84674409793?pwd=WHNKNUE2aG94d1Fub1VvWXBBODNHUT09",
+              "status": 2,
+              "booked": "2023-04-19T13:50:22.476+00:00",
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": "61",
+              "meeting_zoom_id": "84674409793",
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": "2023-04-20T10:30:00+00:00",
+              "time_slot": "13:30 - 14:30",
+              "meetings_type": {
+                "name": "ДС",
+                "meeting_recommend": "2023-04-19",
+                "meeting_deadline": "2023-04-23"
+              },
+              "meetings_status": {
+                "name": "Scheduled"
+              },
+              "projects": {
+                "id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+                "short_id": 3311,
+                "name": "Тестовый проект 0",
+                "contact_name": "Тишкин Александр Андреевич"
+              },
+              "artifacts": [
+                {
+                  "created_at": "2023-04-19T16:44:46.446917+00:00",
+                  "link": "https://183406.selcdn.ru/2T.Drive/accelerator/projects/42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0/18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea/designHere.png?temp_url_sig=886646a53fb093db1f6d8cde1f119558a59112af&temp_url_expires=1687106686&filename=designHere.png",
+                  "meeting_id": "18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea",
+                  "tl_feedback": null,
+                  "is_accepted": null,
+                  "type": 1,
+                  "id": "a0be90f0-ade4-4004-866d-89a7cd36165c",
+                  "name": "designHere.png",
+                  "s3_path": "accelerator/projects/42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0/18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea/designHere.png",
+                  "is_deleted": false
+                },
+                {
+                  "created_at": "2023-04-19T16:45:01.945992+00:00",
+                  "link": "https://183406.selcdn.ru/2T.Drive/accelerator/projects/42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0/18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea/designHere.png?temp_url_sig=55b65bb5160b60e8eda2dd5b678ab1b1874e9b3b&temp_url_expires=1687106701&filename=designHere.png",
+                  "meeting_id": "18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea",
+                  "tl_feedback": null,
+                  "is_accepted": null,
+                  "type": 2,
+                  "id": "1528eb53-6b27-4a5e-b374-0bab240a2539",
+                  "name": "designHere.png",
+                  "s3_path": "accelerator/projects/42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0/18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea/designHere.png",
+                  "is_deleted": false
+                },
+                {
+                  "created_at": "2023-04-19T19:04:26.436318+00:00",
+                  "link": "https://183406.selcdn.ru/2T.Drive/accelerator/projects/42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0/18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea/ref1HR.PNG?temp_url_sig=33b2b99e4d26e3b41152c86c2ea2d9324a137d7a&temp_url_expires=1687115066&filename=ref1HR.PNG",
+                  "meeting_id": "18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea",
+                  "tl_feedback": null,
+                  "is_accepted": null,
+                  "type": 1,
+                  "id": "1b999634-285a-4679-b906-2acc18164831",
+                  "name": "ref1HR.PNG",
+                  "s3_path": "accelerator/projects/42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0/18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea/ref1HR.PNG",
+                  "is_deleted": false
+                }
+              ]
+            },
+            {
+              "id": "c91a70b2-0d85-40e4-878d-161c09e11799",
+              "created_at": "2023-04-19T11:48:04.854922+00:00",
+              "project_id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+              "name": "Тестовый проект 0 - ТС1",
+              "type": 2,
+              "booking_link": "https://us06web.zoom.us/s/89161062205?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IlhHc1YxN2J4UUZDcjZfYV8wQUNUUEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6Ijg5MTYxMDYyMjA1IiwiZXhwIjoxNjgxOTMyMzk2LCJpYXQiOjE2ODE5MjUxOTYsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJjaWQiOiIifQ.4yRaHyxaJf8rREnsgl7RQgd4dC-loXd-X-w7JTJvtx0",
+              "join_link": "https://us06web.zoom.us/j/89161062205?pwd=amVrWnI3eVdHamE3eU9QaEVCZkVZdz09",
+              "status": 2,
+              "booked": "2023-04-19T17:26:36.829+00:00",
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": "83",
+              "meeting_zoom_id": "89161062205",
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": "2023-04-25T07:30:00+00:00",
+              "time_slot": "10:30 - 11:30",
+              "meetings_type": {
+                "name": "ТС-1",
+                "meeting_recommend": "2023-04-18",
+                "meeting_deadline": "2023-04-24"
+              },
+              "meetings_status": {
+                "name": "Scheduled"
+              },
+              "projects": {
+                "id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+                "short_id": 3311,
+                "name": "Тестовый проект 0",
+                "contact_name": "Тишкин Александр Андреевич"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "38b29b0c-2ca1-4d5b-94c4-11732187f0e8",
+              "created_at": "2023-04-19T11:56:37.528355+00:00",
+              "project_id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+              "name": "Тестовый проект 0 - ФС",
+              "type": 5,
+              "booking_link": null,
+              "join_link": null,
+              "status": 1,
+              "booked": null,
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": null,
+              "meeting_zoom_id": null,
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ФС",
+                "meeting_recommend": "2023-06-12",
+                "meeting_deadline": "2023-06-18"
+              },
+              "meetings_status": {
+                "name": "Pending"
+              },
+              "projects": {
+                "id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+                "short_id": 3311,
+                "name": "Тестовый проект 0",
+                "contact_name": "Тишкин Александр Андреевич"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "8229d205-38a1-470d-964f-510e33512c31",
+              "created_at": "2023-04-19T13:48:21.486128+00:00",
+              "project_id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+              "name": "Тестовый проект 4 - ДС",
+              "type": 1,
+              "booking_link": null,
+              "join_link": null,
+              "status": 1,
+              "booked": null,
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": null,
+              "meeting_zoom_id": null,
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ДС",
+                "meeting_recommend": "2023-04-19",
+                "meeting_deadline": "2023-04-23"
+              },
+              "meetings_status": {
+                "name": "Pending"
+              },
+              "projects": {
+                "id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+                "short_id": 7272,
+                "name": "Тестовый проект 4",
+                "contact_name": "Иванов Иван Иванович"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "3f7c8b6b-7011-4593-abaf-cc8258fd45d1",
+              "created_at": "2023-04-19T13:49:01.037364+00:00",
+              "project_id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+              "name": "Тестовый проект 4 - ТС1",
+              "type": 2,
+              "booking_link": null,
+              "join_link": null,
+              "status": 1,
+              "booked": null,
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": null,
+              "meeting_zoom_id": null,
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ТС-1",
+                "meeting_recommend": "2023-04-18",
+                "meeting_deadline": "2023-04-24"
+              },
+              "meetings_status": {
+                "name": "Pending"
+              },
+              "projects": {
+                "id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+                "short_id": 7272,
+                "name": "Тестовый проект 4",
+                "contact_name": "Иванов Иван Иванович"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "f674c34c-5dce-43c8-b3c5-4ac591f509f3",
+              "created_at": "2023-04-19T13:49:32.657258+00:00",
+              "project_id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+              "name": "Тестовый проект 4 - ТС2",
+              "type": 3,
+              "booking_link": null,
+              "join_link": null,
+              "status": 1,
+              "booked": null,
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": null,
+              "meeting_zoom_id": null,
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ТС-2",
+                "meeting_recommend": "2023-04-30",
+                "meeting_deadline": "2023-05-01"
+              },
+              "meetings_status": {
+                "name": "Pending"
+              },
+              "projects": {
+                "id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+                "short_id": 7272,
+                "name": "Тестовый проект 4",
+                "contact_name": "Иванов Иван Иванович"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "c200752a-0643-4d85-8d38-8d7da0187826",
+              "created_at": "2023-04-19T13:50:24.332169+00:00",
+              "project_id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+              "name": "Тестовый проект 4 - ФС",
+              "type": 5,
+              "booking_link": null,
+              "join_link": null,
+              "status": 1,
+              "booked": null,
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": null,
+              "meeting_zoom_id": null,
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ФС",
+                "meeting_recommend": "2023-06-12",
+                "meeting_deadline": "2023-06-18"
+              },
+              "meetings_status": {
+                "name": "Pending"
+              },
+              "projects": {
+                "id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+                "short_id": 7272,
+                "name": "Тестовый проект 4",
+                "contact_name": "Иванов Иван Иванович"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "46584175-11c8-46a7-af64-081d2a0eb0d3",
+              "created_at": "2023-04-19T11:48:22.095413+00:00",
+              "project_id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+              "name": "Городское фермерство\r\n",
+              "type": 3,
+              "booking_link": "https://us06web.zoom.us/s/85994695145?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IlhHc1YxN2J4UUZDcjZfYV8wQUNUUEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6Ijg1OTk0Njk1MTQ1IiwiZXhwIjoxNjgxOTIwMTgwLCJpYXQiOjE2ODE5MTI5ODAsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJjaWQiOiIifQ.MRFGqKsUAYBwNmyOv2TY_xd3x66Vb7y2KpfXJ66Bqzc",
+              "join_link": "https://us06web.zoom.us/j/85994695145?pwd=bVlPWUhWcXdyc3lkVjA0SU9EVDFPQT09",
+              "status": 2,
+              "booked": "2023-04-19T14:03:00.287+00:00",
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": "62",
+              "meeting_zoom_id": "85994695145",
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ТС-2",
+                "meeting_recommend": "2023-04-30",
+                "meeting_deadline": "2023-05-01"
+              },
+              "meetings_status": {
+                "name": "Scheduled"
+              },
+              "projects": {
+                "id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+                "short_id": 3311,
+                "name": "Тестовый проект 0",
+                "contact_name": "Тишкин Александр Андреевич"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "43a24e53-4d4d-45d2-af60-2f9761afcd19",
+              "created_at": "2023-04-19T11:48:50.883046+00:00",
+              "project_id": "e0c58f52-ba6b-4852-a938-2446d78a16c4",
+              "name": "Тестовый проект 0 - ТС2",
+              "type": 3,
+              "booking_link": "https://us06web.zoom.us/s/81510067592?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IlhHc1YxN2J4UUZDcjZfYV8wQUNUUEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6IjgxNTEwMDY3NTkyIiwiZXhwIjoxNjgxOTIwNjU4LCJpYXQiOjE2ODE5MTM0NTgsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJjaWQiOiIifQ.EK3_niT40hDx-_MCIVq36xis3uW05bQFy1OBoZcv-Hc",
+              "join_link": "https://us06web.zoom.us/j/81510067592?pwd=M1ZvYkFPRmdFSGR6dmJ3WFpHMHJ5Zz09",
+              "status": 2,
+              "booked": "2023-04-19T14:10:58.507+00:00",
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": "63",
+              "meeting_zoom_id": "81510067592",
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ТС-2",
+                "meeting_recommend": "2023-04-30",
+                "meeting_deadline": "2023-05-01"
+              },
+              "meetings_status": {
+                "name": "Scheduled"
+              },
+              "projects": {
+                "id": "e0c58f52-ba6b-4852-a938-2446d78a16c4",
+                "short_id": 2222,
+                "name": "Тестовый проект 3",
+                "contact_name": "Тишкин Андрей Валерьевич"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "4e2985ee-8e22-4b94-a583-9a9feb997e4d",
+              "created_at": "2023-04-19T13:49:51.638164+00:00",
+              "project_id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+              "name": "Тестовый проект 4 - ТС3",
+              "type": 4,
+              "booking_link": "https://us06web.zoom.us/s/83914807923?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IlhHc1YxN2J4UUZDcjZfYV8wQUNUUEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6IjgzOTE0ODA3OTIzIiwiZXhwIjoxNjgxOTIyNDc3LCJpYXQiOjE2ODE5MTUyNzcsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJjaWQiOiIifQ.wSyxN_ies2ULj4gpguu5XWaanFn0OzDcPQoDrqzRgsM",
+              "join_link": "https://us06web.zoom.us/j/83914807923?pwd=dGRjV3MraWEvUW1FUSs1K1pSUG1EQT09",
+              "status": 2,
+              "booked": "2023-04-19T14:41:17.12+00:00",
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": "68",
+              "meeting_zoom_id": "83914807923",
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ТС-3",
+                "meeting_recommend": "2023-05-08",
+                "meeting_deadline": "2023-05-10"
+              },
+              "meetings_status": {
+                "name": "Scheduled"
+              },
+              "projects": {
+                "id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+                "short_id": 7272,
+                "name": "Тестовый проект 4",
+                "contact_name": "Иванов Иван Иванович"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "b9773937-fd61-4a6e-b121-ec83a807a49d",
+              "created_at": "2023-04-19T11:56:09.911549+00:00",
+              "project_id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+              "name": "Тестовый проект 0 - ТС3",
+              "type": 4,
+              "booking_link": "https://us06web.zoom.us/s/83260083101?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IlhHc1YxN2J4UUZDcjZfYV8wQUNUUEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6IjgzMjYwMDgzMTAxIiwiZXhwIjoxNjgxOTMzMDE0LCJpYXQiOjE2ODE5MjU4MTQsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJjaWQiOiIifQ.Ua56-PP7n9C5wcC_qbd7lYyYKIDDG9STzPmKbB82mKQ",
+              "join_link": "https://us06web.zoom.us/j/83260083101?pwd=bm1jbzlJT2I5Q0NORXl0QUw5em1qZz09",
+              "status": 2,
+              "booked": "2023-04-19T17:36:54.927+00:00",
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": "84",
+              "meeting_zoom_id": "83260083101",
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": "2023-04-27T06:00:00+00:00",
+              "time_slot": "09:00 - 10:00",
+              "meetings_type": {
+                "name": "ТС-3",
+                "meeting_recommend": "2023-05-08",
+                "meeting_deadline": "2023-05-10"
+              },
+              "meetings_status": {
+                "name": "Scheduled"
+              },
+              "projects": {
+                "id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+                "short_id": 3311,
+                "name": "Тестовый проект 0",
+                "contact_name": "Тишкин Александр Андреевич"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea",
+              "created_at": "2023-04-19T11:47:27.376947+00:00",
+              "project_id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+              "name": "Тестовый проект 0 - ДС",
+              "type": 1,
+              "booking_link": "https://us06web.zoom.us/s/84674409793?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IlhHc1YxN2J4UUZDcjZfYV8wQUNUUEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6Ijg0Njc0NDA5NzkzIiwiZXhwIjoxNjgxOTE5NDIyLCJpYXQiOjE2ODE5MTIyMjIsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJjaWQiOiIifQ.eLrkFcWdNZICP6bIIMAx03fl6wdZBFwTDQIcNxzphks",
+              "join_link": "https://us06web.zoom.us/j/84674409793?pwd=WHNKNUE2aG94d1Fub1VvWXBBODNHUT09",
+              "status": 2,
+              "booked": "2023-04-19T13:50:22.476+00:00",
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": "61",
+              "meeting_zoom_id": "84674409793",
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": "2023-04-20T10:30:00+00:00",
+              "time_slot": "13:30 - 14:30",
+              "meetings_type": {
+                "name": "ДС",
+                "meeting_recommend": "2023-04-19",
+                "meeting_deadline": "2023-04-23"
+              },
+              "meetings_status": {
+                "name": "Scheduled"
+              },
+              "projects": {
+                "id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+                "short_id": 3311,
+                "name": "Тестовый проект 0",
+                "contact_name": "Тишкин Александр Андреевич"
+              },
+              "artifacts": [
+                {
+                  "created_at": "2023-04-19T16:44:46.446917+00:00",
+                  "link": "https://183406.selcdn.ru/2T.Drive/accelerator/projects/42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0/18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea/designHere.png?temp_url_sig=886646a53fb093db1f6d8cde1f119558a59112af&temp_url_expires=1687106686&filename=designHere.png",
+                  "meeting_id": "18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea",
+                  "tl_feedback": null,
+                  "is_accepted": null,
+                  "type": 1,
+                  "id": "a0be90f0-ade4-4004-866d-89a7cd36165c",
+                  "name": "designHere.png",
+                  "s3_path": "accelerator/projects/42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0/18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea/designHere.png",
+                  "is_deleted": false
+                },
+                {
+                  "created_at": "2023-04-19T16:45:01.945992+00:00",
+                  "link": "https://183406.selcdn.ru/2T.Drive/accelerator/projects/42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0/18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea/designHere.png?temp_url_sig=55b65bb5160b60e8eda2dd5b678ab1b1874e9b3b&temp_url_expires=1687106701&filename=designHere.png",
+                  "meeting_id": "18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea",
+                  "tl_feedback": null,
+                  "is_accepted": null,
+                  "type": 2,
+                  "id": "1528eb53-6b27-4a5e-b374-0bab240a2539",
+                  "name": "designHere.png",
+                  "s3_path": "accelerator/projects/42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0/18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea/designHere.png",
+                  "is_deleted": false
+                },
+                {
+                  "created_at": "2023-04-19T19:04:26.436318+00:00",
+                  "link": "https://183406.selcdn.ru/2T.Drive/accelerator/projects/42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0/18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea/ref1HR.PNG?temp_url_sig=33b2b99e4d26e3b41152c86c2ea2d9324a137d7a&temp_url_expires=1687115066&filename=ref1HR.PNG",
+                  "meeting_id": "18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea",
+                  "tl_feedback": null,
+                  "is_accepted": null,
+                  "type": 1,
+                  "id": "1b999634-285a-4679-b906-2acc18164831",
+                  "name": "ref1HR.PNG",
+                  "s3_path": "accelerator/projects/42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0/18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea/ref1HR.PNG",
+                  "is_deleted": false
+                }
+              ]
+            },
+            {
+              "id": "c91a70b2-0d85-40e4-878d-161c09e11799",
+              "created_at": "2023-04-19T11:48:04.854922+00:00",
+              "project_id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+              "name": "Тестовый проект 0 - ТС1",
+              "type": 2,
+              "booking_link": "https://us06web.zoom.us/s/89161062205?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IlhHc1YxN2J4UUZDcjZfYV8wQUNUUEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6Ijg5MTYxMDYyMjA1IiwiZXhwIjoxNjgxOTMyMzk2LCJpYXQiOjE2ODE5MjUxOTYsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJjaWQiOiIifQ.4yRaHyxaJf8rREnsgl7RQgd4dC-loXd-X-w7JTJvtx0",
+              "join_link": "https://us06web.zoom.us/j/89161062205?pwd=amVrWnI3eVdHamE3eU9QaEVCZkVZdz09",
+              "status": 2,
+              "booked": "2023-04-19T17:26:36.829+00:00",
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": "83",
+              "meeting_zoom_id": "89161062205",
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": "2023-04-25T07:30:00+00:00",
+              "time_slot": "10:30 - 11:30",
+              "meetings_type": {
+                "name": "ТС-1",
+                "meeting_recommend": "2023-04-18",
+                "meeting_deadline": "2023-04-24"
+              },
+              "meetings_status": {
+                "name": "Scheduled"
+              },
+              "projects": {
+                "id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+                "short_id": 3311,
+                "name": "Тестовый проект 0",
+                "contact_name": "Тишкин Александр Андреевич"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "38b29b0c-2ca1-4d5b-94c4-11732187f0e8",
+              "created_at": "2023-04-19T11:56:37.528355+00:00",
+              "project_id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+              "name": "Тестовый проект 0 - ФС",
+              "type": 5,
+              "booking_link": null,
+              "join_link": null,
+              "status": 1,
+              "booked": null,
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": null,
+              "meeting_zoom_id": null,
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ФС",
+                "meeting_recommend": "2023-06-12",
+                "meeting_deadline": "2023-06-18"
+              },
+              "meetings_status": {
+                "name": "Pending"
+              },
+              "projects": {
+                "id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+                "short_id": 3311,
+                "name": "Тестовый проект 0",
+                "contact_name": "Тишкин Александр Андреевич"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "8229d205-38a1-470d-964f-510e33512c31",
+              "created_at": "2023-04-19T13:48:21.486128+00:00",
+              "project_id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+              "name": "Тестовый проект 4 - ДС",
+              "type": 1,
+              "booking_link": null,
+              "join_link": null,
+              "status": 1,
+              "booked": null,
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": null,
+              "meeting_zoom_id": null,
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ДС",
+                "meeting_recommend": "2023-04-19",
+                "meeting_deadline": "2023-04-23"
+              },
+              "meetings_status": {
+                "name": "Pending"
+              },
+              "projects": {
+                "id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+                "short_id": 7272,
+                "name": "Тестовый проект 4",
+                "contact_name": "Иванов Иван Иванович"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "3f7c8b6b-7011-4593-abaf-cc8258fd45d1",
+              "created_at": "2023-04-19T13:49:01.037364+00:00",
+              "project_id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+              "name": "Тестовый проект 4 - ТС1",
+              "type": 2,
+              "booking_link": null,
+              "join_link": null,
+              "status": 1,
+              "booked": null,
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": null,
+              "meeting_zoom_id": null,
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ТС-1",
+                "meeting_recommend": "2023-04-18",
+                "meeting_deadline": "2023-04-24"
+              },
+              "meetings_status": {
+                "name": "Pending"
+              },
+              "projects": {
+                "id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+                "short_id": 7272,
+                "name": "Тестовый проект 4",
+                "contact_name": "Иванов Иван Иванович"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "f674c34c-5dce-43c8-b3c5-4ac591f509f3",
+              "created_at": "2023-04-19T13:49:32.657258+00:00",
+              "project_id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+              "name": "Тестовый проект 4 - ТС2",
+              "type": 3,
+              "booking_link": null,
+              "join_link": null,
+              "status": 1,
+              "booked": null,
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": null,
+              "meeting_zoom_id": null,
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ТС-2",
+                "meeting_recommend": "2023-04-30",
+                "meeting_deadline": "2023-05-01"
+              },
+              "meetings_status": {
+                "name": "Pending"
+              },
+              "projects": {
+                "id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+                "short_id": 7272,
+                "name": "Тестовый проект 4",
+                "contact_name": "Иванов Иван Иванович"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "c200752a-0643-4d85-8d38-8d7da0187826",
+              "created_at": "2023-04-19T13:50:24.332169+00:00",
+              "project_id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+              "name": "Тестовый проект 4 - ФС",
+              "type": 5,
+              "booking_link": null,
+              "join_link": null,
+              "status": 1,
+              "booked": null,
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": null,
+              "meeting_zoom_id": null,
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ФС",
+                "meeting_recommend": "2023-06-12",
+                "meeting_deadline": "2023-06-18"
+              },
+              "meetings_status": {
+                "name": "Pending"
+              },
+              "projects": {
+                "id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+                "short_id": 7272,
+                "name": "Тестовый проект 4",
+                "contact_name": "Иванов Иван Иванович"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "46584175-11c8-46a7-af64-081d2a0eb0d3",
+              "created_at": "2023-04-19T11:48:22.095413+00:00",
+              "project_id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+              "name": "Городское фермерство\r\n",
+              "type": 3,
+              "booking_link": "https://us06web.zoom.us/s/85994695145?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IlhHc1YxN2J4UUZDcjZfYV8wQUNUUEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6Ijg1OTk0Njk1MTQ1IiwiZXhwIjoxNjgxOTIwMTgwLCJpYXQiOjE2ODE5MTI5ODAsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJjaWQiOiIifQ.MRFGqKsUAYBwNmyOv2TY_xd3x66Vb7y2KpfXJ66Bqzc",
+              "join_link": "https://us06web.zoom.us/j/85994695145?pwd=bVlPWUhWcXdyc3lkVjA0SU9EVDFPQT09",
+              "status": 2,
+              "booked": "2023-04-19T14:03:00.287+00:00",
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": "62",
+              "meeting_zoom_id": "85994695145",
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ТС-2",
+                "meeting_recommend": "2023-04-30",
+                "meeting_deadline": "2023-05-01"
+              },
+              "meetings_status": {
+                "name": "Scheduled"
+              },
+              "projects": {
+                "id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+                "short_id": 3311,
+                "name": "Тестовый проект 0",
+                "contact_name": "Тишкин Александр Андреевич"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "43a24e53-4d4d-45d2-af60-2f9761afcd19",
+              "created_at": "2023-04-19T11:48:50.883046+00:00",
+              "project_id": "e0c58f52-ba6b-4852-a938-2446d78a16c4",
+              "name": "Тестовый проект 0 - ТС2",
+              "type": 3,
+              "booking_link": "https://us06web.zoom.us/s/81510067592?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IlhHc1YxN2J4UUZDcjZfYV8wQUNUUEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6IjgxNTEwMDY3NTkyIiwiZXhwIjoxNjgxOTIwNjU4LCJpYXQiOjE2ODE5MTM0NTgsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJjaWQiOiIifQ.EK3_niT40hDx-_MCIVq36xis3uW05bQFy1OBoZcv-Hc",
+              "join_link": "https://us06web.zoom.us/j/81510067592?pwd=M1ZvYkFPRmdFSGR6dmJ3WFpHMHJ5Zz09",
+              "status": 2,
+              "booked": "2023-04-19T14:10:58.507+00:00",
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": "63",
+              "meeting_zoom_id": "81510067592",
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ТС-2",
+                "meeting_recommend": "2023-04-30",
+                "meeting_deadline": "2023-05-01"
+              },
+              "meetings_status": {
+                "name": "Scheduled"
+              },
+              "projects": {
+                "id": "e0c58f52-ba6b-4852-a938-2446d78a16c4",
+                "short_id": 2222,
+                "name": "Тестовый проект 3",
+                "contact_name": "Тишкин Андрей Валерьевич"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "4e2985ee-8e22-4b94-a583-9a9feb997e4d",
+              "created_at": "2023-04-19T13:49:51.638164+00:00",
+              "project_id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+              "name": "Тестовый проект 4 - ТС3",
+              "type": 4,
+              "booking_link": "https://us06web.zoom.us/s/83914807923?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IlhHc1YxN2J4UUZDcjZfYV8wQUNUUEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6IjgzOTE0ODA3OTIzIiwiZXhwIjoxNjgxOTIyNDc3LCJpYXQiOjE2ODE5MTUyNzcsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJjaWQiOiIifQ.wSyxN_ies2ULj4gpguu5XWaanFn0OzDcPQoDrqzRgsM",
+              "join_link": "https://us06web.zoom.us/j/83914807923?pwd=dGRjV3MraWEvUW1FUSs1K1pSUG1EQT09",
+              "status": 2,
+              "booked": "2023-04-19T14:41:17.12+00:00",
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": "68",
+              "meeting_zoom_id": "83914807923",
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ТС-3",
+                "meeting_recommend": "2023-05-08",
+                "meeting_deadline": "2023-05-10"
+              },
+              "meetings_status": {
+                "name": "Scheduled"
+              },
+              "projects": {
+                "id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+                "short_id": 7272,
+                "name": "Тестовый проект 4",
+                "contact_name": "Иванов Иван Иванович"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "b9773937-fd61-4a6e-b121-ec83a807a49d",
+              "created_at": "2023-04-19T11:56:09.911549+00:00",
+              "project_id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+              "name": "Тестовый проект 0 - ТС3",
+              "type": 4,
+              "booking_link": "https://us06web.zoom.us/s/83260083101?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IlhHc1YxN2J4UUZDcjZfYV8wQUNUUEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6IjgzMjYwMDgzMTAxIiwiZXhwIjoxNjgxOTMzMDE0LCJpYXQiOjE2ODE5MjU4MTQsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJjaWQiOiIifQ.Ua56-PP7n9C5wcC_qbd7lYyYKIDDG9STzPmKbB82mKQ",
+              "join_link": "https://us06web.zoom.us/j/83260083101?pwd=bm1jbzlJT2I5Q0NORXl0QUw5em1qZz09",
+              "status": 2,
+              "booked": "2023-04-19T17:36:54.927+00:00",
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": "84",
+              "meeting_zoom_id": "83260083101",
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": "2023-04-27T06:00:00+00:00",
+              "time_slot": "09:00 - 10:00",
+              "meetings_type": {
+                "name": "ТС-3",
+                "meeting_recommend": "2023-05-08",
+                "meeting_deadline": "2023-05-10"
+              },
+              "meetings_status": {
+                "name": "Scheduled"
+              },
+              "projects": {
+                "id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+                "short_id": 3311,
+                "name": "Тестовый проект 0",
+                "contact_name": "Тишкин Александр Андреевич"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea",
+              "created_at": "2023-04-19T11:47:27.376947+00:00",
+              "project_id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+              "name": "Тестовый проект 0 - ДС",
+              "type": 1,
+              "booking_link": "https://us06web.zoom.us/s/84674409793?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IlhHc1YxN2J4UUZDcjZfYV8wQUNUUEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6Ijg0Njc0NDA5NzkzIiwiZXhwIjoxNjgxOTE5NDIyLCJpYXQiOjE2ODE5MTIyMjIsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJjaWQiOiIifQ.eLrkFcWdNZICP6bIIMAx03fl6wdZBFwTDQIcNxzphks",
+              "join_link": "https://us06web.zoom.us/j/84674409793?pwd=WHNKNUE2aG94d1Fub1VvWXBBODNHUT09",
+              "status": 2,
+              "booked": "2023-04-19T13:50:22.476+00:00",
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": "61",
+              "meeting_zoom_id": "84674409793",
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": "2023-04-20T10:30:00+00:00",
+              "time_slot": "13:30 - 14:30",
+              "meetings_type": {
+                "name": "ДС",
+                "meeting_recommend": "2023-04-19",
+                "meeting_deadline": "2023-04-23"
+              },
+              "meetings_status": {
+                "name": "Scheduled"
+              },
+              "projects": {
+                "id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+                "short_id": 3311,
+                "name": "Тестовый проект 0",
+                "contact_name": "Тишкин Александр Андреевич"
+              },
+              "artifacts": [
+                {
+                  "created_at": "2023-04-19T16:44:46.446917+00:00",
+                  "link": "https://183406.selcdn.ru/2T.Drive/accelerator/projects/42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0/18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea/designHere.png?temp_url_sig=886646a53fb093db1f6d8cde1f119558a59112af&temp_url_expires=1687106686&filename=designHere.png",
+                  "meeting_id": "18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea",
+                  "tl_feedback": null,
+                  "is_accepted": null,
+                  "type": 1,
+                  "id": "a0be90f0-ade4-4004-866d-89a7cd36165c",
+                  "name": "designHere.png",
+                  "s3_path": "accelerator/projects/42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0/18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea/designHere.png",
+                  "is_deleted": false
+                },
+                {
+                  "created_at": "2023-04-19T16:45:01.945992+00:00",
+                  "link": "https://183406.selcdn.ru/2T.Drive/accelerator/projects/42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0/18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea/designHere.png?temp_url_sig=55b65bb5160b60e8eda2dd5b678ab1b1874e9b3b&temp_url_expires=1687106701&filename=designHere.png",
+                  "meeting_id": "18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea",
+                  "tl_feedback": null,
+                  "is_accepted": null,
+                  "type": 2,
+                  "id": "1528eb53-6b27-4a5e-b374-0bab240a2539",
+                  "name": "designHere.png",
+                  "s3_path": "accelerator/projects/42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0/18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea/designHere.png",
+                  "is_deleted": false
+                },
+                {
+                  "created_at": "2023-04-19T19:04:26.436318+00:00",
+                  "link": "https://183406.selcdn.ru/2T.Drive/accelerator/projects/42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0/18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea/ref1HR.PNG?temp_url_sig=33b2b99e4d26e3b41152c86c2ea2d9324a137d7a&temp_url_expires=1687115066&filename=ref1HR.PNG",
+                  "meeting_id": "18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea",
+                  "tl_feedback": null,
+                  "is_accepted": null,
+                  "type": 1,
+                  "id": "1b999634-285a-4679-b906-2acc18164831",
+                  "name": "ref1HR.PNG",
+                  "s3_path": "accelerator/projects/42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0/18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea/ref1HR.PNG",
+                  "is_deleted": false
+                }
+              ]
+            },
+            {
+              "id": "c91a70b2-0d85-40e4-878d-161c09e11799",
+              "created_at": "2023-04-19T11:48:04.854922+00:00",
+              "project_id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+              "name": "Тестовый проект 0 - ТС1",
+              "type": 2,
+              "booking_link": "https://us06web.zoom.us/s/89161062205?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IlhHc1YxN2J4UUZDcjZfYV8wQUNUUEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6Ijg5MTYxMDYyMjA1IiwiZXhwIjoxNjgxOTMyMzk2LCJpYXQiOjE2ODE5MjUxOTYsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJjaWQiOiIifQ.4yRaHyxaJf8rREnsgl7RQgd4dC-loXd-X-w7JTJvtx0",
+              "join_link": "https://us06web.zoom.us/j/89161062205?pwd=amVrWnI3eVdHamE3eU9QaEVCZkVZdz09",
+              "status": 2,
+              "booked": "2023-04-19T17:26:36.829+00:00",
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": "83",
+              "meeting_zoom_id": "89161062205",
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": "2023-04-25T07:30:00+00:00",
+              "time_slot": "10:30 - 11:30",
+              "meetings_type": {
+                "name": "ТС-1",
+                "meeting_recommend": "2023-04-18",
+                "meeting_deadline": "2023-04-24"
+              },
+              "meetings_status": {
+                "name": "Scheduled"
+              },
+              "projects": {
+                "id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+                "short_id": 3311,
+                "name": "Тестовый проект 0",
+                "contact_name": "Тишкин Александр Андреевич"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "38b29b0c-2ca1-4d5b-94c4-11732187f0e8",
+              "created_at": "2023-04-19T11:56:37.528355+00:00",
+              "project_id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+              "name": "Тестовый проект 0 - ФС",
+              "type": 5,
+              "booking_link": null,
+              "join_link": null,
+              "status": 1,
+              "booked": null,
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": null,
+              "meeting_zoom_id": null,
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ФС",
+                "meeting_recommend": "2023-06-12",
+                "meeting_deadline": "2023-06-18"
+              },
+              "meetings_status": {
+                "name": "Pending"
+              },
+              "projects": {
+                "id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+                "short_id": 3311,
+                "name": "Тестовый проект 0",
+                "contact_name": "Тишкин Александр Андреевич"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "8229d205-38a1-470d-964f-510e33512c31",
+              "created_at": "2023-04-19T13:48:21.486128+00:00",
+              "project_id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+              "name": "Тестовый проект 4 - ДС",
+              "type": 1,
+              "booking_link": null,
+              "join_link": null,
+              "status": 1,
+              "booked": null,
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": null,
+              "meeting_zoom_id": null,
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ДС",
+                "meeting_recommend": "2023-04-19",
+                "meeting_deadline": "2023-04-23"
+              },
+              "meetings_status": {
+                "name": "Pending"
+              },
+              "projects": {
+                "id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+                "short_id": 7272,
+                "name": "Тестовый проект 4",
+                "contact_name": "Иванов Иван Иванович"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "3f7c8b6b-7011-4593-abaf-cc8258fd45d1",
+              "created_at": "2023-04-19T13:49:01.037364+00:00",
+              "project_id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+              "name": "Тестовый проект 4 - ТС1",
+              "type": 2,
+              "booking_link": null,
+              "join_link": null,
+              "status": 1,
+              "booked": null,
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": null,
+              "meeting_zoom_id": null,
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ТС-1",
+                "meeting_recommend": "2023-04-18",
+                "meeting_deadline": "2023-04-24"
+              },
+              "meetings_status": {
+                "name": "Pending"
+              },
+              "projects": {
+                "id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+                "short_id": 7272,
+                "name": "Тестовый проект 4",
+                "contact_name": "Иванов Иван Иванович"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "f674c34c-5dce-43c8-b3c5-4ac591f509f3",
+              "created_at": "2023-04-19T13:49:32.657258+00:00",
+              "project_id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+              "name": "Тестовый проект 4 - ТС2",
+              "type": 3,
+              "booking_link": null,
+              "join_link": null,
+              "status": 1,
+              "booked": null,
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": null,
+              "meeting_zoom_id": null,
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ТС-2",
+                "meeting_recommend": "2023-04-30",
+                "meeting_deadline": "2023-05-01"
+              },
+              "meetings_status": {
+                "name": "Pending"
+              },
+              "projects": {
+                "id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+                "short_id": 7272,
+                "name": "Тестовый проект 4",
+                "contact_name": "Иванов Иван Иванович"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "c200752a-0643-4d85-8d38-8d7da0187826",
+              "created_at": "2023-04-19T13:50:24.332169+00:00",
+              "project_id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+              "name": "Тестовый проект 4 - ФС",
+              "type": 5,
+              "booking_link": null,
+              "join_link": null,
+              "status": 1,
+              "booked": null,
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": null,
+              "meeting_zoom_id": null,
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ФС",
+                "meeting_recommend": "2023-06-12",
+                "meeting_deadline": "2023-06-18"
+              },
+              "meetings_status": {
+                "name": "Pending"
+              },
+              "projects": {
+                "id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+                "short_id": 7272,
+                "name": "Тестовый проект 4",
+                "contact_name": "Иванов Иван Иванович"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "46584175-11c8-46a7-af64-081d2a0eb0d3",
+              "created_at": "2023-04-19T11:48:22.095413+00:00",
+              "project_id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+              "name": "Городское фермерство\r\n",
+              "type": 3,
+              "booking_link": "https://us06web.zoom.us/s/85994695145?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IlhHc1YxN2J4UUZDcjZfYV8wQUNUUEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6Ijg1OTk0Njk1MTQ1IiwiZXhwIjoxNjgxOTIwMTgwLCJpYXQiOjE2ODE5MTI5ODAsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJjaWQiOiIifQ.MRFGqKsUAYBwNmyOv2TY_xd3x66Vb7y2KpfXJ66Bqzc",
+              "join_link": "https://us06web.zoom.us/j/85994695145?pwd=bVlPWUhWcXdyc3lkVjA0SU9EVDFPQT09",
+              "status": 2,
+              "booked": "2023-04-19T14:03:00.287+00:00",
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": "62",
+              "meeting_zoom_id": "85994695145",
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ТС-2",
+                "meeting_recommend": "2023-04-30",
+                "meeting_deadline": "2023-05-01"
+              },
+              "meetings_status": {
+                "name": "Scheduled"
+              },
+              "projects": {
+                "id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+                "short_id": 3311,
+                "name": "Тестовый проект 0",
+                "contact_name": "Тишкин Александр Андреевич"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "43a24e53-4d4d-45d2-af60-2f9761afcd19",
+              "created_at": "2023-04-19T11:48:50.883046+00:00",
+              "project_id": "e0c58f52-ba6b-4852-a938-2446d78a16c4",
+              "name": "Тестовый проект 0 - ТС2",
+              "type": 3,
+              "booking_link": "https://us06web.zoom.us/s/81510067592?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IlhHc1YxN2J4UUZDcjZfYV8wQUNUUEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6IjgxNTEwMDY3NTkyIiwiZXhwIjoxNjgxOTIwNjU4LCJpYXQiOjE2ODE5MTM0NTgsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJjaWQiOiIifQ.EK3_niT40hDx-_MCIVq36xis3uW05bQFy1OBoZcv-Hc",
+              "join_link": "https://us06web.zoom.us/j/81510067592?pwd=M1ZvYkFPRmdFSGR6dmJ3WFpHMHJ5Zz09",
+              "status": 2,
+              "booked": "2023-04-19T14:10:58.507+00:00",
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": "63",
+              "meeting_zoom_id": "81510067592",
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ТС-2",
+                "meeting_recommend": "2023-04-30",
+                "meeting_deadline": "2023-05-01"
+              },
+              "meetings_status": {
+                "name": "Scheduled"
+              },
+              "projects": {
+                "id": "e0c58f52-ba6b-4852-a938-2446d78a16c4",
+                "short_id": 2222,
+                "name": "Тестовый проект 3",
+                "contact_name": "Тишкин Андрей Валерьевич"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "4e2985ee-8e22-4b94-a583-9a9feb997e4d",
+              "created_at": "2023-04-19T13:49:51.638164+00:00",
+              "project_id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+              "name": "Тестовый проект 4 - ТС3",
+              "type": 4,
+              "booking_link": "https://us06web.zoom.us/s/83914807923?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IlhHc1YxN2J4UUZDcjZfYV8wQUNUUEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6IjgzOTE0ODA3OTIzIiwiZXhwIjoxNjgxOTIyNDc3LCJpYXQiOjE2ODE5MTUyNzcsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJjaWQiOiIifQ.wSyxN_ies2ULj4gpguu5XWaanFn0OzDcPQoDrqzRgsM",
+              "join_link": "https://us06web.zoom.us/j/83914807923?pwd=dGRjV3MraWEvUW1FUSs1K1pSUG1EQT09",
+              "status": 2,
+              "booked": "2023-04-19T14:41:17.12+00:00",
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": "68",
+              "meeting_zoom_id": "83914807923",
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ТС-3",
+                "meeting_recommend": "2023-05-08",
+                "meeting_deadline": "2023-05-10"
+              },
+              "meetings_status": {
+                "name": "Scheduled"
+              },
+              "projects": {
+                "id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+                "short_id": 7272,
+                "name": "Тестовый проект 4",
+                "contact_name": "Иванов Иван Иванович"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "b9773937-fd61-4a6e-b121-ec83a807a49d",
+              "created_at": "2023-04-19T11:56:09.911549+00:00",
+              "project_id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+              "name": "Тестовый проект 0 - ТС3",
+              "type": 4,
+              "booking_link": "https://us06web.zoom.us/s/83260083101?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IlhHc1YxN2J4UUZDcjZfYV8wQUNUUEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6IjgzMjYwMDgzMTAxIiwiZXhwIjoxNjgxOTMzMDE0LCJpYXQiOjE2ODE5MjU4MTQsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJjaWQiOiIifQ.Ua56-PP7n9C5wcC_qbd7lYyYKIDDG9STzPmKbB82mKQ",
+              "join_link": "https://us06web.zoom.us/j/83260083101?pwd=bm1jbzlJT2I5Q0NORXl0QUw5em1qZz09",
+              "status": 2,
+              "booked": "2023-04-19T17:36:54.927+00:00",
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": "84",
+              "meeting_zoom_id": "83260083101",
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": "2023-04-27T06:00:00+00:00",
+              "time_slot": "09:00 - 10:00",
+              "meetings_type": {
+                "name": "ТС-3",
+                "meeting_recommend": "2023-05-08",
+                "meeting_deadline": "2023-05-10"
+              },
+              "meetings_status": {
+                "name": "Scheduled"
+              },
+              "projects": {
+                "id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+                "short_id": 3311,
+                "name": "Тестовый проект 0",
+                "contact_name": "Тишкин Александр Андреевич"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea",
+              "created_at": "2023-04-19T11:47:27.376947+00:00",
+              "project_id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+              "name": "Тестовый проект 0 - ДС",
+              "type": 1,
+              "booking_link": "https://us06web.zoom.us/s/84674409793?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IlhHc1YxN2J4UUZDcjZfYV8wQUNUUEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6Ijg0Njc0NDA5NzkzIiwiZXhwIjoxNjgxOTE5NDIyLCJpYXQiOjE2ODE5MTIyMjIsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJjaWQiOiIifQ.eLrkFcWdNZICP6bIIMAx03fl6wdZBFwTDQIcNxzphks",
+              "join_link": "https://us06web.zoom.us/j/84674409793?pwd=WHNKNUE2aG94d1Fub1VvWXBBODNHUT09",
+              "status": 2,
+              "booked": "2023-04-19T13:50:22.476+00:00",
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": "61",
+              "meeting_zoom_id": "84674409793",
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": "2023-04-20T10:30:00+00:00",
+              "time_slot": "13:30 - 14:30",
+              "meetings_type": {
+                "name": "ДС",
+                "meeting_recommend": "2023-04-19",
+                "meeting_deadline": "2023-04-23"
+              },
+              "meetings_status": {
+                "name": "Scheduled"
+              },
+              "projects": {
+                "id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+                "short_id": 3311,
+                "name": "Тестовый проект 0",
+                "contact_name": "Тишкин Александр Андреевич"
+              },
+              "artifacts": [
+                {
+                  "created_at": "2023-04-19T16:44:46.446917+00:00",
+                  "link": "https://183406.selcdn.ru/2T.Drive/accelerator/projects/42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0/18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea/designHere.png?temp_url_sig=886646a53fb093db1f6d8cde1f119558a59112af&temp_url_expires=1687106686&filename=designHere.png",
+                  "meeting_id": "18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea",
+                  "tl_feedback": null,
+                  "is_accepted": null,
+                  "type": 1,
+                  "id": "a0be90f0-ade4-4004-866d-89a7cd36165c",
+                  "name": "designHere.png",
+                  "s3_path": "accelerator/projects/42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0/18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea/designHere.png",
+                  "is_deleted": false
+                },
+                {
+                  "created_at": "2023-04-19T16:45:01.945992+00:00",
+                  "link": "https://183406.selcdn.ru/2T.Drive/accelerator/projects/42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0/18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea/designHere.png?temp_url_sig=55b65bb5160b60e8eda2dd5b678ab1b1874e9b3b&temp_url_expires=1687106701&filename=designHere.png",
+                  "meeting_id": "18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea",
+                  "tl_feedback": null,
+                  "is_accepted": null,
+                  "type": 2,
+                  "id": "1528eb53-6b27-4a5e-b374-0bab240a2539",
+                  "name": "designHere.png",
+                  "s3_path": "accelerator/projects/42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0/18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea/designHere.png",
+                  "is_deleted": false
+                },
+                {
+                  "created_at": "2023-04-19T19:04:26.436318+00:00",
+                  "link": "https://183406.selcdn.ru/2T.Drive/accelerator/projects/42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0/18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea/ref1HR.PNG?temp_url_sig=33b2b99e4d26e3b41152c86c2ea2d9324a137d7a&temp_url_expires=1687115066&filename=ref1HR.PNG",
+                  "meeting_id": "18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea",
+                  "tl_feedback": null,
+                  "is_accepted": null,
+                  "type": 1,
+                  "id": "1b999634-285a-4679-b906-2acc18164831",
+                  "name": "ref1HR.PNG",
+                  "s3_path": "accelerator/projects/42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0/18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea/ref1HR.PNG",
+                  "is_deleted": false
+                }
+              ]
+            },
+            {
+              "id": "c91a70b2-0d85-40e4-878d-161c09e11799",
+              "created_at": "2023-04-19T11:48:04.854922+00:00",
+              "project_id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+              "name": "Тестовый проект 0 - ТС1",
+              "type": 2,
+              "booking_link": "https://us06web.zoom.us/s/89161062205?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IlhHc1YxN2J4UUZDcjZfYV8wQUNUUEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6Ijg5MTYxMDYyMjA1IiwiZXhwIjoxNjgxOTMyMzk2LCJpYXQiOjE2ODE5MjUxOTYsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJjaWQiOiIifQ.4yRaHyxaJf8rREnsgl7RQgd4dC-loXd-X-w7JTJvtx0",
+              "join_link": "https://us06web.zoom.us/j/89161062205?pwd=amVrWnI3eVdHamE3eU9QaEVCZkVZdz09",
+              "status": 2,
+              "booked": "2023-04-19T17:26:36.829+00:00",
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": "83",
+              "meeting_zoom_id": "89161062205",
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": "2023-04-25T07:30:00+00:00",
+              "time_slot": "10:30 - 11:30",
+              "meetings_type": {
+                "name": "ТС-1",
+                "meeting_recommend": "2023-04-18",
+                "meeting_deadline": "2023-04-24"
+              },
+              "meetings_status": {
+                "name": "Scheduled"
+              },
+              "projects": {
+                "id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+                "short_id": 3311,
+                "name": "Тестовый проект 0",
+                "contact_name": "Тишкин Александр Андреевич"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "38b29b0c-2ca1-4d5b-94c4-11732187f0e8",
+              "created_at": "2023-04-19T11:56:37.528355+00:00",
+              "project_id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+              "name": "Тестовый проект 0 - ФС",
+              "type": 5,
+              "booking_link": null,
+              "join_link": null,
+              "status": 1,
+              "booked": null,
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": null,
+              "meeting_zoom_id": null,
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ФС",
+                "meeting_recommend": "2023-06-12",
+                "meeting_deadline": "2023-06-18"
+              },
+              "meetings_status": {
+                "name": "Pending"
+              },
+              "projects": {
+                "id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+                "short_id": 3311,
+                "name": "Тестовый проект 0",
+                "contact_name": "Тишкин Александр Андреевич"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "8229d205-38a1-470d-964f-510e33512c31",
+              "created_at": "2023-04-19T13:48:21.486128+00:00",
+              "project_id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+              "name": "Тестовый проект 4 - ДС",
+              "type": 1,
+              "booking_link": null,
+              "join_link": null,
+              "status": 1,
+              "booked": null,
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": null,
+              "meeting_zoom_id": null,
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ДС",
+                "meeting_recommend": "2023-04-19",
+                "meeting_deadline": "2023-04-23"
+              },
+              "meetings_status": {
+                "name": "Pending"
+              },
+              "projects": {
+                "id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+                "short_id": 7272,
+                "name": "Тестовый проект 4",
+                "contact_name": "Иванов Иван Иванович"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "3f7c8b6b-7011-4593-abaf-cc8258fd45d1",
+              "created_at": "2023-04-19T13:49:01.037364+00:00",
+              "project_id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+              "name": "Тестовый проект 4 - ТС1",
+              "type": 2,
+              "booking_link": null,
+              "join_link": null,
+              "status": 1,
+              "booked": null,
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": null,
+              "meeting_zoom_id": null,
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ТС-1",
+                "meeting_recommend": "2023-04-18",
+                "meeting_deadline": "2023-04-24"
+              },
+              "meetings_status": {
+                "name": "Pending"
+              },
+              "projects": {
+                "id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+                "short_id": 7272,
+                "name": "Тестовый проект 4",
+                "contact_name": "Иванов Иван Иванович"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "f674c34c-5dce-43c8-b3c5-4ac591f509f3",
+              "created_at": "2023-04-19T13:49:32.657258+00:00",
+              "project_id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+              "name": "Тестовый проект 4 - ТС2",
+              "type": 3,
+              "booking_link": null,
+              "join_link": null,
+              "status": 1,
+              "booked": null,
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": null,
+              "meeting_zoom_id": null,
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ТС-2",
+                "meeting_recommend": "2023-04-30",
+                "meeting_deadline": "2023-05-01"
+              },
+              "meetings_status": {
+                "name": "Pending"
+              },
+              "projects": {
+                "id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+                "short_id": 7272,
+                "name": "Тестовый проект 4",
+                "contact_name": "Иванов Иван Иванович"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "c200752a-0643-4d85-8d38-8d7da0187826",
+              "created_at": "2023-04-19T13:50:24.332169+00:00",
+              "project_id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+              "name": "Тестовый проект 4 - ФС",
+              "type": 5,
+              "booking_link": null,
+              "join_link": null,
+              "status": 1,
+              "booked": null,
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": null,
+              "meeting_zoom_id": null,
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ФС",
+                "meeting_recommend": "2023-06-12",
+                "meeting_deadline": "2023-06-18"
+              },
+              "meetings_status": {
+                "name": "Pending"
+              },
+              "projects": {
+                "id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+                "short_id": 7272,
+                "name": "Тестовый проект 4",
+                "contact_name": "Иванов Иван Иванович"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "46584175-11c8-46a7-af64-081d2a0eb0d3",
+              "created_at": "2023-04-19T11:48:22.095413+00:00",
+              "project_id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+              "name": "Городское фермерство\r\n",
+              "type": 3,
+              "booking_link": "https://us06web.zoom.us/s/85994695145?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IlhHc1YxN2J4UUZDcjZfYV8wQUNUUEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6Ijg1OTk0Njk1MTQ1IiwiZXhwIjoxNjgxOTIwMTgwLCJpYXQiOjE2ODE5MTI5ODAsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJjaWQiOiIifQ.MRFGqKsUAYBwNmyOv2TY_xd3x66Vb7y2KpfXJ66Bqzc",
+              "join_link": "https://us06web.zoom.us/j/85994695145?pwd=bVlPWUhWcXdyc3lkVjA0SU9EVDFPQT09",
+              "status": 2,
+              "booked": "2023-04-19T14:03:00.287+00:00",
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": "62",
+              "meeting_zoom_id": "85994695145",
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ТС-2",
+                "meeting_recommend": "2023-04-30",
+                "meeting_deadline": "2023-05-01"
+              },
+              "meetings_status": {
+                "name": "Scheduled"
+              },
+              "projects": {
+                "id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+                "short_id": 3311,
+                "name": "Тестовый проект 0",
+                "contact_name": "Тишкин Александр Андреевич"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "43a24e53-4d4d-45d2-af60-2f9761afcd19",
+              "created_at": "2023-04-19T11:48:50.883046+00:00",
+              "project_id": "e0c58f52-ba6b-4852-a938-2446d78a16c4",
+              "name": "Тестовый проект 0 - ТС2",
+              "type": 3,
+              "booking_link": "https://us06web.zoom.us/s/81510067592?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IlhHc1YxN2J4UUZDcjZfYV8wQUNUUEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6IjgxNTEwMDY3NTkyIiwiZXhwIjoxNjgxOTIwNjU4LCJpYXQiOjE2ODE5MTM0NTgsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJjaWQiOiIifQ.EK3_niT40hDx-_MCIVq36xis3uW05bQFy1OBoZcv-Hc",
+              "join_link": "https://us06web.zoom.us/j/81510067592?pwd=M1ZvYkFPRmdFSGR6dmJ3WFpHMHJ5Zz09",
+              "status": 2,
+              "booked": "2023-04-19T14:10:58.507+00:00",
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": "63",
+              "meeting_zoom_id": "81510067592",
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ТС-2",
+                "meeting_recommend": "2023-04-30",
+                "meeting_deadline": "2023-05-01"
+              },
+              "meetings_status": {
+                "name": "Scheduled"
+              },
+              "projects": {
+                "id": "e0c58f52-ba6b-4852-a938-2446d78a16c4",
+                "short_id": 2222,
+                "name": "Тестовый проект 3",
+                "contact_name": "Тишкин Андрей Валерьевич"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "4e2985ee-8e22-4b94-a583-9a9feb997e4d",
+              "created_at": "2023-04-19T13:49:51.638164+00:00",
+              "project_id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+              "name": "Тестовый проект 4 - ТС3",
+              "type": 4,
+              "booking_link": "https://us06web.zoom.us/s/83914807923?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IlhHc1YxN2J4UUZDcjZfYV8wQUNUUEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6IjgzOTE0ODA3OTIzIiwiZXhwIjoxNjgxOTIyNDc3LCJpYXQiOjE2ODE5MTUyNzcsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJjaWQiOiIifQ.wSyxN_ies2ULj4gpguu5XWaanFn0OzDcPQoDrqzRgsM",
+              "join_link": "https://us06web.zoom.us/j/83914807923?pwd=dGRjV3MraWEvUW1FUSs1K1pSUG1EQT09",
+              "status": 2,
+              "booked": "2023-04-19T14:41:17.12+00:00",
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": "68",
+              "meeting_zoom_id": "83914807923",
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ТС-3",
+                "meeting_recommend": "2023-05-08",
+                "meeting_deadline": "2023-05-10"
+              },
+              "meetings_status": {
+                "name": "Scheduled"
+              },
+              "projects": {
+                "id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+                "short_id": 7272,
+                "name": "Тестовый проект 4",
+                "contact_name": "Иванов Иван Иванович"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "b9773937-fd61-4a6e-b121-ec83a807a49d",
+              "created_at": "2023-04-19T11:56:09.911549+00:00",
+              "project_id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+              "name": "Тестовый проект 0 - ТС3",
+              "type": 4,
+              "booking_link": "https://us06web.zoom.us/s/83260083101?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IlhHc1YxN2J4UUZDcjZfYV8wQUNUUEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6IjgzMjYwMDgzMTAxIiwiZXhwIjoxNjgxOTMzMDE0LCJpYXQiOjE2ODE5MjU4MTQsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJjaWQiOiIifQ.Ua56-PP7n9C5wcC_qbd7lYyYKIDDG9STzPmKbB82mKQ",
+              "join_link": "https://us06web.zoom.us/j/83260083101?pwd=bm1jbzlJT2I5Q0NORXl0QUw5em1qZz09",
+              "status": 2,
+              "booked": "2023-04-19T17:36:54.927+00:00",
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": "84",
+              "meeting_zoom_id": "83260083101",
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": "2023-04-27T06:00:00+00:00",
+              "time_slot": "09:00 - 10:00",
+              "meetings_type": {
+                "name": "ТС-3",
+                "meeting_recommend": "2023-05-08",
+                "meeting_deadline": "2023-05-10"
+              },
+              "meetings_status": {
+                "name": "Scheduled"
+              },
+              "projects": {
+                "id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+                "short_id": 3311,
+                "name": "Тестовый проект 0",
+                "contact_name": "Тишкин Александр Андреевич"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea",
+              "created_at": "2023-04-19T11:47:27.376947+00:00",
+              "project_id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+              "name": "Тестовый проект 0 - ДС",
+              "type": 1,
+              "booking_link": "https://us06web.zoom.us/s/84674409793?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IlhHc1YxN2J4UUZDcjZfYV8wQUNUUEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6Ijg0Njc0NDA5NzkzIiwiZXhwIjoxNjgxOTE5NDIyLCJpYXQiOjE2ODE5MTIyMjIsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJjaWQiOiIifQ.eLrkFcWdNZICP6bIIMAx03fl6wdZBFwTDQIcNxzphks",
+              "join_link": "https://us06web.zoom.us/j/84674409793?pwd=WHNKNUE2aG94d1Fub1VvWXBBODNHUT09",
+              "status": 2,
+              "booked": "2023-04-19T13:50:22.476+00:00",
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": "61",
+              "meeting_zoom_id": "84674409793",
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": "2023-04-20T10:30:00+00:00",
+              "time_slot": "13:30 - 14:30",
+              "meetings_type": {
+                "name": "ДС",
+                "meeting_recommend": "2023-04-19",
+                "meeting_deadline": "2023-04-23"
+              },
+              "meetings_status": {
+                "name": "Scheduled"
+              },
+              "projects": {
+                "id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+                "short_id": 3311,
+                "name": "Тестовый проект 0",
+                "contact_name": "Тишкин Александр Андреевич"
+              },
+              "artifacts": [
+                {
+                  "created_at": "2023-04-19T16:44:46.446917+00:00",
+                  "link": "https://183406.selcdn.ru/2T.Drive/accelerator/projects/42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0/18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea/designHere.png?temp_url_sig=886646a53fb093db1f6d8cde1f119558a59112af&temp_url_expires=1687106686&filename=designHere.png",
+                  "meeting_id": "18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea",
+                  "tl_feedback": null,
+                  "is_accepted": null,
+                  "type": 1,
+                  "id": "a0be90f0-ade4-4004-866d-89a7cd36165c",
+                  "name": "designHere.png",
+                  "s3_path": "accelerator/projects/42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0/18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea/designHere.png",
+                  "is_deleted": false
+                },
+                {
+                  "created_at": "2023-04-19T16:45:01.945992+00:00",
+                  "link": "https://183406.selcdn.ru/2T.Drive/accelerator/projects/42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0/18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea/designHere.png?temp_url_sig=55b65bb5160b60e8eda2dd5b678ab1b1874e9b3b&temp_url_expires=1687106701&filename=designHere.png",
+                  "meeting_id": "18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea",
+                  "tl_feedback": null,
+                  "is_accepted": null,
+                  "type": 2,
+                  "id": "1528eb53-6b27-4a5e-b374-0bab240a2539",
+                  "name": "designHere.png",
+                  "s3_path": "accelerator/projects/42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0/18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea/designHere.png",
+                  "is_deleted": false
+                },
+                {
+                  "created_at": "2023-04-19T19:04:26.436318+00:00",
+                  "link": "https://183406.selcdn.ru/2T.Drive/accelerator/projects/42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0/18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea/ref1HR.PNG?temp_url_sig=33b2b99e4d26e3b41152c86c2ea2d9324a137d7a&temp_url_expires=1687115066&filename=ref1HR.PNG",
+                  "meeting_id": "18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea",
+                  "tl_feedback": null,
+                  "is_accepted": null,
+                  "type": 1,
+                  "id": "1b999634-285a-4679-b906-2acc18164831",
+                  "name": "ref1HR.PNG",
+                  "s3_path": "accelerator/projects/42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0/18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea/ref1HR.PNG",
+                  "is_deleted": false
+                }
+              ]
+            },
+            {
+              "id": "c91a70b2-0d85-40e4-878d-161c09e11799",
+              "created_at": "2023-04-19T11:48:04.854922+00:00",
+              "project_id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+              "name": "Тестовый проект 0 - ТС1",
+              "type": 2,
+              "booking_link": "https://us06web.zoom.us/s/89161062205?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IlhHc1YxN2J4UUZDcjZfYV8wQUNUUEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6Ijg5MTYxMDYyMjA1IiwiZXhwIjoxNjgxOTMyMzk2LCJpYXQiOjE2ODE5MjUxOTYsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJjaWQiOiIifQ.4yRaHyxaJf8rREnsgl7RQgd4dC-loXd-X-w7JTJvtx0",
+              "join_link": "https://us06web.zoom.us/j/89161062205?pwd=amVrWnI3eVdHamE3eU9QaEVCZkVZdz09",
+              "status": 2,
+              "booked": "2023-04-19T17:26:36.829+00:00",
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": "83",
+              "meeting_zoom_id": "89161062205",
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": "2023-04-25T07:30:00+00:00",
+              "time_slot": "10:30 - 11:30",
+              "meetings_type": {
+                "name": "ТС-1",
+                "meeting_recommend": "2023-04-18",
+                "meeting_deadline": "2023-04-24"
+              },
+              "meetings_status": {
+                "name": "Scheduled"
+              },
+              "projects": {
+                "id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+                "short_id": 3311,
+                "name": "Тестовый проект 0",
+                "contact_name": "Тишкин Александр Андреевич"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "38b29b0c-2ca1-4d5b-94c4-11732187f0e8",
+              "created_at": "2023-04-19T11:56:37.528355+00:00",
+              "project_id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+              "name": "Тестовый проект 0 - ФС",
+              "type": 5,
+              "booking_link": null,
+              "join_link": null,
+              "status": 1,
+              "booked": null,
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": null,
+              "meeting_zoom_id": null,
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ФС",
+                "meeting_recommend": "2023-06-12",
+                "meeting_deadline": "2023-06-18"
+              },
+              "meetings_status": {
+                "name": "Pending"
+              },
+              "projects": {
+                "id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+                "short_id": 3311,
+                "name": "Тестовый проект 0",
+                "contact_name": "Тишкин Александр Андреевич"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "8229d205-38a1-470d-964f-510e33512c31",
+              "created_at": "2023-04-19T13:48:21.486128+00:00",
+              "project_id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+              "name": "Тестовый проект 4 - ДС",
+              "type": 1,
+              "booking_link": null,
+              "join_link": null,
+              "status": 1,
+              "booked": null,
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": null,
+              "meeting_zoom_id": null,
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ДС",
+                "meeting_recommend": "2023-04-19",
+                "meeting_deadline": "2023-04-23"
+              },
+              "meetings_status": {
+                "name": "Pending"
+              },
+              "projects": {
+                "id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+                "short_id": 7272,
+                "name": "Тестовый проект 4",
+                "contact_name": "Иванов Иван Иванович"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "3f7c8b6b-7011-4593-abaf-cc8258fd45d1",
+              "created_at": "2023-04-19T13:49:01.037364+00:00",
+              "project_id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+              "name": "Тестовый проект 4 - ТС1",
+              "type": 2,
+              "booking_link": null,
+              "join_link": null,
+              "status": 1,
+              "booked": null,
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": null,
+              "meeting_zoom_id": null,
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ТС-1",
+                "meeting_recommend": "2023-04-18",
+                "meeting_deadline": "2023-04-24"
+              },
+              "meetings_status": {
+                "name": "Pending"
+              },
+              "projects": {
+                "id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+                "short_id": 7272,
+                "name": "Тестовый проект 4",
+                "contact_name": "Иванов Иван Иванович"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "f674c34c-5dce-43c8-b3c5-4ac591f509f3",
+              "created_at": "2023-04-19T13:49:32.657258+00:00",
+              "project_id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+              "name": "Тестовый проект 4 - ТС2",
+              "type": 3,
+              "booking_link": null,
+              "join_link": null,
+              "status": 1,
+              "booked": null,
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": null,
+              "meeting_zoom_id": null,
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ТС-2",
+                "meeting_recommend": "2023-04-30",
+                "meeting_deadline": "2023-05-01"
+              },
+              "meetings_status": {
+                "name": "Pending"
+              },
+              "projects": {
+                "id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+                "short_id": 7272,
+                "name": "Тестовый проект 4",
+                "contact_name": "Иванов Иван Иванович"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "c200752a-0643-4d85-8d38-8d7da0187826",
+              "created_at": "2023-04-19T13:50:24.332169+00:00",
+              "project_id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+              "name": "Тестовый проект 4 - ФС",
+              "type": 5,
+              "booking_link": null,
+              "join_link": null,
+              "status": 1,
+              "booked": null,
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": null,
+              "meeting_zoom_id": null,
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ФС",
+                "meeting_recommend": "2023-06-12",
+                "meeting_deadline": "2023-06-18"
+              },
+              "meetings_status": {
+                "name": "Pending"
+              },
+              "projects": {
+                "id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+                "short_id": 7272,
+                "name": "Тестовый проект 4",
+                "contact_name": "Иванов Иван Иванович"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "46584175-11c8-46a7-af64-081d2a0eb0d3",
+              "created_at": "2023-04-19T11:48:22.095413+00:00",
+              "project_id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+              "name": "Городское фермерство\r\n",
+              "type": 3,
+              "booking_link": "https://us06web.zoom.us/s/85994695145?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IlhHc1YxN2J4UUZDcjZfYV8wQUNUUEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6Ijg1OTk0Njk1MTQ1IiwiZXhwIjoxNjgxOTIwMTgwLCJpYXQiOjE2ODE5MTI5ODAsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJjaWQiOiIifQ.MRFGqKsUAYBwNmyOv2TY_xd3x66Vb7y2KpfXJ66Bqzc",
+              "join_link": "https://us06web.zoom.us/j/85994695145?pwd=bVlPWUhWcXdyc3lkVjA0SU9EVDFPQT09",
+              "status": 2,
+              "booked": "2023-04-19T14:03:00.287+00:00",
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": "62",
+              "meeting_zoom_id": "85994695145",
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ТС-2",
+                "meeting_recommend": "2023-04-30",
+                "meeting_deadline": "2023-05-01"
+              },
+              "meetings_status": {
+                "name": "Scheduled"
+              },
+              "projects": {
+                "id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+                "short_id": 3311,
+                "name": "Тестовый проект 0",
+                "contact_name": "Тишкин Александр Андреевич"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "43a24e53-4d4d-45d2-af60-2f9761afcd19",
+              "created_at": "2023-04-19T11:48:50.883046+00:00",
+              "project_id": "e0c58f52-ba6b-4852-a938-2446d78a16c4",
+              "name": "Тестовый проект 0 - ТС2",
+              "type": 3,
+              "booking_link": "https://us06web.zoom.us/s/81510067592?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IlhHc1YxN2J4UUZDcjZfYV8wQUNUUEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6IjgxNTEwMDY3NTkyIiwiZXhwIjoxNjgxOTIwNjU4LCJpYXQiOjE2ODE5MTM0NTgsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJjaWQiOiIifQ.EK3_niT40hDx-_MCIVq36xis3uW05bQFy1OBoZcv-Hc",
+              "join_link": "https://us06web.zoom.us/j/81510067592?pwd=M1ZvYkFPRmdFSGR6dmJ3WFpHMHJ5Zz09",
+              "status": 2,
+              "booked": "2023-04-19T14:10:58.507+00:00",
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": "63",
+              "meeting_zoom_id": "81510067592",
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ТС-2",
+                "meeting_recommend": "2023-04-30",
+                "meeting_deadline": "2023-05-01"
+              },
+              "meetings_status": {
+                "name": "Scheduled"
+              },
+              "projects": {
+                "id": "e0c58f52-ba6b-4852-a938-2446d78a16c4",
+                "short_id": 2222,
+                "name": "Тестовый проект 3",
+                "contact_name": "Тишкин Андрей Валерьевич"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "4e2985ee-8e22-4b94-a583-9a9feb997e4d",
+              "created_at": "2023-04-19T13:49:51.638164+00:00",
+              "project_id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+              "name": "Тестовый проект 4 - ТС3",
+              "type": 4,
+              "booking_link": "https://us06web.zoom.us/s/83914807923?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IlhHc1YxN2J4UUZDcjZfYV8wQUNUUEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6IjgzOTE0ODA3OTIzIiwiZXhwIjoxNjgxOTIyNDc3LCJpYXQiOjE2ODE5MTUyNzcsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJjaWQiOiIifQ.wSyxN_ies2ULj4gpguu5XWaanFn0OzDcPQoDrqzRgsM",
+              "join_link": "https://us06web.zoom.us/j/83914807923?pwd=dGRjV3MraWEvUW1FUSs1K1pSUG1EQT09",
+              "status": 2,
+              "booked": "2023-04-19T14:41:17.12+00:00",
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": "68",
+              "meeting_zoom_id": "83914807923",
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ТС-3",
+                "meeting_recommend": "2023-05-08",
+                "meeting_deadline": "2023-05-10"
+              },
+              "meetings_status": {
+                "name": "Scheduled"
+              },
+              "projects": {
+                "id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+                "short_id": 7272,
+                "name": "Тестовый проект 4",
+                "contact_name": "Иванов Иван Иванович"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "b9773937-fd61-4a6e-b121-ec83a807a49d",
+              "created_at": "2023-04-19T11:56:09.911549+00:00",
+              "project_id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+              "name": "Тестовый проект 0 - ТС3",
+              "type": 4,
+              "booking_link": "https://us06web.zoom.us/s/83260083101?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IlhHc1YxN2J4UUZDcjZfYV8wQUNUUEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6IjgzMjYwMDgzMTAxIiwiZXhwIjoxNjgxOTMzMDE0LCJpYXQiOjE2ODE5MjU4MTQsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJjaWQiOiIifQ.Ua56-PP7n9C5wcC_qbd7lYyYKIDDG9STzPmKbB82mKQ",
+              "join_link": "https://us06web.zoom.us/j/83260083101?pwd=bm1jbzlJT2I5Q0NORXl0QUw5em1qZz09",
+              "status": 2,
+              "booked": "2023-04-19T17:36:54.927+00:00",
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": "84",
+              "meeting_zoom_id": "83260083101",
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": "2023-04-27T06:00:00+00:00",
+              "time_slot": "09:00 - 10:00",
+              "meetings_type": {
+                "name": "ТС-3",
+                "meeting_recommend": "2023-05-08",
+                "meeting_deadline": "2023-05-10"
+              },
+              "meetings_status": {
+                "name": "Scheduled"
+              },
+              "projects": {
+                "id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+                "short_id": 3311,
+                "name": "Тестовый проект 0",
+                "contact_name": "Тишкин Александр Андреевич"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea",
+              "created_at": "2023-04-19T11:47:27.376947+00:00",
+              "project_id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+              "name": "Тестовый проект 0 - ДС",
+              "type": 1,
+              "booking_link": "https://us06web.zoom.us/s/84674409793?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IlhHc1YxN2J4UUZDcjZfYV8wQUNUUEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6Ijg0Njc0NDA5NzkzIiwiZXhwIjoxNjgxOTE5NDIyLCJpYXQiOjE2ODE5MTIyMjIsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJjaWQiOiIifQ.eLrkFcWdNZICP6bIIMAx03fl6wdZBFwTDQIcNxzphks",
+              "join_link": "https://us06web.zoom.us/j/84674409793?pwd=WHNKNUE2aG94d1Fub1VvWXBBODNHUT09",
+              "status": 2,
+              "booked": "2023-04-19T13:50:22.476+00:00",
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": "61",
+              "meeting_zoom_id": "84674409793",
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": "2023-04-20T10:30:00+00:00",
+              "time_slot": "13:30 - 14:30",
+              "meetings_type": {
+                "name": "ДС",
+                "meeting_recommend": "2023-04-19",
+                "meeting_deadline": "2023-04-23"
+              },
+              "meetings_status": {
+                "name": "Scheduled"
+              },
+              "projects": {
+                "id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+                "short_id": 3311,
+                "name": "Тестовый проект 0",
+                "contact_name": "Тишкин Александр Андреевич"
+              },
+              "artifacts": [
+                {
+                  "created_at": "2023-04-19T16:44:46.446917+00:00",
+                  "link": "https://183406.selcdn.ru/2T.Drive/accelerator/projects/42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0/18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea/designHere.png?temp_url_sig=886646a53fb093db1f6d8cde1f119558a59112af&temp_url_expires=1687106686&filename=designHere.png",
+                  "meeting_id": "18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea",
+                  "tl_feedback": null,
+                  "is_accepted": null,
+                  "type": 1,
+                  "id": "a0be90f0-ade4-4004-866d-89a7cd36165c",
+                  "name": "designHere.png",
+                  "s3_path": "accelerator/projects/42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0/18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea/designHere.png",
+                  "is_deleted": false
+                },
+                {
+                  "created_at": "2023-04-19T16:45:01.945992+00:00",
+                  "link": "https://183406.selcdn.ru/2T.Drive/accelerator/projects/42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0/18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea/designHere.png?temp_url_sig=55b65bb5160b60e8eda2dd5b678ab1b1874e9b3b&temp_url_expires=1687106701&filename=designHere.png",
+                  "meeting_id": "18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea",
+                  "tl_feedback": null,
+                  "is_accepted": null,
+                  "type": 2,
+                  "id": "1528eb53-6b27-4a5e-b374-0bab240a2539",
+                  "name": "designHere.png",
+                  "s3_path": "accelerator/projects/42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0/18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea/designHere.png",
+                  "is_deleted": false
+                },
+                {
+                  "created_at": "2023-04-19T19:04:26.436318+00:00",
+                  "link": "https://183406.selcdn.ru/2T.Drive/accelerator/projects/42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0/18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea/ref1HR.PNG?temp_url_sig=33b2b99e4d26e3b41152c86c2ea2d9324a137d7a&temp_url_expires=1687115066&filename=ref1HR.PNG",
+                  "meeting_id": "18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea",
+                  "tl_feedback": null,
+                  "is_accepted": null,
+                  "type": 1,
+                  "id": "1b999634-285a-4679-b906-2acc18164831",
+                  "name": "ref1HR.PNG",
+                  "s3_path": "accelerator/projects/42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0/18491b2f-7c0b-4c98-b8b1-12dcb1bcfaea/ref1HR.PNG",
+                  "is_deleted": false
+                }
+              ]
+            },
+            {
+              "id": "c91a70b2-0d85-40e4-878d-161c09e11799",
+              "created_at": "2023-04-19T11:48:04.854922+00:00",
+              "project_id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+              "name": "Тестовый проект 0 - ТС1",
+              "type": 2,
+              "booking_link": "https://us06web.zoom.us/s/89161062205?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IlhHc1YxN2J4UUZDcjZfYV8wQUNUUEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6Ijg5MTYxMDYyMjA1IiwiZXhwIjoxNjgxOTMyMzk2LCJpYXQiOjE2ODE5MjUxOTYsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJjaWQiOiIifQ.4yRaHyxaJf8rREnsgl7RQgd4dC-loXd-X-w7JTJvtx0",
+              "join_link": "https://us06web.zoom.us/j/89161062205?pwd=amVrWnI3eVdHamE3eU9QaEVCZkVZdz09",
+              "status": 2,
+              "booked": "2023-04-19T17:26:36.829+00:00",
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": "83",
+              "meeting_zoom_id": "89161062205",
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": "2023-04-25T07:30:00+00:00",
+              "time_slot": "10:30 - 11:30",
+              "meetings_type": {
+                "name": "ТС-1",
+                "meeting_recommend": "2023-04-18",
+                "meeting_deadline": "2023-04-24"
+              },
+              "meetings_status": {
+                "name": "Scheduled"
+              },
+              "projects": {
+                "id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+                "short_id": 3311,
+                "name": "Тестовый проект 0",
+                "contact_name": "Тишкин Александр Андреевич"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "38b29b0c-2ca1-4d5b-94c4-11732187f0e8",
+              "created_at": "2023-04-19T11:56:37.528355+00:00",
+              "project_id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+              "name": "Тестовый проект 0 - ФС",
+              "type": 5,
+              "booking_link": null,
+              "join_link": null,
+              "status": 1,
+              "booked": null,
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": null,
+              "meeting_zoom_id": null,
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ФС",
+                "meeting_recommend": "2023-06-12",
+                "meeting_deadline": "2023-06-18"
+              },
+              "meetings_status": {
+                "name": "Pending"
+              },
+              "projects": {
+                "id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+                "short_id": 3311,
+                "name": "Тестовый проект 0",
+                "contact_name": "Тишкин Александр Андреевич"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "8229d205-38a1-470d-964f-510e33512c31",
+              "created_at": "2023-04-19T13:48:21.486128+00:00",
+              "project_id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+              "name": "Тестовый проект 4 - ДС",
+              "type": 1,
+              "booking_link": null,
+              "join_link": null,
+              "status": 1,
+              "booked": null,
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": null,
+              "meeting_zoom_id": null,
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ДС",
+                "meeting_recommend": "2023-04-19",
+                "meeting_deadline": "2023-04-23"
+              },
+              "meetings_status": {
+                "name": "Pending"
+              },
+              "projects": {
+                "id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+                "short_id": 7272,
+                "name": "Тестовый проект 4",
+                "contact_name": "Иванов Иван Иванович"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "3f7c8b6b-7011-4593-abaf-cc8258fd45d1",
+              "created_at": "2023-04-19T13:49:01.037364+00:00",
+              "project_id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+              "name": "Тестовый проект 4 - ТС1",
+              "type": 2,
+              "booking_link": null,
+              "join_link": null,
+              "status": 1,
+              "booked": null,
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": null,
+              "meeting_zoom_id": null,
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ТС-1",
+                "meeting_recommend": "2023-04-18",
+                "meeting_deadline": "2023-04-24"
+              },
+              "meetings_status": {
+                "name": "Pending"
+              },
+              "projects": {
+                "id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+                "short_id": 7272,
+                "name": "Тестовый проект 4",
+                "contact_name": "Иванов Иван Иванович"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "f674c34c-5dce-43c8-b3c5-4ac591f509f3",
+              "created_at": "2023-04-19T13:49:32.657258+00:00",
+              "project_id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+              "name": "Тестовый проект 4 - ТС2",
+              "type": 3,
+              "booking_link": null,
+              "join_link": null,
+              "status": 1,
+              "booked": null,
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": null,
+              "meeting_zoom_id": null,
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ТС-2",
+                "meeting_recommend": "2023-04-30",
+                "meeting_deadline": "2023-05-01"
+              },
+              "meetings_status": {
+                "name": "Pending"
+              },
+              "projects": {
+                "id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+                "short_id": 7272,
+                "name": "Тестовый проект 4",
+                "contact_name": "Иванов Иван Иванович"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "c200752a-0643-4d85-8d38-8d7da0187826",
+              "created_at": "2023-04-19T13:50:24.332169+00:00",
+              "project_id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+              "name": "Тестовый проект 4 - ФС",
+              "type": 5,
+              "booking_link": null,
+              "join_link": null,
+              "status": 1,
+              "booked": null,
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": null,
+              "meeting_zoom_id": null,
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ФС",
+                "meeting_recommend": "2023-06-12",
+                "meeting_deadline": "2023-06-18"
+              },
+              "meetings_status": {
+                "name": "Pending"
+              },
+              "projects": {
+                "id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+                "short_id": 7272,
+                "name": "Тестовый проект 4",
+                "contact_name": "Иванов Иван Иванович"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "46584175-11c8-46a7-af64-081d2a0eb0d3",
+              "created_at": "2023-04-19T11:48:22.095413+00:00",
+              "project_id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+              "name": "Городское фермерство\r\n",
+              "type": 3,
+              "booking_link": "https://us06web.zoom.us/s/85994695145?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IlhHc1YxN2J4UUZDcjZfYV8wQUNUUEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6Ijg1OTk0Njk1MTQ1IiwiZXhwIjoxNjgxOTIwMTgwLCJpYXQiOjE2ODE5MTI5ODAsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJjaWQiOiIifQ.MRFGqKsUAYBwNmyOv2TY_xd3x66Vb7y2KpfXJ66Bqzc",
+              "join_link": "https://us06web.zoom.us/j/85994695145?pwd=bVlPWUhWcXdyc3lkVjA0SU9EVDFPQT09",
+              "status": 2,
+              "booked": "2023-04-19T14:03:00.287+00:00",
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": "62",
+              "meeting_zoom_id": "85994695145",
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ТС-2",
+                "meeting_recommend": "2023-04-30",
+                "meeting_deadline": "2023-05-01"
+              },
+              "meetings_status": {
+                "name": "Scheduled"
+              },
+              "projects": {
+                "id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+                "short_id": 3311,
+                "name": "Тестовый проект 0",
+                "contact_name": "Тишкин Александр Андреевич"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "43a24e53-4d4d-45d2-af60-2f9761afcd19",
+              "created_at": "2023-04-19T11:48:50.883046+00:00",
+              "project_id": "e0c58f52-ba6b-4852-a938-2446d78a16c4",
+              "name": "Тестовый проект 0 - ТС2",
+              "type": 3,
+              "booking_link": "https://us06web.zoom.us/s/81510067592?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IlhHc1YxN2J4UUZDcjZfYV8wQUNUUEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6IjgxNTEwMDY3NTkyIiwiZXhwIjoxNjgxOTIwNjU4LCJpYXQiOjE2ODE5MTM0NTgsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJjaWQiOiIifQ.EK3_niT40hDx-_MCIVq36xis3uW05bQFy1OBoZcv-Hc",
+              "join_link": "https://us06web.zoom.us/j/81510067592?pwd=M1ZvYkFPRmdFSGR6dmJ3WFpHMHJ5Zz09",
+              "status": 2,
+              "booked": "2023-04-19T14:10:58.507+00:00",
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": "63",
+              "meeting_zoom_id": "81510067592",
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ТС-2",
+                "meeting_recommend": "2023-04-30",
+                "meeting_deadline": "2023-05-01"
+              },
+              "meetings_status": {
+                "name": "Scheduled"
+              },
+              "projects": {
+                "id": "e0c58f52-ba6b-4852-a938-2446d78a16c4",
+                "short_id": 2222,
+                "name": "Тестовый проект 3",
+                "contact_name": "Тишкин Андрей Валерьевич"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "4e2985ee-8e22-4b94-a583-9a9feb997e4d",
+              "created_at": "2023-04-19T13:49:51.638164+00:00",
+              "project_id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+              "name": "Тестовый проект 4 - ТС3",
+              "type": 4,
+              "booking_link": "https://us06web.zoom.us/s/83914807923?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IlhHc1YxN2J4UUZDcjZfYV8wQUNUUEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6IjgzOTE0ODA3OTIzIiwiZXhwIjoxNjgxOTIyNDc3LCJpYXQiOjE2ODE5MTUyNzcsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJjaWQiOiIifQ.wSyxN_ies2ULj4gpguu5XWaanFn0OzDcPQoDrqzRgsM",
+              "join_link": "https://us06web.zoom.us/j/83914807923?pwd=dGRjV3MraWEvUW1FUSs1K1pSUG1EQT09",
+              "status": 2,
+              "booked": "2023-04-19T14:41:17.12+00:00",
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": "68",
+              "meeting_zoom_id": "83914807923",
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": null,
+              "time_slot": null,
+              "meetings_type": {
+                "name": "ТС-3",
+                "meeting_recommend": "2023-05-08",
+                "meeting_deadline": "2023-05-10"
+              },
+              "meetings_status": {
+                "name": "Scheduled"
+              },
+              "projects": {
+                "id": "f559b1d8-ffb6-4efa-9912-e457d4a1314e",
+                "short_id": 7272,
+                "name": "Тестовый проект 4",
+                "contact_name": "Иванов Иван Иванович"
+              },
+              "artifacts": []
+            },
+            {
+              "id": "b9773937-fd61-4a6e-b121-ec83a807a49d",
+              "created_at": "2023-04-19T11:56:09.911549+00:00",
+              "project_id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+              "name": "Тестовый проект 0 - ТС3",
+              "type": 4,
+              "booking_link": "https://us06web.zoom.us/s/83260083101?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IlhHc1YxN2J4UUZDcjZfYV8wQUNUUEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6IjgzMjYwMDgzMTAxIiwiZXhwIjoxNjgxOTMzMDE0LCJpYXQiOjE2ODE5MjU4MTQsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJjaWQiOiIifQ.Ua56-PP7n9C5wcC_qbd7lYyYKIDDG9STzPmKbB82mKQ",
+              "join_link": "https://us06web.zoom.us/j/83260083101?pwd=bm1jbzlJT2I5Q0NORXl0QUw5em1qZz09",
+              "status": 2,
+              "booked": "2023-04-19T17:36:54.927+00:00",
+              "happened": null,
+              "reported": null,
+              "recorded": null,
+              "artifact": null,
+              "user_id": "01868d44-881d-4fbf-95ff-eb7b22526f8f",
+              "meeting_eap_id": "84",
+              "meeting_zoom_id": "83260083101",
+              "tl_is_accepted": null,
+              "recording_link": null,
+              "screencast_link": null,
+              "tl_comment": null,
+              "s3_path": null,
+              "start_time": "2023-04-27T06:00:00+00:00",
+              "time_slot": "09:00 - 10:00",
+              "meetings_type": {
+                "name": "ТС-3",
+                "meeting_recommend": "2023-05-08",
+                "meeting_deadline": "2023-05-10"
+              },
+              "meetings_status": {
+                "name": "Scheduled"
+              },
+              "projects": {
+                "id": "42ac5b02-e1a0-42b0-a8fc-13df62fbaeb0",
+                "short_id": 3311,
+                "name": "Тестовый проект 0",
+                "contact_name": "Тишкин Александр Андреевич"
+              },
+              "artifacts": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "settings": {
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "saveDataSuccessExecution": "all"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrencyRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-04-25T17:52:18.976Z",
+  "versionId": "744b33eb-6856-4882-a867-193ead766382"
+}
