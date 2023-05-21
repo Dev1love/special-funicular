@@ -1,0 +1,525 @@
+{
+  "active": false,
+  "connections": {
+    "EasyHostname": {
+      "main": [
+        [
+          {
+            "node": "NewTrackers",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "GetNewTrackerEAP1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "GetNewTrackerEAP2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NewTrackers": {
+      "main": [
+        [
+          {
+            "node": "SplitInBatches1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SplitInBatches1": {
+      "main": [
+        [
+          {
+            "node": "IsValidTracker",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IsValidTracker": {
+      "main": [
+        [
+          {
+            "node": "GeneratePassword",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GeneratePassword": {
+      "main": [
+        [
+          {
+            "node": "Add Tracker",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add Tracker": {
+      "main": [
+        [
+          {
+            "node": "Wait2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GetNewTrackerEAP": {
+      "main": [
+        [
+          {
+            "node": "Item Lists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "SplitInBatches1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NewTrackerID": {
+      "main": [
+        [
+          {
+            "node": "Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists": {
+      "main": [
+        [
+          {
+            "node": "NewTrackerID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait2": {
+      "main": [
+        [
+          {
+            "node": "GetNewTrackerEAP",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Email": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking \"Execute Workflow\"": {
+      "main": [
+        [
+          {
+            "node": "EasyHostname",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-02-02T00:17:46.881Z",
+  "id": "19",
+  "name": "Add New Provider EAP",
+  "nodes": [
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "HOSTNAME",
+              "value": "http://calend.dev.2t.band:8081/index.php/api/v1"
+            },
+            {
+              "name": "NOCODBHOST",
+              "value": "https://nocodb.dev.2t.band/api/v1/db/data/noco/2T_pilot"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f9c95fea-d788-4abe-8d7d-aa98fe50f20d",
+      "name": "EasyHostname",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        220,
+        640
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "p_4jpbiqaicez9ds",
+        "table": "md_qud1os3qde26n3",
+        "returnAll": true,
+        "options": {
+          "where": "(TrackerEasyId,is,null)~or(TrackerEasyId,eq,0)"
+        }
+      },
+      "id": "4ad16ed6-bbce-4554-b3bf-1354fedba3cc",
+      "name": "NewTrackers",
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 2,
+      "position": [
+        560,
+        560
+      ],
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "2",
+          "name": "NocoDB Token account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "73e3e88a-fda6-43af-80f3-d2f099defb2e",
+      "name": "SplitInBatches1",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 1,
+      "position": [
+        720,
+        560
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{$json[\"TrackerSurname\"] != null &&  $json[\"TrackerName\"] != null && $json[\"TrackerPhone\"]!= null && $json[\"TrackerEmail\"]!= null}}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "d30bc3c7-c680-448b-809d-90db24818d09",
+      "name": "IsValidTracker",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        880,
+        560
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Создание новых аккаунтов для трекеров\n### Добавление новых трекеров в EAP после создания строки в основной базе. Отправка данных для входа в аккаунт на почту",
+        "height": 433.31524733393724,
+        "width": 1475.8342547838533
+      },
+      "id": "cd50c7a4-e0cd-4ce4-8908-8d96ee610e23",
+      "name": "Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        540,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "command": "< /dev/urandom tr -dc 'A-Z-a-z-0-9' | head -c${1:-12};echo;"
+      },
+      "id": "514624db-1b27-49c7-bab0-3c63e8e95a42",
+      "name": "GeneratePassword",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        720,
+        720
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $item(0).$node[\"EasyHostname\"].json[\"HOSTNAME\"] }}/providers",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n\"firstName\": \"{{ $node[\"IsValidTracker\"].json[\"TrackerName\"] }}\",\n\"lastName\": \"{{ $node[\"IsValidTracker\"].json[\"TrackerSurname\"] }}\",\n\"email\": \"{{ $node[\"IsValidTracker\"].json[\"TrackerEmail\"] }}\",\n\"phone\":\"{{ $node[\"IsValidTracker\"].json[\"TrackerPhone\"] }}\",\n\"services\": [1],\n\"timezone\":\"Europe/Moscow\",\n\"settings\": {\n\"username\": \"{{ $node[\"IsValidTracker\"].json[\"TrackerEmail\"] }}\",\n\"password\": \"{{$json[\"stdout\"]}}!\",\n\"notifications\":true,\n\"calendarView\": \"default\"},\n\"workingPlan\": { },\n\"working_plan\": { }\n}",
+        "options": {}
+      },
+      "id": "346c816a-c644-46af-9c36-b72ff95cab3d",
+      "name": "Add Tracker",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        880,
+        720
+      ],
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "1",
+          "name": "EAP admin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $item(0).$node[\"EasyHostname\"].json[\"HOSTNAME\"] }}/providers",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "sort",
+              "value": "-id"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "7f0a2dff-021b-4221-897f-043006e19f99",
+      "name": "GetNewTrackerEAP",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1200,
+        720
+      ],
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "1",
+          "name": "EAP admin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 2,
+        "unit": "seconds"
+      },
+      "id": "45b15b56-feea-4036-b77a-7f10f719ce1d",
+      "name": "Wait1",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        1840,
+        720
+      ],
+      "webhookId": "fa620580-7540-46c6-9ec5-2663078eabeb"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "update",
+        "projectId": "p_4jpbiqaicez9ds",
+        "table": "md_qud1os3qde26n3",
+        "id": "={{ $node[\"SplitInBatches1\"].json[\"Id\"] }}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldName": "TrackerEasyId",
+              "fieldValue": "={{ $json[\"id\"] }}"
+            }
+          ]
+        }
+      },
+      "id": "9eee28dc-049e-4538-9139-28f321a59175",
+      "name": "NewTrackerID",
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 2,
+      "position": [
+        1520,
+        720
+      ],
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "2",
+          "name": "NocoDB Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "limit"
+      },
+      "id": "42cfeb25-157d-4946-add9-827fa37e6bca",
+      "name": "Item Lists",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 1,
+      "position": [
+        1360,
+        720
+      ]
+    },
+    {
+      "parameters": {
+        "unit": "seconds"
+      },
+      "id": "9a55a6c8-94b9-4ef5-a192-07b7a0e55d5d",
+      "name": "Wait2",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        720
+      ],
+      "webhookId": "fa620580-7540-46c6-9ec5-2663078eabeb"
+    },
+    {
+      "parameters": {
+        "fromEmail": "dev@2t.band",
+        "toEmail": "={{ $node[\"Item Lists\"].json[\"email\"] }}",
+        "ccEmail": "dev@2t.band",
+        "bccEmail": "eduard@stats-consult.com",
+        "subject": "={{ $node[\"Item Lists\"].json[\"firstName\"] }}, ваш аккаунт создан!",
+        "text": "=Здравствуйте, {{$node[\"Item Lists\"].json[\"firstName\"]}}!\nСпешим сообщить, что ваш аккаунт трекера был создан.\nДля подключения используйте следующую информацию:\nURL : {{$node[\"EasyHostname\"].json[\"HOSTNAME\"].split('/').slice(0, 3).join('/') }}/index.php/user/login\nИмя пользователя : {{$node[\"Item Lists\"].json[\"email\"]}}\nПароль : {{$node[\"GeneratePassword\"].json[\"stdout\"]}}!\n\nУбедитесь, пожалуйста, что пароль верно скопирован и не содержит лишних пробелов в начале или конце строки.\nВ случае сложностей с доступом попробуйте сбросить ваш пароль или ответить на данный email с описанием проблемы.\n\nС уважением,\nкоманда 2T",
+        "options": {}
+      },
+      "id": "cfee7b7c-7d08-442a-8513-58dc820428bf",
+      "name": "Send Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [
+        1680,
+        720
+      ],
+      "credentials": {
+        "smtp": {
+          "id": "3",
+          "name": "SMTP account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {},
+      "id": "ba535b73-37ff-4c1d-8795-e420a3cb1e65",
+      "name": "When clicking \"Execute Workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        40,
+        640
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $item(0).$node[\"EasyHostname\"].json[\"HOSTNAME\"] }}/providers",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "sort",
+              "value": "-id"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0514540b-e653-41c8-9e56-8bc813c37352",
+      "name": "GetNewTrackerEAP1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        620,
+        960
+      ],
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "1",
+          "name": "EAP admin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $item(0).$node[\"EasyHostname\"].json[\"HOSTNAME\"] }}/availabilities",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "sort",
+              "value": "-id"
+            },
+            {
+              "name": "providerId",
+              "value": "5"
+            },
+            {
+              "name": "serviceId",
+              "value": "1"
+            },
+            {
+              "name": "date",
+              "value": "2023-02-03"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "7b9a9a1c-ba3e-43e8-8e1d-fea4ecf9f362",
+      "name": "GetNewTrackerEAP2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        480,
+        1100
+      ],
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "1",
+          "name": "EAP admin"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-02-02T08:23:57.711Z",
+  "versionId": "87b84baf-b29e-4f78-8ee0-d0bcb488a0be"
+}
