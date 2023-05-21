@@ -1,0 +1,481 @@
+{
+  "active": true,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow": {
+      "main": [
+        [
+          {
+            "node": "SUPA_rpc_stats",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "APITemplate.io": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "set_params": {
+      "main": [
+        [
+          {
+            "node": "APITemplate.io1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "APITemplate.io1": {
+      "main": [
+        [
+          {
+            "node": "update user_profiles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond to Webhook3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_rpc_stats": {
+      "main": [
+        [
+          {
+            "node": "Set",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set": {
+      "main": [
+        [
+          {
+            "node": "set_params",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "update user_profiles": {
+      "main": [
+        [
+          {
+            "node": "IF1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-04-24T13:07:43.514Z",
+  "id": "87",
+  "name": "pdf_generate",
+  "nodes": [
+    {
+      "parameters": {
+        "resource": "pdf",
+        "pdfTemplateId": "={{ $json.template_id }}",
+        "jsonParameters": true,
+        "download": true,
+        "propertiesJson": "={{ $node.Webhook.json.body.params }}",
+        "options": {
+          "fileName": "Agreement.pdf"
+        }
+      },
+      "id": "9cfec6a0-1d66-42cb-9967-07da5cf3c585",
+      "name": "APITemplate.io",
+      "type": "n8n-nodes-base.apiTemplateIo",
+      "typeVersion": 1,
+      "position": [
+        1380,
+        180
+      ],
+      "retryOnFail": true,
+      "maxTries": 2,
+      "credentials": {
+        "apiTemplateIoApi": {
+          "id": "16",
+          "name": "APITemplate.io account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "httpMethod": "POST",
+        "path": "agreement/generate",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "1363cffa-bfca-41ed-a8b8-4fb641600fcb",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        160,
+        460
+      ],
+      "webhookId": "9feac071-7535-4487-8418-8d8ceb7c8ddd",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "appsmith->n8n Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "binary",
+        "responseDataSource": "set",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "d4aa8288-32a6-4a75-852a-09604e834bdc",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1700,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "d704005e-7702-4401-8335-56acd0c65e1a",
+      "name": "Execute Workflow",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        340,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ !!$json.download_url }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "3083dedf-1bb5-4d53-9a4a-6a2fb90b267d",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1540,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\"error\": \"there was a problem with PDF generation!\"}",
+        "options": {}
+      },
+      "id": "3dad0ddc-f262-4732-be64-8239f5533642",
+      "name": "Respond to Webhook1",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1880,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "var template_id = \"e2077b238df3f8ce\"; // ООО\n\n//if ($('Webhook').first().json.body.type === 'ООО')\nif ($('Webhook').first().json.body.type === 'СЗ') template_id = \"17d77b238df4c6a0\"\nelse if ($('Webhook').first().json.body.type === 'ИП') template_id = \"fbc77b238d9d6ea8\"\n\n//console.log(\"$input.first().json:\", $input.first().json);\n\n$input.first().json.template_id = template_id;\n\nvar curDate = new Date();\n\nvar contract = {\n  \"type\":\"ФСИ\",\n  \"year\": curDate.getFullYear(),\n  \"series\":\"T\",\n  \"number\": $input.first().json.contractId,\n  \"date\": curDate.toISOString().split(\"T\")[0]\n};\n\nvar customer = {\n  \"name\":\"Татьяна Иванова\",\n  \"phone\":\" +7 (903) 796-99-58\",\n  \"email\":\"tk@2t.band / t-as@inbox.ru\",\n  \"telegram\":\"@Tatyana_Khrapko\"\n};\n\n$input.first().json.parameters = $('Webhook').first().json.body.params;\n$input.first().json.parameters.customer = customer;\n$input.first().json.parameters.contract = contract;\n\nreturn $input.all();"
+      },
+      "id": "0d32f3fb-da86-437b-96fb-f4415ed78052",
+      "name": "set_params",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        880,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "pdf",
+        "pdfTemplateId": "={{ $json.template_id }}",
+        "jsonParameters": true,
+        "propertiesJson": "={{ $json.parameters }}"
+      },
+      "id": "25e40317-ab2e-49c0-a9f7-c457e317adf4",
+      "name": "APITemplate.io1",
+      "type": "n8n-nodes-base.apiTemplateIo",
+      "typeVersion": 1,
+      "position": [
+        1060,
+        460
+      ],
+      "retryOnFail": false,
+      "maxTries": 2,
+      "credentials": {
+        "apiTemplateIoApi": {
+          "id": "16",
+          "name": "APITemplate.io account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{JSON.stringify( {download_url:$node[\"APITemplate.io1\"].json.download_url  ? $node[\"APITemplate.io1\"].json.download_url : \"error\"})}}",
+        "options": {}
+      },
+      "id": "d0ba6e60-f67b-4160-bbdb-ea7672bca19b",
+      "name": "Respond to Webhook2",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1580,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ !!$node[\"APITemplate.io1\"].json.download_url }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "66a0e45a-08c6-4d6d-a73a-40ba5d5fb1bc",
+      "name": "IF1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1380,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\"error\": \"there was a problem with PDF generation!\"}",
+        "options": {}
+      },
+      "id": "3cfaffd5-7566-400b-8d53-005616ad42c7",
+      "name": "Respond to Webhook3",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1580,
+        620
+      ]
+    },
+    {
+      "parameters": {
+        "content": "**direct download** very often results in errors",
+        "height": 99.0625
+      },
+      "id": "52160c80-4491-44bb-92ff-c82ebcbb3250",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1640,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.supaBaseURL }}rest/v1/rpc/next_value_for_contractidsequence",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $json.supaBasePublicKey }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "0979409a-6916-4283-8b9b-21727d1d13bf",
+      "name": "SUPA_rpc_stats",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        520,
+        460
+      ],
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "number": [
+            {
+              "name": "contractId",
+              "value": "={{ $json }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "68142d6d-7ae8-4bbf-8cbd-41f30ef6f4bc",
+      "name": "Set",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        700,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ $node[\"Execute Workflow\"].json.supaBaseURL }}rest/v1/user_profiles?select=*&user_id=eq.{{ $node.Webhook.json.body.user_id }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "draft_contract_url",
+              "value": "={{ $json.download_url }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "368511d8-6800-4e74-8593-116e18c73438",
+      "name": "update user_profiles",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1220,
+        460
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "content": "Получение номера договора",
+        "height": 287.8926946107785,
+        "width": 378.1556886227544
+      },
+      "id": "fdcf96fc-95aa-488d-acb9-9de7277842be",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        480,
+        380
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "102"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-05-11T16:59:27.482Z",
+  "versionId": "79903aa3-6b57-4be8-b67b-e797b22fadf2"
+}
