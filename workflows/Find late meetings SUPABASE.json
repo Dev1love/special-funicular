@@ -1,0 +1,1088 @@
+{
+  "active": false,
+  "connections": {
+    "NoOp": {
+      "main": [
+        [
+          {
+            "node": "Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PlannedRunning": {
+      "main": [
+        [
+          {
+            "node": "IFLatePlanned",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "IFNeedRemind",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "IFLateRunning",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "IFNeedRemind",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Zoom Auth": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "IFLatePlanned": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IFLateRunning": {
+      "main": [
+        [
+          {
+            "node": "Zoom Auth",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "SplitInBatches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SplitInBatches": {
+      "main": [
+        [
+          {
+            "node": "StopMeeting",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "MeetingStatusForced",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Supabase2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "StopMeeting": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "SplitInBatches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IFNeedRemind": {
+      "main": [
+        [
+          {
+            "node": "Send Reminder",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "MeetingReminded",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase1": {
+      "main": [
+        [
+          {
+            "node": "Wait2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ConvertDates": {
+      "main": [
+        [
+          {
+            "node": "PlannedRunning",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Item Lists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "ConvertDates",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split In Batches": {
+      "main": [
+        [
+          {
+            "node": "Supabase3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase3": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split In Batches1": {
+      "main": [
+        [
+          {
+            "node": "Supabase1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait2": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "NoOp",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Split In Batches1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2022-12-20T22:15:13.329Z",
+  "id": "17",
+  "name": "Find late meetings SUPABASE",
+  "nodes": [
+    {
+      "parameters": {
+        "values": {
+          "number": [
+            {
+              "name": "MeetingStartDateTime_",
+              "value": "={{  Math.round(new Date($json[\"visit_planned_start\"]).getTime()*0.001)  }}"
+            },
+            {
+              "name": "MeetingEndDateTime_",
+              "value": "={{ Math.round(new Date($json[\"visit_planned_stop\"]).getTime()*0.001) }}"
+            },
+            {
+              "name": "Now_",
+              "value": "={{ Math.round(new Date($now).getTime()*0.001) }}"
+            }
+          ],
+          "string": [
+            {
+              "name": "Now",
+              "value": "={{(new Date($now)).toString()}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b9f4388b-a882-4958-877e-a7999a505500",
+      "name": "ConvertDates",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "p_4jpbiqaicez9ds",
+        "table": "md_67n7wa1n04h1n1",
+        "returnAll": true,
+        "options": {
+          "where": "(MeetingStatus,in,Planned,Running)"
+        }
+      },
+      "id": "a3349e87-dee5-4315-b6d1-883ded9db20c",
+      "name": "OpenMeetings",
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 2,
+      "position": [
+        280,
+        40
+      ],
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "2",
+          "name": "NocoDB Token account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "fromEmail": "dev@2t.band",
+        "toEmail": "=dev@2t.band, eduard@stats-consult.com, wowbuckwheat@gmail.com",
+        "subject": "=2T-Pilot: Некоторые встречи просрочены!",
+        "text": "=Здравствуйте, админы.\n\nОбнаружены просроченные встречи. Проверьте их, пожалуйста, на странице с обзором встреч:\nhttps://apps.dev.2t.band/app/admin-page-639f4ed00707b240c74a205d/edit\n\nС уважением,\nкоманда 2T",
+        "options": {}
+      },
+      "id": "d5a76512-ab65-43c4-80f6-c26ec52f84b2",
+      "name": "Send Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [
+        2040,
+        -240
+      ],
+      "credentials": {
+        "smtp": {
+          "id": "3",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "d9ca8f80-d4ba-4f0f-a7eb-f0cf66624646",
+      "name": "NoOp",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1860,
+        -240
+      ],
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes"
+            }
+          ]
+        }
+      },
+      "id": "975dbf23-e34c-42f1-afbc-85540e096b8f",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [
+        -460,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{ $json[\"MeetingStatus\"] }}",
+        "rules": {
+          "rules": [
+            {
+              "value2": "Planned"
+            },
+            {
+              "value2": "Running",
+              "output": 1
+            }
+          ]
+        },
+        "fallbackOutput": 3
+      },
+      "id": "55b7eb46-0a6f-4a97-8527-c3f63276dfbf",
+      "name": "PlannedRunning",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [
+        720,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### Информировать о просроченных не начавшихся встречах",
+        "height": 208.925050985724,
+        "width": 1354.1398196590008
+      },
+      "id": "3882beb7-c2ca-4859-bc45-169648f8b13a",
+      "name": "Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        940,
+        -300
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### Прибивать затянувшиеся встречи",
+        "height": 413.44967356508613,
+        "width": 1069.1415908808701
+      },
+      "id": "99945fd7-7ab1-4645-8652-127bd3c702be",
+      "name": "Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        940,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "9"
+      },
+      "id": "93b67666-01de-4525-bbc4-cbecae260a75",
+      "name": "Zoom Auth",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        1180,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "={{ $json[\"ZoomBaseUrl\"] }}meetings/{{ $node[\"IFLateRunning\"].json[\"MeetingZoomID\"] }}/status",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ $json[\"ZoomAuth\"] }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\"action\":\"end\"}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "id": "5c058319-27cf-431e-8012-eca27f630e0a",
+      "name": "StopMeeting",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1680,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json[\"Now_\"] - $json[\"MeetingEndDateTime_\"]}}",
+              "operation": "largerEqual",
+              "value2": "={{-60*30}}"
+            }
+          ]
+        }
+      },
+      "id": "9905691a-a4c6-48e6-9696-56726f9f01dc",
+      "name": "IFLatePlanned",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        960,
+        -240
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json[\"Now_\"] - $json[\"MeetingEndDateTime_\"]}}",
+              "operation": "largerEqual",
+              "value2": "={{60*30}}"
+            }
+          ]
+        }
+      },
+      "id": "cbc18c78-e16c-473a-9aea-ecdcebcb7a15",
+      "name": "IFLateRunning",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        960,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "multiplex",
+        "options": {}
+      },
+      "id": "c65fb8b7-1630-407c-8f3e-bc055e784220",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2,
+      "position": [
+        1360,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "a16cc53e-e133-4814-813f-7cd8f42467b8",
+      "name": "SplitInBatches",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 1,
+      "position": [
+        1520,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "unit": "seconds"
+      },
+      "id": "9069e228-4aa9-40eb-92e9-74b5e057db27",
+      "name": "Wait",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        1840,
+        360
+      ],
+      "webhookId": "3840e9e5-85e2-4124-935a-9568d0aed126"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "update",
+        "projectId": "p_4jpbiqaicez9ds",
+        "table": "md_67n7wa1n04h1n1",
+        "id": "={{ $json[\"Id\"] }}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldName": "MeetingStatus",
+              "fieldValue": "=Pending"
+            }
+          ]
+        }
+      },
+      "id": "f63230c7-e7eb-4386-96f9-88d1f268e911",
+      "name": "MeetingStatusPending",
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 2,
+      "position": [
+        1140,
+        -500
+      ],
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "2",
+          "name": "NocoDB Token account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "update",
+        "projectId": "p_4jpbiqaicez9ds",
+        "table": "md_67n7wa1n04h1n1",
+        "id": "={{ $json[\"Id\"] }}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldName": "MeetingStatus",
+              "fieldValue": "=Finished"
+            },
+            {
+              "fieldName": "MeetingForceStop",
+              "fieldValue": "true"
+            }
+          ]
+        }
+      },
+      "id": "cefb9251-9298-4747-90da-bcead8c43d17",
+      "name": "MeetingStatusForced",
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 2,
+      "position": [
+        1700,
+        40
+      ],
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "2",
+          "name": "NocoDB Token account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "### Информировать о грядущих встречах",
+        "height": 615.1305710851635,
+        "width": 969.085388755092
+      },
+      "id": "ed535aa3-4286-4416-b33f-d79c92483036",
+      "name": "Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        940,
+        680
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json[\"Now_\"] - $json[\"MeetingStartDateTime_\"]}}",
+              "operation": "largerEqual",
+              "value2": "={{-60*30}}"
+            }
+          ],
+          "boolean": [
+            {
+              "value1": "={{ $json[\"ReminderSent\"] === true }}"
+            }
+          ]
+        }
+      },
+      "id": "86dc6152-0dc7-4502-bcea-d5deaadfc4aa",
+      "name": "IFNeedRemind",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        980,
+        960
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "update",
+        "projectId": "p_4jpbiqaicez9ds",
+        "table": "md_67n7wa1n04h1n1",
+        "id": "={{ $json[\"Id\"] }}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldName": "ReminderSent",
+              "fieldValue": "true"
+            }
+          ]
+        }
+      },
+      "id": "db8bd379-bd32-4ad9-924b-c5642ea3cf3b",
+      "name": "MeetingReminded",
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 2,
+      "position": [
+        1240,
+        740
+      ],
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "2",
+          "name": "NocoDB Token account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "fromEmail": "dev@2t.band",
+        "toEmail": "={{ $json[\"email\"] }}",
+        "ccEmail": "=eduard@stats-consult.com",
+        "subject": "=Скоро начнется ваш встреча с проектом {{ $json[\"projects\"][\"Name\"] }}!",
+        "text": "=Дорогой трекер!\nНапоминаем вам о запланированной встрече ({{ $json[\"visit_name\"] }}) с проектом {{ $json[\"projects\"][\"Name\"] }}.\n\nCсылка для подключения ко встрече: {{ $json[\"MeetingJoinURL\"] }}\n\nПожалуйста, передайте данную ссылку вашему проекту перед началом встречи.\n\nЖелаем продуктивно провести время!\n\nС уважением,\nкоманда 2T",
+        "options": {}
+      },
+      "id": "61c377cd-20c4-4ac2-951d-8ff27ee7947b",
+      "name": "Send Reminder",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [
+        1240,
+        1160
+      ],
+      "credentials": {
+        "smtp": {
+          "id": "3",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "project_visits",
+        "returnAll": true,
+        "filterType": "string",
+        "filterString": "MeetingStatus=in.(Planned,Running)"
+      },
+      "id": "de68129d-95bd-458d-adf6-76c1f508878a",
+      "name": "Supabase",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        60,
+        40
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "project_visits",
+        "filterType": "string",
+        "filterString": "=id=eq.{{$json[\"id\"]}}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "meeting_status",
+              "fieldValue": "Pending"
+            }
+          ]
+        }
+      },
+      "id": "4e4ed34d-9ed6-4f9d-be07-37ba9e978380",
+      "name": "Supabase1",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1340,
+        -240
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "project_visits",
+        "filterType": "string",
+        "filterString": "=id=eq.{{$json[\"id\"]}}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "meeting_status",
+              "fieldValue": "Finished"
+            },
+            {
+              "fieldId": "meeting_force_stop",
+              "fieldValue": "true"
+            }
+          ]
+        }
+      },
+      "id": "fd9a4e35-7d51-4c56-87b4-c10bd6b96d67",
+      "name": "Supabase2",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1700,
+        220
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "project_visits",
+        "filterType": "string",
+        "filterString": "=id=eq.{{$json[\"id\"]}}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "reminder_sent",
+              "fieldValue": "true"
+            }
+          ]
+        }
+      },
+      "id": "c02550e3-2b78-4cf2-8995-0b4be5e7c2e1",
+      "name": "Supabase3",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1440,
+        940
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "mergeByFields": {
+          "values": [
+            {
+              "field1": "projects.tracker",
+              "field2": "user_id"
+            }
+          ]
+        },
+        "joinMode": "enrichInput1",
+        "options": {
+          "clashHandling": {
+            "values": {
+              "resolveClash": "preferInput1"
+            }
+          }
+        }
+      },
+      "id": "c7246b35-4d93-4cb7-a741-8d3d52a012e0",
+      "name": "Merge1",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2,
+      "position": [
+        260,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://supa.dev.2t.band/rest/v1/project_visits?select=*,projects(proj_name,tracker)&meeting_status=in.(Planned,Running)",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "options": {}
+      },
+      "id": "9102d2ef-7031-4809-ae95-814a80dfef02",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        -280,
+        340
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://supa.dev.2t.band/rest/v1/staffs?user_id=eq.{{ $json[\"projects\"][\"tracker\"]}}&select=user_firstname,user_surname,email,user_id",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "options": {}
+      },
+      "id": "f1c8a6a7-b2ef-4543-a187-de79654a7dc6",
+      "name": "HTTP Request1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        -120,
+        420
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "removeDuplicates"
+      },
+      "id": "de4d951d-eede-4f95-b10d-8c970dc5f888",
+      "name": "Item Lists",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 1,
+      "position": [
+        80,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "db948bb5-2755-4ed6-8208-329e630d30d4",
+      "name": "Split In Batches",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 1,
+      "position": [
+        1240,
+        940
+      ]
+    },
+    {
+      "parameters": {
+        "amount": 0.5,
+        "unit": "seconds"
+      },
+      "id": "14ba7717-d103-43f6-894d-b7e9f61511b1",
+      "name": "Wait1",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        1660,
+        940
+      ],
+      "webhookId": "b00b9b1e-7a4d-42be-a627-ce0fb9fd2d3d"
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "15fe0f0c-b84d-4002-9c24-5b22b008a60b",
+      "name": "Split In Batches1",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 1,
+      "position": [
+        1180,
+        -240
+      ]
+    },
+    {
+      "parameters": {
+        "amount": 0.5,
+        "unit": "seconds"
+      },
+      "id": "d25a9e60-e246-4328-ae18-0413dab470af",
+      "name": "Wait2",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        1500,
+        -240
+      ],
+      "webhookId": "b00b9b1e-7a4d-42be-a627-ce0fb9fd2d3d"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $node[\"Split In Batches1\"].context[\"noItemsLeft\"] }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "aa41e32b-0b69-4ed6-8caa-9a84bbb86534",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1660,
+        -240
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "saveManualExecutions": true,
+    "callerPolicy": "any",
+    "executionTimeout": 300,
+    "saveExecutionProgress": true,
+    "saveDataSuccessExecution": "all"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrencyRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-03-29T14:53:13.317Z",
+  "versionId": "280ebc6c-c3c3-40a9-92e6-2e3ecdd8d94b"
+}
