@@ -1,0 +1,638 @@
+{
+  "active": false,
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Authenticate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Authenticate": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "NewFolder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NewFolder": {
+      "main": [
+        [
+          {
+            "node": "Execute Command",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CreateLocalDir": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "GetVideo": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Write Binary File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Write Binary File": {
+      "main": [
+        [
+          {
+            "node": "FileDuration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FileDuration": {
+      "main": [
+        [
+          {
+            "node": "Set",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "LoopOverFrames",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "IF1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF1": {
+      "main": [
+        [
+          {
+            "node": "CreateScreencast",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "LoopOverFrames",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LoopOverFrames": {
+      "main": [
+        [
+          {
+            "node": "ExtractFrame",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ExtractFrame": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists": {
+      "main": [
+        [
+          {
+            "node": "GetVideo",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "CreateLocalDir",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Command": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "IF2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF2": {
+      "main": [
+        [
+          {
+            "node": "Item Lists1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists1": {
+      "main": [
+        [
+          {
+            "node": "Item Lists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2022-10-30T09:03:35.744Z",
+  "id": "7",
+  "name": "Generate screencast",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "7dbd04ac-6bd8-4478-89d8-4ec8ea046f3b",
+      "name": "Start",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        1180,
+        -220
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "6"
+      },
+      "id": "1b6d7572-e7d7-42ab-9ef9-051e66e57eff",
+      "name": "Authenticate",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        1360,
+        -220
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json[\"storage_url\"] }}/2T.Drive",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Auth-Token",
+              "value": "={{ $json[\"storage_token\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "67dc8ae0-f5cf-4eeb-8189-f55dcf605cda",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1540,
+        -220
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json[\"content_type\"] }}",
+              "operation": "startsWith",
+              "value2": "video"
+            }
+          ]
+        }
+      },
+      "id": "cb53cd82-dd8d-4cb6-8de8-e55757e060fb",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1720,
+        -220
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "newfolder",
+              "value": "={{ $json[\"name\"].split(\"_\")[0] }}"
+            },
+            {
+              "name": "FileURL",
+              "value": "={{ $item(0).$node[\"Authenticate\"].json[\"storage_url\"] }}/2T.Drive/{{$json[\"name\"] }}"
+            },
+            {
+              "name": "localfolder",
+              "value": "/home/node/.n8n"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f22ae3dc-33f9-44ea-87f2-1574e0ca021b",
+      "name": "NewFolder",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        1900,
+        -220
+      ]
+    },
+    {
+      "parameters": {
+        "command": "=mkdir -p {{ $json[\"localfolder\"] }}/{{ $json[\"newfolder\"] }} && rm -f {{ $json[\"localfolder\"] }}/{{ $json[\"newfolder\"] }}/*.jpeg"
+      },
+      "id": "0c8ee198-bba5-4236-8346-f08c964c726c",
+      "name": "CreateLocalDir",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        1360,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ encodeURI($json[\"FileURL\"]) }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Auth-Token",
+              "value": "={{ $node[\"Authenticate\"].json[\"storage_token\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5117e4bc-a5e5-4913-a391-accea4c44686",
+      "name": "GetVideo",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1360,
+        160
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "id": "40f0f21f-a91a-426d-a8f3-f38afbb4b1c8",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2,
+      "position": [
+        1540,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "fileName": "={{ $json[\"localfolder\"] }}/{{ $json[\"newfolder\"] }}/{{ $json[\"name\"] }}",
+        "options": {}
+      },
+      "id": "b5a2df9b-356b-4bb2-9fae-d2aad75200cc",
+      "name": "Write Binary File",
+      "type": "n8n-nodes-base.writeBinaryFile",
+      "typeVersion": 1,
+      "position": [
+        1700,
+        240
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "command": "=ffprobe -i '{{ $node[\"Merge\"].json[\"localfolder\"] }}/{{ $node[\"Merge\"].json[\"newfolder\"] }}/{{$node[\"Merge\"].json[\"name\"] }}' -show_entries format=duration -v quiet -of csv=\"p=0\""
+      },
+      "id": "9c69ffca-d248-474d-bbb2-be6b5ebc5ae2",
+      "name": "FileDuration",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        1860,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "number": [
+            {
+              "name": "VideoDuration",
+              "value": "={{ Math.floor($json[\"stdout\"]/60)*60 }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "24d83384-d0aa-4d2a-a204-d36740a63196",
+      "name": "Set",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        2020,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const totaldur = $input.first().json[\"VideoDuration\"];\nconst fileinfo = $('Merge').first().json;\n\n//console.log(fileinfo);\n\nvar out=[];\nvar num = 0;\nfor (let i=0; i < totaldur; i += 60*1) {\n  var num_char = ('000' + num).slice(-4);\n  out.push({step:num_char,\n            ss:i,\n            command: `ffmpeg -ss ${i} -i '${fileinfo[\"localfolder\"]}/${fileinfo[\"newfolder\"]}/${fileinfo[\"name\"]}' -frames:v 1 -f image2 -map 0:v:0 '${fileinfo[\"localfolder\"]}/${fileinfo[\"newfolder\"]}/thumb${num_char}.jpeg'` });\n  num ++;\n}\n\nreturn out;"
+      },
+      "id": "b86abad2-8a9a-407e-bc1a-cb35356b9e5c",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        2180,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "amount": 0.25,
+        "unit": "seconds"
+      },
+      "id": "0d36f732-e86e-4d46-b16a-e2d262b07834",
+      "name": "Wait",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        2680,
+        240
+      ],
+      "webhookId": "27125996-05cb-4b28-a626-a8d1e88b7287"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{$node[\"LoopOverFrames\"].context[\"noItemsLeft\"]}}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "7252efa7-16d1-42b4-972c-4f91e6ceb7c6",
+      "name": "IF1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        2840,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "28666927-a53d-454a-907e-95a5a8dff979",
+      "name": "LoopOverFrames",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 1,
+      "position": [
+        2360,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "command": "=gm montage -tile 5x -geometry 640x340+2+2 -title '{{$node[\"Merge\"].json[\"name\"]}} - {{parseFloat($node[\"Set\"].json[\"stdout\"]/60).toFixed(2)}} min' '{{ $node[\"Merge\"].json[\"localfolder\"] }}/{{ $node[\"Merge\"].json[\"newfolder\"] }}/thumb*.jpeg' '{{ $node[\"Merge\"].json[\"localfolder\"] }}/{{ $node[\"Merge\"].json[\"newfolder\"] }}/{{ $node[\"Merge\"].json[\"name\"].split(\".\").slice(0, -1).join('.') }}.jpeg'"
+      },
+      "id": "1aa6fe2e-3faa-49fa-aead-10d55d0b522a",
+      "name": "CreateScreencast",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        3020,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "command": "={{ $json[\"command\"] }}"
+      },
+      "id": "abdf69cc-1fc1-41ee-a4bc-666edfe7546d",
+      "name": "ExtractFrame",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        2520,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "limit"
+      },
+      "id": "e2bf8d84-f002-49e4-a13c-2174a3285be1",
+      "name": "Item Lists",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 1,
+      "position": [
+        1180,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "executeOnce": "=",
+        "command": "=if [ -r '{{$json[\"localfolder\"]}}/{{$json[\"newfolder\"]}}/{{$json[\"name\"]}}' ]; then echo Exists; fi"
+      },
+      "id": "a5949742-c13c-4955-85dd-20277d1e6c41",
+      "name": "Execute Command",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        2040,
+        -140
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition",
+        "options": {}
+      },
+      "id": "be244c3d-377b-43f2-8b7f-6f59a649a45f",
+      "name": "Merge1",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2,
+      "position": [
+        2220,
+        -220
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json[\"stdout\"] }}",
+              "operation": "notEqual",
+              "value2": "Exists"
+            }
+          ]
+        }
+      },
+      "id": "72c626d4-195f-4e48-ba03-bd1bfb52d7cd",
+      "name": "IF2",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        2380,
+        -140
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "sort",
+        "type": "random"
+      },
+      "id": "effb195e-e28d-405a-bf4a-ea7d37a8cd33",
+      "name": "Item Lists1",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 1,
+      "position": [
+        1020,
+        240
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionTimeout": 600,
+    "saveManualExecutions": false
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2022-10-15T10:23:21.960Z",
+      "updatedAt": "2022-10-15T10:23:21.960Z",
+      "id": "1",
+      "name": "eaasyapp"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2022-11-06T16:00:45.418Z",
+  "versionId": "7756d1a7-5c80-42ff-a1cc-2f1810bd7073"
+}
