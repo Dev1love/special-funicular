@@ -1,0 +1,430 @@
+{
+  "active": false,
+  "connections": {
+    "NewZoomMeeting": {
+      "main": [
+        [
+          {
+            "node": "AddZoomURLs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set4": {
+      "main": [
+        [
+          {
+            "node": "NewZoomMeeting",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AddZoomURLs": {
+      "main": [
+        [
+          {
+            "node": "Wait3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait3": {
+      "main": [
+        [
+          {
+            "node": "SingleMeeting",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "GetEvents",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Called By Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "GetEvents",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GetEvents": {
+      "main": [
+        [
+          {
+            "node": "NoOp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GetEvents1": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Zoom Auth1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "SingleMeeting",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Set4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SingleMeeting": {
+      "main": [
+        [
+          {
+            "node": "GetEvents1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NoOp": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2022-11-14T09:31:14.461Z",
+  "id": "14",
+  "name": "Assign Zoom Meeting",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Генерация ссылок Zoom встреч",
+        "height": 290.98171738989004,
+        "width": 1295.1164132108865
+      },
+      "id": "74473e8c-9119-4ed6-a843-25c54f37598a",
+      "name": "Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1060,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $node[\"SingleMeeting\"].json[\"ZoomBaseUrl\"] }}users/{{ $json[\"ZoomUser\"] }}/meetings",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ $node[\"SingleMeeting\"].json[\"ZoomAuth\"] }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json[\"JSONbody\"] }}",
+        "options": {}
+      },
+      "id": "76cfaac0-4dfa-4772-8f2c-725fbfe27b0a",
+      "name": "NewZoomMeeting",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1840,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "JSONbody",
+              "value": "={\n\"topic\": \"{{($json[\"MeetingComment\"] == null) ? 'Meeting topic not provided' : $json[\"MeetingComment\"]}}\",\n\"type\": 2,\n\"start_time\": \"{{$json[\"MeetingStartDateTime\"]}}\",\n\"timezone\": \"Europe/Moscow\",\n\"duration\": 60,\n\"schedule_for\": \"{{$json[\"ZoomUser\"]}}\",\n\"settings\": {\n\"auto_recording\": \"cloud\",\n\"join_before_host\": false,\n\"mute_upon_entry\": false\n}\n}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "bb9daaee-ef3b-4418-ac9a-b4e5744dd2be",
+      "name": "Set4",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        1660,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "update",
+        "projectId": "p_4jpbiqaicez9ds",
+        "table": "md_67n7wa1n04h1n1",
+        "id": "={{ $node[\"SingleMeeting\"].json[\"Id\"] }}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldName": "MeetingStartURL",
+              "fieldValue": "={{ $json[\"start_url\"] }}"
+            },
+            {
+              "fieldName": "MeetingJoinURL",
+              "fieldValue": "={{ $json[\"join_url\"] }}"
+            },
+            {
+              "fieldName": "MeetingZoomID",
+              "fieldValue": "={{ $json[\"id\"] }}"
+            },
+            {
+              "fieldName": "ZoomUser",
+              "fieldValue": "={{ $json[\"host_email\"] }}"
+            }
+          ]
+        }
+      },
+      "id": "9a9493c5-efc0-4a84-ba18-ed8cd4df592f",
+      "name": "AddZoomURLs",
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 2,
+      "position": [
+        2020,
+        420
+      ],
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "2",
+          "name": "NocoDB Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "unit": "seconds"
+      },
+      "id": "038401b6-d82f-4a88-acae-d2323d97402b",
+      "name": "Wait3",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        2200,
+        420
+      ],
+      "webhookId": "eaf44c49-19c1-4187-851f-7ed29ff30199"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "p_4jpbiqaicez9ds",
+        "table": "md_67n7wa1n04h1n1",
+        "returnAll": true,
+        "options": {
+          "fields": [],
+          "where": "=(MeetingZoomID,is,null)~and(MeetingStatus,eq,Planned)"
+        }
+      },
+      "id": "59a2d789-3334-4ea3-aa93-eab4fcddabba",
+      "name": "GetEvents",
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 2,
+      "position": [
+        560,
+        320
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "2",
+          "name": "NocoDB Token account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "cbb54baf-79a3-46e9-acba-db1a78656bfb",
+      "name": "When Called By Another Workflow",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        360,
+        240
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "fb89ea76-9508-47c9-bbea-d945d726a080",
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        360,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "p_4jpbiqaicez9ds",
+        "table": "md_67n7wa1n04h1n1",
+        "returnAll": true,
+        "options": {
+          "fields": [
+            "Id,MeetingComment,MeetingStartDateTime,MeetingEndDateTime,MeetingStatus,MeetingEasyId,ZoomUser"
+          ],
+          "where": "=(Id,neq,{{ $json[\"Id\"] }})~and((MeetingStartDateTime,btw,{{ $json[\"MeetingStartDateTime\"] }},{{ $json[\"MeetingEndDateTime\"]}})~or(MeetingEndDateTime,btw,{{ $json[\"MeetingStartDateTime\"] }},{{ $json[\"MeetingEndDateTime\"]}}))"
+        }
+      },
+      "id": "4eda65bf-a94b-433f-abf3-3ca273f47a64",
+      "name": "GetEvents1",
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 2,
+      "position": [
+        1300,
+        420
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "2",
+          "name": "NocoDB Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const AllZoomEmails = [\n  \"user01@2t.band\",\n  \"user02@2t.band\",\n  \"user03@2t.band\",\n  \"user04@2t.band\",\n  \"user05@2t.band\",\n  \"user06@2t.band\",\n  \"user07@2t.band\",\n  \"user08@2t.band\",\n  \"user09@2t.band\",\n  \"user10@2t.band\",\n  \"user11@2t.band\",\n  \"user12@2t.band\",\n  \"user13@2t.band\",\n  \"user14@2t.band\",\n  \"user15@2t.band\",\n  \"user16@2t.band\",\n  \"user17@2t.band\",\n  \"user18@2t.band\",\n  \"user19@2t.band\",\n  \"user20@2t.band\",\n  \"user21@2t.band\",\n  \"user22@2t.band\",\n  \"user23@2t.band\",\n  \"user24@2t.band\",\n  \"user25@2t.band\",\n  \"user26@2t.band\",\n  \"user27@2t.band\",\n  \"user28@2t.band\",\n  \"user29@2t.band\"  \n];\n\nvar OverlapVisit = $input.all();\n\nvar UsedEmails = [];\nfor (const item of OverlapVisit) {\n  if(item.json.ZoomUser !== null) {UsedEmails.push(item.json.ZoomUser)};\n}\n//console.log(UsedEmails);\n\nfor (const ZoomAccount of AllZoomEmails) {\n//  console.log(ZoomAccount + ': '+ UsedEmails.includes(ZoomAccount));\n  if(!UsedEmails.includes(ZoomAccount))\n    {\n      $input.first().json.ZoomUser = ZoomAccount;\n      break;\n    };\n}\n\nreturn $input.first();"
+      },
+      "id": "b7bba41e-59ea-4bdf-ae78-ce659446198a",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        1480,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "9"
+      },
+      "id": "cb93c12f-9b6e-45bd-a593-fb33b2ced4d2",
+      "name": "Zoom Auth1",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        740,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "multiplex",
+        "options": {}
+      },
+      "id": "3b146c8b-1afd-41b6-bdfd-6af0e39be711",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2,
+      "position": [
+        920,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "cf2b39b9-eb36-496e-b1ac-b164a898189a",
+      "name": "SingleMeeting",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        420
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "ebcd1bb4-d4a5-4d7f-a915-f800be40e52f",
+      "name": "NoOp",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        740,
+        320
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-02-02T00:28:37.735Z",
+  "versionId": "61f0a6c2-cdf8-4247-8028-0f7139056dda"
+}
