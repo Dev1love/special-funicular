@@ -1,0 +1,404 @@
+{
+  "active": true,
+  "connections": {
+    "update_recording_TL_acceptance": {
+      "main": [
+        [
+          {
+            "node": "init_vars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "init_vars": {
+      "main": [
+        [
+          {
+            "node": "get_meeting_user_id",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "update_tl_feedback": {
+      "main": [
+        [
+          {
+            "node": "add_report_accepted_notif",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "update_tl_feedback",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "tl_update_meeting",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "tl_update_meeting": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "add_report_accepted_notif": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_meeting_user_id": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-04-14T15:30:02.369Z",
+  "id": "70",
+  "name": "update_teamlead_recording_acceptance_",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "recording/teamlead_accept",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "bdfc63c9-22c8-4d41-93b8-9d1b30cb5d89",
+      "name": "update_recording_TL_acceptance",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        760,
+        420
+      ],
+      "webhookId": "0cc40cac-7ddf-4b57-b8c5-25bb7416835e"
+    },
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "ae68edfc-ddd7-4004-8161-48beed18ad3a",
+      "name": "init_vars",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        920,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/meetings?id=eq.{{ $node.update_recording_TL_acceptance.json.body.meeting_id }}&select=*  ",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "tl_is_accepted",
+              "value": "={{ $json.body.tl_is_accepted }}"
+            },
+            {
+              "name": "tl_comment",
+              "value": "={{ $json.body.comment }}"
+            },
+            {
+              "name": "booking_link",
+              "value": "={{ null }}"
+            },
+            {
+              "name": "join_link",
+              "value": "={{ null }}"
+            },
+            {
+              "name": "status",
+              "value": "6"
+            },
+            {
+              "name": "booked",
+              "value": "={{ null }}"
+            },
+            {
+              "name": "meeting_zoom_id",
+              "value": "\" \""
+            },
+            {
+              "name": "screencast_link",
+              "value": "={{ null }}"
+            },
+            {
+              "name": "happened",
+              "value": "={{ null }}"
+            },
+            {
+              "name": "meeting_eap_id",
+              "value": "={{ null }}"
+            },
+            {
+              "name": "screencast_link",
+              "value": "={{ null }}"
+            },
+            {
+              "name": "s3_path",
+              "value": "={{ null }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "82e7d668-720f-45b5-b3b4-0c24011b7d7d",
+      "name": "update_tl_feedback",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1560,
+        340
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "1926a27c-a1d1-4067-9a77-23eec6d082ef",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        2160,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "content": "Update tl feedback and set meeting to defaul to book it again\n",
+        "height": 450,
+        "width": 329
+      },
+      "id": "7fa69d51-ee0e-4dfb-bdf5-4b376082ff11",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1460,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $node.update_recording_TL_acceptance.json.body.tl_is_accepted }}",
+              "operation": "equal"
+            }
+          ]
+        }
+      },
+      "id": "77119584-a7c8-4edf-b454-1b3fb6d59d84",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1340,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/meetings?id=eq.{{ $node.update_recording_TL_acceptance.json.body.meeting_id }}&select=*  ",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "tl_is_accepted",
+              "value": "={{ $json.body.tl_is_accepted }}"
+            },
+            {
+              "name": "tl_comment",
+              "value": "={{ $json.body.comment }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e6b49f2f-f588-4f81-8562-802150d17787",
+      "name": "tl_update_meeting",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1560,
+        520
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/notifications",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "user_id",
+              "value": "={{ $json.user_id }}"
+            },
+            {
+              "name": "text",
+              "value": "=Тимлида не устроило качество проведенной вами сессии {{ $node.get_meeting_user_id.json.name }}, подробности можно увидеть в карточке встречи. Вам необходимо повторно провести сессию с участниками проекта.  "
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "6c3a50ea-4020-4683-a2f7-944eee17f383",
+      "name": "add_report_accepted_notif",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1800,
+        340
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/meetings?id=eq.{{ $node.update_recording_TL_acceptance.json.body.meeting_id }}&select=user_id,name ",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "is_accepted",
+              "value": "={{ $json.body.is_accepted }}"
+            },
+            {
+              "name": "tl_feedback",
+              "value": "={{ $json.body.comment }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "6f4eb6b0-f9a9-4001-b283-26417f66b9c9",
+      "name": "get_meeting_user_id",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1120,
+        420
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "saveManualExecutions": false,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "102",
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": true
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-05-11T16:58:18.481Z",
+  "versionId": "12d40b8c-8ff7-4253-a66d-a3e9c42b8df8"
+}
