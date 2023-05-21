@@ -1,0 +1,138 @@
+{
+  "active": true,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "init_vars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "init_vars": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-04-25T18:37:15.748Z",
+  "id": "94",
+  "name": "get_user_contract",
+  "nodes": [
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "httpMethod": "POST",
+        "path": "user/contract",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "97238a4f-ae1c-4b01-89d6-9f0fc97ff611",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        700,
+        300
+      ],
+      "webhookId": "61e3269a-3235-42e7-bc93-7f1fdf29fa5f",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "appsmith->n8n Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "77efd940-918c-40ab-ba34-7774623c37a3",
+      "name": "init_vars",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        880,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/user_profiles?user_id=eq.{{ $node.Webhook.json.body.user_id }}&select=contract_url,draft_contract_url",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "04126894-912a-4255-ba57-3852c6c40f1b",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1060,
+        300
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "10",
+          "name": "Supabase stage"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "5a949668-d462-487a-aaaf-c53de9611237",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        300
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "102"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-05-11T17:03:17.334Z",
+  "versionId": "156d32f5-7f72-4a7f-abe6-ef627a82bebb"
+}
