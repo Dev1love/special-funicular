@@ -1,0 +1,263 @@
+{
+  "active": true,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Supabase1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase": {
+      "main": [
+        []
+      ]
+    },
+    "Supabase1": {
+      "main": [
+        [
+          {
+            "node": "Supabase4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase2": {
+      "main": [
+        [
+          {
+            "node": "Supabase3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase3": {
+      "main": [
+        [
+          {
+            "node": "Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase4": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-04-04T18:42:16.372Z",
+  "id": "51",
+  "name": "get_accelerator_manual_",
+  "nodes": [
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "httpMethod": "POST",
+        "path": "accelerator/manual",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "dceeb7e0-17af-4fc8-bcbe-e4118e4dd97c",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        680,
+        280
+      ],
+      "webhookId": "d753861f-dcdd-40b9-82c8-9b73ced90a10",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "appsmith->n8n Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "ap_settings_instance",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "ap_id",
+              "keyValue": "={{ $json.ap_id }}"
+            }
+          ]
+        }
+      },
+      "id": "0fe63520-bd77-4fcf-81a4-3f9452e2dab9",
+      "name": "Supabase",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1420,
+        280
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "10",
+          "name": "Supabase stage"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"manual_link\":\" {{ $json.manual_link }}\"}",
+        "options": {}
+      },
+      "id": "ff33d156-0006-48ac-9ccc-6802a637c7e3",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1080,
+        60
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "user_profiles",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "user_id",
+              "keyValue": "={{ $json.body.user_id }}"
+            }
+          ]
+        }
+      },
+      "id": "62a1f3ae-ef0d-4982-b4eb-4651f34ce3e2",
+      "name": "Supabase1",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        840,
+        280
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "10",
+          "name": "Supabase stage"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "user_projects",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "user_profile_id",
+              "keyValue": "={{ $json.id }}"
+            }
+          ]
+        }
+      },
+      "id": "607da7c7-625a-47f4-ab5f-cddf06eb0c8a",
+      "name": "Supabase2",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1020,
+        280
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "10",
+          "name": "Supabase stage"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "projects",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "keyValue": "={{ $json.project_id }}"
+            }
+          ]
+        }
+      },
+      "id": "b950e6ea-c5ab-404e-8a68-5132c665b9be",
+      "name": "Supabase3",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1240,
+        280
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "10",
+          "name": "Supabase stage"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "ap_settings_instance",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "support_link",
+              "condition": "neq",
+              "keyValue": "NULL"
+            }
+          ]
+        }
+      },
+      "id": "a2310149-4e4a-4cce-bbee-fb0975f7b119",
+      "name": "Supabase4",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        940,
+        140
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "10",
+          "name": "Supabase stage"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "saveDataSuccessExecution": "all",
+    "saveManualExecutions": false,
+    "callerPolicy": "workflowsFromSameOwner",
+    "saveExecutionProgress": true,
+    "errorWorkflow": "102"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-05-11T17:01:20.200Z",
+  "versionId": "be2d9af0-630d-4dcf-9d63-829fdb7b7a81"
+}
