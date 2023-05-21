@@ -1,0 +1,1228 @@
+{
+  "active": false,
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "EasyHostname",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EasyHostname": {
+      "main": [
+        [
+          {
+            "node": "NewTrackers",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "NewProjects",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "NoOp",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "GetProjects1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cron": {
+      "main": [
+        [
+          {
+            "node": "EasyHostname",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NewProjects": {
+      "main": [
+        [
+          {
+            "node": "SplitInBatches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SplitInBatches": {
+      "main": [
+        [
+          {
+            "node": "IsValidProject?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IsValidProject?": {
+      "main": [
+        [
+          {
+            "node": "Add Client",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add Client": {
+      "main": [
+        [
+          {
+            "node": "NewProjectEID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NewProjectEID": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "SplitInBatches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NewTrackers": {
+      "main": [
+        [
+          {
+            "node": "SplitInBatches1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SplitInBatches1": {
+      "main": [
+        [
+          {
+            "node": "IsValidTracker",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NoOp": {
+      "main": [
+        [
+          {
+            "node": "GetEventsEAP",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GetProjects": {
+      "main": [
+        [
+          {
+            "node": "Rename Keys",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GetProviders": {
+      "main": [
+        [
+          {
+            "node": "Rename Keys1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rename Keys": {
+      "main": [
+        [
+          {
+            "node": "Set",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rename Keys1": {
+      "main": [
+        [
+          {
+            "node": "Set1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set1": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "GetEventsEAP": {
+      "main": [
+        [
+          {
+            "node": "Function",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "WhichEventsNew",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Function1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Function2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "WhichEventsNew1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Function": {
+      "main": [
+        [
+          {
+            "node": "GetEvents",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GetEvents": {
+      "main": [
+        [
+          {
+            "node": "Set2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set2": {
+      "main": [
+        [
+          {
+            "node": "WhichEventsNew",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "WhichEventsNew": {
+      "main": [
+        [
+          {
+            "node": "AddEvent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AddEvent": {
+      "main": [
+        [
+          {
+            "node": "Set3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Function1": {
+      "main": [
+        [
+          {
+            "node": "GetProjects",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Function2": {
+      "main": [
+        [
+          {
+            "node": "GetProviders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set3": {
+      "main": [
+        [
+          {
+            "node": "WhichEventsNew1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "WhichEventsNew1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "UpdateEvents",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2022-10-15T10:23:15.176Z",
+  "id": "2",
+  "name": "EAP Sync Trackers Projects Meetings",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "0296788b-a931-422d-85b1-c36c758beacb",
+      "name": "Start",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        20,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "HOSTNAME",
+              "value": "http://automate.digigin.eu:8080/index.php/api/v1"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a60a5101-d93c-49d9-bb86-4904d3a13372",
+      "name": "EasyHostname",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        340,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "p_4jpbiqaicez9ds",
+        "table": "md_qud1os3qde26n3",
+        "returnAll": true,
+        "options": {
+          "where": "(TrackerEasyId,is,null)"
+        }
+      },
+      "id": "c5f83d38-e294-49af-910c-aad44db82f5d",
+      "name": "NewTrackers",
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 2,
+      "position": [
+        540,
+        -120
+      ],
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "2",
+          "name": "NocoDB Token account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "p_4jpbiqaicez9ds",
+        "table": "md_mr9k87svxiox6z",
+        "returnAll": true,
+        "options": {
+          "where": "(ProjectEasyId,is,null)"
+        }
+      },
+      "id": "5f302ec9-c12b-478c-9ae8-8bb8a9cb9cc4",
+      "name": "NewProjects",
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 2,
+      "position": [
+        540,
+        240
+      ],
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "2",
+          "name": "NocoDB Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "triggerTimes": {
+          "item": [
+            {
+              "mode": "everyX",
+              "unit": "minutes"
+            }
+          ]
+        }
+      },
+      "id": "7f563ecc-1aaf-43fb-9e44-ab2850443d2f",
+      "name": "Cron",
+      "type": "n8n-nodes-base.cron",
+      "typeVersion": 1,
+      "position": [
+        20,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "78e70761-fbd0-41bc-a0dc-0af92c826217",
+      "name": "SplitInBatches",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 1,
+      "position": [
+        720,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $item(0).$node[\"EasyHostname\"].json[\"HOSTNAME\"] }}/customers",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"firstName\": \"{{$json[\"ProjectTitle\"]}}\", \n    \"lastName\": \"{{$json[\"ProjectRegion\"]}}\", \n    \"email\": \"{{$json[\"ProjectEmail\"]}}\", \n    \"phone\": \"{{$json[\"ProjectPhone\"]}}\",\n    \"notes\": \"Autoadded from n8n on {{new Date($now).toString()}}\",\n    \"language\": \"english\",\n    \"timezone\": \"Europe/Moscow\"\n}",
+        "options": {}
+      },
+      "id": "2a97d61b-c31f-4c60-a96c-ee8a057ed785",
+      "name": "Add Client",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1080,
+        240
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "39",
+          "name": "EasyAppointments test API"
+        },
+        "httpBasicAuth": {
+          "id": "1",
+          "name": "EAP admin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{$json[\"ProjectTitle\"] != null &&  $json[\"ProjectRegion\"] != null && $json[\"ProjectPhone\"]!= null && $json[\"ProjectEmail\"]!= null}}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "102510be-3af9-4498-86d1-eefde414c7a3",
+      "name": "IsValidProject?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        900,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "unit": "seconds"
+      },
+      "id": "7f67f1eb-5373-4d88-8df1-527592e189be",
+      "name": "Wait",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        1440,
+        240
+      ],
+      "webhookId": "e31677a9-34a9-4989-b046-6697123cc6ec"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "update",
+        "projectId": "p_4jpbiqaicez9ds",
+        "table": "md_mr9k87svxiox6z",
+        "id": "={{ $node[\"IsValidProject?\"].json[\"Id\"] }}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldName": "ProjectEasyId",
+              "fieldValue": "={{ $json[\"id\"] }}"
+            }
+          ]
+        }
+      },
+      "id": "d335fd23-153c-4a8b-aac9-a1c93f9f5265",
+      "name": "NewProjectEID",
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 2,
+      "position": [
+        1260,
+        240
+      ],
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "2",
+          "name": "NocoDB Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "d9a6b779-2943-4481-9602-d22bd1f4ed4a",
+      "name": "SplitInBatches1",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 1,
+      "position": [
+        720,
+        -120
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{$json[\"ProjectTitle\"] != null &&  $json[\"ProjectRegion\"] != null && $json[\"ProjectPhone\"]!= null && $json[\"ProjectEmail\"]!= null}}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "584f0665-eef0-4b27-84ec-04f85dbb9275",
+      "name": "IsValidTracker",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        900,
+        -120
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {},
+      "id": "79cd74ab-39ad-4ff9-9b8c-7e970f151833",
+      "name": "NoOp",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        540,
+        940
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $item(0).$node[\"EasyHostname\"].json[\"HOSTNAME\"] }}/providers",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "sort",
+              "value": "-id"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "18ffc8af-e4d3-44d1-89ec-e6b99a26cd16",
+      "name": "NewEventsEAP1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        340,
+        1440
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "39",
+          "name": "EasyAppointments test API"
+        },
+        "httpBasicAuth": {
+          "id": "1",
+          "name": "EAP admin"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "p_4jpbiqaicez9ds",
+        "table": "md_mr9k87svxiox6z",
+        "returnAll": true,
+        "options": {
+          "fields": [
+            "Id,ProjectEasyId,ProjectTitle"
+          ],
+          "where": "=(ProjectEasyId,in,{{ $json[\"idnums\"] }})"
+        }
+      },
+      "id": "32f9fbd8-f475-4337-9b9b-16bcf06052fe",
+      "name": "GetProjects",
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 2,
+      "position": [
+        900,
+        1140
+      ],
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "2",
+          "name": "NocoDB Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "p_4jpbiqaicez9ds",
+        "table": "md_qud1os3qde26n3",
+        "returnAll": true,
+        "options": {
+          "fields": [
+            "Id,TrackerEasyId,TrackerEmail"
+          ],
+          "where": "=(TrackerEasyId,in,{{ $json[\"idnums\"] }})"
+        }
+      },
+      "id": "7ff8da20-c831-4798-bf32-4e2871dc6902",
+      "name": "GetProviders",
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 2,
+      "position": [
+        900,
+        1300
+      ],
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "2",
+          "name": "NocoDB Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "keys": {
+          "key": [
+            {
+              "currentKey": "Id",
+              "newKey": "ProjectId"
+            }
+          ]
+        },
+        "additionalOptions": {}
+      },
+      "id": "334d1c66-5e63-4a6e-87f1-6284283d6589",
+      "name": "Rename Keys",
+      "type": "n8n-nodes-base.renameKeys",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        1140
+      ]
+    },
+    {
+      "parameters": {
+        "keys": {
+          "key": [
+            {
+              "currentKey": "Id",
+              "newKey": "TrackerId"
+            }
+          ]
+        },
+        "additionalOptions": {}
+      },
+      "id": "33813fbf-56dd-4e86-97c6-4033c8e08cbc",
+      "name": "Rename Keys1",
+      "type": "n8n-nodes-base.renameKeys",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        1300
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "mergeByFields",
+        "mergeByFields": {
+          "values": [
+            {
+              "field1": "customerId",
+              "field2": "ProjectEasyId"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "cbae0a5b-fbd6-4eb1-976e-a0f725dd8e60",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2,
+      "position": [
+        1960,
+        1120
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "number": [
+            {
+              "name": "ProjectEasyId",
+              "value": "={{ Number($json[\"ProjectEasyId\"]) }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e9623be4-d17d-4871-bd1f-85ffb8432cae",
+      "name": "Set",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        1180,
+        1140
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "number": [
+            {
+              "name": "TrackerEasyId",
+              "value": "={{ Number($json[\"TrackerEasyId\"]) }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e43186d6-56cb-44f3-8e15-243b48a81bc9",
+      "name": "Set1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        1180,
+        1300
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "mergeByFields",
+        "mergeByFields": {
+          "values": [
+            {
+              "field1": "providerId",
+              "field2": "TrackerEasyId"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5e598cab-4e5b-42b4-b1e1-28d61292fdd5",
+      "name": "Merge1",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2,
+      "position": [
+        2160,
+        1280
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "p_4jpbiqaicez9ds",
+        "table": "md_67n7wa1n04h1n1",
+        "returnAll": true,
+        "options": {
+          "fields": [],
+          "where": "=(MeetingEasyId,in,{{ $json[\"idnums\"] }})"
+        }
+      },
+      "id": "96dce872-93bc-4265-9bbe-f3b949496078",
+      "name": "GetEvents",
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 2,
+      "position": [
+        1040,
+        780
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "2",
+          "name": "NocoDB Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "create",
+        "projectId": "p_4jpbiqaicez9ds",
+        "table": "md_67n7wa1n04h1n1",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldName": "MeetingStatus",
+              "fieldValue": "Planned"
+            },
+            {
+              "fieldName": "MeetingComment",
+              "fieldValue": "={{ $json[\"notes\"] }}"
+            },
+            {
+              "fieldName": "MeetingStartDateTime",
+              "fieldValue": "={{ $json[\"start\"] }}"
+            },
+            {
+              "fieldName": "MeetingEndDateTime",
+              "fieldValue": "={{ $json[\"end\"] }}"
+            },
+            {
+              "fieldName": "MeetingEasyId",
+              "fieldValue": "={{ $json[\"id\"] }}"
+            }
+          ]
+        }
+      },
+      "id": "92057a66-95a4-44f3-adfa-ef1ed8c34d86",
+      "name": "AddEvent",
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 2,
+      "position": [
+        1480,
+        720
+      ],
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "2",
+          "name": "NocoDB Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $item(0).$node[\"EasyHostname\"].json[\"HOSTNAME\"] }}/appointments",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "sort",
+              "value": "-id"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "62374357-fbbb-45b0-a007-c8cbb90c0344",
+      "name": "GetEventsEAP",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        720,
+        700
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "39",
+          "name": "EasyAppointments test API"
+        },
+        "httpBasicAuth": {
+          "id": "1",
+          "name": "EAP admin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "functionCode": "return [{idnums: $jmespath($items(),\"[].json.id\").join(\",\")}];"
+      },
+      "id": "5db4a65c-8853-4e3d-8bf6-03aa8d2cdd61",
+      "name": "Function",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        900,
+        780
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "number": [
+            {
+              "name": "MeetingEasyId",
+              "value": "={{Number($json[\"MeetingEasyId\"])}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "bd89a68a-6bd0-4030-88e7-1ee2aac82f91",
+      "name": "Set2",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        1180,
+        780
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "mergeByFields",
+        "mergeByFields": {
+          "values": [
+            {
+              "field1": "id",
+              "field2": "MeetingEasyId"
+            }
+          ]
+        },
+        "joinMode": "keepNonMatches",
+        "outputDataFrom": "input1",
+        "options": {}
+      },
+      "id": "00eb1f97-b283-4a93-8ca9-08e7835c272a",
+      "name": "WhichEventsNew",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2,
+      "position": [
+        1340,
+        720
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Создание новых встреч\n### Получаем несколько самых новых встреч из EAP, смотрим, какие из них еще не внесены в базу и создаем новые записи со встречами со статусом \"запланировано\"",
+        "height": 381.52321981424154,
+        "width": 1333.6998968008263
+      },
+      "id": "907328b4-3249-4b2f-a1a8-3d51b7534cbe",
+      "name": "Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        700,
+        560
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Связывание встреч с проектами и трекерами\n### Берем из базы проекты и трекеры, которые были упомянуты в новых встречах,\n### находим их Id в базе и создаем связи в таблице \"встречи\"",
+        "height": 456.9618163054696,
+        "width": 1761.9781217750258
+      },
+      "id": "229a4205-1d92-4d3a-a997-d4108e186e06",
+      "name": "Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        700,
+        1000
+      ]
+    },
+    {
+      "parameters": {
+        "functionCode": "return [{idnums: $jmespath($items(),\"[].json.customerId\").join(\",\")}];"
+      },
+      "id": "e23356ba-0220-43ce-ab5d-ca53cce6af8b",
+      "name": "Function1",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        740,
+        1140
+      ]
+    },
+    {
+      "parameters": {
+        "functionCode": "return [{idnums: $jmespath($items(),\"[].json.providerId\").join(\",\")}];"
+      },
+      "id": "80e571c4-de33-414c-b5b1-0335a111d313",
+      "name": "Function2",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        740,
+        1300
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "number": [
+            {
+              "name": "DadabaseId",
+              "value": "={{ $json[\"id\"] }}"
+            },
+            {
+              "name": "MeetingEasyId",
+              "value": "={{ $json[\"MeetingEasyId\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "83c5b955-2362-4768-abc3-5002baedf3c8",
+      "name": "Set3",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        1620,
+        720
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "mergeByFields",
+        "mergeByFields": {
+          "values": [
+            {
+              "field1": "id",
+              "field2": "MeetingEasyId"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "7521d499-566b-41b7-8266-02db8e6f3712",
+      "name": "WhichEventsNew1",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2,
+      "position": [
+        1760,
+        660
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "update",
+        "projectId": "p_4jpbiqaicez9ds",
+        "table": "md_67n7wa1n04h1n1",
+        "id": "={{ $json[\"DadabaseId\"] }}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldName": "nc_meeting_Tracker",
+              "fieldValue": "=[{ \"table2_id\":{{$json[\"DadabaseId\"]}},\n\"table1_id\":{{$json[\"TrackerId\"]}}\n}]"
+            },
+            {
+              "fieldName": "nc_meeting_Project",
+              "fieldValue": "=[{ \"table2_id\":{{$json[\"DadabaseId\"]}},\n\"table1_id\":{{$json[\"ProjectId\"]}}\n}]"
+            }
+          ]
+        }
+      },
+      "id": "21c7da30-84c6-4cce-b6f0-71fe250fb720",
+      "name": "UpdateEvents",
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 2,
+      "position": [
+        2300,
+        1280
+      ],
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "2",
+          "name": "NocoDB Token account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "p_4jpbiqaicez9ds",
+        "table": "md_mr9k87svxiox6z",
+        "returnAll": true,
+        "options": {
+          "fields": []
+        }
+      },
+      "id": "9f9f9d97-ee33-4334-b6d6-1f5ca71fa8b1",
+      "name": "GetProjects1",
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 2,
+      "position": [
+        360,
+        820
+      ],
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "2",
+          "name": "NocoDB Token account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://nocodb.dev.2t.band/api/v1/db/data/noco/2T_pilot/Meetings/102/mm/Projects%20List/3",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "nocoDbApiToken",
+        "options": {}
+      },
+      "id": "ed1be446-5028-4291-b9ad-a0603c2cfcbc",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        240,
+        1020
+      ],
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "2",
+          "name": "NocoDB Token account"
+        }
+      },
+      "disabled": true
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2022-10-17T20:19:17.915Z",
+  "versionId": "aa5b89af-c452-47b2-81be-1c82ea7ce3fb"
+}
