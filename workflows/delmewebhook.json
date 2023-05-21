@@ -1,0 +1,31 @@
+{
+  "active": false,
+  "connections": {},
+  "createdAt": "2023-03-24T09:23:40.598Z",
+  "id": "30",
+  "name": "delmewebhook",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "/path1/:id",
+        "options": {}
+      },
+      "id": "db3b8a38-c82c-4d04-9fe7-1d2047d077c6",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        640,
+        300
+      ],
+      "webhookId": "beeb0e4c-6955-47ee-9a29-2eefe57d33d3"
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-03-24T09:47:42.688Z",
+  "versionId": "4900fa92-d051-4754-a058-d2d18d8e0a0f"
+}
