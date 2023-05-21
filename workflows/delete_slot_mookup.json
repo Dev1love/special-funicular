@@ -1,0 +1,184 @@
+{
+  "active": true,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow": {
+      "main": [
+        [
+          {
+            "node": "Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "success_response",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "error_response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-03-29T18:32:36.316Z",
+  "id": "42",
+  "name": "delete_slot_mookup",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "slots/delete",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "4fa6f3bb-69fa-44fa-95fd-487f1de564fe",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        620,
+        280
+      ],
+      "webhookId": "9a945e68-7077-4e0e-968c-22413e20090d"
+    },
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "5347062c-afec-4d35-80ed-4b0b83fba12b",
+      "name": "Execute Workflow",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        840,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "tableId": "slots",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $node.Webhook.json.body.slot_id }}"
+            }
+          ]
+        }
+      },
+      "id": "41c1a59b-6e0f-4c01-a141-53592e3497b7",
+      "name": "Supabase",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1060,
+        280
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "10",
+          "name": "Supabase stage"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "= {{ $json.id }}",
+              "operation": "notEqual",
+              "value2": "=null"
+            }
+          ]
+        }
+      },
+      "id": "da522f5c-77bb-4928-93ea-87db6b9c432b",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\n\"status\": \"delete\"\n}",
+        "options": {}
+      },
+      "id": "642be06e-9cb1-4ac7-af80-8e94abf2ecf1",
+      "name": "success_response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1480,
+        140
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{{ JSON.stringify( \"Не удалось удалить слот\" )}}",
+        "options": {}
+      },
+      "id": "c148d544-991b-4b98-821c-5cc00c9cb9c9",
+      "name": "error_response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1500,
+        360
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": true,
+    "saveManualExecutions": false,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "102"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-05-11T16:51:47.203Z",
+  "versionId": "5df5130d-4131-475f-ad4a-03cc097fe2d2"
+}
