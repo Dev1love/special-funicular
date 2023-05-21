@@ -1,0 +1,245 @@
+{
+  "active": true,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "init_vars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "init_vars": {
+      "main": [
+        [
+          {
+            "node": "SUPA_user_update",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_user_update": {
+      "main": [
+        [
+          {
+            "node": "SUPA_user_role",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "SUPA_user_role": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-03-24T10:15:35.024Z",
+  "id": "36",
+  "name": "supabase_user_update_",
+  "nodes": [
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "httpMethod": "POST",
+        "path": "user/update",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "5fd8d713-fb2f-4e18-bc33-5a5a92e3b875",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -280,
+        220
+      ],
+      "webhookId": "22acb997-1914-4822-8b18-6c9d8bfb1458",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "appsmith->n8n Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{\nJSON.stringify({\n\"res\": $json ? $json : null,\n\"error\": $json[\"error\"] ? $json.error : null})\n}}",
+        "options": {}
+      },
+      "id": "749d1e0f-204d-45d0-877c-1345ef2a002d",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        540,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "3babf5e8-245b-4d27-b184-fac3dcfd6e0c",
+      "name": "init_vars",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        -100,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "={{ $json.supaBaseURL }}auth/v1/user",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $json.supaBasePublicKey }}"
+            },
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $node.Webhook.json.body[\"user-access-token\"] }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "email",
+              "value": "={{ $node.Webhook.json.body.email }}"
+            },
+            {
+              "name": "password",
+              "value": "={{ $node.Webhook.json.body.password }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "87866257-c1f2-47b0-859d-792b3980445d",
+      "name": "SUPA_user_update",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        60,
+        220
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}/rest/v1/user_profiles?user_id=eq.{{ $json.id }}&select=id,role_id ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $node.init_vars.json.supaBasePublicKey }}"
+            },
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $node.Webhook.json.body[\"user-access-token\"] }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "email",
+              "value": "={{ $node.Webhook.json.body.email }}"
+            },
+            {
+              "name": "password",
+              "value": "={{ $node.Webhook.json.body.password }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d08dc127-e061-44d0-8efe-22542b36c37d",
+      "name": "SUPA_user_role",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        200,
+        100
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "mergeByFields": {
+          "values": [
+            {
+              "field1": "id",
+              "field2": "id"
+            }
+          ]
+        },
+        "joinMode": "keepEverything",
+        "options": {}
+      },
+      "id": "8138a1c2-f810-4a02-a5d9-f02e2f6292f1",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2,
+      "position": [
+        340,
+        280
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "saveDataSuccessExecution": "all",
+    "errorWorkflow": "102"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrencyRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-05-11T17:04:06.162Z",
+  "versionId": "671d988c-175d-49f2-b7c4-36d7b8304ef8"
+}
