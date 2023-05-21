@@ -1,0 +1,294 @@
+{
+  "active": true,
+  "connections": {
+    "Execute Workflow": {
+      "main": [
+        [
+          {
+            "node": "get_user_profiles",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "get_user_edu",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fill profile": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_user_edu": {
+      "main": [
+        [
+          {
+            "node": "Item Lists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_user_profiles": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-04-21T09:44:54.661Z",
+  "id": "85",
+  "name": "get_user_profile_",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "6f276e07-c6d7-413b-8aad-42b8c42b1877",
+      "name": "Execute Workflow",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        780,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{JSON.stringify(\n{res:$json ? $json : \"error\"})}}",
+        "options": {}
+      },
+      "id": "ff1875f5-61f5-4434-8f9e-5de327ef3b5d",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1680,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "content": "get user_profile With educations\n",
+        "height": 520.3248474546373,
+        "width": 943.7117896736395
+      },
+      "id": "864401ff-c886-4fe7-a20b-dac9d4d35840",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        560,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "httpMethod": "POST",
+        "path": "user_profile",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "a89c5f05-097e-4b20-9b4f-5dd5417dd7b1",
+      "name": "Fill profile",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        620,
+        260
+      ],
+      "webhookId": "d6676d9c-1b12-41f4-8fb5-8b8433bba660",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "appsmith->n8n Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $node[\"Execute Workflow\"].json.supaBaseURL }}rest/v1/user_profiles?user_id=eq.{{ $json.body.user_id }}&select=*",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ca4c5172-6fcb-41c0-801d-cd05f6bf778f",
+      "name": "get_user_profiles",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1140,
+        260
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "aggregateItems",
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "educations",
+        "include": "allFieldsExcept"
+      },
+      "id": "090d46ad-1259-417d-82d1-b37757e183d7",
+      "name": "Item Lists",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 2,
+      "position": [
+        1140,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $node[\"Execute Workflow\"].json.supaBaseURL }}rest/v1/educations?user_id=eq.{{ $node[\"Fill profile\"].json.body.user_id }}&select=* ",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "178edfd0-6a99-446b-acaf-92ebb9f3ec8c",
+      "name": "get_user_edu",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        980,
+        420
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "mergeByFields": {
+          "values": [
+            {
+              "field1": "user_id",
+              "field2": "educations[0].user_id"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "533e0019-b37b-433b-baf3-dba1e1591e51",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2,
+      "position": [
+        1500,
+        280
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.educations[0] }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "id": "d0b4ad7e-88a1-45e6-a3fd-f7e58ff174a8",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1300,
+        420
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "102"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-05-11T17:00:04.046Z",
+  "versionId": "732cf172-9263-4fcb-a85e-2bd0e10e5e78"
+}
