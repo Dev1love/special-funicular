@@ -1,0 +1,1358 @@
+{
+  "active": true,
+  "connections": {
+    "init_vars": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter_meet_recommend_date": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter_meet_deadline_date": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split In Batches": {
+      "main": [
+        [
+          {
+            "node": "add_meeting_today_notif",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "add_meeting_today_notif": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split In Batches1": {
+      "main": [
+        [
+          {
+            "node": "add_meeting_today_notif1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "add_meeting_today_notif1": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split In Batches2": {
+      "main": [
+        [
+          {
+            "node": "add_meeting_today_notif2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "add_meeting_today_notif2": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "Filter_meet_recommend_date",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Filter_meet_deadline_date",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Filter_meeting_deadlined_canceled_not_rebooked_notTM",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Filter_meeting_deadlined_yesterday_not_happened_notTM1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter_meet_today_notTM": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "add_meeting_today_notif3": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split In Batches3": {
+      "main": [
+        [
+          {
+            "node": "add_meeting_today_notif3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter_meet_today_TM": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "init_vars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "Filter_meet_today_notTM",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Filter_meet_today_TM",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Filter_meeting_yesterday_not_reported_notTM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter_meeting_yesterday_not_reported_notTM": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_team_id": {
+      "main": [
+        [
+          {
+            "node": "get_tl_id",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_tl_id": {
+      "main": [
+        [
+          {
+            "node": "tl_notif_not_reported",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_team_id1": {
+      "main": [
+        [
+          {
+            "node": "get_tl_id1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_tl_id1": {
+      "main": [
+        [
+          {
+            "node": "add_notif_meeting_canceled_not_happened_yet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "tl_notif_not_reported": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "add_notif_meeting_canceled_not_happened_yet": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split In Batches4": {
+      "main": [
+        [
+          {
+            "node": "get_team_id",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split In Batches5": {
+      "main": [
+        [
+          {
+            "node": "get_team_id1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter_meeting_deadlined_canceled_not_rebooked_notTM": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_team_id2": {
+      "main": [
+        [
+          {
+            "node": "get_tl_id2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_tl_id2": {
+      "main": [
+        [
+          {
+            "node": "add_notif_meeting_canceled_not_happened_yet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "add_notif_meeting_canceled_not_happened_yet1": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split In Batches6": {
+      "main": [
+        [
+          {
+            "node": "get_team_id2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter_meeting_deadlined_yesterday_not_happened_notTM1": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-04-18T12:49:20.505Z",
+  "id": "82",
+  "name": "daily_notifications_meeting_dates_worker_",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/meetings",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "select",
+              "value": "name,happened,start_time,projects(*),user_id,meeting_eap_id,meeting_zoom_id,booking_link,join_link,type(*)"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a09c32a7-01ac-45b6-a2c7-bb061ced91e7",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        740,
+        420
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "13f9d72c-e113-4f32-ad63-8660ff28eec6",
+      "name": "init_vars",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        560,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.type.meeting_recommend }}",
+              "value2": "={{$today.toString().split('T')[0]}}"
+            },
+            {
+              "value1": "={{ $json.booking_link }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "id": "19dc02fd-1152-4e1f-81fd-72e9a01c189e",
+      "name": "Filter_meet_recommend_date",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 1,
+      "position": [
+        1580,
+        140
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.type.meeting_deadline }}",
+              "value2": "={{$today.toString().split('T')[0]}}"
+            },
+            {
+              "value1": "={{ $json.booking_link }}"
+            }
+          ]
+        }
+      },
+      "id": "fab0bab6-0367-4bbb-aae5-3ee3a4c2d4cb",
+      "name": "Filter_meet_deadline_date",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 1,
+      "position": [
+        1580,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/notifications",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "user_id",
+              "value": "={{ $json.user_id }}"
+            },
+            {
+              "name": "text",
+              "value": "=Вы назначили встречу по проекту {{ $json.projects.name }} сегодня в {{new Date( $json.start_time).format(\"hh:mm\")}}. Вы можете начать встречу по ссылке  {{ $json.booking_link }}  "
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "28673476-7569-488c-82c7-5385c3027850",
+      "name": "add_meeting_today_notif",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        2160,
+        540
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/notifications",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "user_id",
+              "value": "={{ $json.user_id }}"
+            },
+            {
+              "name": "text",
+              "value": "=Вам необходимо срочно назначить встречу по проекту {{ $node.Filter_meet_recommend_date.json.projects.name }}! "
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "13f71b24-9ada-4bda-86f2-02c415f3dc28",
+      "name": "add_meeting_today_notif1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        2080,
+        320
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/notifications",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "user_id",
+              "value": "={{ $json.user_id }}"
+            },
+            {
+              "name": "text",
+              "value": "=Напоминаем, что у вас есть незабронированные встречи. Пожалуйста, договоритесь с участниками проекта {{ $node.Filter_meet_recommend_date.json.projects.name }} о встрече.  "
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "fa976e0f-7672-4c50-9ad0-f6bb7db90660",
+      "name": "add_meeting_today_notif2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        2080,
+        120
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "c9e95a07-2824-4a33-95de-9f83ce1b22ac",
+      "name": "Split In Batches",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 2,
+      "position": [
+        1860,
+        560
+      ]
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "ed2f69df-7e34-4890-9a3b-ca64be4ac386",
+      "name": "Split In Batches1",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 2,
+      "position": [
+        1840,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "1a7e1c90-ebc4-40ea-a954-69edc2f22148",
+      "name": "Split In Batches2",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 2,
+      "position": [
+        1820,
+        140
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ !!$json.user_id }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "4379ee85-31c1-48ee-9b7c-1152738af222",
+      "name": "Filter",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 1,
+      "position": [
+        920,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.start_time.split('T')[0] }}",
+              "value2": "={{$today.toString().split('T')[0]}}"
+            }
+          ],
+          "number": [
+            {
+              "value1": "={{ $json.type.id }}",
+              "operation": "equal",
+              "value2": 6
+            }
+          ]
+        }
+      },
+      "id": "0a9d30d2-4c3f-4bd7-8d56-484547283f41",
+      "name": "Filter_meet_today_TM",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 1,
+      "position": [
+        1580,
+        760
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.start_time.split('T')[0] }}",
+              "value2": "={{$today.toString().split('T')[0]}}"
+            }
+          ],
+          "number": [
+            {
+              "value1": "={{ $json.type.id }}",
+              "operation": "notEqual",
+              "value2": 6
+            }
+          ]
+        }
+      },
+      "id": "fdeec66c-59d6-447d-9f35-e3a4fae4733d",
+      "name": "Filter_meet_today_notTM",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 1,
+      "position": [
+        1580,
+        560
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/notifications",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "user_id",
+              "value": "={{ $json.user_id }}"
+            },
+            {
+              "name": "text",
+              "value": "=Ваш трекшн-митинг на тему {{ $json.name }}  начнется сегодня в {{new Date( $json.start_time).format(\"hh:mm\")}}. Вы можете присоединиться по ссылке  {{ $json.booking_link }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "964ab580-3037-4d51-b475-feaabb41be22",
+      "name": "add_meeting_today_notif3",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        2100,
+        740
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "d05182b9-62e7-4acf-af6b-301a24476b62",
+      "name": "Split In Batches3",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 2,
+      "position": [
+        1860,
+        760
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 10
+            }
+          ]
+        }
+      },
+      "id": "032e5e40-168a-4fca-a963-ccde5424c57f",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [
+        360,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ !!$json.start_time }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "fbfac970-da64-4ce9-926f-1ab0fd73432f",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        820
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.start_time.split('T')[0] }}",
+              "value2": "={{$today.minus({days: 1}).toString().split('T')[0]}}"
+            },
+            {
+              "value1": "={{ $json.reported }}",
+              "operation": "isNotEmpty"
+            }
+          ],
+          "number": [
+            {
+              "value1": "={{ $json.type.id }}",
+              "operation": "notEqual",
+              "value2": 6
+            }
+          ]
+        }
+      },
+      "id": "6dbb41bf-b030-46f2-a9ba-e564acd4dead",
+      "name": "Filter_meeting_yesterday_not_reported_notTM",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 1,
+      "position": [
+        1480,
+        1060
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/user_profiles?select=team_id&user_id=eq.{{ $json.user_id }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "id": "3e70e917-7096-4ff2-af80-96bd0521e3f3",
+      "name": "get_team_id",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1860,
+        960
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/user_profiles?select=user_id&role_id=eq.2&team_id=eq.{{ $json.team_id }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "id": "957b5576-48b5-49c3-8b65-b5c368f517b7",
+      "name": "get_tl_id",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        2040,
+        960
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/user_profiles?select=team_id&user_id=eq.{{ $json.user_id }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "id": "f2401768-c15a-4c9d-8eb6-2414d4dc92cf",
+      "name": "get_team_id1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        2000,
+        -60
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/user_profiles?select=user_id&role_id=eq.2&team_id=eq.{{ $json.team_id }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "id": "87b40a18-ebf0-4214-a8b5-faba2628a2e4",
+      "name": "get_tl_id1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        2180,
+        -60
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/notifications",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "user_id",
+              "value": "={{ $json.user_id }}"
+            },
+            {
+              "name": "text",
+              "value": "=Внимание! Трекер не собрал отчет о проведенной сессии {{ $node[\"Split In Batches4\"].json.name }} вовремя. "
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5e0439ff-6245-4041-acb0-964766b1a8a6",
+      "name": "tl_notif_not_reported",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        2200,
+        1040
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/notifications",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "user_id",
+              "value": "={{ $json.user_id }}"
+            },
+            {
+              "name": "text",
+              "value": "=Внимание! Трекер отменил назначенную встречу {{ $node[\"Split In Batches4\"].json.name }} и не забронировал новую "
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "66f95d04-9f74-404c-8ee4-2eb4dd481114",
+      "name": "add_notif_meeting_canceled_not_happened_yet",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        2340,
+        -60
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "7b88fb05-0932-4076-8f01-c71bff324240",
+      "name": "Split In Batches4",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 2,
+      "position": [
+        1720,
+        1060
+      ]
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "897120b4-5352-4a50-9d57-f43a748f60dd",
+      "name": "Split In Batches5",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 2,
+      "position": [
+        1820,
+        -40
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.type.meeting_deadline.split('T')[0] }}",
+              "value2": "={{$today.toString().split('T')[0]}}"
+            }
+          ],
+          "number": [
+            {
+              "value1": "={{ $json.type.id }}",
+              "operation": "notEqual",
+              "value2": 6
+            },
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": 3
+            }
+          ]
+        }
+      },
+      "id": "f01d53cb-c5ac-41e5-a679-150a85df53d4",
+      "name": "Filter_meeting_deadlined_canceled_not_rebooked_notTM",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 1,
+      "position": [
+        1560,
+        -40
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/user_profiles?select=team_id&user_id=eq.{{ $json.user_id }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "id": "04b31bf4-5c95-41c7-bee5-694aa2092613",
+      "name": "get_team_id2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1940,
+        -300
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/user_profiles?select=user_id&role_id=eq.2&team_id=eq.{{ $json.team_id }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "id": "0656fb6b-9ffe-4795-9a0e-47461f2190f1",
+      "name": "get_tl_id2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        2120,
+        -300
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/notifications",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "user_id",
+              "value": "={{ $json.user_id }}"
+            },
+            {
+              "name": "text",
+              "value": "=Внимание! Трекер отменил назначенную встречу {{ $node[\"Split In Batches4\"].json.name }} и не забронировал новую "
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ebc3e938-355c-4c9d-af22-1d6c91168ca7",
+      "name": "add_notif_meeting_canceled_not_happened_yet1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        2280,
+        -300
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "1b5a2099-7641-4db0-8287-cc6e3dfc2069",
+      "name": "Split In Batches6",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 2,
+      "position": [
+        1760,
+        -280
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.type.meeting_deadline.split('T')[0] }}",
+              "value2": "={{$today.minus({days:1}).toString().split('T')[0]}}"
+            }
+          ],
+          "number": [
+            {
+              "value1": "={{ $json.type.id }}",
+              "operation": "notEqual",
+              "value2": 6
+            },
+            {
+              "value1": "={{ $json.happened }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "id": "aec9d800-5c7e-4d63-821f-d318e1b443ee",
+      "name": "Filter_meeting_deadlined_yesterday_not_happened_notTM1",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 1,
+      "position": [
+        1500,
+        -280
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": true,
+    "saveManualExecutions": false,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "102"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrencyRules": []
+    }
+  },
+  "tags": [
+    {
+      "createdAt": "2023-04-27T18:40:13.285Z",
+      "updatedAt": "2023-04-27T18:40:13.285Z",
+      "id": "3",
+      "name": "notif"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2023-05-11T16:23:49.969Z",
+  "versionId": "a57533a3-7ff4-4f88-a423-951411978582"
+}
