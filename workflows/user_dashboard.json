@@ -101,7 +101,7 @@
     {
       "parameters": {
         "respondWith": "json",
-        "responseBody": "={{ JSON.stringify( {\"res\":{\"ap_basic_info\":$json.ap_basic_info, \"stage\":$node[\"Code_getstage\"].json[\"stage\"] } }) }}",
+        "responseBody": "={{ JSON.stringify( {\"res\":{\"name\":$json.name, \"ap_basic_info\":$json.ap_basic_info, \"stage\":$node[\"Code_getstage\"].json[\"stage\"] } }) }}",
         "options": {}
       },
       "id": "9ad07eb5-497a-4b83-b060-0817c5e8fad2",
@@ -310,6 +310,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-05-11T17:02:47.663Z",
-  "versionId": "a0cab486-8741-4b4e-be25-c49040faacd5"
+  "updatedAt": "2023-05-21T19:47:48.439Z",
+  "versionId": "59d58f41-17e2-4b5e-8fb5-cadb247e6d80"
 }
