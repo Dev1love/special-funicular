@@ -1,0 +1,196 @@
+{
+  "active": true,
+  "connections": {
+    "init_vars": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_project_artifacts": {
+      "main": [
+        [
+          {
+            "node": "init_vars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Item Lists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-04-18T12:51:06.159Z",
+  "id": "83",
+  "name": "get_project_artifacts_",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "f051ac37-175b-4e5b-a696-feb5680ba272",
+      "name": "init_vars",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        800,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{\nJSON.stringify($json )\n}}",
+        "options": {}
+      },
+      "id": "82d90e81-a15e-465e-962d-9b7a5f4fbd97",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1580,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "httpMethod": "POST",
+        "path": "project/artifacts",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "14691905-b1be-4ac0-90b4-dad8c2742f61",
+      "name": "get_project_artifacts",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        620,
+        300
+      ],
+      "webhookId": "cc109f43-23f4-41ac-b3b3-14e0c3a7ef89",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "appsmith->n8n Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/meetings?project_id=eq.{{ $node.get_project_artifacts.json.body.project_id }}&select=*,artifacts(*)",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "10e8ae6b-3aae-4098-b8ac-628d900d2d06",
+      "name": "HTTP Request1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        960,
+        300
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "aggregateItems",
+        "aggregate": "aggregateAllItemData",
+        "include": "specifiedFields",
+        "fieldsToInclude": {
+          "fields": [
+            {
+              "fieldName": "artifacts"
+            }
+          ]
+        }
+      },
+      "id": "4f4de323-0e68-460c-86b0-f1eb0a2987a2",
+      "name": "Item Lists",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 2,
+      "position": [
+        1180,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "let array = [];\n\n$json.data.map(item => item.artifacts.length> 0 &&  array.push(...item.artifacts));\n\nreturn { response: array }"
+      },
+      "id": "9197b114-877e-462d-84db-32c1836dce52",
+      "name": "Code1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        1380,
+        300
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "102"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-05-11T16:56:03.011Z",
+  "versionId": "76f53360-7d55-4c9d-8798-d30e4b08573f"
+}
