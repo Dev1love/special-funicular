@@ -1,0 +1,228 @@
+{
+  "active": true,
+  "connections": {
+    "get_slot": {
+      "main": [
+        [
+          {
+            "node": "get_vars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_vars": {
+      "main": [
+        [
+          {
+            "node": "get_slot_by_id",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_slot_by_id": {
+      "main": [
+        [
+          {
+            "node": "IF found",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF found": {
+      "main": [
+        [
+          {
+            "node": "succes_response",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "error_response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-03-31T12:38:34.557Z",
+  "id": "46",
+  "name": "get_slot_by_id",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "={{ $json.supaBaseURL }}rest/v1/slots",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "id",
+              "value": "=eq.{{ $node[\"get_slot\"].json.body.slot_id }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $json.supaBaseServiceKey }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "abab75f9-85e6-4fe7-8bc5-6fc36ecfa06e",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1240,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "httpMethod": "POST",
+        "path": "slots/get_by_id",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "987cb5d0-003a-4457-9066-0b6dd0cf6c1a",
+      "name": "get_slot",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        700,
+        300
+      ],
+      "webhookId": "61f2e4d2-be00-46a1-a81f-dfbd085852f4",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "appsmith->n8n Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "5e04cf8b-1d0f-4c4f-b9a7-5db4794a9295",
+      "name": "get_vars",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        1020,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "slots",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "keyValue": "={{ $node[\"get_slot\"].json[\"body\"][\"slot_id\"] }}"
+            }
+          ]
+        }
+      },
+      "id": "1a47fddc-65d4-462d-a965-a0bcf4f71d10",
+      "name": "get_slot_by_id",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1240,
+        220
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "10",
+          "name": "Supabase stage"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.id }}",
+              "operation": "notEqual",
+              "value2": "null"
+            },
+            {
+              "value1": "={{ $json.id }}",
+              "operation": "notEqual",
+              "value2": "=\"\""
+            }
+          ]
+        },
+        "combineOperation": "any"
+      },
+      "id": "22d8e24d-7588-4e0d-b158-2e4e3b489af3",
+      "name": "IF found",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1460,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n\"id\":\"{{ $json.id }}\",\n\"meeting_id\":\"{{ $json.meeting_id }}\",\n\"change_time_meet\":\"{{ $json.change_time_meet }}\",\n\"book_timestamp\":\"{{ $json.book_timestamp }}\",\n\"booking_timestring\":\"{{ $json.booking_timestring }}\",\n\"provider_id\":\"{{ $json.provider_id }}\",\n\"user_id\":\"{{ $json.user_id }}\",\n\"created_at\":\"{{ $json.created_at }}\"\n} ",
+        "options": {}
+      },
+      "id": "4db5444d-60e4-4094-be06-8cb34db10fa5",
+      "name": "succes_response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1780,
+        60
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{{ JSON.stringify( \"Слот не найден\" )}}",
+        "options": {}
+      },
+      "id": "b5933aa6-402d-4c56-89eb-91469a14ae75",
+      "name": "error_response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1780,
+        320
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "102"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-05-11T16:50:57.230Z",
+  "versionId": "8f180aec-bb42-4ed6-8229-13571e140b74"
+}
