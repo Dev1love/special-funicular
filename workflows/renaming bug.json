@@ -1,0 +1,144 @@
+{
+  "active": false,
+  "connections": {
+    "test": {
+      "main": [
+        [
+          {
+            "node": "AWS S3_",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-04-07T19:36:00.739Z",
+  "id": "62",
+  "name": "renaming bug",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "530be387-28d3-468d-833a-1b900f20da6d",
+      "name": "test",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        340,
+        360
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "ef03b926-4808-4bd1-9d73-2f8842991af1",
+      "name": "MSG91",
+      "type": "n8n-nodes-base.msg91",
+      "typeVersion": 1,
+      "position": [
+        440,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "get"
+      },
+      "id": "c323ca6e-cdf6-46b6-97a6-09c70ff69289",
+      "name": "Magento 2",
+      "type": "n8n-nodes-base.magento2",
+      "typeVersion": 1,
+      "position": [
+        180,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "bucket",
+        "operation": "search",
+        "additionalFields": {}
+      },
+      "id": "edb57337-528c-481d-a427-b307951d35c1",
+      "name": "S3",
+      "type": "n8n-nodes-base.s3",
+      "typeVersion": 1,
+      "position": [
+        700,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "bucket",
+        "operation": "getAll"
+      },
+      "id": "20c526d3-e1ed-43bf-9843-1d957f30fa24",
+      "name": "AWS S3",
+      "type": "n8n-nodes-base.awsS3",
+      "typeVersion": 1,
+      "position": [
+        920,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "resolve"
+      },
+      "id": "93424b37-ef48-4eda-853c-cd8206e1f28f",
+      "name": "SIGNL4",
+      "type": "n8n-nodes-base.signl4",
+      "typeVersion": 1,
+      "position": [
+        1080,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "ff1c013d-bcc9-481c-a9b0-d29174d17108",
+      "name": "sms77",
+      "type": "n8n-nodes-base.sms77",
+      "typeVersion": 1,
+      "position": [
+        1180,
+        100
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "4a61aac2-f9c4-40a2-8687-97ea5887d921",
+      "name": "AWS S3_",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        560,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "bucket",
+        "operation": "search",
+        "additionalFields": {}
+      },
+      "id": "476d8311-a1a1-4b6f-9eb3-8fe0eaa0c00c",
+      "name": "S3word",
+      "type": "n8n-nodes-base.s3",
+      "typeVersion": 1,
+      "position": [
+        800,
+        340
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-04-08T07:53:52.139Z",
+  "versionId": "f52ba797-cbdb-41b7-922c-8f47d4dc524a"
+}
