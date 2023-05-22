@@ -387,7 +387,7 @@
     },
     {
       "parameters": {
-        "fromEmail": "dev@2t.band",
+        "fromEmail": "platform2tinfo@gmail.com",
         "toEmail": "={{ $node.get_teamlead_email.json.email }}",
         "subject": "=От {{ $node.get_user_profile.json.firstname }} {{ $node.get_user_profile.json.lastname }}",
         "text": "={{ $node.teamlead_support.json.body.comment }}\n\nПочта для связи с трекером  {{ $node[\"get user\"].json.email }}",
@@ -410,7 +410,7 @@
     },
     {
       "parameters": {
-        "fromEmail": "dev@2t.band",
+        "fromEmail": "platform2tinfo@gmail.com",
         "toEmail": "={{ $node.get_teamlead_email.json.email }}",
         "subject": "=От {{ $node.get_user_profile.json.firstname }} {{ $node.get_user_profile.json.lastname }} из проекта   {{ $node.teamlead_support.json.body.project_name }}",
         "text": "={{ $node.teamlead_support.json.body.comment }}\n\nПочта для связи с трекером  {{ $node[\"get user\"].json.email }}",
@@ -495,6 +495,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-05-11T17:01:56.265Z",
-  "versionId": "aa9698aa-32ea-4677-958f-e6f07cbd105f"
+  "updatedAt": "2023-05-22T14:36:05.316Z",
+  "versionId": "75eaa10c-bbc6-4c8b-9070-8c58a674debf"
 }
