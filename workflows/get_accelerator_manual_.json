@@ -12,11 +12,6 @@
         ]
       ]
     },
-    "Supabase": {
-      "main": [
-        []
-      ]
-    },
     "Supabase1": {
       "main": [
         [
@@ -121,7 +116,7 @@
     {
       "parameters": {
         "respondWith": "json",
-        "responseBody": "={\"manual_link\":\" {{ $json.manual_link }}\"}",
+        "responseBody": "={\"manual_link\":\" {{ $json.manual_link }}\",\n\"manual_tl_link\":\"{{ $json.manual_tl_link }}\"}",
         "options": {}
       },
       "id": "ff33d156-0006-48ac-9ccc-6802a637c7e3",
@@ -258,6 +253,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-05-11T17:01:20.200Z",
-  "versionId": "be2d9af0-630d-4dcf-9d63-829fdb7b7a81"
+  "updatedAt": "2023-05-22T18:02:21.767Z",
+  "versionId": "e6841882-2818-4916-8760-8e1713f50229"
 }
