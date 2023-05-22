@@ -38,7 +38,7 @@
       "main": [
         [
           {
-            "node": "get_team_id",
+            "node": "update_meeting_reported_time1",
             "type": "main",
             "index": 0
           }
@@ -72,6 +72,17 @@
         [
           {
             "node": "add_tl_notif_new_report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "update_meeting_reported_time1": {
+      "main": [
+        [
+          {
+            "node": "get_team_id",
             "type": "main",
             "index": 0
           }
@@ -111,7 +122,7 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1,
       "position": [
-        200,
+        -40,
         300
       ],
       "webhookId": "0bbada9c-5ec0-4d4c-bfa7-d1f58d96f53f",
@@ -131,7 +142,7 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1,
       "position": [
-        360,
+        120,
         300
       ]
     },
@@ -174,7 +185,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 3,
       "position": [
-        560,
+        320,
         300
       ],
       "credentials": {
@@ -187,7 +198,7 @@
     {
       "parameters": {
         "method": "PATCH",
-        "url": "={{ $node[\"Execute Workflow\"].json.supaBaseURL }}rest/v1/meetings?select=*&id=eq.{{ $json.meeting_id }}",
+        "url": "={{ $node[\"Execute Workflow\"].json.supaBaseURL }}rest/v1/meetings?id=eq.{{ $json.meeting_id }}&select=*,meetings_type(*)",
         "authentication": "predefinedCredentialType",
         "nodeCredentialType": "supabaseApi",
         "sendHeaders": true,
@@ -215,7 +226,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 3,
       "position": [
-        740,
+        500,
         300
       ],
       "credentials": {
@@ -249,7 +260,7 @@
             },
             {
               "name": "text",
-              "value": "=Внесены данные отчета.\tВам нужно проверить новый отчет о проведенной сессии  {{ $json.name }}"
+              "value": "=Внесены данные отчета.\tВам нужно проверить новый отчет о проведенной сессии {{ $node.update_meeting_reported_time.json.name }} {{ $node.update_meeting_reported_time.json.meetings_type.name }}"
             }
           ]
         },
@@ -260,7 +271,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 3,
       "position": [
-        1360,
+        1320,
         300
       ],
       "credentials": {
@@ -343,6 +354,37 @@
           "name": "Supabase account"
         }
       }
+    },
+    {
+      "parameters": {
+        "url": "={{ $node[\"Execute Workflow\"].json.supaBaseURL }}rest/v1/meetings?id=eq.{{ $node.update_report.json.meeting_id }}&select=*",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "06d57f6e-87ab-4e32-a98f-28bb2752377e",
+      "name": "update_meeting_reported_time1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        740,
+        300
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -357,6 +399,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-05-11T16:59:48.549Z",
-  "versionId": "c4a2c533-5142-4deb-a7f1-a1869405ae63"
+  "updatedAt": "2023-05-22T14:53:20.227Z",
+  "versionId": "b73d559d-8d1b-4c9f-8a86-d2dce3ed03f3"
 }
