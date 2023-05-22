@@ -222,7 +222,7 @@
             },
             {
               "name": "text",
-              "value": "=Спасибо, тимлид высоко оценил ваш {{ $node.update_tl_feedback.json.artifacts_type.type }} "
+              "value": "=Спасибо, тимлид высоко оценил вашу презентацию по проекту "
             }
           ]
         },
@@ -267,7 +267,7 @@
             },
             {
               "name": "text",
-              "value": "=Вам необходимо доработать ваш артефакт {{ $node.update_tl_feedback.json.artifacts_type.type }} по встрече {{ $json. }}"
+              "value": "=Вам необходимо доработать вашу презентацию по проекту  {{ $json.projects.name }}"
             }
           ]
         },
@@ -290,7 +290,7 @@
     },
     {
       "parameters": {
-        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/meetings?id=eq.{{ $json.meeting_id }}&select=user_id,name",
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/meetings?id=eq.{{ $json.meeting_id }}&select=user_id,name,projects(name)",
         "authentication": "predefinedCredentialType",
         "nodeCredentialType": "supabaseApi",
         "sendHeaders": true,
@@ -344,6 +344,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-05-20T07:08:00.938Z",
-  "versionId": "3efef067-4694-4da9-8dab-b1f7fe8489d3"
+  "updatedAt": "2023-05-22T15:01:59.219Z",
+  "versionId": "30d32452-7e31-4b61-86f7-41286d4347b4"
 }
