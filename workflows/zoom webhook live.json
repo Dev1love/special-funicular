@@ -1420,7 +1420,7 @@
             },
             {
               "name": "text",
-              "value": "=Вам нужно подтвердить качество проведенной встречи \"{{ $node.SUPA_get_meeting.json.name }}\" с  {{ $node.SUPA_get_team_id1.json.firstname ?? \"\" }} {{ $node.SUPA_get_team_id1.json.lastname ?? \"\" }}"
+              "value": "=Вам нужно подтвердить качество проведенной встречи {{ $node.SUPA_get_meeting.json.name }} с  {{ $node.SUPA_get_team_id1.json.firstname ?? \"\" }} {{ $node.SUPA_get_team_id1.json.lastname ?? \"\" }}"
             }
           ]
         },
@@ -1550,7 +1550,7 @@
     },
     {
       "parameters": {
-        "url": "={{ $node[\"init_vars\"].json.supaBaseURL }}rest/v1/meetings?id=eq.{{ $json.id }}&select=user_id",
+        "url": "={{ $node[\"init_vars\"].json.supaBaseURL }}rest/v1/meetings?id=eq.{{ $json.id }}&select=user_id,meetings_type(name)",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -1733,6 +1733,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-05-11T17:04:38.179Z",
-  "versionId": "7970a36e-c201-4679-8846-4491b12afea7"
+  "updatedAt": "2023-05-22T15:25:36.962Z",
+  "versionId": "df036294-4eb5-42ac-9c11-6c77aeda234f"
 }
