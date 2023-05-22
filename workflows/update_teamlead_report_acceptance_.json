@@ -222,7 +222,7 @@
             },
             {
               "name": "text",
-              "value": "=Спасибо, отчет о проведенной сессии \"{{ $json.name }}\" принят! "
+              "value": "=Спасибо, отчет о проведенной сессии {{ $json.name }} {{ $json.meetings_type.name }} принят!  "
             }
           ]
         },
@@ -267,7 +267,7 @@
             },
             {
               "name": "text",
-              "value": "=Необходимо доработать отчет о проведенной сессии {{ $json.name }}."
+              "value": "=Необходимо доработать отчет о проведенной сессии {{ $json.name }} {{ $json.meetings_type.name }}"
             }
           ]
         },
@@ -290,7 +290,7 @@
     },
     {
       "parameters": {
-        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/meetings?id=eq.{{ $json.meeting_id }}&select=user_id,name",
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/meetings?id=eq.{{ $json.meeting_id }}&select=user_id,name,type,meetings_type(*)",
         "authentication": "predefinedCredentialType",
         "nodeCredentialType": "supabaseApi",
         "sendHeaders": true,
@@ -344,6 +344,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-05-20T06:23:48.596Z",
-  "versionId": "83733874-80d1-4cd5-8af0-2e6b2dd110f6"
+  "updatedAt": "2023-05-22T14:58:41.006Z",
+  "versionId": "cae31e0e-9648-4e47-8791-93d5ddeaedab"
 }
