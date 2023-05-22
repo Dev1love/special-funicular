@@ -313,7 +313,7 @@
     },
     {
       "parameters": {
-        "fromEmail": "dev@2t.band",
+        "fromEmail": "platform2tinfo@gmail.com",
         "toEmail": "={{ $node[\"init_vars_\"].json.code_verification_params.user_email }}",
         "subject": "=код верификации на платформу 2т",
         "text": "=Ваш код верификации на платформу 2т:\n{{ $node.generate_code.json.code }}\nДля подтверждения аккаунта введите его в поле на странице верификации.\nС уважением,\nКоманда 2Т",
@@ -495,7 +495,7 @@
     },
     {
       "parameters": {
-        "fromEmail": "dev@2t.band",
+        "fromEmail": "platform2tinfo@gmail.com",
         "toEmail": "={{ $node[\"SUPA_RPC_get_user\"].json.email }}",
         "subject": "=код верификации на платформу 2т",
         "text": "=Ваш код верификации на платформу 2т:\n{{ $node[\"generate_code1\"].json.code }}\nДля подтверждения аккаунта введите его в поле на странице верификации.\nС уважением,\nКоманда 2Т",
@@ -684,6 +684,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-05-04T08:45:45.132Z",
-  "versionId": "8c753249-e03a-4149-9776-07c1cf283894"
+  "updatedAt": "2023-05-22T14:34:56.564Z",
+  "versionId": "3632cf87-ec8a-48df-b4ed-52dfdf89fdf2"
 }
