@@ -392,6 +392,11 @@
             "node": "IF_pitchdeck",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "SUPA_add_notification_",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -1481,7 +1486,7 @@
             },
             {
               "name": "text",
-              "value": "=Трекер {{ $node.SUPA_get_team_id1.json.firstname ?? \"\" }} {{ $node.SUPA_get_team_id1.json.lastname ?? \"\" }} загрузил новый питчдек \"{{ $node.init_vars.binary.data.fileName }}\". Вам нужно проверить его качество. "
+              "value": "=Трекер {{ $node.SUPA_get_team_id1.json.firstname ?? \"\" }} {{ $node.SUPA_get_team_id1.json.lastname ?? \"\" }} загрузил презентацию {{ $node.init_vars.binary.data.fileName }}. Вам нужно проверить ее качество. "
             }
           ]
         },
@@ -1492,8 +1497,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 3,
       "position": [
-        3560,
-        -180
+        3500,
+        -300
       ]
     },
     {
@@ -1515,7 +1520,8 @@
       "position": [
         3320,
         -120
-      ]
+      ],
+      "disabled": true
     },
     {
       "parameters": {
@@ -2054,8 +2060,33 @@
     "errorWorkflow": "102"
   },
   "staticData": null,
-  "tags": [],
+  "tags": [
+    {
+      "createdAt": "2023-04-27T18:40:13.285Z",
+      "updatedAt": "2023-04-27T18:40:13.285Z",
+      "id": "3",
+      "name": "notif"
+    },
+    {
+      "createdAt": "2023-05-22T15:02:41.430Z",
+      "updatedAt": "2023-05-22T15:02:41.430Z",
+      "id": "6",
+      "name": "s3"
+    },
+    {
+      "createdAt": "2023-05-22T15:02:35.597Z",
+      "updatedAt": "2023-05-22T15:02:35.597Z",
+      "id": "5",
+      "name": "files"
+    },
+    {
+      "createdAt": "2023-05-22T15:02:29.217Z",
+      "updatedAt": "2023-05-22T15:02:29.217Z",
+      "id": "4",
+      "name": "artifact"
+    }
+  ],
   "triggerCount": 6,
-  "updatedAt": "2023-05-11T16:32:53.034Z",
-  "versionId": "0ea4e201-a111-44c6-aff9-04b8215ce9be"
+  "updatedAt": "2023-05-22T15:26:46.262Z",
+  "versionId": "7671b6d9-8e84-440e-b091-160e2790077f"
 }
