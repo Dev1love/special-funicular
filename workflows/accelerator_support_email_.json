@@ -177,7 +177,7 @@
     },
     {
       "parameters": {
-        "fromEmail": "dev@2t.band",
+        "fromEmail": "platform2tinfo@gmail.com",
         "toEmail": "={{ $json.admin_email }}",
         "subject": "=От {{ $node.get_user_profile.json.firstname }} {{ $node.get_user_profile.json.lastname }} из проекта  {{ $node.get_user_profile1.json.projects.name }}",
         "text": "={{ $node.accelerator_support.json.body.comment }}",
@@ -405,7 +405,7 @@
     },
     {
       "parameters": {
-        "fromEmail": "dev@2t.band",
+        "fromEmail": "platform2tinfo@gmail.com",
         "toEmail": "={{ $json.admin_email }}",
         "subject": "=От {{ $node.get_user_profile.json.firstname }} {{ $node.get_user_profile.json.lastname }}",
         "text": "={{ $node.accelerator_support.json.body.comment }}",
@@ -438,6 +438,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-05-11T17:01:39.930Z",
-  "versionId": "e4a3c217-12ce-4e29-ab12-d49e4c9ed536"
+  "updatedAt": "2023-05-22T14:36:16.469Z",
+  "versionId": "0022f565-15b1-49ba-9e8f-ea919155de6b"
 }
