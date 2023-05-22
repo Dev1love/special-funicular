@@ -197,7 +197,7 @@
     },
     {
       "parameters": {
-        "jsCode": "let res = [];\nfor (let meet of $json.data[0].meetings) {\n    const meeting_recommend = new Date(meet?.meetings_type?.meeting_recommend);\n    const meeting_deadline = new Date(meet?.meetings_type?.meeting_deadline);\n    const current_date = new Date()\n\n    if (meeting_recommend < current_date && meeting_deadline > current_date) {\n      if (meet.booked === null) {\n        meet.booking_btn = 'yellow';\n      }\n      if (meet.reported === null) {\n        meet.report_btn = 'yellow';\n      }\n      if (meet.s3_path === null) {\n        meet.artifact_btn = 'yellow';\n      }\n    } else if (meeting_deadline < current_date) {\n      if (meet.booked === null) {\n        meet.booking_btn = 'red';\n      }\n      if (meet.reported === null) {\n        meet.report_btn = 'red';\n      }\n    }\n    else if (meeting_recommend > current_date) {\n      if (meet.booked === null) {\n        meet.booking_btn = 'gray';\n      }\n    }\n  res.push(meet);\n }\nreturn {...$json.data[0], meetings: res};"
+        "jsCode": "let res = [];\nfor (let meet of $json.data[0].meetings) {\n    const meeting_recommend = new Date(meet?.meetings_type?.meeting_recommend);\n    const meeting_deadline = new Date(meet?.meetings_type?.meeting_deadline);\n    const current_date = new Date()\n\n    if (meeting_recommend < current_date && meeting_deadline > current_date) {\n      if (meet.booked === null) {\n        meet.booking_btn = 'yellow';\n      }\n      if (meet.reported === null) {\n        meet.report_btn = 'yellow';\n      }\n      if (meet.s3_path === null) {\n        meet.artifact_btn = 'yellow';\n      }\n    } else if (meeting_deadline < current_date) {\n      if (meet.booked === null) {\n        meet.booking_btn = 'red';\n      }\n      if (meet.reported === null) {\n        meet.report_btn = 'red';\n      }\n    }\n    else if (meeting_recommend > current_date) {\n      if (meet.booked === null) {\n        meet.booking_btn = 'gray';\n      }\n    }\n  res.push(meet);\n }\nreturn {...$json.data[0],meetings:res.sort(function (a, b) {\n            if (a.type > b.type) {\n              return 1;\n            }\n            if (a.type < b.type) {\n              return -1;\n             }\n              return 0;\n            })};"
       },
       "id": "627df54f-94a5-4591-b6ff-038730a8d298",
       "name": "Code1",
@@ -234,6 +234,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-05-11T16:57:33.988Z",
-  "versionId": "2375b3fb-5ec2-4763-b38e-dbdb8ec24639"
+  "updatedAt": "2023-05-22T06:58:25.666Z",
+  "versionId": "ed67578a-ec03-4ac9-bc54-eba56825834c"
 }
