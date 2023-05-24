@@ -951,7 +951,7 @@
     },
     {
       "parameters": {
-        "command": "=cd /home/node/{{ $node[\"fileParams\"].json[\"folder_in_parent\"] +  '/' + $node.Webhook.json.body.payload.object.id }} && ffmpeg -i {{ $node[\"fileParams\"].json.fileName }} -vf \"select=isnan(prev_selected_t)+gte(t-prev_selected_t\\,300),scale=640:360\" -vsync vfr -q:v 2 output_%03d.jpg"
+        "command": "=cd /home/node/{{ $node[\"fileParams\"].json[\"folder_in_parent\"] +  '/' + $node.Webhook.json.body.payload.object.id }} && ffmpeg -i {{ $node[\"fileParams\"].json.fileName }} -vf \"select=isnan(prev_selected_t)+gte(t-prev_selected_t\\,60),scale=640:360\" -vsync vfr -q:v 2 output_%03d.jpg"
       },
       "id": "6e3516af-3359-4c3f-a73a-d22ae475c6b6",
       "name": "extract_frames",
@@ -1733,6 +1733,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-05-22T15:25:36.962Z",
-  "versionId": "df036294-4eb5-42ac-9c11-6c77aeda234f"
+  "updatedAt": "2023-05-24T08:42:50.483Z",
+  "versionId": "4a9b63f5-6723-419f-971c-76a1005b72cb"
 }
