@@ -96,6 +96,13 @@
             "type": "main",
             "index": 0
           }
+        ],
+        [
+          {
+            "node": "check_params1",
+            "type": "main",
+            "index": 0
+          }
         ]
       ]
     },
@@ -414,7 +421,7 @@
       "main": [
         [
           {
-            "node": "SUPA_meeting_user_id",
+            "node": "SUPA_add_notification_",
             "type": "main",
             "index": 0
           }
@@ -424,13 +431,7 @@
     "IF_err": {
       "main": [
         [],
-        [
-          {
-            "node": "SUPA_add_notification_",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "SUPA_meeting_user_id": {
@@ -460,6 +461,24 @@
         [
           {
             "node": "IF_err",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "check_params1": {
+      "main": [
+        [
+          {
+            "node": "SUPA_get_meeting",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Telegram",
             "type": "main",
             "index": 0
           }
@@ -559,7 +578,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 1,
       "position": [
-        2220,
+        2660,
         340
       ]
     },
@@ -572,7 +591,7 @@
       "type": "n8n-nodes-base.executeCommand",
       "typeVersion": 1,
       "position": [
-        2020,
+        2460,
         340
       ]
     },
@@ -585,7 +604,7 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1,
       "position": [
-        1840,
+        2280,
         340
       ]
     },
@@ -625,7 +644,7 @@
       "typeVersion": 1,
       "position": [
         920,
-        -200
+        -20
       ]
     },
     {
@@ -835,7 +854,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 3,
       "position": [
-        1180,
+        1620,
         340
       ],
       "alwaysOutputData": true,
@@ -899,7 +918,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 3,
       "position": [
-        4320,
+        4660,
         360
       ]
     },
@@ -934,7 +953,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        1360,
+        1800,
         340
       ]
     },
@@ -945,7 +964,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        1660,
+        2100,
         540
       ]
     },
@@ -958,7 +977,7 @@
       "type": "n8n-nodes-base.executeCommand",
       "typeVersion": 1,
       "position": [
-        2620,
+        3060,
         320
       ]
     },
@@ -971,7 +990,7 @@
       "type": "n8n-nodes-base.executeCommand",
       "typeVersion": 1,
       "position": [
-        2960,
+        3400,
         320
       ]
     },
@@ -984,7 +1003,7 @@
       "type": "n8n-nodes-base.executeCommand",
       "typeVersion": 1,
       "position": [
-        3580,
+        4020,
         340
       ]
     },
@@ -997,7 +1016,7 @@
       "type": "n8n-nodes-base.executeCommand",
       "typeVersion": 1,
       "position": [
-        2780,
+        3220,
         320
       ]
     },
@@ -1017,7 +1036,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        2380,
+        2820,
         340
       ]
     },
@@ -1032,8 +1051,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        1000,
-        500
+        940,
+        480
       ]
     },
     {
@@ -1058,7 +1077,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 1,
       "position": [
-        1620,
+        2060,
         340
       ]
     },
@@ -1071,7 +1090,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 1,
       "position": [
-        3140,
+        3580,
         320
       ]
     },
@@ -1084,7 +1103,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 1,
       "position": [
-        3780,
+        4220,
         340
       ]
     },
@@ -1104,7 +1123,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        3300,
+        3740,
         320
       ]
     },
@@ -1124,7 +1143,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        3960,
+        4400,
         340
       ]
     },
@@ -1137,7 +1156,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 1,
       "position": [
-        4120,
+        4560,
         160
       ]
     },
@@ -1150,7 +1169,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 1,
       "position": [
-        3440,
+        3880,
         160
       ]
     },
@@ -1416,7 +1435,7 @@
           "parameters": [
             {
               "name": "user_id",
-              "value": "={{ $json.user_id }}"
+              "value": "=c571544e-083b-4884-a02d-f3f7f9c7eb2c"
             },
             {
               "name": "text",
@@ -1431,8 +1450,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 3,
       "position": [
-        5460,
-        360
+        5240,
+        120
       ]
     },
     {
@@ -1452,7 +1471,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        4520,
+        4840,
         360
       ]
     },
@@ -1518,8 +1537,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        5240,
-        340
+        5680,
+        380
       ]
     },
     {
@@ -1531,7 +1550,7 @@
       "type": "n8n-nodes-base.executeCommand",
       "typeVersion": 1,
       "position": [
-        4080,
+        4520,
         -20
       ]
     },
@@ -1575,8 +1594,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 3,
       "position": [
-        4700,
-        340
+        5480,
+        380
       ]
     },
     {
@@ -1606,8 +1625,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 3,
       "position": [
-        4880,
-        340
+        5220,
+        380
       ]
     },
     {
@@ -1638,8 +1657,66 @@
       "typeVersion": 3,
       "position": [
         5040,
-        340
+        380
       ]
+    },
+    {
+      "parameters": {
+        "content": "TEAMLEAD hardcoded\nc571544e-083b-4884-a02d-f3f7f9c7eb2c\n25.05.2023 14:14\n"
+      },
+      "id": "581a399f-e89d-4413-95b3-de57b7595ff1",
+      "name": "Sticky Note7",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        5080,
+        80
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $node.Webhook.json.body.payload.object.recording_files[1].file_type }}",
+              "value2": "MP4"
+            },
+            {
+              "value1": "={{ $node.Webhook.json.body.payload.object.recording_files[1].status }}",
+              "value2": "completed"
+            }
+          ]
+        }
+      },
+      "id": "67c372ca-166a-431f-bed4-2ba44843902f",
+      "name": "check_params1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1100,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "-938702100",
+        "text": "=Hey lovely, something wrong with zoom response {{ $workflow.name }} {{$execution.id}}. But don't worry it's already in zoom so we goooood",
+        "additionalFields": {}
+      },
+      "id": "2e2c7b0a-f501-4b49-9a5f-02645ac12952",
+      "name": "Telegram",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [
+        1420,
+        520
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "18",
+          "name": "Telegram account"
+        }
+      }
     }
   ],
   "pinData": {
@@ -1653,12 +1730,12 @@
             "x-forwarded-for": "134.224.191.2",
             "x-real-ip": "134.224.191.2",
             "connection": "close",
-            "content-length": "1649",
+            "content-length": "2327",
             "authorization": "tP_k6dh1Tuiz8fz_6ryD6w",
             "clientid": "QKmsVEh0TN6zlVqUdvOykg",
-            "x-zm-trackingid": "v=2.0;clid=us06;rid=WEB_2a37755930ecbc8c06163eaf0065d24b",
-            "x-zm-request-timestamp": "1682526957",
-            "x-zm-signature": "v0=5a446b993118531a0f3f6791d9d9a06eb7b46cfd436139c6b40b22bf319d5d0b",
+            "x-zm-trackingid": "v=2.0;clid=us06;rid=WEB_a8572a1584d887d8b5aa76c601d40fbf",
+            "x-zm-request-timestamp": "1685008857",
+            "x-zm-signature": "v0=f7f0d132a6401eb4f82f7162a794783411a2f07192352530b495c06202b94299",
             "content-type": "application/json; charset=utf-8",
             "user-agent": "Zoom Marketplace/1.0a"
           },
@@ -1668,40 +1745,40 @@
             "payload": {
               "account_id": "0kLVFu_pSxuiWCUZ_CyvKg",
               "object": {
-                "uuid": "dcG0c4akQuOnextqQcIwMw==",
-                "id": 85659587161,
+                "uuid": "eH1kT4X2TuW4/AhEPv5m8w==",
+                "id": 85438943012,
                 "account_id": "0kLVFu_pSxuiWCUZ_CyvKg",
-                "host_id": "XGsV17bxQFCr6_a_0ACTPA",
-                "topic": "meeting topic X",
+                "host_id": "S0ZaPlQiR7-FOr6lJtX9LA",
+                "topic": "Курилки возле ТОГУ",
                 "type": 2,
-                "start_time": "2023-04-26T15:28:17Z",
+                "start_time": "2023-05-25T08:57:03Z",
                 "timezone": "Europe/Moscow",
-                "host_email": "main00@2t.band",
-                "duration": 61,
-                "total_size": 146817205,
-                "recording_count": 1,
-                "share_url": "https://us06web.zoom.us/rec/share/5K2EbYul98FVhU3NtVcz3hsqu9qsvsDuzdtRGFkrhf7h4Z-UwJ0ITM8rbK5buG6r.AoVOgTq9VoqB61xn",
+                "host_email": "user02@2t.band",
+                "duration": 48,
+                "total_size": 169656104,
+                "recording_count": 2,
+                "share_url": "https://us06web.zoom.us/rec/share/egpQhrhjPuU5tk_5sMe4a7yXR9pYe_pWIOI6np2nS2kPHVeA1f3lQNC9KGQWR8j4.UOorOR52CN6inx7y",
                 "recording_files": [
                   {
-                    "id": "490605a7-5781-4c54-adc7-7432e2c1d36a",
-                    "meeting_id": "dcG0c4akQuOnextqQcIwMw==",
-                    "recording_start": "2023-04-26T15:28:18Z",
-                    "recording_end": "2023-04-26T16:29:22Z",
+                    "id": "a40eb824-4d4d-47c4-92b7-b1d0dda96f79",
+                    "meeting_id": "eH1kT4X2TuW4/AhEPv5m8w==",
+                    "recording_start": "2023-05-25T08:57:04Z",
+                    "recording_end": "2023-05-25T09:45:27Z",
                     "file_type": "MP4",
                     "file_extension": "MP4",
-                    "file_size": 146817205,
-                    "play_url": "https://us06web.zoom.us/rec/play/0xSzjsytpeSGaniEzTYjhCsVgRgTTczu3m4MOTV05gEIyDx7rg_g6KiZvtPbXCBUtBLDP47ohu6jyXKl.t6zKLnr6rzlFw0Dz",
-                    "download_url": "https://us06web.zoom.us/rec/webhook_download/0xSzjsytpeSGaniEzTYjhCsVgRgTTczu3m4MOTV05gEIyDx7rg_g6KiZvtPbXCBUtBLDP47ohu6jyXKl.t6zKLnr6rzlFw0Dz/CKwPBMsMFYmvM90UgR_1G50IoLDFO5qwgqF_2jua5EoDqaXF0wU_I1oWXvULnnE.gf2wjgIKvK1ugvkB",
+                    "file_size": 169656007,
+                    "play_url": "https://us06web.zoom.us/rec/play/Hj7NsQcMg97gSCPyXw5QimZKamhQzLFL0lPrPMH-xbY4f9SKJWUfRlNRtm_Hy5jBlm2KRcSyiuwt4Rl3.Tw6eLdoAPe_-AEQi",
+                    "download_url": "https://us06web.zoom.us/rec/webhook_download/Hj7NsQcMg97gSCPyXw5QimZKamhQzLFL0lPrPMH-xbY4f9SKJWUfRlNRtm_Hy5jBlm2KRcSyiuwt4Rl3.Tw6eLdoAPe_-AEQi/olzhEQ6TUJOn3GJtB9u8XkUB62if-PsWbir0UjHq-cM0GD2O4Ppl2ztDkb5iCeA.xubUDU8DHbrLLrli",
                     "status": "completed",
-                    "recording_type": "shared_screen_with_speaker_view"
+                    "recording_type": "shared_screen_with_gallery_view"
                   }
                 ],
                 "on_prem": false
               }
             },
-            "event_ts": 1682526942365,
+            "event_ts": 1685008842039,
             "event": "recording.completed",
-            "download_token": "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJodHRwczovL2V2ZW50Lnpvb20udXMiLCJhY2NvdW50SWQiOiIwa0xWRnVfcFN4dWlXQ1VaX0N5dktnIiwiYXVkIjoiaHR0cHM6Ly9vYXV0aC56b29tLnVzIiwibWlkIjoiZGNHMGM0YWtRdU9uZXh0cVFjSXdNdz09IiwiZXhwIjoxNjgyNjEzMzU3LCJ1c2VySWQiOiJYR3NWMTdieFFGQ3I2X2FfMEFDVFBBIn0.8eetNRIwjBtMpuLgto66IMS8vcvv0YqjCOfR8AUkD6RZHShUp8Mikzro7UYKE_3BlR0XPLtPR3x0z_6uT7w-zg"
+            "download_token": "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJodHRwczovL2V2ZW50Lnpvb20udXMiLCJhY2NvdW50SWQiOiIwa0xWRnVfcFN4dWlXQ1VaX0N5dktnIiwiYXVkIjoiaHR0cHM6Ly9vYXV0aC56b29tLnVzIiwibWlkIjoiZUgxa1Q0WDJUdVc0L0FoRVB2NW04dz09IiwiZXhwIjoxNjg1MDk1MjU3LCJ1c2VySWQiOiJTMFphUGxRaVI3LUZPcjZsSnRYOUxBIn0.3jWBNZ8BhUqx7J_Fg7x9bJHTDWCP9bNnrkUxPV2yUbjbqIJ3Rh75CcPJTrFVgvepdMAFwqVBn_qa1BZGtLfYpw"
           }
         }
       }
@@ -1733,6 +1810,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-05-24T08:42:50.483Z",
-  "versionId": "4a9b63f5-6723-419f-971c-76a1005b72cb"
+  "updatedAt": "2023-05-25T14:02:00.686Z",
+  "versionId": "b653adf2-f64a-40fb-a012-d1aacb0a5992"
 }
