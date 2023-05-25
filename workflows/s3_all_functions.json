@@ -1482,7 +1482,7 @@
           "parameters": [
             {
               "name": "user_id",
-              "value": "={{ $json.user_id }}"
+              "value": "=c571544e-083b-4884-a02d-f3f7f9c7eb2c"
             },
             {
               "name": "text",
@@ -1730,6 +1730,19 @@
       "position": [
         3560,
         -40
+      ]
+    },
+    {
+      "parameters": {
+        "content": "TEAMLEAD hardcoded\nc571544e-083b-4884-a02d-f3f7f9c7eb2c\n25.05.2023 14:14\n"
+      },
+      "id": "299e8234-4b11-42bf-9b7a-9fda1526a6ce",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3420,
+        -440
       ]
     }
   ],
@@ -2087,6 +2100,6 @@
     }
   ],
   "triggerCount": 6,
-  "updatedAt": "2023-05-22T15:26:46.262Z",
-  "versionId": "7671b6d9-8e84-440e-b091-160e2790077f"
+  "updatedAt": "2023-05-25T17:12:40.335Z",
+  "versionId": "09d613de-a2f9-4497-af7e-fe3a9b278020"
 }
