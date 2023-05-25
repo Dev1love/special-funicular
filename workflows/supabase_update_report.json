@@ -256,7 +256,7 @@
           "parameters": [
             {
               "name": "user_id",
-              "value": "={{ $json.user_id }}"
+              "value": "=c571544e-083b-4884-a02d-f3f7f9c7eb2c"
             },
             {
               "name": "text",
@@ -385,6 +385,19 @@
           "name": "Supabase account"
         }
       }
+    },
+    {
+      "parameters": {
+        "content": "TEAMLEAD hardcoded\nc571544e-083b-4884-a02d-f3f7f9c7eb2c\n25.05.2023\n"
+      },
+      "id": "4a561b34-0815-49f3-8cb5-99cbb3ce87fd",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1260,
+        140
+      ]
     }
   ],
   "pinData": {},
@@ -397,8 +410,15 @@
     "errorWorkflow": "102"
   },
   "staticData": null,
-  "tags": [],
+  "tags": [
+    {
+      "createdAt": "2023-04-27T18:40:13.285Z",
+      "updatedAt": "2023-04-27T18:40:13.285Z",
+      "id": "3",
+      "name": "notif"
+    }
+  ],
   "triggerCount": 1,
-  "updatedAt": "2023-05-22T14:53:20.227Z",
-  "versionId": "b73d559d-8d1b-4c9f-8a86-d2dce3ed03f3"
+  "updatedAt": "2023-05-25T17:12:49.857Z",
+  "versionId": "ef973814-1c58-40d9-8230-4040542c01bf"
 }
