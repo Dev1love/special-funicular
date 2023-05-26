@@ -260,6 +260,11 @@
             "node": "Respond to Create",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -2738,9 +2743,61 @@
         6100,
         40
       ]
+    },
+    {
+      "parameters": {
+        "chatId": "-938702100",
+        "text": "=Ales gut in bagdad!\n\nВстреча {{ $json.name }}  забронирована на {{ $json.start_time.split('+')[0] }} на зум хоста\n{{ $json.zoom_user_host }}\n\nАйди встречи {{ $json.id }}  ",
+        "additionalFields": {}
+      },
+      "id": "8b1f8d49-4012-40ba-a8fd-74ee15fdd26c",
+      "name": "Telegram",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [
+        4300,
+        120
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "18",
+          "name": "Telegram account"
+        }
+      }
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "SUPA_update_meeting": [
+      {
+        "json": {
+          "id": "07c3c9e5-3d2b-4b6a-9277-2a1fb8c33555",
+          "created_at": "2023-05-21T21:46:59+00:00",
+          "project_id": "562b11d1-1d47-4798-b14d-b4c960dc65a9",
+          "name": "Успешный проект",
+          "type": 4,
+          "booking_link": "https://us06web.zoom.us/s/84929563394?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IlMwWmFQbFFpUjctRk9yNmxKdFg5TEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6Ijg0OTI5NTYzMzk0IiwiZXhwIjoxNjg1MDk5MjY1LCJpYXQiOjE2ODUwOTIwNjUsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJjaWQiOiIifQ.DeDSAxPhs6ZlfLw7dJvSJ11--jQbK_PLpZslsCWWcGg",
+          "join_link": "https://us06web.zoom.us/j/84929563394?pwd=WDl5SFg3VGR3bFg1dHZ5RFA4VzRPUT09",
+          "status": 2,
+          "booked": "2023-05-26T09:07:45.968+00:00",
+          "happened": null,
+          "reported": null,
+          "recorded": null,
+          "artifact": null,
+          "user_id": "38143cdd-a10a-4790-80ec-1823312fb3d4",
+          "meeting_eap_id": "250",
+          "meeting_zoom_id": "84929563394",
+          "tl_is_accepted": null,
+          "recording_link": null,
+          "screencast_link": null,
+          "tl_comment": null,
+          "s3_path": null,
+          "start_time": "2023-05-26T17:30:00+00:00",
+          "time_slot": "17:30 - 18:30",
+          "zoom_user_host": "user02@2t.band"
+        }
+      }
+    ]
+  },
   "settings": {
     "saveDataSuccessExecution": "all",
     "saveExecutionProgress": true,
@@ -2751,6 +2808,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 5,
-  "updatedAt": "2023-05-24T14:36:45.058Z",
-  "versionId": "7de0fee2-5835-49a2-9191-75b2d0a139b7"
+  "updatedAt": "2023-05-26T09:16:59.160Z",
+  "versionId": "eafa3747-6d96-4f04-9991-a92171615e99"
 }
