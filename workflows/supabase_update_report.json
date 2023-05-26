@@ -47,13 +47,7 @@
     },
     "add_tl_notif_new_report": {
       "main": [
-        [
-          {
-            "node": "Respond to Webhook",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "get_team_id": {
@@ -82,7 +76,12 @@
       "main": [
         [
           {
-            "node": "get_team_id",
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "add_tl_notif_new_report",
             "type": "main",
             "index": 0
           }
@@ -271,8 +270,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 3,
       "position": [
-        1320,
-        300
+        900,
+        120
       ],
       "credentials": {
         "supabaseApi": {
@@ -397,8 +396,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        1260,
-        140
+        900,
+        20
       ]
     }
   ],
@@ -474,6 +473,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2023-05-26T07:05:35.768Z",
-  "versionId": "d60fd382-a65a-4935-9892-9fb86985b986"
+  "updatedAt": "2023-05-26T13:29:13.899Z",
+  "versionId": "c5354beb-05f7-4b9a-9337-d2117fb78143"
 }
