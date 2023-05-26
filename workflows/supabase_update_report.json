@@ -256,7 +256,7 @@
           "parameters": [
             {
               "name": "user_id",
-              "value": "=c571544e-083b-4884-a02d-f3f7f9c7eb2c"
+              "value": "c571544e-083b-4884-a02d-f3f7f9c7eb2c"
             },
             {
               "name": "text",
@@ -316,7 +316,8 @@
           "id": "7",
           "name": "Supabase account"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -353,7 +354,8 @@
           "id": "7",
           "name": "Supabase account"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -400,7 +402,60 @@
       ]
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "save_report": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n.stage.2t.band",
+            "x-forwarded-scheme": "https",
+            "x-forwarded-proto": "https",
+            "x-forwarded-for": "5.159.102.176",
+            "x-real-ip": "5.159.102.176",
+            "connection": "close",
+            "content-length": "824",
+            "accept-encoding": "gzip",
+            "user-agent": "ReactorNetty/1.1.1",
+            "accept": "*/*",
+            "auth": "d23Y_Vfds8_9sdf",
+            "content-type": "application/json"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "is_accepted": null,
+            "report_data": [
+              {
+                "date": "2023-05-23T17:27:16.622+00:00",
+                "margin": null,
+                "notes": null,
+                "made": null,
+                "main_product": "Программа (идея) для реализации мер по увеличению безопасности дорожного движения на ж/д переездах",
+                "target_audience": "РЖД, муниципальные органы власти, автомобилисты",
+                "avg_bill": null,
+                "staff": 5,
+                "requests": null,
+                "planned": null,
+                "order_qty": null,
+                "agenda": null,
+                "resale_rate": null,
+                "target": "",
+                "inclusion": null,
+                "revenue": null,
+                "project_time": "",
+                "bottleneck": "формулирование проблематики ЦА",
+                "type_meeting": "ДС",
+                "market_volume": "пока не считали",
+                "convertion": null
+              }
+            ],
+            "id": "08fca64f-8b11-4bd8-a682-b8063ac01e91",
+            "teamlead_feedback": null
+          }
+        }
+      }
+    ]
+  },
   "settings": {
     "saveDataErrorExecution": "all",
     "saveDataSuccessExecution": "all",
@@ -419,6 +474,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2023-05-25T17:12:49.857Z",
-  "versionId": "ef973814-1c58-40d9-8230-4040542c01bf"
+  "updatedAt": "2023-05-26T07:05:35.768Z",
+  "versionId": "d60fd382-a65a-4935-9892-9fb86985b986"
 }
