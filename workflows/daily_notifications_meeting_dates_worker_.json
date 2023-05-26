@@ -903,7 +903,8 @@
           "id": "7",
           "name": "Supabase account"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -940,7 +941,8 @@
           "id": "7",
           "name": "Supabase account"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -977,7 +979,8 @@
           "id": "7",
           "name": "Supabase account"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -1014,7 +1017,8 @@
           "id": "7",
           "name": "Supabase account"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -1036,7 +1040,7 @@
           "parameters": [
             {
               "name": "user_id",
-              "value": "={{ $json.user_id }}"
+              "value": "=c571544e-083b-4884-a02d-f3f7f9c7eb2c"
             },
             {
               "name": "text",
@@ -1201,7 +1205,8 @@
           "id": "7",
           "name": "Supabase account"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -1238,7 +1243,8 @@
           "id": "7",
           "name": "Supabase account"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -1366,6 +1372,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2023-05-25T14:05:25.271Z",
-  "versionId": "7d3335ea-2aea-4123-95a7-ea082064016a"
+  "updatedAt": "2023-05-26T07:06:33.870Z",
+  "versionId": "de95bd98-0fc1-4fef-b412-5c7f2a0353c4"
 }
