@@ -413,6 +413,11 @@
             "node": "IF_not_TM",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Telegram3",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -426,12 +431,6 @@
             "index": 0
           }
         ]
-      ]
-    },
-    "IF_err": {
-      "main": [
-        [],
-        []
       ]
     },
     "SUPA_meeting_user_id": {
@@ -479,6 +478,28 @@
         [
           {
             "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_update_meeting1": {
+      "main": [
+        [
+          {
+            "node": "Telegram1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_update_meeting2": {
+      "main": [
+        [
+          {
+            "node": "Telegram2",
             "type": "main",
             "index": 0
           }
@@ -1717,6 +1738,69 @@
           "name": "Telegram account"
         }
       }
+    },
+    {
+      "parameters": {
+        "chatId": "-938702100",
+        "text": "=Ales gut in bagdad!\n\nВстреча {{ $json.name }} начата в зуме\n\nАйди встречи {{ $json.id }}",
+        "additionalFields": {}
+      },
+      "id": "b5ca09ce-3ae6-472b-9f90-e6ef46312d67",
+      "name": "Telegram1",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [
+        1540,
+        700
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "18",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "-938702100",
+        "text": "=Ales gut in bagdad!\n\nВстреча {{ $json.name }} закончена в зуме\nждем запись и скринкаст! \n\nАйди встречи {{ $json.id }}",
+        "additionalFields": {}
+      },
+      "id": "e45caab6-53a7-439b-8d3e-2714edfb1d5a",
+      "name": "Telegram2",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [
+        1540,
+        880
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "18",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "-938702100",
+        "text": "=Ales gut in bagdad!\n\nЗапись встречи {{ $json.name }} сохранена вообще везде\n\nАйди встречи {{ $json.id }}",
+        "additionalFields": {}
+      },
+      "id": "830b2b23-b54d-4aff-9bf3-d01526e2e93f",
+      "name": "Telegram3",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [
+        4840,
+        560
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "18",
+          "name": "Telegram account"
+        }
+      }
     }
   ],
   "pinData": {
@@ -1798,6 +1882,96 @@
           "tracker_middle_name": null
         }
       }
+    ],
+    "SUPA_update_meeting2": [
+      {
+        "json": {
+          "id": "afd7cf78-06fc-4f08-91d7-d95a01f66beb",
+          "created_at": "2023-05-21T22:44:09+00:00",
+          "project_id": "7f9a9fd5-2bc3-43a1-b7c4-ad532552b1cd",
+          "name": "Безопасный переезд",
+          "type": 1,
+          "booking_link": "https://us06web.zoom.us/s/82281203870?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IlMwWmFQbFFpUjctRk9yNmxKdFg5TEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6IjgyMjgxMjAzODcwIiwiZXhwIjoxNjg0ODcwMDM2LCJpYXQiOjE2ODQ4NjI4MzYsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJjaWQiOiIifQ.c0E0FCM1SbGqy7lcYc6T9m1J5pgkMMvhiv_UcfCELd8",
+          "join_link": "https://us06web.zoom.us/j/82281203870?pwd=aUwyQzZFcXNZazVHN1dxL1BhdStBZz09",
+          "status": 4,
+          "booked": "2023-05-23T17:27:16.622+00:00",
+          "happened": "2023-05-26T06:56:07.431+00:00",
+          "reported": null,
+          "recorded": null,
+          "artifact": null,
+          "user_id": "7344af07-90db-4318-86d4-b15f2f46b46d",
+          "meeting_eap_id": "234",
+          "meeting_zoom_id": "82281203870",
+          "tl_is_accepted": null,
+          "recording_link": null,
+          "screencast_link": null,
+          "tl_comment": null,
+          "s3_path": null,
+          "start_time": "2023-05-26T09:00:00+00:00",
+          "time_slot": "09:00 - 10:00",
+          "zoom_user_host": "user02@2t.band"
+        }
+      }
+    ],
+    "SUPA_update_meeting1": [
+      {
+        "json": {
+          "id": "afd7cf78-06fc-4f08-91d7-d95a01f66beb",
+          "created_at": "2023-05-21T22:44:09+00:00",
+          "project_id": "7f9a9fd5-2bc3-43a1-b7c4-ad532552b1cd",
+          "name": "Безопасный переезд",
+          "type": 1,
+          "booking_link": "https://us06web.zoom.us/s/82281203870?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IlMwWmFQbFFpUjctRk9yNmxKdFg5TEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6IjgyMjgxMjAzODcwIiwiZXhwIjoxNjg0ODcwMDM2LCJpYXQiOjE2ODQ4NjI4MzYsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJjaWQiOiIifQ.c0E0FCM1SbGqy7lcYc6T9m1J5pgkMMvhiv_UcfCELd8",
+          "join_link": "https://us06web.zoom.us/j/82281203870?pwd=aUwyQzZFcXNZazVHN1dxL1BhdStBZz09",
+          "status": 4,
+          "booked": "2023-05-23T17:27:16.622+00:00",
+          "happened": "2023-05-26T06:56:07.431+00:00",
+          "reported": null,
+          "recorded": null,
+          "artifact": null,
+          "user_id": "7344af07-90db-4318-86d4-b15f2f46b46d",
+          "meeting_eap_id": "234",
+          "meeting_zoom_id": "82281203870",
+          "tl_is_accepted": null,
+          "recording_link": null,
+          "screencast_link": null,
+          "tl_comment": null,
+          "s3_path": null,
+          "start_time": "2023-05-26T09:00:00+00:00",
+          "time_slot": "09:00 - 10:00",
+          "zoom_user_host": "user02@2t.band"
+        }
+      }
+    ],
+    "SUPA_update_meeting": [
+      {
+        "json": {
+          "id": "afd7cf78-06fc-4f08-91d7-d95a01f66beb",
+          "created_at": "2023-05-21T22:44:09+00:00",
+          "project_id": "7f9a9fd5-2bc3-43a1-b7c4-ad532552b1cd",
+          "name": "Безопасный переезд",
+          "type": 1,
+          "booking_link": "https://us06web.zoom.us/s/82281203870?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IlMwWmFQbFFpUjctRk9yNmxKdFg5TEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6IjgyMjgxMjAzODcwIiwiZXhwIjoxNjg0ODcwMDM2LCJpYXQiOjE2ODQ4NjI4MzYsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJjaWQiOiIifQ.c0E0FCM1SbGqy7lcYc6T9m1J5pgkMMvhiv_UcfCELd8",
+          "join_link": "https://us06web.zoom.us/j/82281203870?pwd=aUwyQzZFcXNZazVHN1dxL1BhdStBZz09",
+          "status": 4,
+          "booked": "2023-05-23T17:27:16.622+00:00",
+          "happened": "2023-05-26T06:56:07.431+00:00",
+          "reported": "2023-05-26T07:05:37.235+00:00",
+          "recorded": "2023-05-26T07:12:47.488+00:00",
+          "artifact": null,
+          "user_id": "7344af07-90db-4318-86d4-b15f2f46b46d",
+          "meeting_eap_id": "234",
+          "meeting_zoom_id": "82281203870",
+          "tl_is_accepted": null,
+          "recording_link": "https://183406.selcdn.ru/2T.Drive/accelerator/projects/7f9a9fd5-2bc3-43a1-b7c4-ad532552b1cd/afd7cf78-06fc-4f08-91d7-d95a01f66beb/meeting_82281203870__Безопасный_переезд_.mp4?temp_url_sig=84bbd0f61ebfdc61fa5987a3f184f3cb201ee6da&temp_url_expires=1690269167&filename=meeting_82281203870__Безопасный_переезд_.mp4",
+          "screencast_link": "https://183406.selcdn.ru/2T.Drive/accelerator/projects/7f9a9fd5-2bc3-43a1-b7c4-ad532552b1cd/afd7cf78-06fc-4f08-91d7-d95a01f66beb/meeting_82281203870__Безопасный_переезд__screencast.jpg?temp_url_sig=cdde79b43f4bd5e9c77fd64c33f7214c2b45c4a7&temp_url_expires=1690269167&filename=meeting_82281203870__Безопасный_переезд__screencast.jpg",
+          "tl_comment": null,
+          "s3_path": "accelerator/projects/7f9a9fd5-2bc3-43a1-b7c4-ad532552b1cd/afd7cf78-06fc-4f08-91d7-d95a01f66beb/meeting_82281203870__Безопасный_переезд_.mp4",
+          "start_time": "2023-05-26T09:00:00+00:00",
+          "time_slot": "09:00 - 10:00",
+          "zoom_user_host": "user02@2t.band"
+        }
+      }
     ]
   },
   "settings": {
@@ -1810,6 +1984,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-05-25T14:02:00.686Z",
-  "versionId": "b653adf2-f64a-40fb-a012-d1aacb0a5992"
+  "updatedAt": "2023-05-26T09:23:47.908Z",
+  "versionId": "ca8c34cd-c9c1-4fd3-bfd7-44dbe4968e20"
 }
