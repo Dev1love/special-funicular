@@ -44,6 +44,28 @@
           }
         ]
       ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Set",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2023-03-22T11:10:13.661Z",
@@ -59,7 +81,8 @@
       "position": [
         120,
         180
-      ]
+      ],
+      "disabled": true
     },
     {
       "parameters": {
@@ -160,17 +183,145 @@
       "type": "n8n-nodes-base.executeCommand",
       "typeVersion": 1,
       "position": [
-        480,
-        440
+        260,
+        40
       ],
       "disabled": true
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "delmetest1",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "cd096376-3b3d-49c9-961d-a555145b1517",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        80,
+        460
+      ],
+      "webhookId": "34c348d2-44b8-4c16-9231-1152a6ae3bec"
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "OUTPUT",
+              "value": "={{ $jmespath($node.Webhook.json.body.payload.object.recording_files, \"[?file_type=='M1P4'].download_url\")[0] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d3a14a22-7a15-4d34-aabe-ede7a128b410",
+      "name": "Set",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        300,
+        460
+      ],
+      "alwaysOutputData": true,
+      "continueOnFail": true
+    },
+    {
+      "parameters": {},
+      "id": "2d40a9c3-6197-46f2-9bc5-649968ba0558",
+      "name": "No Operation, do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        520,
+        460
+      ]
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n.stage.2t.band",
+            "x-forwarded-scheme": "https",
+            "x-forwarded-proto": "https",
+            "x-forwarded-for": "3.235.82.171",
+            "x-real-ip": "3.235.82.171",
+            "connection": "close",
+            "content-length": "2347",
+            "authorization": "tP_k6dh1Tuiz8fz_6ryD6w",
+            "clientid": "QKmsVEh0TN6zlVqUdvOykg",
+            "x-zm-trackingid": "v=2.0;clid=us06;rid=WEB_4ded6900c25c41c424d7e162656a4f67",
+            "x-zm-request-timestamp": "1685435870",
+            "x-zm-signature": "v0=e0fb901aac1f9aaab8812a326c5f56197f57db958f2e47d322c1ac4163d7ddfa",
+            "content-type": "application/json; charset=utf-8",
+            "user-agent": "Zoom Marketplace/1.0a"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "payload": {
+              "account_id": "0kLVFu_pSxuiWCUZ_CyvKg",
+              "object": {
+                "uuid": "THa0vwpCSo2o7inC9Ihmtg==",
+                "id": 89039514870,
+                "account_id": "0kLVFu_pSxuiWCUZ_CyvKg",
+                "host_id": "S0ZaPlQiR7-FOr6lJtX9LA",
+                "topic": "Новый взгряд на старые районы",
+                "type": 2,
+                "start_time": "2023-05-30T06:52:36Z",
+                "timezone": "Europe/Moscow",
+                "host_email": "user02@2t.band",
+                "duration": 87,
+                "total_size": 223286308,
+                "recording_count": 2,
+                "share_url": "https://us06web.zoom.us/rec/share/3MQNMY8gIOCNwF9T3hEjHgaL_JTTWxLK2EO0ujxs9-hEbaOVYvR9WrdqoqIzKSg.UqNmtn5V2t6hd3hg",
+                "recording_files": [
+                  {
+                    "id": "251b75b9-49d5-4df9-aa2e-f75dae025e08",
+                    "meeting_id": "THa0vwpCSo2o7inC9Ihmtg==",
+                    "recording_start": "2023-05-30T06:52:37Z",
+                    "recording_end": "2023-05-30T08:20:08Z",
+                    "file_type": "CHAT",
+                    "file_extension": "TXT",
+                    "file_size": 278,
+                    "play_url": "https://us06web.zoom.us/rec/play/ReGv4IVA3y5wORbRHZ1tJgHVriR3ftVJNfuLOp9hT1DA1CpLq3pri64ZODlSKcvbs-icwQQ9PuvvpcHB.a75lAdNFdmS3a2cg",
+                    "download_url": "https://us06web.zoom.us/rec/webhook_download/ReGv4IVA3y5wORbRHZ1tJgHVriR3ftVJNfuLOp9hT1DA1CpLq3pri64ZODlSKcvbs-icwQQ9PuvvpcHB.a75lAdNFdmS3a2cg/1CL-aUWxtDwZAUGnsAy2NuojruhygT7SYY21E1-hCfDxFbOQfJRFbhQeLVnl6zy-.2svoQG8ccrFWbT0X",
+                    "status": "completed",
+                    "recording_type": "chat_file"
+                  },
+                  {
+                    "id": "48e17c49-0257-4576-82be-a4f3ce139402",
+                    "meeting_id": "THa0vwpCSo2o7inC9Ihmtg==",
+                    "recording_start": "2023-05-30T06:52:37Z",
+                    "recording_end": "2023-05-30T08:20:08Z",
+                    "file_type": "MP4",
+                    "file_extension": "MP4",
+                    "file_size": 223286030,
+                    "play_url": "https://us06web.zoom.us/rec/play/sXNpVrGGb5L6-dIyg2_if1-CG2FQ5FIadcadCZ_R0f_NAk5jXJ_LBy1QXFgxBXmVg-6tZY_d7n7B-JOp.yRmFwjt7T3va1Gdb",
+                    "download_url": "https://us06web.zoom.us/rec/webhook_download/sXNpVrGGb5L6-dIyg2_if1-CG2FQ5FIadcadCZ_R0f_NAk5jXJ_LBy1QXFgxBXmVg-6tZY_d7n7B-JOp.yRmFwjt7T3va1Gdb/btWRGm_2Rd1R-4M1EegWQVm38gRwBU-Ljl937ZwdRo3FGDA4y3mnjERsabJ21Ck.K35irL0bvta1FTZT",
+                    "status": "completed",
+                    "recording_type": "shared_screen_with_gallery_view"
+                  }
+                ],
+                "on_prem": false
+              }
+            },
+            "event_ts": 1685435855199,
+            "event": "recording.completed",
+            "download_token": "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJodHRwczovL2V2ZW50Lnpvb20udXMiLCJhY2NvdW50SWQiOiIwa0xWRnVfcFN4dWlXQ1VaX0N5dktnIiwiYXVkIjoiaHR0cHM6Ly9vYXV0aC56b29tLnVzIiwibWlkIjoiVEhhMHZ3cENTbzJvN2luQzlJaG10Zz09IiwiZXhwIjoxNjg1NTIyMjcwLCJ1c2VySWQiOiJTMFphUGxRaVI3LUZPcjZsSnRYOUxBIn0.FJGO9wBDmyWT3zT_VYHiJHGX6f54-FRVPYBgH6GBwnN89FsgkMKAdcWXqKOIVOsBqyM1TMmbefMWcCGJzg5VoA"
+          }
+        }
+      }
+    ]
+  },
   "settings": {},
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2023-04-29T12:42:15.251Z",
-  "versionId": "49ab7439-3be0-467b-a98f-9513c7091a17"
+  "updatedAt": "2023-05-30T09:09:28.725Z",
+  "versionId": "cac662f5-02cf-4a84-b223-1ae975636324"
 }
