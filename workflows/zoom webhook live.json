@@ -99,7 +99,7 @@
         ],
         [
           {
-            "node": "check_params1",
+            "node": "Telegram",
             "type": "main",
             "index": 0
           }
@@ -142,7 +142,7 @@
       "main": [
         [
           {
-            "node": "check_params",
+            "node": "Set_downloadURL",
             "type": "main",
             "index": 0
           }
@@ -466,24 +466,6 @@
         ]
       ]
     },
-    "check_params1": {
-      "main": [
-        [
-          {
-            "node": "SUPA_get_meeting",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Telegram",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "SUPA_update_meeting1": {
       "main": [
         [
@@ -500,6 +482,17 @@
         [
           {
             "node": "Telegram2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set_downloadURL": {
+      "main": [
+        [
+          {
+            "node": "check_params",
             "type": "main",
             "index": 0
           }
@@ -605,7 +598,7 @@
     },
     {
       "parameters": {
-        "command": "=cd /home/node/{{ $node[\"fileParams\"].json[\"folder_in_parent\"] }} && mkdir -p '{{ $node.Webhook.json.body.payload.object.id }}' && curl -w %{json} -o '{{ $node.Webhook.json.body.payload.object.id + '/' + $node[\"fileParams\"].json[\"fileName\"] }}' --request GET \\\n --location '{{ $node.Webhook.json.body.payload.object.recording_files[0].download_url }}' \\\n --header 'authorization: Bearer {{ $node.Webhook.json.body.download_token }}' \\\n --header 'content-type: video/mp4'"
+        "command": "=cd /home/node/{{ $node[\"fileParams\"].json[\"folder_in_parent\"] }} && mkdir -p '{{ $node.Webhook.json.body.payload.object.id }}' && curl -w %{json} -o '{{ $node.Webhook.json.body.payload.object.id + '/' + $node[\"fileParams\"].json[\"fileName\"] }}' --request GET \\\n --location '{{ $node.Set_downloadURL.json.downloadURL}}' \\\n --header 'authorization: Bearer {{ $node.Webhook.json.body.download_token }}' \\\n --header 'content-type: video/mp4'"
       },
       "id": "9f03ac83-396f-48da-9d7f-d9960d2c2746",
       "name": "download_recording",
@@ -634,12 +627,8 @@
         "conditions": {
           "string": [
             {
-              "value1": "={{ $node.Webhook.json.body.payload.object.recording_files[0].file_type }}",
-              "value2": "MP4"
-            },
-            {
-              "value1": "={{ $node.Webhook.json.body.payload.object.recording_files[0].status }}",
-              "value2": "completed"
+              "value1": "={{ $json.downloadURL}}",
+              "operation": "isNotEmpty"
             }
           ]
         }
@@ -649,8 +638,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        960,
-        360
+        1180,
+        340
       ]
     },
     {
@@ -1059,21 +1048,6 @@
       "position": [
         2820,
         340
-      ]
-    },
-    {
-      "parameters": {
-        "content": "**current check only allows MP4** - could there be others?",
-        "height": 108.1829543088896,
-        "width": 150
-      },
-      "id": "46f4659e-4f29-4e5b-87a2-e5df03415ee9",
-      "name": "Sticky Note5",
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        940,
-        480
       ]
     },
     {
@@ -1696,30 +1670,6 @@
     },
     {
       "parameters": {
-        "conditions": {
-          "string": [
-            {
-              "value1": "={{ $node.Webhook.json.body.payload.object.recording_files[1].file_type }}",
-              "value2": "MP4"
-            },
-            {
-              "value1": "={{ $node.Webhook.json.body.payload.object.recording_files[1].status }}",
-              "value2": "completed"
-            }
-          ]
-        }
-      },
-      "id": "67c372ca-166a-431f-bed4-2ba44843902f",
-      "name": "check_params1",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 1,
-      "position": [
-        1100,
-        500
-      ]
-    },
-    {
-      "parameters": {
         "chatId": "-938702100",
         "text": "=Hey lovely, something wrong with zoom response {{ $workflow.name }} {{$execution.id}}. But don't worry it's already in zoom so we goooood",
         "additionalFields": {}
@@ -1801,6 +1751,27 @@
           "name": "Telegram account"
         }
       }
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "downloadURL",
+              "value": "={{ $jmespath($node.Webhook.json.body.payload.object.recording_files, \"[?file_type=='MP4'].download_url\")[0] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "01975f72-5038-4933-9fda-1f78996f399f",
+      "name": "Set_downloadURL",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        980,
+        340
+      ]
     }
   ],
   "pinData": {
@@ -1811,15 +1782,15 @@
             "host": "n8n.stage.2t.band",
             "x-forwarded-scheme": "https",
             "x-forwarded-proto": "https",
-            "x-forwarded-for": "134.224.191.2",
-            "x-real-ip": "134.224.191.2",
+            "x-forwarded-for": "3.235.82.171",
+            "x-real-ip": "3.235.82.171",
             "connection": "close",
-            "content-length": "2327",
+            "content-length": "2347",
             "authorization": "tP_k6dh1Tuiz8fz_6ryD6w",
             "clientid": "QKmsVEh0TN6zlVqUdvOykg",
-            "x-zm-trackingid": "v=2.0;clid=us06;rid=WEB_a8572a1584d887d8b5aa76c601d40fbf",
-            "x-zm-request-timestamp": "1685008857",
-            "x-zm-signature": "v0=f7f0d132a6401eb4f82f7162a794783411a2f07192352530b495c06202b94299",
+            "x-zm-trackingid": "v=2.0;clid=us06;rid=WEB_4ded6900c25c41c424d7e162656a4f67",
+            "x-zm-request-timestamp": "1685435870",
+            "x-zm-signature": "v0=e0fb901aac1f9aaab8812a326c5f56197f57db958f2e47d322c1ac4163d7ddfa",
             "content-type": "application/json; charset=utf-8",
             "user-agent": "Zoom Marketplace/1.0a"
           },
@@ -1829,30 +1800,43 @@
             "payload": {
               "account_id": "0kLVFu_pSxuiWCUZ_CyvKg",
               "object": {
-                "uuid": "eH1kT4X2TuW4/AhEPv5m8w==",
-                "id": 85438943012,
+                "uuid": "THa0vwpCSo2o7inC9Ihmtg==",
+                "id": 89039514870,
                 "account_id": "0kLVFu_pSxuiWCUZ_CyvKg",
                 "host_id": "S0ZaPlQiR7-FOr6lJtX9LA",
-                "topic": "Курилки возле ТОГУ",
+                "topic": "Новый взгряд на старые районы",
                 "type": 2,
-                "start_time": "2023-05-25T08:57:03Z",
+                "start_time": "2023-05-30T06:52:36Z",
                 "timezone": "Europe/Moscow",
                 "host_email": "user02@2t.band",
-                "duration": 48,
-                "total_size": 169656104,
+                "duration": 87,
+                "total_size": 223286308,
                 "recording_count": 2,
-                "share_url": "https://us06web.zoom.us/rec/share/egpQhrhjPuU5tk_5sMe4a7yXR9pYe_pWIOI6np2nS2kPHVeA1f3lQNC9KGQWR8j4.UOorOR52CN6inx7y",
+                "share_url": "https://us06web.zoom.us/rec/share/3MQNMY8gIOCNwF9T3hEjHgaL_JTTWxLK2EO0ujxs9-hEbaOVYvR9WrdqoqIzKSg.UqNmtn5V2t6hd3hg",
                 "recording_files": [
                   {
-                    "id": "a40eb824-4d4d-47c4-92b7-b1d0dda96f79",
-                    "meeting_id": "eH1kT4X2TuW4/AhEPv5m8w==",
-                    "recording_start": "2023-05-25T08:57:04Z",
-                    "recording_end": "2023-05-25T09:45:27Z",
+                    "id": "251b75b9-49d5-4df9-aa2e-f75dae025e08",
+                    "meeting_id": "THa0vwpCSo2o7inC9Ihmtg==",
+                    "recording_start": "2023-05-30T06:52:37Z",
+                    "recording_end": "2023-05-30T08:20:08Z",
+                    "file_type": "CHAT",
+                    "file_extension": "TXT",
+                    "file_size": 278,
+                    "play_url": "https://us06web.zoom.us/rec/play/ReGv4IVA3y5wORbRHZ1tJgHVriR3ftVJNfuLOp9hT1DA1CpLq3pri64ZODlSKcvbs-icwQQ9PuvvpcHB.a75lAdNFdmS3a2cg",
+                    "download_url": "https://us06web.zoom.us/rec/webhook_download/ReGv4IVA3y5wORbRHZ1tJgHVriR3ftVJNfuLOp9hT1DA1CpLq3pri64ZODlSKcvbs-icwQQ9PuvvpcHB.a75lAdNFdmS3a2cg/1CL-aUWxtDwZAUGnsAy2NuojruhygT7SYY21E1-hCfDxFbOQfJRFbhQeLVnl6zy-.2svoQG8ccrFWbT0X",
+                    "status": "completed",
+                    "recording_type": "chat_file"
+                  },
+                  {
+                    "id": "48e17c49-0257-4576-82be-a4f3ce139402",
+                    "meeting_id": "THa0vwpCSo2o7inC9Ihmtg==",
+                    "recording_start": "2023-05-30T06:52:37Z",
+                    "recording_end": "2023-05-30T08:20:08Z",
                     "file_type": "MP4",
                     "file_extension": "MP4",
-                    "file_size": 169656007,
-                    "play_url": "https://us06web.zoom.us/rec/play/Hj7NsQcMg97gSCPyXw5QimZKamhQzLFL0lPrPMH-xbY4f9SKJWUfRlNRtm_Hy5jBlm2KRcSyiuwt4Rl3.Tw6eLdoAPe_-AEQi",
-                    "download_url": "https://us06web.zoom.us/rec/webhook_download/Hj7NsQcMg97gSCPyXw5QimZKamhQzLFL0lPrPMH-xbY4f9SKJWUfRlNRtm_Hy5jBlm2KRcSyiuwt4Rl3.Tw6eLdoAPe_-AEQi/olzhEQ6TUJOn3GJtB9u8XkUB62if-PsWbir0UjHq-cM0GD2O4Ppl2ztDkb5iCeA.xubUDU8DHbrLLrli",
+                    "file_size": 223286030,
+                    "play_url": "https://us06web.zoom.us/rec/play/sXNpVrGGb5L6-dIyg2_if1-CG2FQ5FIadcadCZ_R0f_NAk5jXJ_LBy1QXFgxBXmVg-6tZY_d7n7B-JOp.yRmFwjt7T3va1Gdb",
+                    "download_url": "https://us06web.zoom.us/rec/webhook_download/sXNpVrGGb5L6-dIyg2_if1-CG2FQ5FIadcadCZ_R0f_NAk5jXJ_LBy1QXFgxBXmVg-6tZY_d7n7B-JOp.yRmFwjt7T3va1Gdb/btWRGm_2Rd1R-4M1EegWQVm38gRwBU-Ljl937ZwdRo3FGDA4y3mnjERsabJ21Ck.K35irL0bvta1FTZT",
                     "status": "completed",
                     "recording_type": "shared_screen_with_gallery_view"
                   }
@@ -1860,9 +1844,9 @@
                 "on_prem": false
               }
             },
-            "event_ts": 1685008842039,
+            "event_ts": 1685435855199,
             "event": "recording.completed",
-            "download_token": "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJodHRwczovL2V2ZW50Lnpvb20udXMiLCJhY2NvdW50SWQiOiIwa0xWRnVfcFN4dWlXQ1VaX0N5dktnIiwiYXVkIjoiaHR0cHM6Ly9vYXV0aC56b29tLnVzIiwibWlkIjoiZUgxa1Q0WDJUdVc0L0FoRVB2NW04dz09IiwiZXhwIjoxNjg1MDk1MjU3LCJ1c2VySWQiOiJTMFphUGxRaVI3LUZPcjZsSnRYOUxBIn0.3jWBNZ8BhUqx7J_Fg7x9bJHTDWCP9bNnrkUxPV2yUbjbqIJ3Rh75CcPJTrFVgvepdMAFwqVBn_qa1BZGtLfYpw"
+            "download_token": "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJodHRwczovL2V2ZW50Lnpvb20udXMiLCJhY2NvdW50SWQiOiIwa0xWRnVfcFN4dWlXQ1VaX0N5dktnIiwiYXVkIjoiaHR0cHM6Ly9vYXV0aC56b29tLnVzIiwibWlkIjoiVEhhMHZ3cENTbzJvN2luQzlJaG10Zz09IiwiZXhwIjoxNjg1NTIyMjcwLCJ1c2VySWQiOiJTMFphUGxRaVI3LUZPcjZsSnRYOUxBIn0.FJGO9wBDmyWT3zT_VYHiJHGX6f54-FRVPYBgH6GBwnN89FsgkMKAdcWXqKOIVOsBqyM1TMmbefMWcCGJzg5VoA"
           }
         }
       }
@@ -1942,36 +1926,6 @@
           "zoom_user_host": "user02@2t.band"
         }
       }
-    ],
-    "SUPA_update_meeting": [
-      {
-        "json": {
-          "id": "afd7cf78-06fc-4f08-91d7-d95a01f66beb",
-          "created_at": "2023-05-21T22:44:09+00:00",
-          "project_id": "7f9a9fd5-2bc3-43a1-b7c4-ad532552b1cd",
-          "name": "Безопасный переезд",
-          "type": 1,
-          "booking_link": "https://us06web.zoom.us/s/82281203870?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IlMwWmFQbFFpUjctRk9yNmxKdFg5TEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6IjgyMjgxMjAzODcwIiwiZXhwIjoxNjg0ODcwMDM2LCJpYXQiOjE2ODQ4NjI4MzYsImFpZCI6IjBrTFZGdV9wU3h1aVdDVVpfQ3l2S2ciLCJjaWQiOiIifQ.c0E0FCM1SbGqy7lcYc6T9m1J5pgkMMvhiv_UcfCELd8",
-          "join_link": "https://us06web.zoom.us/j/82281203870?pwd=aUwyQzZFcXNZazVHN1dxL1BhdStBZz09",
-          "status": 4,
-          "booked": "2023-05-23T17:27:16.622+00:00",
-          "happened": "2023-05-26T06:56:07.431+00:00",
-          "reported": "2023-05-26T07:05:37.235+00:00",
-          "recorded": "2023-05-26T07:12:47.488+00:00",
-          "artifact": null,
-          "user_id": "7344af07-90db-4318-86d4-b15f2f46b46d",
-          "meeting_eap_id": "234",
-          "meeting_zoom_id": "82281203870",
-          "tl_is_accepted": null,
-          "recording_link": "https://183406.selcdn.ru/2T.Drive/accelerator/projects/7f9a9fd5-2bc3-43a1-b7c4-ad532552b1cd/afd7cf78-06fc-4f08-91d7-d95a01f66beb/meeting_82281203870__Безопасный_переезд_.mp4?temp_url_sig=84bbd0f61ebfdc61fa5987a3f184f3cb201ee6da&temp_url_expires=1690269167&filename=meeting_82281203870__Безопасный_переезд_.mp4",
-          "screencast_link": "https://183406.selcdn.ru/2T.Drive/accelerator/projects/7f9a9fd5-2bc3-43a1-b7c4-ad532552b1cd/afd7cf78-06fc-4f08-91d7-d95a01f66beb/meeting_82281203870__Безопасный_переезд__screencast.jpg?temp_url_sig=cdde79b43f4bd5e9c77fd64c33f7214c2b45c4a7&temp_url_expires=1690269167&filename=meeting_82281203870__Безопасный_переезд__screencast.jpg",
-          "tl_comment": null,
-          "s3_path": "accelerator/projects/7f9a9fd5-2bc3-43a1-b7c4-ad532552b1cd/afd7cf78-06fc-4f08-91d7-d95a01f66beb/meeting_82281203870__Безопасный_переезд_.mp4",
-          "start_time": "2023-05-26T09:00:00+00:00",
-          "time_slot": "09:00 - 10:00",
-          "zoom_user_host": "user02@2t.band"
-        }
-      }
     ]
   },
   "settings": {
@@ -1984,6 +1938,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-05-26T09:23:47.908Z",
-  "versionId": "ca8c34cd-c9c1-4fd3-bfd7-44dbe4968e20"
+  "updatedAt": "2023-05-30T09:44:13.237Z",
+  "versionId": "c80f91e9-6a4f-4c31-9b1b-98f3c25ee65c"
 }
