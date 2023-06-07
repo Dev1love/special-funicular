@@ -1,0 +1,240 @@
+{
+  "active": false,
+  "connections": {
+    "init_vars": {
+      "main": [
+        [
+          {
+            "node": "get_user_project_with_meetings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_user_project_with_meetings": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "reformat",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_projects_reports": {
+      "main": [
+        [
+          {
+            "node": "init_vars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "reformat": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-06-07T17:22:17.957Z",
+  "id": "108",
+  "name": "get_projects_reports_4template",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "77e6f60d-0af1-48f5-acaf-aa679c1eb26d",
+      "name": "init_vars",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        1180,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/projects?id=eq.{{ $json.body.project_id }}&select=*,meetings(*,reports(*)) ",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d74a6a0a-9caf-47be-805c-01ed3d80e18d",
+      "name": "get_user_project_with_meetings",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1340,
+        460
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "f2106991-f164-42f6-9ad4-93a7a54993b5",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1920,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.id }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "id": "08ee5dd6-c0f5-4563-ac42-883c2c41b6bc",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1560,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"error\":{{ $json[\"error\"] ? $JSON.stringify($json.error) : \"null\"}}}",
+        "options": {}
+      },
+      "id": "ceeb24d6-7692-405e-9136-d67d67b4b5ac",
+      "name": "Respond to Webhook1",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1760,
+        540
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "httpMethod": "POST",
+        "path": "project/all_reports4template",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "87dc00d7-bda1-491b-be53-03cdbea544fb",
+      "name": "get_projects_reports",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        1020,
+        460
+      ],
+      "webhookId": "044e07c0-4152-45b2-82c3-6b9896ac5f93",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "appsmith->n8n Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "var meeting_ds = {};\nvar meeting_fs = {};\nvar meetings = [];\n\nfor (const meeting of $input.first().json.meetings) {\n  //  item.json.myNewField = 1;\n  var report = meeting?.reports[0]?.report_data[0];\n  var meeting_type = (\"\"+report?.type_meeting).substr(0,2);\n  if (meeting_type==\"ТС\") meetings.push(report);\n  else if (meeting_type==\"ДС\") meeting_ds = report;\n  else if (meeting_type==\"ФС\") meeting_fs = report;\n}\n\nmeetings.sort(function(obj1,obj2){\n  if(obj1.type_meeting > obj2.type_meeting) return 1;\n  else if(obj1.type_meeting < obj2.type_meeting) return -1;\n  return 0;\n})\n\nvar out = {json:{\n  \"ap_name\": \"ap_name here\",\n  \"project_name\": $input.first().json.name,\n  \"tracker_username\": $input.first().json.contact_name,\n  \"meeting_ds\": meeting_ds,\n  \"meeting_fs\": meeting_fs,\n  \"meetings\": meetings\n}};\n\nreturn out;"
+      },
+      "id": "32221bb9-3d21-482f-8886-21e927e672a9",
+      "name": "reformat",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        1760,
+        380
+      ]
+    }
+  ],
+  "pinData": {
+    "get_projects_reports": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n.stage.2t.band",
+            "x-forwarded-scheme": "https",
+            "x-forwarded-proto": "https",
+            "x-forwarded-for": "5.159.102.176",
+            "x-real-ip": "5.159.102.176",
+            "connection": "close",
+            "content-length": "53",
+            "accept-encoding": "gzip",
+            "user-agent": "ReactorNetty/1.1.1",
+            "accept": "*/*",
+            "auth": "d23Y_Vfds8_9sdf",
+            "content-type": "application/json"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "project_id": "562b11d1-1d47-4798-b14d-b4c960dc65a9"
+          }
+        }
+      }
+    ]
+  },
+  "settings": {
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": true,
+    "saveManualExecutions": false,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "102"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-06-07T19:12:48.315Z",
+  "versionId": "ae5b06a4-a7e2-44c5-9de6-115cfef591ea"
+}
