@@ -16,7 +16,12 @@
       "main": [
         [
           {
-            "node": "IF",
+            "node": "get_user_project_with_meetings1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
             "type": "main",
             "index": 0
           }
@@ -91,6 +96,28 @@
           }
         ]
       ]
+    },
+    "get_user_project_with_meetings1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2023-06-07T17:22:17.957Z",
@@ -106,7 +133,7 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1,
       "position": [
-        1180,
+        1080,
         460
       ]
     },
@@ -131,7 +158,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 3,
       "position": [
-        1340,
+        1240,
         460
       ],
       "credentials": {
@@ -146,7 +173,7 @@
         "conditions": {
           "string": [
             {
-              "value1": "={{ $json.id }}",
+              "value1": "={{ $node.get_user_project_with_meetings.json.id }}",
               "operation": "isNotEmpty"
             }
           ]
@@ -189,7 +216,7 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1,
       "position": [
-        1020,
+        920,
         460
       ],
       "webhookId": "044e07c0-4152-45b2-82c3-6b9896ac5f93",
@@ -202,7 +229,7 @@
     },
     {
       "parameters": {
-        "jsCode": "var meeting_ds = {};\nvar meeting_fs = {};\nvar meetings = [];\n\nfor (const meeting of $input.first().json.meetings) {\n  //  item.json.myNewField = 1;\n  var report = meeting?.reports[0]?.report_data[0];\n  var meeting_type = (\"\"+report?.type_meeting).substr(0,2);\n  if (meeting_type==\"ТС\") meetings.push(report);\n  else if (meeting_type==\"ДС\") meeting_ds = report;\n  else if (meeting_type==\"ФС\") meeting_fs = report;\n}\n\nmeetings.sort(function(obj1,obj2){\n  if(obj1.type_meeting > obj2.type_meeting) return 1;\n  else if(obj1.type_meeting < obj2.type_meeting) return -1;\n  return 0;\n})\n\nvar out = {json:{\n  parameters:{\n    \"ap_name\": \"ap_name here\",\n    \"project_name\": $input.first().json.name,\n    \"tracker_username\": $input.first().json.contact_name,\n    \"meeting_ds\": meeting_ds,\n    \"meeting_fs\": meeting_fs,\n    \"meetings\": meetings\n  }\n}};\n\nreturn out;"
+        "jsCode": "var meeting_ds = {};\nvar meeting_fs = {};\nvar meetings = [];\n\nfor (const meeting of $input.first().json.meetings) {\n  //  item.json.myNewField = 1;\n  var report = meeting?.reports[0]?.report_data[0];\n  var meeting_type = (\"\"+report?.type_meeting).substr(0,2);\n  if (meeting_type==\"ТС\") meetings.push(report);\n  else if (meeting_type==\"ДС\") meeting_ds = report;\n  else if (meeting_type==\"ФС\") meeting_fs = report;\n}\n\nmeetings.sort(function(obj1,obj2){\n  if(obj1.type_meeting > obj2.type_meeting) return 1;\n  else if(obj1.type_meeting < obj2.type_meeting) return -1;\n  return 0;\n})\n\nvar out = {json:{\n  parameters:{\n    \"ap_name\": \"АП поддержки студенческих инициатив ТОГУ\",\n    \"project_name\": $input.first().json.name,\n    \"tracker_username\": $input.first().json.firstname + '' + $input.first().json.lastname,\n    \"meeting_ds\": meeting_ds,\n    \"meeting_fs\": meeting_fs,\n    \"meetings\": meetings\n  }\n}};\n\nreturn out;"
       },
       "id": "32221bb9-3d21-482f-8886-21e927e672a9",
       "name": "reformat",
@@ -300,6 +327,52 @@
         220
       ],
       "disabled": true
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/user_profiles?user_id=eq.{{ $json.meetings[0].user_id }}&select=user_id,firstname,lastname",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b8d07953-3850-4de7-84ba-ca795f64833d",
+      "name": "get_user_project_with_meetings1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1380,
+        300
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition",
+        "options": {}
+      },
+      "id": "89e2422c-a892-4177-9215-9d6e64c96fca",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2,
+      "position": [
+        1420,
+        480
+      ]
     }
   ],
   "pinData": {
@@ -339,6 +412,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-06-08T07:24:27.115Z",
-  "versionId": "a732e8d7-6c82-4570-92d1-2e85deaa3622"
+  "updatedAt": "2023-06-08T15:34:47.781Z",
+  "versionId": "b109f3a1-cb14-416d-b70b-c68a03308507"
 }
