@@ -229,7 +229,7 @@
     },
     {
       "parameters": {
-        "jsCode": "var meeting_ds = {};\nvar meeting_fs = {};\nvar meetings = [];\n\nfor (const meeting of $input.first().json.meetings) {\n  //  item.json.myNewField = 1;\n  var report = meeting?.reports[0]?.report_data[0];\n  var meeting_type = (\"\"+report?.type_meeting).substr(0,2);\n  if (meeting_type==\"ТС\") meetings.push(report);\n  else if (meeting_type==\"ДС\") meeting_ds = report;\n  else if (meeting_type==\"ФС\") meeting_fs = report;\n}\n\nmeetings.sort(function(obj1,obj2){\n  if(obj1.type_meeting > obj2.type_meeting) return 1;\n  else if(obj1.type_meeting < obj2.type_meeting) return -1;\n  return 0;\n})\n\nvar out = {json:{\n  parameters:{\n    \"ap_name\": \"АП поддержки студенческих инициатив ТОГУ\",\n    \"project_name\": $input.first().json.name,\n    \"tracker_username\": $input.first().json.firstname + '' + $input.first().json.lastname,\n    \"meeting_ds\": meeting_ds,\n    \"meeting_fs\": meeting_fs,\n    \"meetings\": meetings\n  }\n}};\n\nreturn out;"
+        "jsCode": "var meeting_ds = {};\nvar meeting_fs = {};\nvar meetings = [];\n\nfor (const meeting of $input.first().json.meetings) {\n  //  item.json.myNewField = 1;\n  if(meeting?.reports[0].report_data==null)\n    continue;\n  var report = meeting?.reports[0]?.report_data[0];\n  if (!!report?.date) report.date = (new Date(report.date)).toLocaleString();\n  var meeting_type = (\"\"+report?.type_meeting).substr(0,2);\n  if (meeting_type==\"ТС\") meetings.push(report);\n  else if (meeting_type==\"ДС\") meeting_ds = report;\n  else if (meeting_type==\"ФС\") meeting_fs = report;\n}\n\nmeetings.sort(function(obj1,obj2){\n  if(obj1.type_meeting > obj2.type_meeting) return 1;\n  else if(obj1.type_meeting < obj2.type_meeting) return -1;\n  return 0;\n})\n\nvar out = {json:{\n  parameters:{\n    \"ap_name\": \"АП поддержки студенческих инициатив ТОГУ\",\n    \"project_name\": $input.first().json.name,\n    \"tracker_username\": $input.first().json.firstname + '' + $input.first().json.lastname,\n    \"meeting_ds\": meeting_ds,\n    \"meeting_fs\": meeting_fs,\n    \"meetings\": meetings\n  }\n}};\n\nreturn out;"
       },
       "id": "32221bb9-3d21-482f-8886-21e927e672a9",
       "name": "reformat",
@@ -350,7 +350,7 @@
       "typeVersion": 3,
       "position": [
         1380,
-        300
+        220
       ],
       "credentials": {
         "supabaseApi": {
@@ -396,7 +396,7 @@
           "params": {},
           "query": {},
           "body": {
-            "project_id": "562b11d1-1d47-4798-b14d-b4c960dc65a9"
+            "project_id": "79aa159a-69b6-47d0-8957-dd996e91b0f3"
           }
         }
       }
@@ -412,6 +412,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-06-08T15:34:47.781Z",
-  "versionId": "b109f3a1-cb14-416d-b70b-c68a03308507"
+  "updatedAt": "2023-06-09T08:11:22.589Z",
+  "versionId": "7321a3bf-a0f7-4ed7-af8a-9cde7c5b9e52"
 }
