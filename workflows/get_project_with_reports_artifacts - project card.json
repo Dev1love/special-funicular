@@ -45,7 +45,12 @@
       "main": [
         [
           {
-            "node": "Item Lists",
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "get_user_project_with_meetings1",
             "type": "main",
             "index": 0
           }
@@ -73,6 +78,28 @@
           }
         ]
       ]
+    },
+    "get_user_project_with_meetings1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Item Lists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2023-04-17T08:12:17.526Z",
@@ -88,8 +115,8 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1,
       "position": [
-        1100,
-        460
+        940,
+        440
       ]
     },
     {
@@ -153,8 +180,8 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1,
       "position": [
-        960,
-        460
+        800,
+        440
       ],
       "webhookId": "0103ed2a-51f0-476b-9412-273b6d982435",
       "credentials": {
@@ -185,8 +212,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 3,
       "position": [
-        1220,
-        460
+        1060,
+        440
       ],
       "credentials": {
         "supabaseApi": {
@@ -221,9 +248,81 @@
         1440,
         460
       ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/user_profiles?user_id=eq.{{ $json.meetings[0].user_id }}&select=user_id,firstname,lastname",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "18b4a328-34d8-407e-858d-dadc504f21ae",
+      "name": "get_user_project_with_meetings1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1160,
+        640
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition",
+        "options": {}
+      },
+      "id": "f4851b0d-568c-4b95-b214-c02fb6192883",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2,
+      "position": [
+        1280,
+        460
+      ]
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "get_projects_reports": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n.stage.2t.band",
+            "x-forwarded-scheme": "https",
+            "x-forwarded-proto": "https",
+            "x-forwarded-for": "5.159.102.176",
+            "x-real-ip": "5.159.102.176",
+            "connection": "close",
+            "content-length": "53",
+            "accept-encoding": "gzip",
+            "user-agent": "ReactorNetty/1.1.1",
+            "accept": "*/*",
+            "auth": "d23Y_Vfds8_9sdf",
+            "content-type": "application/json"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "project_id": "79aa159a-69b6-47d0-8957-dd996e91b0f3"
+          }
+        }
+      }
+    ]
+  },
   "settings": {
     "saveDataSuccessExecution": "all",
     "saveExecutionProgress": true,
@@ -234,6 +333,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-05-22T06:58:25.666Z",
-  "versionId": "ed67578a-ec03-4ac9-bc54-eba56825834c"
+  "updatedAt": "2023-06-09T08:33:43.119Z",
+  "versionId": "a0ddad80-28e3-4332-8b63-d9258e69895e"
 }
