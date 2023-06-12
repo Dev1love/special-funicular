@@ -918,6 +918,10 @@
             {
               "name": "s3_path",
               "value": "={{ $node.fileParams.json.outFullPathEncoded }}"
+            },
+            {
+              "name": "screencast_link_web",
+              "value": "={{ $node.generate_download_url_s?.json?.viewUrl_screencast }}"
             }
           ]
         },
@@ -1144,7 +1148,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const crypto = require('crypto');\nconst method = 'GET';\nconst expires = Math.floor(Date.now() / 1000) + 60*24*60*60; // add 2 months\n\nconst fullPath = '/' + $(\"fileParams\").first().json.bucketName + '/' + $(\"fileParams\").first().json.outFullPathEncoded_s; //  /2T.Drive/unnamed.png';\nconst fileName = fullPath.split('/').at(-1);\nconst linkSecretKey = $('init_vars').first().json.selectel_ContainerMetaTempURLKey;\nconst hmacBody = `${method}\\n${expires}\\n${fullPath}`;\nconsole.log('hmacBody:', hmacBody);\nconst sig = crypto.createHmac('sha1', linkSecretKey).update(hmacBody).digest('hex');\n\nconsole.log('sig:', sig);\nconsole.log('expires:', expires);\n\nvar downloadUrl = $('init_vars').first().json.selectel_api + fullPath + '?temp_url_sig=' + sig + '&temp_url_expires='+expires + '&filename=' + fileName;\n\nconsole.log('downloadUrl:', downloadUrl);\n$input.first().json.downloadUrl_screencast = downloadUrl;\n\nreturn $input.all();"
+        "jsCode": "const crypto = require('crypto');\nconst method = 'GET';\nconst expires = Math.floor(Date.now() / 1000) + 60*24*60*60; // add 2 months\n\nconst fullPath = '/' + $(\"fileParams\").first().json.bucketName + '/' + $(\"fileParams\").first().json.outFullPathEncoded_s; //  /2T.Drive/unnamed.png';\nconst fileName = fullPath.split('/').at(-1);\nconst linkSecretKey = $('init_vars').first().json.selectel_ContainerMetaTempURLKey;\nconst hmacBody = `${method}\\n${expires}\\n${fullPath}`;\nconsole.log('hmacBody:', hmacBody);\nconst sig = crypto.createHmac('sha1', linkSecretKey).update(hmacBody).digest('hex');\n\nconsole.log('sig:', sig);\nconsole.log('expires:', expires);\n\nvar downloadUrl = $('init_vars').first().json.selectel_api + fullPath + '?temp_url_sig=' + sig + '&temp_url_expires='+expires + '&filename=' + fileName;\n\nvar viewUrl = $('init_vars').first().json.selectel_api + fullPath + '?temp_url_sig=' + sig + '&temp_url_expires='+expires;\n\nconsole.log('downloadUrl:', downloadUrl);\n$input.first().json.downloadUrl_screencast = downloadUrl;\n$input.first().json.viewUrl_screencast = viewUrl;\n\nreturn $input.all();"
       },
       "id": "d76efd39-ddb6-44c0-90b9-30688e262ef1",
       "name": "generate_download_url_s",
@@ -1938,6 +1942,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-05-30T09:44:13.237Z",
-  "versionId": "c80f91e9-6a4f-4c31-9b1b-98f3c25ee65c"
+  "updatedAt": "2023-06-12T09:29:41.499Z",
+  "versionId": "2c53ac7c-04f8-48e1-8966-30051ed55da9"
 }
