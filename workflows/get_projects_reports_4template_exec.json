@@ -1,0 +1,438 @@
+{
+  "active": false,
+  "connections": {
+    "init_vars": {
+      "main": [
+        [
+          {
+            "node": "get_user_project_with_meetings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_user_project_with_meetings": {
+      "main": [
+        [
+          {
+            "node": "get_user_project_with_meetings1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "reformat",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "reformat": {
+      "main": [
+        [
+          {
+            "node": "APITemplate.io",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF1": {
+      "main": [
+        [
+          {
+            "node": "update_project_pdf_report",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond to Webhook3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "APITemplate.io": {
+      "main": [
+        [
+          {
+            "node": "IF1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_user_project_with_meetings1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "init_vars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "update_project_pdf_report": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-06-12T13:06:39.639Z",
+  "id": "111",
+  "name": "get_projects_reports_4template_exec",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "eef36464-b830-46e9-95b6-6f552027961b",
+      "name": "init_vars",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        1080,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/projects?id=eq.{{ $json.project_id }}&select=*,meetings(*,reports(*))  ",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "138f8414-3f6d-4047-a7da-d84a8db4859c",
+      "name": "get_user_project_with_meetings",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1240,
+        460
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $node.get_user_project_with_meetings.json.id }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "id": "b46d13eb-279c-4f5b-8d22-0587c48b67a5",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1560,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"error\":{{ $json[\"error\"] ? $JSON.stringify($json.error) : \"null\"}}}",
+        "options": {}
+      },
+      "id": "fa4d0d65-19c3-4699-9b5a-1799cebb2a3a",
+      "name": "Respond to Webhook1",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1760,
+        540
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "var meeting_ds = {};\nvar meeting_fs = {};\nvar meetings = [];\n\nfor (const meeting of $input.first().json.meetings) {\n  //  item.json.myNewField = 1;\n  if(meeting?.reports[0].report_data==null)\n    continue;\n  var report = meeting?.reports[0]?.report_data[0];\n  if (!!report?.date) report.date = (new Date(report.date)).toLocaleString();\n  var meeting_type = (\"\"+report?.type_meeting).substr(0,2);\n  if (meeting_type==\"ТС\") meetings.push(report);\n  else if (meeting_type==\"ДС\") meeting_ds = report;\n  else if (meeting_type==\"ФС\") meeting_fs = report;\n}\n\nmeetings.sort(function(obj1,obj2){\n  if(obj1.type_meeting > obj2.type_meeting) return 1;\n  else if(obj1.type_meeting < obj2.type_meeting) return -1;\n  return 0;\n})\n\nvar out = {json:{\n  parameters:{\n    \"ap_name\": \"АП поддержки студенческих инициатив ТОГУ\",\n    \"project_name\": $input.first().json.name,\n    \"tracker_username\": $input.first().json.firstname + '' + $input.first().json.lastname,\n    \"meeting_ds\": meeting_ds,\n    \"meeting_fs\": meeting_fs,\n    \"meetings\": meetings\n  }\n}};\n\nreturn out;"
+      },
+      "id": "892f848e-eed1-4fba-bcec-fdc524ac7393",
+      "name": "reformat",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        1760,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{JSON.stringify( {download_url:$node[\"APITemplate.io\"].json.download_url  ? $node[\"APITemplate.io\"].json.download_url : \"error\"})}}",
+        "options": {}
+      },
+      "id": "4d122867-67fc-44d0-b33a-fce6d2f9a77c",
+      "name": "Respond to Webhook2",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        2680,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ !!$node[\"APITemplate.io\"].json.download_url }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "e02a39f5-6c36-4fe4-92cf-3b48541dc026",
+      "name": "IF1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        2300,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\"error\": \"there was a problem with PDF generation!\"}",
+        "options": {}
+      },
+      "id": "fa0c9e5e-0c5d-4174-acbe-2c84a6e83e6e",
+      "name": "Respond to Webhook3",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        2500,
+        540
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "pdf",
+        "pdfTemplateId": "=77b77b2382ae459c",
+        "jsonParameters": true,
+        "propertiesJson": "={{ $json.parameters }}"
+      },
+      "id": "bc7548d9-3dec-4047-b401-8e273573f620",
+      "name": "APITemplate.io",
+      "type": "n8n-nodes-base.apiTemplateIo",
+      "typeVersion": 1,
+      "position": [
+        2020,
+        380
+      ],
+      "retryOnFail": false,
+      "maxTries": 2,
+      "credentials": {
+        "apiTemplateIoApi": {
+          "id": "22",
+          "name": "APITemplate.io_wowbuckwheat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "var template_id = \"e2077b238df3f8ce\"; // ООО\n\n//if ($('Webhook').first().json.body.type === 'ООО')\nif ($('Webhook').first().json.body.type === 'СЗ') template_id = \"17d77b238df4c6a0\"\nelse if ($('Webhook').first().json.body.type === 'ИП') template_id = \"fbc77b238d9d6ea8\"\n\n//console.log(\"$input.first().json:\", $input.first().json);\n\n$input.first().json.template_id = template_id;\n\nvar curDate = new Date();\n\nvar contract = {\n  \"type\":\"ФСИ\",\n  \"year\": curDate.getFullYear(),\n  \"series\":\"T\",\n  \"number\": $input.first().json.contractId,\n  \"date\": curDate.toISOString().split(\"T\")[0]\n};\n\nvar customer = {\n  \"name\":\"Татьяна Иванова\",\n  \"phone\":\" +7 (903) 796-99-58\",\n  \"email\":\"tk@2t.band / t-as@inbox.ru\",\n  \"telegram\":\"@Tatyana_Khrapko\"\n};\n\n$input.first().json.parameters = $('Webhook').first().json.body.params;\n$input.first().json.parameters.customer = customer;\n$input.first().json.parameters.contract = contract;\n\nreturn $input.all();"
+      },
+      "id": "629d3d95-8788-4510-bda1-140b8a861614",
+      "name": "set_params",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        1940,
+        220
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/user_profiles?user_id=eq.{{ $json.meetings[0].user_id }}&select=user_id,firstname,lastname",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b97f97ca-d626-46c2-b92d-20e336d82668",
+      "name": "get_user_project_with_meetings1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1380,
+        220
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition",
+        "options": {}
+      },
+      "id": "465900fa-043e-4cc3-9d0a-ee474dddcaba",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2,
+      "position": [
+        1420,
+        480
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "bfab0494-dc84-4597-a14f-5018666e877f",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        920,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/projects?select=*&id=eq.{{ $node[\"Execute Workflow Trigger\"].json.project_id }} ",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "project_report_url",
+              "value": "={{ $node[\"APITemplate.io\"].json.download_url }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "58ba90af-4e7e-49ad-a4b5-db4c1a759377",
+      "name": "update_project_pdf_report",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        2500,
+        360
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Execute Workflow Trigger": [
+      {
+        "json": {
+          "project_id": "7f9a9fd5-2bc3-43a1-b7c4-ad532552b1cd"
+        }
+      }
+    ]
+  },
+  "settings": {
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "102"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-06-12T14:10:37.332Z",
+  "versionId": "c47813ad-3f5c-44d5-910b-445d25d13da4"
+}
