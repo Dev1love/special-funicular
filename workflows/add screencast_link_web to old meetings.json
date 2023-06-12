@@ -1,0 +1,220 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking \"Execute Workflow\"": {
+      "main": [
+        [
+          {
+            "node": "init_vars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "init_vars": {
+      "main": [
+        [
+          {
+            "node": "SUPA_meetings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SUPA_meetings": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split In Batches": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-06-12T07:36:27.317Z",
+  "id": "109",
+  "name": "add screencast_link_web to old meetings",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "26a39b0a-36bc-46e3-b164-cacb76f61a74",
+      "name": "When clicking \"Execute Workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        620,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/meetings?select=id,screencast_link,screencast_link_web",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "88ddcc0f-8493-42c6-88db-41c38a37a5ed",
+      "name": "SUPA_meetings",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        960,
+        300
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "10",
+          "name": "Supabase stage"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "9516200a-c3d6-4772-a8c3-9b574260b722",
+      "name": "init_vars",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        780,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.screencast_link }}",
+              "operation": "notEqual",
+              "value2": "={{null}}"
+            }
+          ]
+        }
+      },
+      "id": "512b08dc-6813-4371-b16f-c508ca336abc",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1360,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "2279710f-2281-4220-87a9-e3ffc11712a1",
+      "name": "Split In Batches",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 2,
+      "position": [
+        1180,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/meetings?id=eq.{{ $json.id }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "screencast_link_web",
+              "value": "={{ $json.screencast_link.split('&filename')[0] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "26ceacbc-2b61-453b-bb7a-dfcef775a3a5",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1580,
+        260
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "10",
+          "name": "Supabase stage"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "102"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-06-12T07:37:06.390Z",
+  "versionId": "8c19b231-a7f8-4515-bb14-54f49ebfe25f"
+}
