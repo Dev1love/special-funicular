@@ -92,7 +92,7 @@
       "main": [
         [
           {
-            "node": "Execute Workflow1",
+            "node": "project_report_pdf",
             "type": "main",
             "index": 0
           }
@@ -413,19 +413,6 @@
     },
     {
       "parameters": {
-        "workflowId": "111"
-      },
-      "id": "7a8572af-ce81-4d56-9c1e-92bb88527b79",
-      "name": "Execute Workflow1",
-      "type": "n8n-nodes-base.executeWorkflow",
-      "typeVersion": 1,
-      "position": [
-        760,
-        -60
-      ]
-    },
-    {
-      "parameters": {
         "keepOnlySet": true,
         "values": {
           "string": [
@@ -444,6 +431,19 @@
       "position": [
         620,
         140
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "111"
+      },
+      "id": "7a8572af-ce81-4d56-9c1e-92bb88527b79",
+      "name": "project_report_pdf",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        760,
+        -60
       ]
     }
   ],
@@ -519,6 +519,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2023-06-12T13:39:02.465Z",
-  "versionId": "2838a6d2-aa63-4971-8cbb-60d3fcc3623c"
+  "updatedAt": "2023-06-13T08:07:02.273Z",
+  "versionId": "2c7beb76-ab82-446d-b65a-37e8bee3b00f"
 }
