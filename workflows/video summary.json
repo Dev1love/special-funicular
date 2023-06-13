@@ -1,0 +1,72 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking \"Execute Workflow\"": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-06-13T07:51:30.963Z",
+  "id": "113",
+  "name": "video summary",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "0446b270-4cd6-4a4d-99d5-df75ee060931",
+      "name": "When clicking \"Execute Workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        700,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "164.92.221.173:8080/api/v1/synopsis",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Api-Key",
+              "value": "oQbV9gzhkMb4LpKK7pTqbexzb8bMXpq9"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "url",
+              "value": "https://183406.selcdn.ru/2T.Drive/accelerator/projects/79aa159a-69b6-47d0-8957-dd996e91b0f3/bbfb4473-2c59-4448-865a-b5659d5774cd/meeting_89668004151_Центр_ранней_самоактуализации.mp4?temp_url_sig=a6890af5a6ad7b5e8968af753bd00e52b5c8a37b&temp_url_expires=1691485576&filename=meeting_89668004151_Центр_ранней_самоактуализации.mp4"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "2f8884bf-c322-43ec-bdfc-3c22097b8918",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        920,
+        300
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-06-13T07:51:30.963Z",
+  "versionId": "534afe0b-54fe-474d-9e09-e4c5473e7e44"
+}
