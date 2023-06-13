@@ -72,7 +72,7 @@
       "main": [
         [
           {
-            "node": "Respond to Webhook2",
+            "node": "update_project_pdf_report",
             "type": "main",
             "index": 0
           }
@@ -113,6 +113,17 @@
         [
           {
             "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "update_project_pdf_report": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook2",
             "type": "main",
             "index": 0
           }
@@ -251,7 +262,7 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1,
       "position": [
-        2500,
+        2660,
         360
       ]
     },
@@ -271,7 +282,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        2300,
+        2140,
         380
       ]
     },
@@ -286,7 +297,7 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1,
       "position": [
-        2500,
+        2660,
         540
       ]
     },
@@ -302,7 +313,7 @@
       "type": "n8n-nodes-base.apiTemplateIo",
       "typeVersion": 1,
       "position": [
-        2120,
+        1980,
         380
       ],
       "retryOnFail": false,
@@ -373,6 +384,47 @@
         1420,
         480
       ]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/projects?select=*&id=eq.{{ $node.get_projects_reports.json.body.project_id }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "project_report_url",
+              "value": "={{ $node[\"APITemplate.io\"].json.download_url }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ef3b176b-106e-4a48-a096-b3ad5c62b75a",
+      "name": "update_project_pdf_report",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        2420,
+        360
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
     }
   ],
   "pinData": {
@@ -412,6 +464,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-06-09T08:11:22.589Z",
-  "versionId": "7321a3bf-a0f7-4ed7-af8a-9cde7c5b9e52"
+  "updatedAt": "2023-06-13T08:12:47.796Z",
+  "versionId": "3cc21052-56f1-45b5-8b22-127a88baf2e7"
 }
