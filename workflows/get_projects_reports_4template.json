@@ -316,7 +316,7 @@
         1980,
         380
       ],
-      "retryOnFail": false,
+      "retryOnFail": true,
       "maxTries": 2,
       "credentials": {
         "apiTemplateIoApi": {
@@ -464,6 +464,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-06-13T08:12:47.796Z",
-  "versionId": "3cc21052-56f1-45b5-8b22-127a88baf2e7"
+  "updatedAt": "2023-06-14T06:17:00.142Z",
+  "versionId": "3963e17c-162d-4128-ab42-5511db587c42"
 }
