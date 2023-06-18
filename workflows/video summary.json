@@ -1,7 +1,18 @@
 {
-  "active": false,
+  "active": true,
   "connections": {
     "When clicking \"Execute Workflow\"": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow Trigger": {
       "main": [
         [
           {
@@ -26,7 +37,8 @@
       "position": [
         700,
         300
-      ]
+      ],
+      "disabled": true
     },
     {
       "parameters": {
@@ -60,13 +72,41 @@
         920,
         300
       ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "handle_method",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "39cc85ae-a64d-4c44-a21b-5880b6d92d73",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        460,
+        460
+      ],
+      "webhookId": "21c125bf-e425-4855-a4a9-e6a42b612258"
+    },
+    {
+      "parameters": {},
+      "id": "58be36a5-992b-4319-8afe-4437f5feb8bc",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        680,
+        140
+      ]
     }
   ],
   "pinData": {},
   "settings": {},
   "staticData": null,
   "tags": [],
-  "triggerCount": 0,
-  "updatedAt": "2023-06-13T07:51:30.963Z",
-  "versionId": "534afe0b-54fe-474d-9e09-e4c5473e7e44"
+  "triggerCount": 1,
+  "updatedAt": "2023-06-18T16:50:45.617Z",
+  "versionId": "eb006028-69eb-4a81-9786-015e10e0d255"
 }
