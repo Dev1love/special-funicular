@@ -49,6 +49,7 @@
         920,
         300
       ],
+      "alwaysOutputData": true,
       "credentials": {
         "supabaseApi": {
           "id": "10",
@@ -107,6 +108,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-05-11T16:56:47.813Z",
-  "versionId": "04235e75-249d-4866-a78c-3c4d9b2c7125"
+  "updatedAt": "2023-06-19T16:16:54.605Z",
+  "versionId": "bf305237-bf6e-45f7-bfd7-9b6e559e10a4"
 }
