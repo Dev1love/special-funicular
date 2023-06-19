@@ -1,0 +1,166 @@
+{
+  "active": false,
+  "connections": {
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "send_link_to_analyze",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow": {
+      "main": [
+        [
+          {
+            "node": "update_report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "send_link_to_analyze": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-06-19T13:45:12.150Z",
+  "id": "114",
+  "name": "send_video_to_analyze",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "0dc14c42-ef86-4cce-b945-1d96fa708614",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        720,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ $node[\"Execute Workflow\"].json.supaBaseURL }}rest/v1/reports?select=*&meeting_id=eq.{{ $node[\"Execute Workflow Trigger\"].json.meeting_id }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "summary_task_id",
+              "value": "={{ $node.send_link_to_analyze.json.task_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a77d79cb-5b37-4e08-8cb9-87b200376e0f",
+      "name": "update_report",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1400,
+        300
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "88bce179-fa45-4b49-993b-3cc1e5bc681b",
+      "name": "Execute Workflow",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        1160,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://164.92.221.173:8080/api/v1/synopsis",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Api-Key",
+              "value": "oQbV9gzhkMb4LpKK7pTqbexzb8bMXpq9"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "url",
+              "value": "={{ $json.url }}"
+            },
+            {
+              "name": "url_handler",
+              "value": "https://n8n.stage.2t.band/webhook/handle_method"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e6a08ad8-bce7-4709-ab1d-cf20054f182c",
+      "name": "send_link_to_analyze",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        940,
+        300
+      ]
+    }
+  ],
+  "pinData": {
+    "Execute Workflow Trigger": [
+      {
+        "json": {
+          "meeting_id": "3111723a-32b0-4595-bcc3-90fee2e1cdf7",
+          "url": "https://183406.selcdn.ru/2T.Drive/accelerator/projects/43578266-bfb1-469e-af8e-77808bae9a60/3111723a-32b0-4595-bcc3-90fee2e1cdf7/meeting_86505443115_Многообещающий_проект.mp4?temp_url_sig=94ecbd8e5ea8ae25390b71eed1fb447b90b7c4cc&temp_url_expires=1692374476&filename=meeting_86505443115_Многообещающий_проект.mp4"
+        }
+      }
+    ]
+  },
+  "settings": {
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-06-19T16:09:38.794Z",
+  "versionId": "d2f99385-7997-46d8-9d0a-4802758760f9"
+}
