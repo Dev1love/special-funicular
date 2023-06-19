@@ -273,6 +273,11 @@
             "node": "IF_ok_s",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Set",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -493,6 +498,17 @@
         [
           {
             "node": "check_params",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow",
             "type": "main",
             "index": 0
           }
@@ -932,7 +948,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 3,
       "position": [
-        4660,
+        4880,
         360
       ]
     },
@@ -1142,7 +1158,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        4400,
+        4620,
         340
       ]
     },
@@ -1155,7 +1171,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 1,
       "position": [
-        4560,
+        4780,
         160
       ]
     },
@@ -1449,7 +1465,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 3,
       "position": [
-        5240,
+        5460,
         120
       ]
     },
@@ -1470,7 +1486,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        4840,
+        5060,
         360
       ]
     },
@@ -1549,7 +1565,7 @@
       "type": "n8n-nodes-base.executeCommand",
       "typeVersion": 1,
       "position": [
-        4520,
+        4740,
         -20
       ]
     },
@@ -1746,7 +1762,7 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1,
       "position": [
-        4840,
+        5060,
         560
       ],
       "credentials": {
@@ -1776,85 +1792,48 @@
         980,
         340
       ]
+    },
+    {
+      "parameters": {
+        "workflowId": "114"
+      },
+      "id": "389f3d5c-b7ef-4f13-aa80-bb44cc9a62bf",
+      "name": "Execute Workflow",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        4540,
+        -20
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "meeting_id",
+              "value": "={{ $node.SUPA_get_meeting.json.id }}"
+            },
+            {
+              "name": "url",
+              "value": "={{ $node.generate_download_url.json.downloadUrl_recording }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a6399dd6-27db-435f-ab19-4ceae803be7c",
+      "name": "Set",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        4380,
+        160
+      ]
     }
   ],
   "pinData": {
-    "Webhook": [
-      {
-        "json": {
-          "headers": {
-            "host": "n8n.stage.2t.band",
-            "x-forwarded-scheme": "https",
-            "x-forwarded-proto": "https",
-            "x-forwarded-for": "3.235.82.171",
-            "x-real-ip": "3.235.82.171",
-            "connection": "close",
-            "content-length": "2347",
-            "authorization": "tP_k6dh1Tuiz8fz_6ryD6w",
-            "clientid": "QKmsVEh0TN6zlVqUdvOykg",
-            "x-zm-trackingid": "v=2.0;clid=us06;rid=WEB_4ded6900c25c41c424d7e162656a4f67",
-            "x-zm-request-timestamp": "1685435870",
-            "x-zm-signature": "v0=e0fb901aac1f9aaab8812a326c5f56197f57db958f2e47d322c1ac4163d7ddfa",
-            "content-type": "application/json; charset=utf-8",
-            "user-agent": "Zoom Marketplace/1.0a"
-          },
-          "params": {},
-          "query": {},
-          "body": {
-            "payload": {
-              "account_id": "0kLVFu_pSxuiWCUZ_CyvKg",
-              "object": {
-                "uuid": "THa0vwpCSo2o7inC9Ihmtg==",
-                "id": 89039514870,
-                "account_id": "0kLVFu_pSxuiWCUZ_CyvKg",
-                "host_id": "S0ZaPlQiR7-FOr6lJtX9LA",
-                "topic": "Новый взгряд на старые районы",
-                "type": 2,
-                "start_time": "2023-05-30T06:52:36Z",
-                "timezone": "Europe/Moscow",
-                "host_email": "user02@2t.band",
-                "duration": 87,
-                "total_size": 223286308,
-                "recording_count": 2,
-                "share_url": "https://us06web.zoom.us/rec/share/3MQNMY8gIOCNwF9T3hEjHgaL_JTTWxLK2EO0ujxs9-hEbaOVYvR9WrdqoqIzKSg.UqNmtn5V2t6hd3hg",
-                "recording_files": [
-                  {
-                    "id": "251b75b9-49d5-4df9-aa2e-f75dae025e08",
-                    "meeting_id": "THa0vwpCSo2o7inC9Ihmtg==",
-                    "recording_start": "2023-05-30T06:52:37Z",
-                    "recording_end": "2023-05-30T08:20:08Z",
-                    "file_type": "CHAT",
-                    "file_extension": "TXT",
-                    "file_size": 278,
-                    "play_url": "https://us06web.zoom.us/rec/play/ReGv4IVA3y5wORbRHZ1tJgHVriR3ftVJNfuLOp9hT1DA1CpLq3pri64ZODlSKcvbs-icwQQ9PuvvpcHB.a75lAdNFdmS3a2cg",
-                    "download_url": "https://us06web.zoom.us/rec/webhook_download/ReGv4IVA3y5wORbRHZ1tJgHVriR3ftVJNfuLOp9hT1DA1CpLq3pri64ZODlSKcvbs-icwQQ9PuvvpcHB.a75lAdNFdmS3a2cg/1CL-aUWxtDwZAUGnsAy2NuojruhygT7SYY21E1-hCfDxFbOQfJRFbhQeLVnl6zy-.2svoQG8ccrFWbT0X",
-                    "status": "completed",
-                    "recording_type": "chat_file"
-                  },
-                  {
-                    "id": "48e17c49-0257-4576-82be-a4f3ce139402",
-                    "meeting_id": "THa0vwpCSo2o7inC9Ihmtg==",
-                    "recording_start": "2023-05-30T06:52:37Z",
-                    "recording_end": "2023-05-30T08:20:08Z",
-                    "file_type": "MP4",
-                    "file_extension": "MP4",
-                    "file_size": 223286030,
-                    "play_url": "https://us06web.zoom.us/rec/play/sXNpVrGGb5L6-dIyg2_if1-CG2FQ5FIadcadCZ_R0f_NAk5jXJ_LBy1QXFgxBXmVg-6tZY_d7n7B-JOp.yRmFwjt7T3va1Gdb",
-                    "download_url": "https://us06web.zoom.us/rec/webhook_download/sXNpVrGGb5L6-dIyg2_if1-CG2FQ5FIadcadCZ_R0f_NAk5jXJ_LBy1QXFgxBXmVg-6tZY_d7n7B-JOp.yRmFwjt7T3va1Gdb/btWRGm_2Rd1R-4M1EegWQVm38gRwBU-Ljl937ZwdRo3FGDA4y3mnjERsabJ21Ck.K35irL0bvta1FTZT",
-                    "status": "completed",
-                    "recording_type": "shared_screen_with_gallery_view"
-                  }
-                ],
-                "on_prem": false
-              }
-            },
-            "event_ts": 1685435855199,
-            "event": "recording.completed",
-            "download_token": "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJodHRwczovL2V2ZW50Lnpvb20udXMiLCJhY2NvdW50SWQiOiIwa0xWRnVfcFN4dWlXQ1VaX0N5dktnIiwiYXVkIjoiaHR0cHM6Ly9vYXV0aC56b29tLnVzIiwibWlkIjoiVEhhMHZ3cENTbzJvN2luQzlJaG10Zz09IiwiZXhwIjoxNjg1NTIyMjcwLCJ1c2VySWQiOiJTMFphUGxRaVI3LUZPcjZsSnRYOUxBIn0.FJGO9wBDmyWT3zT_VYHiJHGX6f54-FRVPYBgH6GBwnN89FsgkMKAdcWXqKOIVOsBqyM1TMmbefMWcCGJzg5VoA"
-          }
-        }
-      }
-    ],
     "SUPA_rpc_stats": [
       {
         "json": {
@@ -1930,6 +1909,69 @@
           "zoom_user_host": "user02@2t.band"
         }
       }
+    ],
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n.stage.2t.band",
+            "x-forwarded-scheme": "https",
+            "x-forwarded-proto": "https",
+            "x-forwarded-for": "3.235.82.172",
+            "x-real-ip": "3.235.82.172",
+            "connection": "close",
+            "content-length": "1670",
+            "authorization": "tP_k6dh1Tuiz8fz_6ryD6w",
+            "clientid": "QKmsVEh0TN6zlVqUdvOykg",
+            "x-zm-trackingid": "v=2.0;clid=us06;rid=WEB_22827a5f66a9a208c841317d78fd5e28",
+            "x-zm-request-timestamp": "1687190194",
+            "x-zm-signature": "v0=e33a40af442193fc1a79d96dfe564a47fb7af93376aa61cab7e4713437b15e71",
+            "content-type": "application/json; charset=utf-8",
+            "user-agent": "Zoom Marketplace/1.0a"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "payload": {
+              "account_id": "0kLVFu_pSxuiWCUZ_CyvKg",
+              "object": {
+                "uuid": "7uXP/RDxSbuPvf8K6nM7GA==",
+                "id": 86505443115,
+                "account_id": "0kLVFu_pSxuiWCUZ_CyvKg",
+                "host_id": "S0ZaPlQiR7-FOr6lJtX9LA",
+                "topic": "Многообещающий проект",
+                "type": 2,
+                "start_time": "2023-06-19T15:50:25Z",
+                "timezone": "Europe/Moscow",
+                "host_email": "user02@2t.band",
+                "duration": 2,
+                "total_size": 3098436,
+                "recording_count": 1,
+                "share_url": "https://us06web.zoom.us/rec/share/H9QTsF0OufvpLzW7CCHlsHaIK_Vib4IeeKZ9ra18ifEkJdAiKTwYgf0M0q-8UeqP.zPc_rNUxfPuHrL4D",
+                "recording_files": [
+                  {
+                    "id": "cc77e0e5-05f9-4bbd-a903-e00db1a9e355",
+                    "meeting_id": "7uXP/RDxSbuPvf8K6nM7GA==",
+                    "recording_start": "2023-06-19T15:50:25Z",
+                    "recording_end": "2023-06-19T15:53:12Z",
+                    "file_type": "MP4",
+                    "file_extension": "MP4",
+                    "file_size": 3098436,
+                    "play_url": "https://us06web.zoom.us/rec/play/NYku4N3FwwW5J77mjdsPdQTek31WKuuIIroDYD-jYAGY5jqSYHZXAtvp0wjzQyM38qg4RvGsMzBeN3UK.iZssf9W5Gp8KfoCi",
+                    "download_url": "https://us06web.zoom.us/rec/webhook_download/NYku4N3FwwW5J77mjdsPdQTek31WKuuIIroDYD-jYAGY5jqSYHZXAtvp0wjzQyM38qg4RvGsMzBeN3UK.iZssf9W5Gp8KfoCi/IDnweQ_BdwybI1WwXBhDZ8ToQpd4J3e8GnMwYF5Ntl5c_NofgflNvh5HLWGHfCo._e63obYiY9fbMEp7",
+                    "status": "completed",
+                    "recording_type": "shared_screen_with_speaker_view"
+                  }
+                ],
+                "on_prem": false
+              }
+            },
+            "event_ts": 1687190179745,
+            "event": "recording.completed",
+            "download_token": "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJodHRwczovL2V2ZW50Lnpvb20udXMiLCJhY2NvdW50SWQiOiIwa0xWRnVfcFN4dWlXQ1VaX0N5dktnIiwiYXVkIjoiaHR0cHM6Ly9vYXV0aC56b29tLnVzIiwibWlkIjoiN3VYUC9SRHhTYnVQdmY4SzZuTTdHQT09IiwiZXhwIjoxNjg3Mjc2NTk0LCJ1c2VySWQiOiJTMFphUGxRaVI3LUZPcjZsSnRYOUxBIn0.sxr-YdiDgPHdaFYC3Zg5ACM8X3XuQUG43b8Qb1H4XGQ3_Uh2LRVTE8e3Di8NxS2MUORBDXnftG4WNdgf0cZsTA"
+          }
+        }
+      }
     ]
   },
   "settings": {
@@ -1942,6 +1984,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-06-12T09:29:41.499Z",
-  "versionId": "2c53ac7c-04f8-48e1-8966-30051ed55da9"
+  "updatedAt": "2023-06-19T16:35:54.991Z",
+  "versionId": "15827c13-a905-4e07-a7db-1174649a1eee"
 }
