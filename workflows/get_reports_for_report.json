@@ -1,0 +1,113 @@
+{
+  "active": false,
+  "connections": {
+    "Supabase": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_report_status": {
+      "main": [
+        [
+          {
+            "node": "Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-07-13T16:01:58.357Z",
+  "id": "116",
+  "name": "get_reports_for_report",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "reports",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "meeting_id",
+              "keyValue": "={{ $json.body.meeting_id }}"
+            }
+          ]
+        }
+      },
+      "id": "54b7f48e-d95f-441a-a6be-4954e1c55607",
+      "name": "Supabase",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        920,
+        300
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "10",
+          "name": "Supabase stage"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{JSON.stringify(\n{res:$json ? $json : \"error\"})}}",
+        "options": {}
+      },
+      "id": "9ca50f39-8118-465b-82c3-5cbd66ff2c74",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "httpMethod": "POST",
+        "path": "meetings/report",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "f2d1015e-ca09-4aa7-81d2-98d649a9f684",
+      "name": "get_report_status",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        700,
+        300
+      ],
+      "webhookId": "55fd9fa3-dcbf-4ee1-be81-4035a8ee4a0f",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "appsmith->n8n Header Auth account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "102"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-07-13T16:01:58.357Z",
+  "versionId": "9f99cfcd-bd5b-4d2f-81f3-a0aab3a314ce"
+}
