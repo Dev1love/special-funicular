@@ -1,5 +1,5 @@
 {
-  "active": true,
+  "active": false,
   "connections": {
     "get_reports": {
       "main": [
@@ -538,6 +538,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 3,
-  "updatedAt": "2023-07-15T08:19:29.740Z",
-  "versionId": "4cb81a59-0f4e-4196-8d93-8c2dd63cfe07"
+  "updatedAt": "2023-07-15T09:40:46.772Z",
+  "versionId": "6575c073-3d2b-49a8-89a4-27fd41e5aae1"
 }
