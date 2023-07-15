@@ -1,7 +1,84 @@
 {
-  "active": false,
+  "active": true,
   "connections": {
-    "Supabase": {
+    "get_reports": {
+      "main": [
+        [
+          {
+            "node": "init_vars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_user_project_with_meetings": {
+      "main": [
+        [
+          {
+            "node": "make_report_flat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "init_vars": {
+      "main": [
+        [
+          {
+            "node": "get_user_project_with_meetings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "init_vars1": {
+      "main": [
+        [
+          {
+            "node": "get_meeting_with_reports_by_user_id",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "init_vars2": {
+      "main": [
+        [
+          {
+            "node": "get_meeting_with_reports_by_project_id",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_reports_by_project_id": {
+      "main": [
+        [
+          {
+            "node": "init_vars2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_reports_by_user_id": {
+      "main": [
+        [
+          {
+            "node": "init_vars1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Spreadsheet File": {
       "main": [
         [
           {
@@ -12,11 +89,55 @@
         ]
       ]
     },
-    "get_report_status": {
+    "Spreadsheet File1": {
       "main": [
         [
           {
-            "node": "Supabase",
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Spreadsheet File2": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "make_report_flat": {
+      "main": [
+        [
+          {
+            "node": "Spreadsheet File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_meeting_with_reports_by_user_id": {
+      "main": [
+        [
+          {
+            "node": "Spreadsheet File1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_meeting_with_reports_by_project_id": {
+      "main": [
+        [
+          {
+            "node": "Spreadsheet File2",
             "type": "main",
             "index": 0
           }
@@ -30,35 +151,6 @@
   "nodes": [
     {
       "parameters": {
-        "operation": "get",
-        "tableId": "reports",
-        "filters": {
-          "conditions": [
-            {
-              "keyName": "meeting_id",
-              "keyValue": "={{ $json.body.meeting_id }}"
-            }
-          ]
-        }
-      },
-      "id": "54b7f48e-d95f-441a-a6be-4954e1c55607",
-      "name": "Supabase",
-      "type": "n8n-nodes-base.supabase",
-      "typeVersion": 1,
-      "position": [
-        920,
-        300
-      ],
-      "alwaysOutputData": true,
-      "credentials": {
-        "supabaseApi": {
-          "id": "10",
-          "name": "Supabase stage"
-        }
-      }
-    },
-    {
-      "parameters": {
         "respondWith": "json",
         "responseBody": "={{JSON.stringify(\n{res:$json ? $json : \"error\"})}}",
         "options": {}
@@ -68,24 +160,37 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1,
       "position": [
-        1120,
+        1820,
         300
+      ]
+    },
+    {
+      "parameters": {
+        "content": "Реализовать получение отчетов по user_id и по project_id\nНужна плоская модель жсон\n"
+      },
+      "id": "6b8af872-ac8c-4e84-ac1c-d3efbcee8ec3",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        620,
+        100
       ]
     },
     {
       "parameters": {
         "authentication": "headerAuth",
         "httpMethod": "POST",
-        "path": "meetings/report",
+        "path": "reports_by_id",
         "responseMode": "responseNode",
         "options": {}
       },
       "id": "f2d1015e-ca09-4aa7-81d2-98d649a9f684",
-      "name": "get_report_status",
+      "name": "get_reports",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1,
       "position": [
-        700,
+        640,
         300
       ],
       "webhookId": "55fd9fa3-dcbf-4ee1-be81-4035a8ee4a0f",
@@ -95,9 +200,334 @@
           "name": "appsmith->n8n Header Auth account"
         }
       }
+    },
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "httpMethod": "POST",
+        "path": "reports_by_user_id",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "2e829a09-314a-4481-a83a-a1dc9fa4ad85",
+      "name": "get_reports_by_user_id",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        640,
+        480
+      ],
+      "webhookId": "ec3bbb64-a09d-4d49-8121-da3322f359bb",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "appsmith->n8n Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "httpMethod": "POST",
+        "path": "reports_by_project_id",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "3eac402e-bb37-4bbb-801b-f9f4192da1d9",
+      "name": "get_reports_by_project_id",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        640,
+        660
+      ],
+      "webhookId": "b02b87c7-fb1c-45d1-9358-7aa1747d46dd",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "appsmith->n8n Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/reports?meeting_id=eq.{{ $json.body.meeting_id }}&select=*,meetings(*,projects(*))  ",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9331aba9-7114-43d9-ad48-de082893ac76",
+      "name": "get_user_project_with_meetings",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        920,
+        300
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "7142adef-2822-4461-8a55-a86a756159af",
+      "name": "init_vars",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        780,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{JSON.stringify(\n{res:$json ? $json : \"error\"})}}",
+        "options": {}
+      },
+      "id": "24e7cdeb-2b46-4d19-b9b0-fef5340c7e07",
+      "name": "Respond to Webhook1",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1560,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "8b22ff61-7649-437f-9e8e-7312e269fd1f",
+      "name": "init_vars1",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        800,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{JSON.stringify(\n{res:$json ? $json : \"error\"})}}",
+        "options": {}
+      },
+      "id": "13f10164-ba96-46f6-aa08-ce58dc9539e4",
+      "name": "Respond to Webhook2",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1360,
+        660
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "9f4fabfc-1686-4ac4-89fb-7c7f7c4451e2",
+      "name": "init_vars2",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        800,
+        660
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "toFile",
+        "fileFormat": "xlsx",
+        "options": {
+          "fileName": "=report_meeting_id_{{ $node.get_reports.json.body.meeting_id }}.xlsx"
+        }
+      },
+      "name": "Spreadsheet File",
+      "type": "n8n-nodes-base.spreadsheetFile",
+      "position": [
+        1400,
+        300
+      ],
+      "typeVersion": 1,
+      "id": "766f52a9-b4b6-4cc6-aaae-a9bc58b95018"
+    },
+    {
+      "parameters": {
+        "operation": "toFile",
+        "fileFormat": "xlsx",
+        "options": {
+          "fileName": "=reports_user_id_{{ $json.user_id }}.xlsx"
+        }
+      },
+      "name": "Spreadsheet File1",
+      "type": "n8n-nodes-base.spreadsheetFile",
+      "position": [
+        1140,
+        480
+      ],
+      "typeVersion": 1,
+      "id": "0077d75c-4e17-4259-9a91-cd8c6f68a23c"
+    },
+    {
+      "parameters": {
+        "operation": "toFile",
+        "fileFormat": "xlsx",
+        "options": {
+          "fileName": "=reports_project_id_{{ $json.project_id }}.xlsx"
+        }
+      },
+      "name": "Spreadsheet File2",
+      "type": "n8n-nodes-base.spreadsheetFile",
+      "position": [
+        1140,
+        660
+      ],
+      "typeVersion": 1,
+      "id": "1a486a79-369e-4331-a5bb-dba41a466752"
+    },
+    {
+      "parameters": {
+        "jsCode": "const modifyData = (arr) => {\n  const obj = arr[0].json;\n  const { report_data, ...rest } = obj;\n  const reportDataObj = report_data[0];\n  \n  return {\n    ...rest,\n    ...reportDataObj,\n  };\n};\n\nconst data = $('get_user_project_with_meetings').all(); //вместо receive_data название вебхука принимающего данные\n\nreturn modifyData(data);"
+      },
+      "id": "30c2a951-00c5-43b2-b7c4-cba352c3488d",
+      "name": "make_report_flat",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        1140,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $node[\"init_vars1\"].json.supaBaseURL }}rest/v1/meetings?user_id=eq.{{ $json.body.user_id}}&select=*,reports(*)  ",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "6c91e93c-07a8-4339-b763-b3a8513221e6",
+      "name": "get_meeting_with_reports_by_user_id",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        940,
+        480
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $node[\"init_vars2\"].json.supaBaseURL }}rest/v1/meetings?project_id=eq.{{ $json.body.project_id }}&select=*,reports(*)  ",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "dc7d8fa7-d729-4c91-9ad4-3872ff1469d1",
+      "name": "get_meeting_with_reports_by_project_id",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        940,
+        660
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "get_reports": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n.stage.2t.band",
+            "x-forwarded-scheme": "https",
+            "x-forwarded-proto": "https",
+            "x-forwarded-for": "5.159.102.176",
+            "x-real-ip": "5.159.102.176",
+            "connection": "close",
+            "content-length": "53",
+            "accept-encoding": "gzip",
+            "user-agent": "ReactorNetty/1.1.1",
+            "accept": "*/*",
+            "auth": "d23Y_Vfds8_9sdf",
+            "content-type": "application/json"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "meeting_id": "abb03e80-a2d0-4158-b10d-0f4a0b933610"
+          }
+        }
+      }
+    ],
+    "get_reports_by_project_id": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n.stage.2t.band",
+            "x-forwarded-scheme": "https",
+            "x-forwarded-proto": "https",
+            "x-forwarded-for": "5.159.102.176",
+            "x-real-ip": "5.159.102.176",
+            "connection": "close",
+            "content-length": "53",
+            "accept-encoding": "gzip",
+            "user-agent": "ReactorNetty/1.1.1",
+            "accept": "*/*",
+            "auth": "d23Y_Vfds8_9sdf",
+            "content-type": "application/json"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "project_id": "00caca11-dd77-4863-8b55-8dbc60a2e78f"
+          }
+        }
+      }
+    ]
+  },
   "settings": {
     "saveDataSuccessExecution": "all",
     "saveExecutionProgress": true,
@@ -107,7 +537,7 @@
   },
   "staticData": null,
   "tags": [],
-  "triggerCount": 1,
-  "updatedAt": "2023-07-13T16:01:58.357Z",
-  "versionId": "9f99cfcd-bd5b-4d2f-81f3-a0aab3a314ce"
+  "triggerCount": 3,
+  "updatedAt": "2023-07-15T08:19:29.740Z",
+  "versionId": "4cb81a59-0f4e-4196-8d93-8c2dd63cfe07"
 }
