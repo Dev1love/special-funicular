@@ -422,6 +422,17 @@
           }
         ]
       ]
+    },
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "get_path",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2023-04-04T13:51:32.778Z",
@@ -1746,6 +1757,17 @@
         3420,
         -440
       ]
+    },
+    {
+      "parameters": {},
+      "id": "f08b6888-af8d-4607-8dea-479681d9c699",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        320,
+        -40
+      ]
     }
   ],
   "pinData": {
@@ -2102,6 +2124,6 @@
     }
   ],
   "triggerCount": 6,
-  "updatedAt": "2023-05-26T07:07:37.566Z",
-  "versionId": "242bfafd-8a35-4441-b1be-ccfb4cd64467"
+  "updatedAt": "2023-07-15T07:55:58.314Z",
+  "versionId": "fe04a1a4-4b1e-4351-b087-0d5116283074"
 }
