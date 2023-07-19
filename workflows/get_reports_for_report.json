@@ -41,6 +41,21 @@
             "node": "get_meeting_with_reports_by_user_id",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "get_meeting_with_reports_by_user_id1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Spreadsheet File1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "get_meeting_with_reports_by_user_id2",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -143,6 +158,50 @@
           }
         ]
       ]
+    },
+    "get_reports_by_project_id1": {
+      "main": [
+        [
+          {
+            "node": "init_vars3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "init_vars3": {
+      "main": [
+        [
+          {
+            "node": "get_meeting_with_reports_by_project_id1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_meeting_with_reports_by_user_id1": {
+      "main": [
+        [
+          {
+            "node": "Spreadsheet File1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_meeting_with_reports_by_user_id2": {
+      "main": [
+        [
+          {
+            "node": "Spreadsheet File1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2023-07-13T16:01:58.357Z",
@@ -238,8 +297,8 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1,
       "position": [
-        640,
-        660
+        620,
+        1020
       ],
       "webhookId": "b02b87c7-fb1c-45d1-9358-7aa1747d46dd",
       "credentials": {
@@ -251,7 +310,7 @@
     },
     {
       "parameters": {
-        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/reports?meeting_id=eq.{{ $json.body.meeting_id }}&select=*,meetings(*,projects(*))  ",
+        "url": "={{ $node.init_vars.json.supaBaseURL }}rest/v1/reports?meeting_id=eq.{{ $json.body.meeting_id }}&select=*,meetings(*,artifacts(*),projects(*))  ",
         "authentication": "predefinedCredentialType",
         "nodeCredentialType": "supabaseApi",
         "sendHeaders": true,
@@ -304,7 +363,7 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1,
       "position": [
-        1560,
+        1780,
         480
       ]
     },
@@ -332,8 +391,8 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1,
       "position": [
-        1360,
-        660
+        1340,
+        1020
       ]
     },
     {
@@ -345,8 +404,8 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1,
       "position": [
-        800,
-        660
+        780,
+        1020
       ]
     },
     {
@@ -377,7 +436,7 @@
       "name": "Spreadsheet File1",
       "type": "n8n-nodes-base.spreadsheetFile",
       "position": [
-        1140,
+        1280,
         480
       ],
       "typeVersion": 1,
@@ -394,8 +453,8 @@
       "name": "Spreadsheet File2",
       "type": "n8n-nodes-base.spreadsheetFile",
       "position": [
-        1140,
-        660
+        1120,
+        1020
       ],
       "typeVersion": 1,
       "id": "1a486a79-369e-4331-a5bb-dba41a466752"
@@ -415,7 +474,7 @@
     },
     {
       "parameters": {
-        "url": "={{ $node[\"init_vars1\"].json.supaBaseURL }}rest/v1/meetings?user_id=eq.{{ $json.body.user_id}}&select=*,reports(*)  ",
+        "url": "={{ $node[\"init_vars1\"].json.supaBaseURL }}rest/v1/meetings?user_id=eq.{{ $json.body.user_id}}&select=*,reports(*)&type=eq.1",
         "authentication": "predefinedCredentialType",
         "nodeCredentialType": "supabaseApi",
         "sendHeaders": true,
@@ -442,11 +501,12 @@
           "id": "7",
           "name": "Supabase account"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
-        "url": "={{ $node[\"init_vars2\"].json.supaBaseURL }}rest/v1/meetings?project_id=eq.{{ $json.body.project_id }}&select=*,reports(*)  ",
+        "url": "={{ $node[\"init_vars2\"].json.supaBaseURL }}rest/v1/meetings?project_id=eq.{{ $json.body.project_id }}&select=*,artifacts(*)",
         "authentication": "predefinedCredentialType",
         "nodeCredentialType": "supabaseApi",
         "sendHeaders": true,
@@ -465,8 +525,139 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 3,
       "position": [
+        920,
+        1020
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "httpMethod": "POST",
+        "path": "reports_by_project_id",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "5d74d317-41d0-4d88-aec1-bfb8ba313ed4",
+      "name": "get_reports_by_project_id1",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        620,
+        1260
+      ],
+      "webhookId": "b02b87c7-fb1c-45d1-9358-7aa1747d46dd",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "appsmith->n8n Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowId": "22"
+      },
+      "id": "4840cb15-b404-4a0d-9009-376e10e94852",
+      "name": "init_vars3",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        780,
+        1260
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $node[\"init_vars3\"].json.supaBaseURL }}rest/v1/meetings?project_id=eq.{{ $json.body.project_id }}&select=*,artifacts(*)",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9afdd083-2aa0-4b54-978b-6f2ebf1030ec",
+      "name": "get_meeting_with_reports_by_project_id1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        920,
+        1260
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $node[\"init_vars1\"].json.supaBaseURL }}rest/v1/meetings?user_id=eq.{{ $json.body.user_id}}&select=*,reports(*)&or=(type.eq.2,type.eq.3,type.eq.4,type.eq.7,type.eq.8,type.eq.9)",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "452cd3b8-5f23-46ec-907f-0bc32d847fb0",
+      "name": "get_meeting_with_reports_by_user_id1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
         940,
-        660
+        620
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "7",
+          "name": "Supabase account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "url": "={{ $node[\"init_vars1\"].json.supaBaseURL }}rest/v1/meetings?user_id=eq.{{ $json.body.user_id}}&select=*,reports(*)&or=(type.eq.10,type.eq.5)",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e6902b38-fa1a-4005-9850-23ed6d764f7d",
+      "name": "get_meeting_with_reports_by_user_id2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        940,
+        760
       ],
       "credentials": {
         "supabaseApi": {
@@ -526,6 +717,31 @@
           }
         }
       }
+    ],
+    "get_reports_by_user_id": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n.stage.2t.band",
+            "x-forwarded-scheme": "https",
+            "x-forwarded-proto": "https",
+            "x-forwarded-for": "5.159.102.176",
+            "x-real-ip": "5.159.102.176",
+            "connection": "close",
+            "content-length": "53",
+            "accept-encoding": "gzip",
+            "user-agent": "ReactorNetty/1.1.1",
+            "accept": "*/*",
+            "auth": "d23Y_Vfds8_9sdf",
+            "content-type": "application/json"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "user_id": "0914b24a-fb4c-4431-b603-673f234bcb4f"
+          }
+        }
+      }
     ]
   },
   "settings": {
@@ -538,6 +754,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 3,
-  "updatedAt": "2023-07-15T09:40:46.772Z",
-  "versionId": "6575c073-3d2b-49a8-89a4-27fd41e5aae1"
+  "updatedAt": "2023-07-19T15:06:07.474Z",
+  "versionId": "2a1655f2-373b-489f-a488-c8052d06c526"
 }
